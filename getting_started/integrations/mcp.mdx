@@ -8,6 +8,12 @@ The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) lets AI age
 
 The server exposes four read-only, search-focused tools: `listIndexes`, `describeIndex`, `searchInIndexes`, and `facetSearch`.
 
+## When to use MCP
+
+MCP is the fastest way to let an agent search your data: there is no tool code to write. It is a good fit to experiment, or when you can add an MCP server to an agent but cannot change the agent's code.
+
+If you are building your own application with the [Vercel AI SDK](https://ai-sdk.dev), you can [use Meilisearch MCP with the AI SDK](/getting_started/integrations/ai_sdk#use-meilisearch-mcp). For production applications that need typed tools and control over search parameters, we recommend [`@meilisearch/ai-sdk`](/getting_started/integrations/ai_sdk) instead. See [choose an approach](/capabilities/agentic_search/overview#choose-an-approach) for a comparison.
+
 ## Requirements
 
 - A Meilisearch project running v1.54 or later
@@ -64,6 +70,8 @@ Meilisearch uses MCP protocol version `2026-07-28`. Enable that version by setti
 
 See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/mcp) documentation for more information on how to configure MCP servers with custom headers.
 
+To use these tools in an app built with the Vercel AI SDK, see [use Meilisearch MCP](/getting_started/integrations/ai_sdk#use-meilisearch-mcp) in the AI SDK guide.
+
 ## Available tools
 
 | Tool | Wraps | Description |
@@ -95,5 +103,5 @@ If your MCP client can't connect or calls fail:
 
 ## Legacy `meilisearch-mcp` server
 
-The [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) Python package is as a local stdio process alongside desktop clients like Claude Desktop. It is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained.
+The [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) Python package runs as a local stdio process alongside desktop clients like Claude Desktop. It is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained.
 

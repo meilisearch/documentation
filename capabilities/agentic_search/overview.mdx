@@ -55,22 +55,46 @@ Depending on your application needs, you may give more or less autonomy to the L
 
 ## Implementation strategies
 
+Meilisearch offers three ways to build agentic search. They are listed in the order we recommend:
+
+1. **AI SDK**: you build the agent, Meilisearch provides typed search tools
+2. **MCP**: you connect an agent to Meilisearch through the Model Context Protocol, with no tool code to write
+3. **Chats API (experimental)**: Meilisearch runs retrieval and generation for you
+
 ### AI SDK (recommended)
 
-[`@meilisearch/ai-sdk`](https://github.com/meilisearch/ai-sdk) provides ready-made search tools for the [Vercel AI SDK](https://ai-sdk.dev), so any agent or LLM application can call Meilisearch directly, without an engine-managed `/chats` workspace. This is the recommended way to build agentic and conversational search on top of Meilisearch.
+[`@meilisearch/ai-sdk`](https://github.com/meilisearch/ai-sdk) provides ready-made search tools for the [Vercel AI SDK](https://ai-sdk.dev), so any agent or LLM application can call Meilisearch directly, without an engine-managed `/chats` workspace. This is the recommended way to build agentic and conversational search on top of Meilisearch, especially for production applications.
+
+Search tools are native AI SDK tools. You get static typing, in-process execution, and full control over each tool's description, schema, and search parameters (filters, sorting, hybrid search). Vercel also recommends native tools over MCP for production applications.
 
 Get started with the [agentic search getting started guide](/capabilities/agentic_search/getting_started).
 
+### Model Context Protocol (MCP)
+
+Meilisearch has a built-in [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server. It exposes four read-only search tools (`listIndexes`, `describeIndex`, `searchInIndexes`, and `facetSearch`) that an MCP client can call, as long as it supports the protocol version Meilisearch uses (see the [MCP guide](/getting_started/integrations/mcp#requirements)). You write no tool code: the agent discovers your indexes and learns how to search them.
+
+MCP is the fastest way to get an agent talking to your data. It is a good fit when you want to experiment, or when you can add an MCP server to an agent but cannot change the agent's code. You can also use it with the Vercel AI SDK through `@ai-sdk/mcp`.
+
+The trade-off is control: the agent sees the full search API instead of a tool scoped to your use case, and tools are loaded dynamically, so they are not typed.
+
+- To connect an MCP client, follow the [MCP guide](/getting_started/integrations/mcp)
+- To use MCP with the Vercel AI SDK, see [use Meilisearch MCP](/getting_started/integrations/ai_sdk#use-meilisearch-mcp) in the AI SDK guide
+
+The MCP server is currently an experimental feature.
+
 ### Chats API (experimental)
 
-The experimental [`/chats` route](/reference/api/chats/request-a-chat-completion) consolidates retrieval, context management, and generation into a single, engine-managed endpoint.
+The experimental [`/chats` route](/reference/api/chats/request-a-chat-completion) consolidates retrieval, context management, and generation into a single, engine-managed endpoint. Use it only if you specifically need Meilisearch to handle the LLM call for you.
 
 See the [Chats API guide](/capabilities/agentic_search/advanced/chats_api) for setup, chat patterns, streaming, and tools. Consult the [chat completions API reference](/reference/api/chats/request-a-chat-completion) for the full list of supported parameters.
 
-### Model Context Protocol (MCP)
+### Choose an approach
 
-{/* TODO: revisit whether MCP wording should move or shrink if agentic-search positioning expands later */}
+| Your situation | Use |
+|---|---|
+| You are building an application for production, and you want typed tools and control over search parameters | [AI SDK](/capabilities/agentic_search/getting_started) |
+| You want something working fast, or you are experimenting | [MCP](/getting_started/integrations/mcp) |
+| You can configure an MCP server in your agent but cannot edit the agent's code | [MCP](/getting_started/integrations/mcp) |
+| You want Meilisearch to run retrieval and generation, and accept an experimental API | [Chats API](/capabilities/agentic_search/advanced/chats_api) |
 
-An alternative method is using a Model Context Protocol (MCP) server. MCPs are designed for broader uses that go beyond answering questions, and are useful in contexts where having up-to-date data matters more than a tightly scoped search tool.
-
-Follow the [dedicated MCP guide](/getting_started/integrations/mcp) if you want to implement it in your application.
+Both the AI SDK tools and MCP work with the Vercel AI SDK, so you can start with MCP and switch to `@meilisearch/ai-sdk` tools when you need more control.
