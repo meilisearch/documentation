@@ -5,10 +5,6 @@ description: Show users which indexed documents an AI agent used to generate its
 
 Displaying source documents builds user trust by showing which data the AI used to formulate its answer. When using [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started), source documents are already part of your search tool's output: whenever the model calls a Meilisearch search tool, the result contains the query it ran and the documents it found.
 
-<Note>
-This page covers `@meilisearch/ai-sdk` tools. If you connect the [Meilisearch MCP server](/getting_started/integrations/ai_sdk#use-meilisearch-mcp) to the AI SDK instead, the model calls MCP tools such as `searchInIndexes`. Their names and output shape differ from `meilisearchSearch`, so inspect a tool part before you extract documents from it.
-</Note>
-
 ## Render tool calls in your UI
 
 The [AI SDK](https://ai-sdk.dev) represents each assistant message as an ordered list of parts (`message.parts`) instead of a single string. A tool call becomes its own message part, typed `tool-{toolName}`, with a `state` that tracks its progress.

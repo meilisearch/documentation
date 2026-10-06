@@ -5,10 +5,6 @@ description: Build resilient agentic search with the AI SDK by handling LLM fail
 
 Agentic search built with [`@meilisearch/ai-sdk`](/capabilities/agentic_search/getting_started) involves multiple systems: Meilisearch, an LLM provider, and your application. Any of these can fail. This guide covers common failure modes and how to handle them gracefully.
 
-<Note>
-The same patterns apply if you use the [Meilisearch MCP server](/getting_started/integrations/ai_sdk#use-meilisearch-mcp) with the AI SDK. A failing MCP call, for example because the API key lacks a permission, surfaces as a tool error. See the [MCP troubleshooting](/getting_started/integrations/mcp#troubleshooting) section for the common causes.
-</Note>
-
 ## Common error scenarios
 
 | Scenario | How it surfaces in the AI SDK | Cause |

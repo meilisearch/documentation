@@ -5,10 +5,6 @@ description: Techniques to minimize LLM hallucination in conversational search, 
 
 Large language models can sometimes generate information that is not present in the source documents. This is known as hallucination. While it cannot be fully eliminated, several techniques significantly reduce its occurrence in Meilisearch's conversational search.
 
-<Note>
-These techniques apply whether you use the [AI SDK](/capabilities/agentic_search/getting_started), the [Meilisearch MCP server](/getting_started/integrations/mcp), or the experimental [Chats API](#using-the-chats-api). Only the built-in workspace guardrails are specific to the Chats API.
-</Note>
-
 ## Understanding why hallucination happens
 
 When Meilisearch sends retrieved documents to the LLM, the model may:

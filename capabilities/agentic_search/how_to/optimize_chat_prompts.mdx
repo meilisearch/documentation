@@ -7,10 +7,6 @@ import CodeSamplesChatPatchSettingsPrompts1 from '/snippets/generated-code-sampl
 
 The quality of conversational search responses depends on three layers of configuration: the system prompt, the document template, and the index-level chat settings. Each layer shapes what the LLM receives and how it responds. This guide covers how to tune each one for better results.
 
-<Note>
-The [system prompt strategies](#system-prompt-strategies) and [test and iterate](#test-and-iterate) sections apply to the AI SDK, MCP, and the Chats API. The tool prompts, index chat settings, and document template sections below only apply to the experimental [Chats API](/capabilities/agentic_search/advanced/chats_api). With the AI SDK, tune the tool's `description` and `searchParams` instead. With [MCP](/getting_started/integrations/mcp), tune your system prompt.
-</Note>
-
 ## System prompt strategies
 
 The system prompt (set through [workspace settings](/capabilities/agentic_search/advanced/chats_api#workspace-settings)) defines the LLM's overall behavior. Beyond basic [guardrails](/capabilities/agentic_search/how_to/configure_guardrails), you can shape response quality with specific instructions.
