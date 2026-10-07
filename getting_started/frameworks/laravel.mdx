@@ -315,7 +315,9 @@ php artisan scout:sync-index-settings
 ```
 
 <Warning>
-Changing an embedder's `source`, `model`, or `documentTemplate` regenerates all embeddings. For large indexes, this can take a long time and incur costs with your embedding provider. Read more about [automatic embedding generation](/capabilities/hybrid_search/overview#automatic-embedding-generation).
+With Option 1, changing an embedder's `source`, `model`, or `documentTemplate` may make Meilisearch regenerate the embeddings of all documents. For large indexes, this can take a long time and incur costs with your embedding provider. Read more about [automatic embedding generation](/capabilities/hybrid_search/overview#automatic-embedding-generation).
+
+With Option 2, Meilisearch never regenerates embeddings. If you change the AI provider, model, or `toSearchableEmbedding` output, [re-import your records](#importing-your-data) so Scout generates new embeddings.
 </Warning>
 
 ## Importing your data
@@ -324,9 +326,10 @@ New and updated records are synced to Meilisearch automatically. To import recor
 
 ```sh
 php artisan scout:import "App\Models\Contact"
+php artisan scout:import "App\Models\Article"
 ```
 
-If you configured embedders, importing also sends your documents to be embedded. For Option 2, Scout generates the embeddings. For Option 1, Meilisearch generates them.
+If you configured embedders, importing also embeds your documents. With Option 1, Meilisearch generates the embeddings. With Option 2, Scout generates them. You must import the `Article` records before running the [semantic and hybrid search](#semantic-search) examples below.
 
 <Tip>
 For large datasets, [configure a queue](https://laravel.com/docs/13.x/scout#queueing) so Scout syncs records in the background. Meilisearch always indexes documents asynchronously, so new records may take a moment to appear in search results.
