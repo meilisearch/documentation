@@ -1,0 +1,783 @@
+---
+openapi: 3.0.1
+info:
+  title: Meilisearch Cloud API V2
+  version: v2
+paths:
+  "/api/v2/me":
+    get:
+      summary: Retrieves the authenticated user identity
+      tags:
+      - Me
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: current user identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                required:
+                - name
+                - email
+        '401':
+          description: unauthorized
+  "/api/v2/meilisearch-versions":
+    get:
+      summary: Lists the active Meilisearch versions
+      tags:
+      - Meilisearch Versions
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: meilisearch versions list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/MeilisearchVersion"
+        '401':
+          description: unauthorized
+  "/api/v2/organizations":
+    get:
+      summary: Lists organizations the authenticated user can access
+      tags:
+      - Organizations
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: organizations list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Organization"
+        '401':
+          description: unauthorized
+  "/api/v2/organizations/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves an organization
+      tags:
+      - Organizations
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: organization found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '403':
+          description: organization not accessible
+    patch:
+      summary: Updates an organization
+      tags:
+      - Organizations
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: organization updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '403':
+          description: not the organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+    delete:
+      summary: Deletes an organization
+      tags:
+      - Organizations
+      security:
+      - personal_access_token: []
+      responses:
+        '204':
+          description: organization deleted
+        '422':
+          description: organization still has active projects
+        '403':
+          description: not the organization owner
+  "/api/v2/projects/{projectId}/version":
+    parameters:
+    - name: projectId
+      in: path
+      required: true
+      schema:
+        type: integer
+    patch:
+      summary: Upgrades the Meilisearch version of a project
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '202':
+          description: version upgrade started
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: unauthorized
+        '403':
+          description: project not accessible
+        '422':
+          description: already running this version
+        '423':
+          description: manual update disabled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - version
+              properties:
+                version:
+                  type: string
+                  example: v1.54.0
+  "/api/v2/projects":
+    get:
+      summary: Lists the projects of the accessible teams
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      parameters:
+      - name: teamId
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: projects list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Project"
+        '401':
+          description: unauthorized
+    post:
+      summary: Creates a project in a team
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: project created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '403':
+          description: team not accessible
+        '422':
+          description: invalid project attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                project:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    teamId:
+                      type: integer
+                    resourceId:
+                      type: integer
+  "/api/v2/projects/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves a project
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: project found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '403':
+          description: project not accessible
+    patch:
+      summary: Updates a project
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: project updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '403':
+          description: project not accessible
+        '422':
+          description: invalid project attributes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                project:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+    delete:
+      summary: Deletes a project
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      responses:
+        '204':
+          description: project deleted
+        '403':
+          description: project not accessible
+  "/api/v2/regions":
+    get:
+      summary: Lists the active regions
+      tags:
+      - Regions
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: regions list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Region"
+        '401':
+          description: unauthorized
+  "/api/v2/resources":
+    get:
+      summary: Lists the active resources and their plan pricing
+      tags:
+      - Resources
+      security:
+      - personal_access_token: []
+      parameters:
+      - name: regionId
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: resources list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Resource"
+        '401':
+          description: unauthorized
+  "/api/v2/team-members":
+    get:
+      summary: Lists the members and pending invitees of a team
+      tags:
+      - Team Members
+      security:
+      - personal_access_token: []
+      parameters:
+      - name: teamId
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: team members list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/TeamMember"
+        '403':
+          description: team not accessible
+    post:
+      summary: Invites a member to a team
+      tags:
+      - Team Members
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: member invited
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TeamMember"
+        '422':
+          description: email is already a member
+        '403':
+          description: not the team or organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teamId:
+                  type: integer
+                email:
+                  type: string
+    delete:
+      summary: Removes a member from a team
+      tags:
+      - Team Members
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '204':
+          description: member removed
+        '422':
+          description: owner cannot be removed
+        '403':
+          description: not the team or organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teamId:
+                  type: integer
+                email:
+                  type: string
+  "/api/v2/teams":
+    get:
+      summary: Lists teams the authenticated user can access
+      tags:
+      - Teams
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: teams list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Team"
+        '401':
+          description: unauthorized
+    post:
+      summary: Creates a team
+      tags:
+      - Teams
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '201':
+          description: team created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '403':
+          description: not the organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    organizationId:
+                      type: integer
+                  required:
+                  - organizationId
+              required:
+              - team
+  "/api/v2/teams/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieves a team
+      tags:
+      - Teams
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: team found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '403':
+          description: team not accessible
+    patch:
+      summary: Updates a team
+      tags:
+      - Teams
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '200':
+          description: team updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '422':
+          description: new owner is not a team member
+        '403':
+          description: not the team or organization owner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                team:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    ownerId:
+                      type: string
+                      description: New owner's uuid, must already be a team member
+    delete:
+      summary: Deletes a team
+      tags:
+      - Teams
+      security:
+      - personal_access_token: []
+      responses:
+        '204':
+          description: team deleted
+        '422':
+          description: team still has active projects
+        '403':
+          description: not the team or organization owner
+components:
+  securitySchemes:
+    personal_access_token:
+      type: http
+      scheme: bearer
+      description: Personal Access Token (PAT), authenticates as the token's owning
+        user.
+  schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        identifier:
+          type: string
+        ownerId:
+          type: string
+        isAdmin:
+          type: boolean
+        defaultTeamId:
+          type: integer
+          nullable: true
+        customerTier:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - identifier
+      - ownerId
+      - isAdmin
+      - defaultTeamId
+      - customerTier
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        organizationId:
+          type: integer
+        ownerId:
+          type: string
+        isAdmin:
+          type: boolean
+      required:
+      - id
+      - name
+      - organizationId
+      - ownerId
+      - isAdmin
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        email:
+          type: string
+        name:
+          type: string
+          nullable: true
+        isOwner:
+          type: boolean
+          nullable: true
+        status:
+          type: string
+          enum:
+          - accepted
+          - invited
+        invitedAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - email
+      - status
+    PlanFeature:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        kind:
+          type: string
+        enabled:
+          type: boolean
+        nickname:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        productName:
+          type: string
+          nullable: true
+        unitPrice:
+          type: number
+          nullable: true
+        monthlyEstimation:
+          type: number
+          nullable: true
+      required:
+      - name
+      - kind
+      - enabled
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        features:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PlanFeature"
+      required:
+      - id
+      - name
+      - code
+      - features
+    Resource:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        plan:
+          type: string
+        regionId:
+          type: integer
+        storage:
+          type: number
+          nullable: true
+        memory:
+          type: number
+          nullable: true
+        vcpu:
+          type: number
+          nullable: true
+        fullPlan:
+          nullable: true
+          allOf:
+          - "$ref": "#/components/schemas/Plan"
+      required:
+      - id
+      - name
+      - plan
+      - regionId
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        awsRegion:
+          type: string
+        countryCode:
+          type: string
+        greenLabel:
+          type: boolean
+      required:
+      - id
+      - name
+      - awsRegion
+      - countryCode
+    MeilisearchVersion:
+      type: object
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+        latest:
+          type: boolean
+      required:
+      - name
+      - tag
+      - latest
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        projectUid:
+          type: string
+        url:
+          type: string
+          nullable: true
+        apikey:
+          type: string
+        teamId:
+          type: integer
+        resourceId:
+          type: integer
+        msVersion:
+          type: string
+        workloadType:
+          type: string
+          enum:
+          - production
+          - dev
+        readOnly:
+          type: boolean
+        status:
+          type: string
+        paused:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        terminatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        freeTrialEndsAt:
+          type: string
+          format: date-time
+          nullable: true
+        resource:
+          "$ref": "#/components/schemas/Resource"
+      required:
+      - id
+      - name
+      - projectUid
+      - apikey
+      - teamId
+      - resourceId
+      - msVersion
+      - workloadType
+      - readOnly
+      - status
+      - paused
+      - createdAt
+      - resource
+security:
+- personal_access_token: []
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: api.meilisearch.com
