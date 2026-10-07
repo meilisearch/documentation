@@ -79,6 +79,8 @@ The server's instructions tell agents to call `listIndexes`, then `describeIndex
 `describeIndex` only returns sample documents. It does not return an index's settings or configured embedders.
 </Note>
 
+To access these tools with an app built with the Vercel AI SDK, see [using Meilisearch MCP with the AI SDK](/getting_started/integrations/ai_sdk#use-meilisearch-mcp).
+
 ## Limitations
 
 This MCP server only exposes search-related tools. It cannot create or delete indexes, add or edit documents, change index settings, manage API keys, or check tasks or instance health. Use the Meilisearch API or the Cloud UI for anything beyond search.
@@ -95,5 +97,5 @@ If your MCP client can't connect or calls fail:
 
 ## Legacy `meilisearch-mcp` server
 
-The [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) Python package is as a local stdio process alongside desktop clients like Claude Desktop. It is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained.
+The [`meilisearch-mcp`](https://github.com/meilisearch/meilisearch-mcp) Python package runs as a local stdio process alongside desktop clients like Claude Desktop. It is deprecated in favor of the built-in `/mcp` route described on this page, and it is no longer actively maintained.
 
