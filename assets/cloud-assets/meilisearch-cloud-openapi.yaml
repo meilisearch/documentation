@@ -28,7 +28,7 @@ paths:
                 - email
         '401':
           description: unauthorized
-  "/api/v2/meilisearch_versions":
+  "/api/v2/meilisearch-versions":
     get:
       summary: Lists the active Meilisearch versions
       tags:
@@ -126,6 +126,46 @@ paths:
           description: organization still has active projects
         '403':
           description: not the organization owner
+  "/api/v2/projects/{projectId}/version":
+    parameters:
+    - name: projectId
+      in: path
+      required: true
+      schema:
+        type: integer
+    patch:
+      summary: Upgrades the Meilisearch version of a project
+      tags:
+      - Projects
+      security:
+      - personal_access_token: []
+      parameters: []
+      responses:
+        '202':
+          description: version upgrade started
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: unauthorized
+        '403':
+          description: project not accessible
+        '422':
+          description: already running this version
+        '423':
+          description: manual update disabled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - version
+              properties:
+                version:
+                  type: string
+                  example: v1.54.0
   "/api/v2/projects":
     get:
       summary: Lists the projects of the accessible teams
@@ -134,7 +174,7 @@ paths:
       security:
       - personal_access_token: []
       parameters:
-      - name: team_id
+      - name: teamId
         in: query
         required: false
         schema:
@@ -181,9 +221,9 @@ paths:
                   properties:
                     name:
                       type: string
-                    team_id:
+                    teamId:
                       type: integer
-                    resource_id:
+                    resourceId:
                       type: integer
   "/api/v2/projects/{id}":
     parameters:
@@ -275,7 +315,7 @@ paths:
       security:
       - personal_access_token: []
       parameters:
-      - name: region_id
+      - name: regionId
         in: query
         required: false
         schema:
@@ -291,7 +331,7 @@ paths:
                   "$ref": "#/components/schemas/Resource"
         '401':
           description: unauthorized
-  "/api/v2/team_members":
+  "/api/v2/team-members":
     get:
       summary: Lists the members and pending invitees of a team
       tags:
@@ -299,7 +339,7 @@ paths:
       security:
       - personal_access_token: []
       parameters:
-      - name: team_id
+      - name: teamId
         in: query
         schema:
           type: integer
@@ -338,7 +378,7 @@ paths:
             schema:
               type: object
               properties:
-                team_id:
+                teamId:
                   type: integer
                 email:
                   type: string
@@ -362,7 +402,7 @@ paths:
             schema:
               type: object
               properties:
-                team_id:
+                teamId:
                   type: integer
                 email:
                   type: string
@@ -411,10 +451,10 @@ paths:
                   properties:
                     name:
                       type: string
-                    organization_id:
+                    organizationId:
                       type: integer
                   required:
-                  - organization_id
+                  - organizationId
               required:
               - team
   "/api/v2/teams/{id}":
@@ -468,7 +508,7 @@ paths:
                   properties:
                     name:
                       type: string
-                    owner_id:
+                    ownerId:
                       type: string
                       description: New owner's uuid, must already be a team member
     delete:
@@ -501,24 +541,24 @@ components:
           type: string
         identifier:
           type: string
-        owner_id:
+        ownerId:
           type: string
-        is_admin:
+        isAdmin:
           type: boolean
-        default_team_id:
+        defaultTeamId:
           type: integer
           nullable: true
-        customer_tier:
+        customerTier:
           type: string
           nullable: true
       required:
       - id
       - name
       - identifier
-      - owner_id
-      - is_admin
-      - default_team_id
-      - customer_tier
+      - ownerId
+      - isAdmin
+      - defaultTeamId
+      - customerTier
     Team:
       type: object
       properties:
@@ -526,18 +566,18 @@ components:
           type: integer
         name:
           type: string
-        organization_id:
+        organizationId:
           type: integer
-        owner_id:
+        ownerId:
           type: string
-        is_admin:
+        isAdmin:
           type: boolean
       required:
       - id
       - name
-      - organization_id
-      - owner_id
-      - is_admin
+      - organizationId
+      - ownerId
+      - isAdmin
     TeamMember:
       type: object
       properties:
@@ -549,7 +589,7 @@ components:
         name:
           type: string
           nullable: true
-        is_owner:
+        isOwner:
           type: boolean
           nullable: true
         status:
@@ -557,7 +597,7 @@ components:
           enum:
           - accepted
           - invited
-        invited_at:
+        invitedAt:
           type: string
           format: date-time
           nullable: true
@@ -582,13 +622,13 @@ components:
         description:
           type: string
           nullable: true
-        product_name:
+        productName:
           type: string
           nullable: true
-        unit_price:
+        unitPrice:
           type: number
           nullable: true
-        monthly_estimation:
+        monthlyEstimation:
           type: number
           nullable: true
       required:
@@ -620,12 +660,12 @@ components:
           type: integer
         name:
           type: string
-        display_name:
+        displayName:
           type: string
           nullable: true
         plan:
           type: string
-        region_id:
+        regionId:
           type: integer
         storage:
           type: number
@@ -636,7 +676,7 @@ components:
         vcpu:
           type: number
           nullable: true
-        full_plan:
+        fullPlan:
           nullable: true
           allOf:
           - "$ref": "#/components/schemas/Plan"
@@ -644,7 +684,7 @@ components:
       - id
       - name
       - plan
-      - region_id
+      - regionId
     Region:
       type: object
       properties:
@@ -652,17 +692,17 @@ components:
           type: integer
         name:
           type: string
-        aws_region:
+        awsRegion:
           type: string
-        country_code:
+        countryCode:
           type: string
-        green_label:
+        greenLabel:
           type: boolean
       required:
       - id
       - name
-      - aws_region
-      - country_code
+      - awsRegion
+      - countryCode
     MeilisearchVersion:
       type: object
       properties:
@@ -683,38 +723,38 @@ components:
           type: integer
         name:
           type: string
-        project_uid:
+        projectUid:
           type: string
         url:
           type: string
           nullable: true
         apikey:
           type: string
-        team_id:
+        teamId:
           type: integer
-        resource_id:
+        resourceId:
           type: integer
-        ms_version:
+        msVersion:
           type: string
-        workload_type:
+        workloadType:
           type: string
           enum:
           - production
           - dev
-        read_only:
+        readOnly:
           type: boolean
         status:
           type: string
         paused:
           type: boolean
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        terminated_at:
+        terminatedAt:
           type: string
           format: date-time
           nullable: true
-        free_trial_ends_at:
+        freeTrialEndsAt:
           type: string
           format: date-time
           nullable: true
@@ -723,16 +763,16 @@ components:
       required:
       - id
       - name
-      - project_uid
+      - projectUid
       - apikey
-      - team_id
-      - resource_id
-      - ms_version
-      - workload_type
-      - read_only
+      - teamId
+      - resourceId
+      - msVersion
+      - workloadType
+      - readOnly
       - status
       - paused
-      - created_at
+      - createdAt
       - resource
 security:
 - personal_access_token: []
