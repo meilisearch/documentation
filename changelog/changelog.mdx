@@ -4,6 +4,109 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.55" description="2026-10-12">
+
+## New Features
+
+### Preview the effect of a dynamic search rule
+
+You can now apply an inline-specified dynamic search rule to a search query without saving it permanently. This lets you test how a rule would affect search results before deploying it.
+
+The `POST /indexes/{:indexUid}/search` and `POST /multi-search` endpoints now accept an optional `inlineRule` parameter in the search query object. When provided, Meilisearch will apply the rule's actions to that specific search as if it had been saved.
+
+When you include the `Meili-Include-Metadata: true` header, the response's `metadata` will show whether the inline rule's conditions were satisfied and why (if not).
+
+**Note:** This feature requires Meilisearch Enterprise Edition and the `dynamicSearchRules` experimental feature.
+
+**Example: Apply a user-specific rule to boost Batman movies**
+
+```json
+{
+  "q": "super hero",
+  "inlineRule": {
+    "uid": "user-likes-batman",
+    "actions": {
+      "scale": [
+        {
+          "filter": "hero = batman AND release_time = fresh",
+          "weight": 1.2
+        }
+      ]
+    }
+  }
+}
+```
+
+**Example: Compare search results with and without a rule**
+
+```json
+{
+  "queries": [
+    {
+      "q": "fashion",
+      "filter": "color = blue AND category = shirt"
+    },
+    {
+      "q": "fashion",
+      "filter": "color = blue AND category = shirt",
+      "inlineRule": {
+        "uid": "special-sales",
+        "conditions": {
+          "query": {
+            "words": "pants"
+          },
+          "filter": {
+            "values": {
+              "color": "yellow",
+              "stock_intent": "destock"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## Improvements
+
+### Better performance tracking for facet distribution
+
+The `performanceDetails` in search responses now includes timing information for facet distribution computation. When you set `showPerformanceDetails` to `true`, you'll see separate entries for:
+- `compute facet distribution`: Time spent computing facet counts
+- `compute facet stats`: Time spent computing facet statistics
+- `facet distribution`: Total time for all facet-related operations
+
+This helps you identify whether facet computation is affecting your search performance.
+
+**Example response with facet performance details**
+
+```json
+{
+  "performanceDetails": {
+    "process > execute local > facet distribution > compute facet distribution": "315.75µs",
+    "process > execute local > facet distribution > compute facet stats": "27.71µs",
+    "process > execute local > facet distribution": "432.62µs"
+  }
+}
+```
+
+## Other
+
+### Fixed ranking score threshold performance
+
+Meilisearch now stops searching immediately after finding the first document below the `rankingScoreThreshold`, rather than continuing to evaluate additional documents. This significantly improves search performance when using this parameter.
+
+**Note:** This fix may change result ordering in some cases, as allowed by our compatibility policy.
+
+### Breaking change: Binary quantization cannot be disabled
+
+If your embedder is configured with binary quantization, you can no longer disable it by passing `binaryQuantization: null` in an embedder settings update. Doing so now returns an error. Binary quantization is permanent for an index because the exact embedding values cannot be recovered after quantization.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.55.0)
+
+</Update>
+
 <Update label="v1.54" description="2026-09-21">
 
 ## New Features
