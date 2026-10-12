@@ -823,7 +823,7 @@
                   ]
                 },
                 {
-                  "group": "Template",
+                  "group": "Render templates",
                   "pages": [
                     "POST /render-template"
                   ]
