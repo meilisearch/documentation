@@ -6,7 +6,7 @@ import * as path from "path";
 const GITHUB_OWNER = "meilisearch";
 const GITHUB_REPO = "meilisearch";
 
-const octokit = new Octokit();
+const octokit = new Octokit({ auth: process.env.GH_TOKEN || process.env.GITHUB_TOKEN || process.env.GITHUB_PAT });
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);

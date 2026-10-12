@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import yaml from 'js-yaml';
+import { load as yamlLoad } from 'js-yaml';
+const yaml = { load: yamlLoad };
 import fetch from 'node-fetch';
 
 const SDK = [

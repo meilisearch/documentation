@@ -4,6 +4,46 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.55" description="2026-10-12">
+
+## Improvements
+
+### Preview dynamic search rules inline
+
+Search and multi-search requests now accept an optional `inlineRule` object. Meilisearch applies the rule to the query as if it had been sent to `PATCH /dynamicSearchRule/{:uid}`, letting you preview how a rule affects results before publishing it.
+
+When combined with the `Meili-Include-Metadata: true` header, the response includes metadata indicating whether the rule's conditions were met and, if not, why.
+
+This feature requires Meilisearch Enterprise Edition and the `dynamicSearchRules` experimental feature.
+
+### Facet distribution breakdown in performance details
+
+When `showPerformanceDetails` is enabled, the performance report now includes three dedicated trace entries for facet computation:
+
+- Computing the facet distribution
+- Computing facet stats
+- The overall facet distribution step
+
+This makes it easier to identify facet-related performance bottlenecks.
+
+## Fixes
+
+### Formatting panic with raw Unicode codepoints
+
+Documents containing raw Unicode codepoints no longer cause a panic during highlight formatting when certain segmenters are used.
+
+### Ranking score threshold performance improvement
+
+Searches using `rankingScoreThreshold` now stop processing after the first document that scores below the threshold, improving performance for queries with strict score requirements.
+
+### Disabling binary quantization now returns an error
+
+Passing `binaryQuantization: null` in an embedder settings update now returns an explicit error. Previously this would silently corrupt stored embeddings.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.55.0)
+
+</Update>
+
 <Update label="v1.54" description="2026-09-21">
 
 ## New Features
