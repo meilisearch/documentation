@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.54.3"
+    "version": "1.55.0"
   },
   "servers": [
     {
@@ -3816,7 +3816,7 @@
           {
             "name": "rankingScoreThreshold",
             "in": "query",
-            "description": "Exclude from the results any document whose [ranking score](https://www.meilisearch.com/docs/learn/relevancy/ranking_score) is below this value (between 0.0 and 1.0).\n\nExcluded hits do not count toward `estimatedTotalHits`, `totalHits`, or facet distribution.\n\nWhen used together with `page` and `hitsPerPage`, this parameter may reduce performance because Meilisearch must score all matching documents.",
+            "description": "Stop the search at the first document whose [ranking score](https://www.meilisearch.com/docs/learn/relevancy/ranking_score) is below this value (between 0.0 and 1.0).\nAll the documents after this document are excluded from the hits.\n\nExcluded hits do not count toward `estimatedTotalHits`, `totalHits`, or facet distribution.\n\nWhen used together with `page` and `hitsPerPage`, this parameter may reduce performance because Meilisearch must score all matching documents.",
             "required": false,
             "schema": {
               "type": "number",
@@ -10973,10 +10973,10 @@
     "/mcp": {
       "post": {
         "tags": [
-          "MCP connection"
+          "MCP"
         ],
         "summary": "Model context protocol (MCP)",
-        "description": "The `/mcp` route exposes [the MCP open protocol](https://modelcontextprotocol.io) that enables seamless integration between LLM\napplications and external data sources and tools.",
+        "description": "The `/mcp` route exposes an [MCP server](https://www.meilisearch.com/docs/getting_started/integrations/mcp) for\nLLM applications to search Meilisearch.",
         "operationId": "mcp",
         "requestBody": {
           "content": {
@@ -11364,7 +11364,7 @@
     "/render-template": {
       "post": {
         "tags": [
-          "Template"
+          "Render templates"
         ],
         "summary": "Render template",
         "description": "Render a template, either fetched from the settings of an index (embedder document template,\nchat document template, indexing or search fragment) or provided inline, by injecting the\ngiven input (a document from an index, an inline document, or a search query).\n\nReturns the template and the rendered result, allowing to preview how Meilisearch renders\ntemplates without indexing any document.\n\nThis route is only available when the `renderRoute` [experimental feature](https://www.meilisearch.com/docs/resources/help/experimental_features_overview) is enabled.",
@@ -15318,6 +15318,35 @@
           }
         }
       },
+      "ConditionOutcomes": {
+        "type": "object",
+        "description": "Outcome of applying conditions to a query.",
+        "required": [
+          "satisfiesActiveCondition"
+        ],
+        "properties": {
+          "satisfiesActiveCondition": {
+            "type": "boolean",
+            "description": "Whether the rule was active"
+          },
+          "satisfiesTimeCondition": {
+            "$ref": "#/components/schemas/TimeConditionOutcome",
+            "description": "Whether the current time falls in the range of time specified by the condition"
+          },
+          "satisfiesQueryEmptyCondition": {
+            "$ref": "#/components/schemas/QueryEmptyConditionOutcome",
+            "description": "Whether the query emptiness condition aligns with the actual query"
+          },
+          "satisfiesQueryWordsCondition": {
+            "$ref": "#/components/schemas/QueryWordsConditionOutcome",
+            "description": "Whether the query words meet the condition"
+          },
+          "satisfiesFilterCondition": {
+            "$ref": "#/components/schemas/FilterConditionOutcome",
+            "description": "Whether the filter meets the condition"
+          }
+        }
+      },
       "Conditions": {
         "type": "object",
         "properties": {
@@ -16811,6 +16840,7 @@
                   "object",
                   "null"
                 ],
+                "description": "List of vectors per query, if `retrieveVectors` is set to `true`",
                 "additionalProperties": {
                   "$ref": "#/components/schemas/Vec"
                 },
@@ -17160,6 +17190,98 @@
             }
           }
         }
+      },
+      "FilterConditionOutcome": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The filter satifies all constraints in the condition",
+            "enum": [
+              "satisfied"
+            ]
+          },
+          {
+            "type": "string",
+            "description": "No filter condition",
+            "enum": [
+              "noConstraint"
+            ]
+          },
+          {
+            "type": "object",
+            "description": "At least one field from the condition is missing from the filter",
+            "required": [
+              "missingConstraintOnField"
+            ],
+            "properties": {
+              "missingConstraintOnField": {
+                "type": "object",
+                "description": "At least one field from the condition is missing from the filter",
+                "required": [
+                  "field"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Missing field in filter"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "At least one field has a condition not met in the filter",
+            "required": [
+              "unmetConstraintOnField"
+            ],
+            "properties": {
+              "unmetConstraintOnField": {
+                "type": "object",
+                "description": "At least one field has a condition not met in the filter",
+                "required": [
+                  "field"
+                ],
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "description": "Field with unmet constraint in filter"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "description": "The filter does not constraint enough field to satisfy the condition",
+            "required": [
+              "notEnoughFields"
+            ],
+            "properties": {
+              "notEnoughFields": {
+                "type": "object",
+                "description": "The filter does not constraint enough field to satisfy the condition",
+                "required": [
+                  "fieldCountInFilter",
+                  "fieldCountInCondition"
+                ],
+                "properties": {
+                  "fieldCountInFilter": {
+                    "type": "integer",
+                    "description": "Number of fields in the filter",
+                    "minimum": 0
+                  },
+                  "fieldCountInCondition": {
+                    "type": "integer",
+                    "description": "Number of fields in the condition",
+                    "minimum": 0
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Outcome of the filter condition"
       },
       "FilterFeatures": {
         "type": "object",
@@ -17658,6 +17780,43 @@
             "description": "[Primary key](https://www.meilisearch.com/docs/learn/getting_started/primary_key) of the index"
           }
         }
+      },
+      "InlineDynamicSearchRule": {
+        "type": "object",
+        "required": [
+          "uid"
+        ],
+        "properties": {
+          "uid": {
+            "$ref": "#/components/schemas/IndexUid"
+          },
+          "precedence": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "u-int64",
+            "minimum": 0
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "conditions": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Conditions"
+              }
+            ]
+          },
+          "actions": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/RuleActions"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
       },
       "InputAudio": {
         "type": "object",
@@ -19298,6 +19457,57 @@
           }
         }
       },
+      "QueryEmptyConditionOutcome": {
+        "type": "string",
+        "description": "Outcome of the query empty condition",
+        "enum": [
+          "satisfied",
+          "noConstraint",
+          "queryNotEmpty",
+          "queryEmpty"
+        ]
+      },
+      "QueryWordsConditionOutcome": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "The query contains all the words of the condition",
+            "enum": [
+              "satisfied"
+            ]
+          },
+          {
+            "type": "string",
+            "description": "No query words condition",
+            "enum": [
+              "noConstraint"
+            ]
+          },
+          {
+            "type": "object",
+            "description": "At least the specified word is missing in the query",
+            "required": [
+              "missingWord"
+            ],
+            "properties": {
+              "missingWord": {
+                "type": "object",
+                "description": "At least the specified word is missing in the query",
+                "required": [
+                  "word"
+                ],
+                "properties": {
+                  "word": {
+                    "type": "string",
+                    "description": "Missing word in query"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "description": "Outcome of the query words condition"
+      },
       "RankingRuleView": {
         "oneOf": [
           {
@@ -19986,6 +20196,17 @@
               "null"
             ],
             "description": "Remote that processed the query (federated search only)."
+          },
+          "inlineRuleConditionOutcomes": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ConditionOutcomes",
+                "description": "Outcome of checking the conditions of the dynamic search rule passed in `inlineRule`.\n\nOnly present in response if `inlineRule` was set in query."
+              }
+            ]
           }
         }
       },
@@ -20139,7 +20360,7 @@
               "null"
             ],
             "format": "double",
-            "description": "Exclude from the results any document whose [ranking score](https://www.meilisearch.com/docs/learn/relevancy/ranking_score) is below this value (between 0.0 and 1.0).\n\nExcluded hits do not count toward `estimatedTotalHits`, `totalHits`, or facet distribution.\n\nWhen used together with `page` and `hitsPerPage`, this parameter may reduce performance because Meilisearch must score all matching documents."
+            "description": "Stop the search at the first document whose [ranking score](https://www.meilisearch.com/docs/learn/relevancy/ranking_score) is below this value (between 0.0 and 1.0).\nAll the documents after this document are excluded from the hits.\n\nExcluded hits do not count toward `estimatedTotalHits`, `totalHits`, or facet distribution.\n\nWhen used together with `page` and `hitsPerPage`, this parameter may reduce performance because Meilisearch must score all matching documents."
           },
           "locales": {
             "type": [
@@ -20209,6 +20430,17 @@
           "showPerformanceDetails": {
             "type": "boolean",
             "description": "When true, the response includes a `performanceDetails` object with a timing breakdown of the query processing."
+          },
+          "inlineRule": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/InlineDynamicSearchRule",
+                "description": "An inline [search rule](/capabilities/search_rules/overview) to apply to this query.\n\n- Requires the `dynamicSearchRule` experimental feature\n- Inline rules require the Enterprise Edition of Meilisearch."
+              }
+            ]
           }
         }
       },
@@ -20370,7 +20602,7 @@
               "null"
             ],
             "format": "double",
-            "description": "Exclude results below the specified ranking score"
+            "description": "Stop the search at the first document whose [ranking score](https://www.meilisearch.com/docs/learn/relevancy/ranking_score) is below this value (between 0.0 and 1.0).\nAll the documents after this document are excluded from the hits.\n\nExcluded hits do not count toward `estimatedTotalHits`, `totalHits`, or facet distribution.\n\nWhen used together with `page` and `hitsPerPage`, this parameter may reduce performance because Meilisearch must score all matching documents."
           },
           "locales": {
             "type": [
@@ -20452,6 +20684,17 @@
               {
                 "$ref": "#/components/schemas/FederationOptions",
                 "description": "Federation options for multi-index search"
+              }
+            ]
+          },
+          "inlineRule": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/InlineDynamicSearchRule",
+                "description": "An inline [search rule](/capabilities/search_rules/overview) to apply to this query.\n\n- Requires the `dynamicSearchRule` experimental feature\n- Inline rules require the Enterprise Edition of Meilisearch."
               }
             ]
           }
@@ -22101,6 +22344,16 @@
           }
         }
       },
+      "TimeConditionOutcome": {
+        "type": "string",
+        "description": "Outcome of the time condition",
+        "enum": [
+          "satisfied",
+          "noConstraint",
+          "tooEarly",
+          "tooLate"
+        ]
+      },
       "TopLogprobs": {
         "type": "object",
         "description": "A most likely token and its log probability at a given position.",
@@ -22390,14 +22643,6 @@
       "description": "Model Context Protocol (MCP) is an open protocol that enables seamless integration between LLM applications and external data sources and tools."
     },
     {
-      "name": "Tasks",
-      "description": "The tasks route gives information about the progress of the [asynchronous operations](https://docs.meilisearch.com/learn/advanced/asynchronous_operations.html)."
-    },
-    {
-      "name": "Batches",
-      "description": "Meilisearch groups compatible tasks ([asynchronous operations](https://www.meilisearch.com/docs/learn/async/asynchronous_operations)) into batches for efficient processing. For example, multiple document additions to the same index may be batched together. The /batches routes give information about the progress of these batches and let you monitor batch progress and performance."
-    },
-    {
       "name": "Indexes",
       "description": "An index is an entity that gathers a set of [documents](https://www.meilisearch.com/docs/learn/getting_started/documents) with its own [settings](https://www.meilisearch.com/docs/reference/api/settings). Learn more about indexes."
     },
@@ -22440,10 +22685,6 @@
     {
       "name": "Experimental features",
       "description": "The `/experimental-features` route allows you to activate or deactivate some of Meilisearch's experimental features.\n\nThis route is **synchronous**. This means that no task object will be returned, and any activated or deactivated features will be made available or unavailable immediately."
-    },
-    {
-      "name": "Network",
-      "description": "The `/network` route allows you to describe the topology of a network of Meilisearch instances.\n\nThis route is **synchronous**. This means that no task object will be returned, and any change to the network will be made available immediately."
     },
     {
       "name": "Webhooks",
