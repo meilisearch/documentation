@@ -15,7 +15,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import yaml from "js-yaml";
+import { load as yamlLoad } from "js-yaml";
+const yaml = { load: yamlLoad };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");

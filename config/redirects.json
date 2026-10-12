@@ -4702,5 +4702,13 @@
   {
     "source": "/capabilities/conversational_search/advanced/chats_api",
     "destination": "/capabilities/agentic_search/advanced/chats_api"
+  },
+  {
+    "source": "/reference/api/mcp-connection/:path*",
+    "destination": "/reference/api/mcp/:path*"
+  },
+  {
+    "source": "/reference/api/template/:path*",
+    "destination": "/reference/api/render-templates/:path*"
   }
 ]
