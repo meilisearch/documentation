@@ -125,6 +125,153 @@ paths:
           description: not the organization owner
         '422':
           description: organization still has active projects
+  /api/v2/projects/{projectId}/cost:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        required: false
+        description: First UTC day of the window, inclusive. Defaults to the first day of the current month.
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        required: false
+        description: Last UTC day of the window, inclusive. Defaults to today. The window can not exceed 93 days.
+    get:
+      summary: Returns the estimated cost of a project usage
+      tags:
+        - Projects
+      description: 'Gross estimation of the cost of the project usage over the window: quantity × unit price of the project plan, before free tiers shared across the organization, discounts and taxes. The window is the same as the usage one.'
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: project estimated cost
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCost'
+        '401':
+          description: unauthorized
+        '403':
+          description: project not accessible
+        '422':
+          description: 'invalid window: from after to, larger than 93 days or not an ISO 8601 date'
+  /api/v2/projects/{projectId}/master-key:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: integer
+    patch:
+      summary: Rotates the master key of a project
+      tags:
+        - Projects
+      description: Generates a new master key and restarts the instance to apply it. The previous master key and every API key derived from it stop working.
+      security:
+        - personal_access_token: []
+      responses:
+        '202':
+          description: master key rotated, instance restarting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          description: unauthorized
+        '403':
+          description: not a team or organization owner
+        '423':
+          description: project not running
+  /api/v2/projects/{projectId}/plan:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: integer
+    patch:
+      summary: Changes the plan (resource) of a project
+      tags:
+        - Projects
+      security:
+        - personal_access_token: []
+      parameters: []
+      responses:
+        '202':
+          description: plan change started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          description: unauthorized
+        '403':
+          description: organization not self-serve
+        '422':
+          description: project in failed state
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - resourceId
+              properties:
+                resourceId:
+                  type: integer
+                  example: 12
+  /api/v2/projects/{projectId}/usage:
+    parameters:
+      - name: projectId
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+        required: false
+        description: First UTC day of the window, inclusive. Defaults to the first day of the current month.
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+        required: false
+        description: Last UTC day of the window, inclusive. Defaults to today. The window can not exceed 93 days.
+    get:
+      summary: Returns the daily usage of a project
+      tags:
+        - Projects
+      description: Usage per UTC day. The window is clamped to the project lifetime, terminated projects included.
+      security:
+        - personal_access_token: []
+      responses:
+        '200':
+          description: project usage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUsage'
+        '401':
+          description: unauthorized
+        '403':
+          description: project not accessible
+        '422':
+          description: 'invalid window: from after to, larger than 93 days or not an ISO 8601 date'
   /api/v2/projects/{projectId}/version:
     parameters:
       - name: projectId
@@ -213,17 +360,18 @@ paths:
             schema:
               type: object
               required:
-                - project
+                - name
+                - teamId
+                - resourceId
               properties:
-                project:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    teamId:
-                      type: integer
-                    resourceId:
-                      type: integer
+                name:
+                  type: string
+                teamId:
+                  type: integer
+                resourceId:
+                  type: integer
+                msVersion:
+                  type: string
   /api/v2/projects/{id}:
     parameters:
       - name: id
@@ -629,6 +777,18 @@ components:
         monthlyEstimation:
           type: number
           nullable: true
+        transformQuantity:
+          type: object
+          nullable: true
+          description: 'Billed per package of units: the quantity is divided by `divideBy` before applying `unitPrice`.'
+          properties:
+            divideBy:
+              type: integer
+            round:
+              type: string
+              enum:
+                - up
+                - down
       required:
         - name
         - kind
@@ -726,7 +886,7 @@ components:
         url:
           type: string
           nullable: true
-        apikey:
+        masterKey:
           type: string
         teamId:
           type: integer
@@ -762,7 +922,7 @@ components:
         - id
         - name
         - projectUid
-        - apikey
+        - masterKey
         - teamId
         - resourceId
         - msVersion
@@ -772,6 +932,138 @@ components:
         - paused
         - createdAt
         - resource
+    ProjectUsageDay:
+      type: object
+      description: Usage of a UTC day. A null quantity means nothing was collected that day.
+      properties:
+        date:
+          type: string
+          format: date
+        runtime:
+          type: array
+          description: Hours per machine size (resource), each one having its own hourly price.
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: integer
+              hours:
+                type: number
+            required:
+              - resourceId
+              - hours
+        storageGb:
+          type: integer
+          nullable: true
+          description: Provisioned disk.
+        bandwidthBytes:
+          type: integer
+          nullable: true
+          description: Outbound bandwidth.
+        documents:
+          type: integer
+          nullable: true
+        searches:
+          type: integer
+          nullable: true
+        chatTokens:
+          type: integer
+          nullable: true
+      required:
+        - date
+        - runtime
+        - storageGb
+        - bandwidthBytes
+        - documents
+        - searches
+        - chatTokens
+    ProjectUsage:
+      type: object
+      properties:
+        projectId:
+          type: integer
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectUsageDay'
+      required:
+        - projectId
+        - from
+        - to
+        - days
+    ProjectCostItem:
+      type: object
+      description: A feature the project is billed per usage for. Monthly prices (storage, documents, base fee) are prorated on the hours the project existed.
+      properties:
+        kind:
+          type: string
+          enum:
+            - instance_runtime
+            - storage
+            - bandwidth
+            - document
+            - search
+            - chat_token
+            - base
+        resourceId:
+          type: integer
+          description: Machine size of an instance_runtime item.
+        quantity:
+          type: number
+        unit:
+          type: string
+          enum:
+            - hour
+            - GB-month
+            - MiB
+            - document-month
+            - search
+            - token
+            - month
+        unitPrice:
+          type: number
+        amount:
+          type: number
+          description: quantity × unitPrice
+      required:
+        - kind
+        - quantity
+        - unit
+        - unitPrice
+        - amount
+    ProjectCost:
+      type: object
+      properties:
+        projectId:
+          type: integer
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        currency:
+          type: string
+          example: USD
+        total:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCostItem'
+      required:
+        - projectId
+        - from
+        - to
+        - currency
+        - total
+        - items
 security:
   - personal_access_token: []
 servers:
