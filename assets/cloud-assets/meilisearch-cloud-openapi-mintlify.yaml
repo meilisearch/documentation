@@ -351,7 +351,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         '403':
-          description: team not accessible
+          description: project limit reached
         '422':
           description: invalid project attributes
       requestBody:
