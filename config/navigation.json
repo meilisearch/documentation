@@ -357,7 +357,9 @@
             {
               "group": "Advanced",
               "pages": [
-                "capabilities/search_rules/advanced/pinning_behavior"
+                "capabilities/search_rules/advanced/how_search_rules_work",
+                "capabilities/search_rules/advanced/pinning_behavior",
+                "capabilities/search_rules/advanced/search_rules_pricing"
               ]
             }
           ]
