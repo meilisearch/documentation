@@ -35,15 +35,9 @@ Use these questions when creating or editing documentation:
 - When adding or moving content, **update or add links** from related pages so users can find it.
 - Match the existing **tone and structure** of the docs (see `learn/resources/contributing_docs.mdx` and surrounding files for reference).
 
-### cURL examples in `/learn/` and API reference
+## cURL code samples
 
-When adding a cURL example in `/learn/` or in the **API reference** (`/reference/api`), **do not** write the example as raw code directly in the page. Instead:
-
-1. Add the sample in **`.code-samples.meilisearch.yaml`** (follow the existing format: section comments, key name, and `|-` block with the curl command).
-2. Run the project’s **code-samples generation** so the snippet is produced under `snippets/generated-code-samples/`.
-3. **Import and use** the generated snippet in the MDX page (e.g. `import CodeSamplesXxx1 from '/snippets/generated-code-samples/code_samples_xxx_1.mdx'` and `<CodeSamplesXxx1 />`).
-
-This keeps examples centralized, testable, and consistent across the docs.
+Reach [cURL code samples](.agents/skills/curl-code-samples/SKILL.md) when adding or changing a cURL example on a page, or on an API route.
 
 ## Editorial guidelines
 
