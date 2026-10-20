@@ -5,7 +5,7 @@ description: Editorial guidelines for Meilisearch docs. Use when writing or edit
 
 # Editorial guidelines
 
-Apply these guidelines to documentation you write or edit. A **hard miss** fails the piece. Done when voice, mechanics, names, and claims each hold.
+Apply these guidelines to documentation you write or edit. A **hard miss** fails the piece. Done when voice, mechanics, names, claims, samples, and links each hold.
 
 ## Voice
 
@@ -46,3 +46,11 @@ A claim states its **bound**: the mechanism, and the limit that mechanism has.
 - 99.999% uptime is the contractual SLA on an Enterprise agreement. Attach it to that tier.
 - Rewrite a promised outcome into the mechanism. Scan for: proven, guaranteed, eliminates, ensures, always, zero downtime, bulletproof.
 - How a competitor's product works needs a dated, linkable source on the sentence.
+
+## Samples
+
+A code sample is minimal and runnable, and it shows the concept.
+
+## Links
+
+When a change affects another page, update that page's links.
