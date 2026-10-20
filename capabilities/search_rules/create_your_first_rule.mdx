@@ -1,0 +1,165 @@
+---
+title: Create your first rule
+sidebarTitle: Create your first rule
+description: Turn on search rules and create a rule that pins a document to the top of your search results.
+---
+
+import CodeSamplesSearchRulesGuideEnable1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_enable_1.mdx';
+import CodeSamplesSearchRulesGuideCreateRule1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_create_rule_1.mdx';
+import CodeSamplesSearchRulesGuideGetRule1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_get_rule_1.mdx';
+import CodeSamplesSearchRulesGuideSearch1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_search_1.mdx';
+
+This guide shows you how to turn search rules on and build your first rule: pin one document to the top of your search results.
+
+## Set up from the Meilisearch Cloud dashboard
+
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+
+### Turn on search rules
+
+Click **Enable Search Rules**. Your project can now store rules and apply them at search time.
+
+![Meilisearch Cloud Search rules tab with an "Enable Search Rules" button in the add-on panel](/assets/images/cloud-search-rules/01-activate-addon.png)
+
+### Create a new rule
+
+Click **New rule** to open the rule editor.
+
+![Search rules landing page with a "New rule" button in the top-right corner](/assets/images/cloud-search-rules/02-create-first-rule.png)
+
+### Fill in the general information
+
+| Field | What it does |
+|-------|--------------|
+| **Rule ID** | The unique identifier of the rule. You cannot change it later without recreating the rule |
+| **Description** | A free text note, so your team knows why the rule exists |
+| **Rank** | Decides which rule wins when several rules match the same search. The lowest number wins |
+| **Active** | Turns the rule on and off. Keep it on to apply the rule at search time |
+
+![General block of the rule editor with the Rule ID, Description, Rank, and Active fields](/assets/images/cloud-search-rules/11-general-block.png)
+
+### Choose the action
+
+The **Actions** block decides what the rule does to your results.
+
+{/* TODO: link to the boost, deboost, and hide how-to guides here once they exist. */}
+
+![Add action dialog with the pin, boost, deboost, and hide options](/assets/images/cloud-search-rules/07-add-action.png)
+
+Select **Pin a document**, click **Next**, then fill in the three fields:
+
+- **Index**: the index that holds the document you want to promote. The rule then applies only to searches on this index.
+- **Document**: the document itself, selected by its primary key. Meilisearch promotes this exact document and no other one, even if similar documents exist.
+- **Position**: the rank the document takes in the results. It stays at this rank every time the rule matches, even when it does not match what the user typed.
+
+![Pin a document dialog with an index dropdown, a document selector, and a position input](/assets/images/cloud-search-rules/08-add-pin-action.png)
+
+Click **Add action**.
+
+The **Actions** block now lists your action, with the index it targets, the documents you selected, the filter you used, and how many documents it finally affects. A rule can hold several actions: click **Add action** again to add another one.
+
+![Actions block listing one pin action with its index, document, filter, and affected documents](/assets/images/cloud-search-rules/09-actions-block.png)
+
+### Choose the conditions
+
+The **Conditions** block decides when the rule runs. A search must match every condition for the rule to take effect. With the default values, the rule applies to all searches.
+
+For this first rule, set **Query** to `Empty query` and leave the other conditions as they are.
+
+![Conditions block with the Query list open on the "Empty query" option](/assets/images/cloud-search-rules/10-conditions-block.png)
+
+### Save the rule
+
+The bar at the bottom of the editor recaps what your rule contains.
+
+![Editor footer with the general, condition, and action recap next to the Create rule button](/assets/images/cloud-search-rules/12-create-rule.png)
+
+Click **Create rule**.
+
+Your rule is now live: every time a user opens the search on your index without typing anything, the document you selected appears at the top of the results. All the other results remain organic.
+
+### Review and manage your rules
+
+The Search rules tab lists every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
+
+![Search rules list with one rule showing its conditions, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/13-rules-list.png)
+
+Rule changes are applied asynchronously, so a rule you just created, updated, or deleted can take a moment to appear in the list.
+
+## Set up on a self-hosted instance
+
+### Turn on search rules
+
+<CodeSamplesSearchRulesGuideEnable1 />
+
+Until search rules are turned on, the `/dynamic-search-rules` routes reject your requests and stored rules do not apply at search time.
+
+### Create a rule
+
+<CodeSamplesSearchRulesGuideCreateRule1 />
+
+This rule means: every time a user searches the `support` index with a query containing the word `invoice`, the document `billing-workspace-overview` appears at the first position of the results.
+
+- The rule identifier comes from the URL, here `invoice-help`. The body does not contain it.
+- `conditions.query.words` makes the rule run only when every word it contains appears in the query, in any order.
+- `actions.pin.indexUid` limits the rule to searches on the `support` index. Without it, the rule applies to any index that contains a document with this ID.
+- `actions.pin.position` counts from `0`, so `0` is the first result and `1` is the second one.
+
+Meilisearch answers with a summarized task containing a `taskUid`, because creating a rule is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations). The rule only applies to searches once this task reaches the `succeeded` status. To follow its progress, pass the `taskUid` to the [task API](/reference/api/tasks/get-task).
+
+For the full list of conditions and actions a rule accepts, see the [search rules API reference](/reference/api/search-rules/create-or-update-a-search-rule).
+
+### Check the stored rule
+
+<CodeSamplesSearchRulesGuideGetRule1 />
+
+Meilisearch returns the rule as it stored it:
+
+```json
+{
+  "uid": "invoice-help",
+  "description": "Promote billing help for invoice searches",
+  "lastUpdatedAt": "2026-10-20T09:25:53.000000Z",
+  "precedence": 0,
+  "active": true,
+  "conditions": {
+    "query": {
+      "words": "invoice"
+    }
+  },
+  "actions": {
+    "pin": [
+      {
+        "indexUid": "support",
+        "id": "billing-workspace-overview",
+        "position": 0
+      }
+    ]
+  }
+}
+```
+
+If Meilisearch answers that the rule does not exist, the creation task is probably still in progress. Wait a few moments, then try again.
+
+### Run a search
+
+<CodeSamplesSearchRulesGuideSearch1 />
+
+The document `billing-workspace-overview` comes back first, followed by your organic results. If the document does not exist, or if the search filters exclude it, Meilisearch drops the pin and returns the organic results only.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Pin one result for a query" href="/capabilities/search_rules/how_to/pin_one_result_for_query">
+    Promote a landing page or a help article for a query
+  </Card>
+  <Card title="Pin several results" href="/capabilities/search_rules/how_to/pin_multiple_results">
+    Control the first positions of your results
+  </Card>
+  <Card title="How search rules work" href="/capabilities/search_rules/advanced/how_search_rules_work">
+    See how Meilisearch builds the final result set
+  </Card>
+  <Card title="API reference" href="/reference/api/search-rules/create-or-update-a-search-rule">
+    Endpoints, rule fields, and update behavior
+  </Card>
+</CardGroup>

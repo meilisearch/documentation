@@ -1,0 +1,27 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/invoice-help' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Promote billing help for invoice searches",
+    "active": true,
+    "conditions": {
+      "query": {
+        "words": "invoice"
+      }
+    },
+    "actions": {
+      "pin": [
+        {
+          "indexUid": "support",
+          "id": "billing-workspace-overview",
+          "position": 0
+        }
+      ]
+    }
+  }'
+```
+</CodeGroup>

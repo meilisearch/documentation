@@ -6,7 +6,7 @@ description: Temporarily stop a search rule from firing while keeping its config
 Sometimes you need to stop a rule from applying without losing its configuration. A campaign ended early, a pinned document needs to be reviewed before going live again, or a rule is misbehaving in production and you want to disable it while you investigate. Flipping a rule to inactive stops it from firing at search time while preserving every condition, action, and metadata field, so you can reactivate it later in one click or one API call.
 
 <Warning>
-Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Getting started](/capabilities/search_rules/getting_started#enable-the-experimental-flag).
+Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules).
 </Warning>
 
 ## Example scenario

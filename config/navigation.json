@@ -342,7 +342,7 @@
           "group": "Search rules",
           "pages": [
             "capabilities/search_rules/overview",
-            "capabilities/search_rules/getting_started",
+            "capabilities/search_rules/create_your_first_rule",
             {
               "group": "How to",
               "pages": [

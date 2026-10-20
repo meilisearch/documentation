@@ -1838,6 +1838,47 @@ delete_dynamic_search_rule_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
     -H 'Authorization: Bearer API_KEY'
+search_rules_guide_enable_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "dynamicSearchRules": true
+    }'
+search_rules_guide_create_rule_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/invoice-help' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Promote billing help for invoice searches",
+      "active": true,
+      "conditions": {
+        "query": {
+          "words": "invoice"
+        }
+      },
+      "actions": {
+        "pin": [
+          {
+            "indexUid": "support",
+            "id": "billing-workspace-overview",
+            "position": 0
+          }
+        ]
+      }
+    }'
+search_rules_guide_get_rule_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/invoice-help' \
+    -H 'Authorization: Bearer API_KEY'
+search_rules_guide_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/support/search' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "invoice settings" }'
 # get_indexes_indexUid_settings_foreign_keys
 get_foreign_keys_setting_1: |-
   curl \
