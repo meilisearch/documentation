@@ -1,5 +1,9 @@
 [
   {
+    "source": "/capabilities/search_rules/advanced/pinning_behavior",
+    "destination": "/capabilities/search_rules/advanced/specific_behaviors"
+  },
+  {
     "source": "/capabilities/search_rules/getting_started",
     "destination": "/capabilities/search_rules/create_your_first_rule"
   },

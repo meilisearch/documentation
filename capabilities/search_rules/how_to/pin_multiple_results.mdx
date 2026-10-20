@@ -108,7 +108,7 @@ If one of the pins is filtered out but the other one is not, only the surviving 
 
 - **Non-contiguous positions**: nothing stops you from pinning at positions `0` and `5`. The gap between the two pins is filled with organic results. Use this when you want to interleave pinned and organic content.
 - **Same document, same rule**: pinning the same document at two different positions is not useful. Meilisearch deduplicates the final result set, so the document only appears once.
-- **Competing rules on the same position**: if two rules both try to pin a different document at position `0`, the rule with the lower `precedence` value wins. See [Precedence between rules](/capabilities/search_rules/advanced/pinning_behavior#precedence-between-rules).
+- **Competing rules on the same position**: if two rules both try to pin a different document at position `0`, the rule with the lower `precedence` value wins.
 - **Large pinned lists**: pinning many documents removes relevance control over those slots. Keep pinned sets small, usually two to five documents, and let organic ranking handle the rest.
 
 ## Next steps
@@ -117,7 +117,7 @@ If one of the pins is filtered out but the other one is not, only the surviving 
   <Card title="Pin one result for a query" href="/capabilities/search_rules/how_to/pin_one_result_for_query">
     Start with the simplest pinning pattern
   </Card>
-  <Card title="Pinning behavior" href="/capabilities/search_rules/advanced/pinning_behavior">
+  <Card title="Specific behaviors" href="/capabilities/search_rules/advanced/specific_behaviors">
     Learn how pins interact with ranking, filters, and precedence
   </Card>
   <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">

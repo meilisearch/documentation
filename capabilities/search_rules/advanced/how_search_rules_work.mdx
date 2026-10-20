@@ -18,13 +18,9 @@ flowchart LR
     M --> F[Final results]
 ```
 
-When at least one rule matches, Meilisearch:
-
 1. Computes the organic results for the query
 2. Applies boost, deboost, and hide to the relevancy of the selected documents, which changes their order. Hidden documents leave the result set
 3. Inserts the pinned documents at the positions set in the rule
 4. Removes duplicates and returns the final result set
 
 Pinning and relevancy are independent: a pinned document keeps its position whatever its relevancy, while boosted and deboosted documents stay organic and only move up or down.
-
-See [search rule behavior](/capabilities/search_rules/advanced/pinning_behavior) for how rules interact with filters, precedence, and pagination.
