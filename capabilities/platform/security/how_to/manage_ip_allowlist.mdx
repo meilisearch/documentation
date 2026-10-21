@@ -1,0 +1,42 @@
+---
+title: Manage the IP allowlist
+description: Add, remove, and clear CIDR entries from the IP allowlist of your Meilisearch Cloud project.
+---
+
+Once the [IP allowlist add-on is enabled](/capabilities/platform/security/getting_started), you can update the list of allowed CIDR blocks at any time. Changes apply to your project as soon as you confirm them.
+
+## Edit the allowlist
+
+1. Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com)
+2. Click the **Project Settings** tab, then select **Security** in the side menu
+3. In the **IP allowlist** block, click **Edit allowlist** (or **Add CIDR blocks** if the list is empty)
+4. Add, edit, or delete entries, one per line
+5. Click **Review changes** and check the list of entries that will be added and removed
+6. Click **Apply changes**
+
+<Frame>
+  <img src="/assets/images/platform/security/5-edit-access.png" alt="Confirm IP allowlist changes dialog listing the CIDR blocks that will be added and removed" />
+</Frame>
+
+Each entry must be a valid IPv4 address (for example `203.0.113.42`, saved as `203.0.113.42/32`) or IPv4 CIDR block (for example `198.51.100.0/24`). A project can have up to 100 entries.
+
+<Warning>
+Before removing an entry, make sure no server, proxy, or team member still sends requests from that IP address. Their requests will be rejected with a `403 Forbidden` error as soon as you confirm.
+</Warning>
+
+## Remove all restrictions
+
+An empty allowlist means no restriction. To allow requests from any IP address again, delete every entry from the list, then review and apply the changes. The **Network access** status switches back to **Open to all traffic**.
+
+The add-on stays active, so you can add new entries later. If you no longer need IP filtering at all, you can also [disable the add-on](/capabilities/platform/security/how_to/disable_ip_allowlist).
+
+## Troubleshooting
+
+If a client receives a `403 Forbidden` response with the message `Access denied for this route or IP address`, its IP address is not in the allowlist. To fix this:
+
+1. Find the public IP address the client uses to reach Meilisearch Cloud. If the client sits behind a proxy, NAT gateway, or VPN, this is the outgoing IP address of that proxy, gateway, or VPN, not the private address of the machine.
+2. Add a CIDR block covering this address to the allowlist
+
+<Note>
+A request with an invalid or missing API key also returns an error. Check the error message to tell an IP restriction apart from an [API key issue](/capabilities/security/how_to/manage_api_keys).
+</Note>

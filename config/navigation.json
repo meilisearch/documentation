@@ -412,6 +412,20 @@
               ]
             },
             {
+              "group": "Security",
+              "pages": [
+                "capabilities/platform/security/overview",
+                "capabilities/platform/security/getting_started",
+                {
+                  "group": "How to",
+                  "pages": [
+                    "capabilities/platform/security/how_to/manage_ip_allowlist",
+                    "capabilities/platform/security/how_to/disable_ip_allowlist"
+                  ]
+                }
+              ]
+            },
+            {
               "group": "Management",
               "pages": [
                 "capabilities/platform/management/overview",

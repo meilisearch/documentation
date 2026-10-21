@@ -1,0 +1,19 @@
+---
+title: Disable the IP allowlist
+description: Cancel the IP allowlist add-on and understand what happens to your existing rules.
+---
+
+You can disable the IP allowlist add-on at any time. Open your project's **Project Settings** tab, select **Security** in the side menu, and click **Disable add-on** in the **IP allowlist** block.
+
+## What happens when you disable the add-on
+
+Disabling the add-on does not remove your restrictions immediately:
+
+1. **Until the end of the current billing cycle**, the add-on stays active. The **Security** section shows the date on which it will be disabled. All your existing entries remain in place and keep restricting access. You can still edit or delete them during this period.
+2. **At the end of the billing cycle**, the add-on is disabled and all entries are removed. Your instance accepts requests from any IP address again.
+
+## Remove restrictions immediately
+
+If you want to stop filtering traffic right away, without waiting for the end of the billing cycle, [delete every entry from the allowlist](/capabilities/platform/security/how_to/manage_ip_allowlist#remove-all-restrictions). An empty allowlist means no restriction.
+
+You can do this whether or not you also disable the add-on.

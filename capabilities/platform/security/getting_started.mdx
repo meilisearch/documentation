@@ -1,0 +1,79 @@
+---
+title: Getting started with IP allowlist
+sidebarTitle: Getting started
+description: Enable the IP allowlist add-on and restrict access to your Meilisearch Cloud project to a list of trusted IP addresses.
+---
+
+This guide walks you through enabling the IP allowlist add-on and adding your first IP addresses. Once configured, only requests from these IP addresses can reach your Meilisearch Cloud project.
+
+## Prerequisites
+
+- A [Meilisearch Cloud project](/capabilities/platform/infrastructure/create_a_project)
+- The list of public IPv4 addresses that need access to your instance (for example, your servers, proxies, or office network)
+
+<Warning>
+Collect every IP address that sends requests to your project before you start. Once the allowlist contains at least one entry, requests from any other IP address are rejected with a `403 Forbidden` error.
+</Warning>
+
+## Enable the add-on
+
+1. Log in to the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and open your project
+2. Click the **Project Settings** tab, then select **Security** in the side menu
+3. In the **IP allowlist** block, click **Enable IP allowlist** and confirm
+
+<Frame>
+  <img src="/assets/images/platform/security/1-enable-add-on.png" alt="Security section of the Project Settings tab showing the disabled IP allowlist add-on and the Enable IP allowlist button" />
+</Frame>
+
+The add-on costs **$10/month per project**. Enterprise customers should contact the Meilisearch team to enable it.
+
+Enabling the add-on does not restrict access by itself. As long as the allowlist is empty, the **Network access** status shows **Open to all traffic** and your instance accepts requests from any IP address.
+
+## Add IP addresses and CIDR blocks
+
+1. In the **IP allowlist** block, click **Add CIDR blocks**
+2. Enter one entry per line. Each entry can be:
+   - A single IPv4 address, for example `203.0.113.42`. Single addresses are saved as `/32` CIDR blocks (`203.0.113.42/32`).
+   - An IPv4 CIDR block, for example `198.51.100.0/24` to allow all addresses from `198.51.100.0` to `198.51.100.255`
+3. Click **Review changes**
+
+<Frame>
+  <img src="/assets/images/platform/security/2-add-ip-cidr.png" alt="Edit IP allowlist dialog with a single IP address and a CIDR block entered, one per line" />
+</Frame>
+
+Only valid IPv4 addresses and CIDR blocks are accepted. A counter below the field shows how many of the 100 available entries you are using.
+
+## Confirm the changes
+
+The confirmation step lists the entries that will be added and removed. Check them carefully, then click **Apply changes**. Click **Back** if you need to edit the list again.
+
+<Frame>
+  <img src="/assets/images/platform/security/3-confirm-allowlist-changes.png" alt="Confirm IP allowlist changes dialog listing the added CIDR blocks and a warning that requests from other IP addresses will be rejected" />
+</Frame>
+
+Once applied, the **Network access** status shows **Allowlist enforced** and the **IP allowlist** block lists all allowed CIDR blocks.
+
+<Frame>
+  <img src="/assets/images/platform/security/4-review-access.png" alt="IP allowlist block with the add-on enabled, the Allowlist enforced status, and the list of allowed CIDR blocks" />
+</Frame>
+
+## Test the restriction
+
+Send a request to your project from one of the allowed IP addresses. It should succeed as usual. Requests still need a valid [API key](/capabilities/security/how_to/manage_api_keys).
+
+Send the same request from an IP address outside the allowlist. Meilisearch Cloud responds with a `403 Forbidden` status code and the following message:
+
+```
+Access denied for this route or IP address
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Manage the IP allowlist" href="/capabilities/platform/security/how_to/manage_ip_allowlist">
+    Update, remove, or clear entries
+  </Card>
+  <Card title="Disable the IP allowlist" href="/capabilities/platform/security/how_to/disable_ip_allowlist">
+    Cancel the add-on and remove all restrictions
+  </Card>
+</CardGroup>
