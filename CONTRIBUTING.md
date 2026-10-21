@@ -28,7 +28,7 @@ npm install
 
 ## Docs writing
 
-Before writing or editing documentation content, read [Contributing to our documentation](resources/help/contributing_docs.mdx) for the philosophy and the quality checklist.
+Before writing or editing documentation content, read our guide on [Contributing to our documentation](https://www.meilisearch.com/docs/resources/help/contributing_docs).
 
 ## Run the docs locally
 
