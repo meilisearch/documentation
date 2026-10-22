@@ -107,11 +107,8 @@ paths:
             schema:
               type: object
               properties:
-                organization:
-                  type: object
-                  properties:
-                    name:
-                      type: string
+                name:
+                  type: string
     delete:
       summary: Deletes an organization
       tags:
@@ -418,13 +415,10 @@ paths:
             schema:
               type: object
               required:
-                - project
+                - name
               properties:
-                project:
-                  type: object
-                  properties:
-                    name:
-                      type: string
+                name:
+                  type: string
     delete:
       summary: Deletes a project
       tags:
@@ -650,14 +644,11 @@ paths:
             schema:
               type: object
               properties:
-                team:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    ownerId:
-                      type: string
-                      description: New owner's uuid, must already be a team member
+                name:
+                  type: string
+                ownerId:
+                  type: string
+                  description: New owner's uuid, must already be a team member
     delete:
       summary: Deletes a team
       tags:
@@ -677,6 +668,17 @@ components:
       type: http
       scheme: bearer
       description: Personal Access Token (PAT), authenticates as the token's owning user.
+    oauth2:
+      type: oauth2
+      description: OAuth2 authorization code flow with PKCE, for partner applications acting on behalf of a user. Send the user to the authorization URL in their browser. `read` allows GET requests, `write` allows every other method.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://cloud.meilisearch.com/oauth/authorize
+          tokenUrl: https://api.meilisearch.com/oauth/token
+          refreshUrl: https://api.meilisearch.com/oauth/token
+          scopes:
+            read: Read access (GET requests)
+            write: Write access (all other requests)
   schemas:
     Organization:
       type: object
@@ -1066,6 +1068,9 @@ components:
         - items
 security:
   - personal_access_token: []
+  - oauth2:
+      - read
+      - write
 servers:
   - url: https://{defaultHost}
     variables:
