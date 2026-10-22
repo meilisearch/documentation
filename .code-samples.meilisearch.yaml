@@ -1853,6 +1853,7 @@ search_rules_guide_create_rule_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Promote billing help for invoice searches",
+      "precedence": 0,
       "active": true,
       "conditions": {
         "query": {

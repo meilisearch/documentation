@@ -99,6 +99,7 @@ Until search rules are turned on, the `/dynamic-search-rules` routes reject your
 This rule means: every time a user searches the `support` index with a query containing the word `invoice`, the document `billing-workspace-overview` appears at the first position of the results.
 
 - The rule identifier comes from the URL, here `invoice-help`. The body does not contain it.
+- `precedence` decides which rule wins when several rules match the same search. The lowest number wins.
 - `conditions.query.words` makes the rule run only when every word it contains appears in the query, in any order.
 - `actions.pin.indexUid` limits the rule to searches on the `support` index. Without it, the rule applies to any index that contains a document with this ID.
 - `actions.pin.position` counts from `0`, so `0` is the first result. The dashboard displays the same slot as position `1`.
@@ -117,7 +118,7 @@ Meilisearch returns the rule as it stored it:
 {
   "uid": "invoice-help",
   "description": "Promote billing help for invoice searches",
-  "lastUpdatedAt": "2026-10-20T09:25:53.000000Z",
+  "lastUpdatedAt": "2026-10-20T09:25:53.965008429Z",
   "precedence": 0,
   "active": true,
   "conditions": {
