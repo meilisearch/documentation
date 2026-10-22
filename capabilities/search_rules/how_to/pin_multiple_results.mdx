@@ -1,132 +1,77 @@
 ---
-title: Pin several results in a fixed order
-description: Pin more than one document to specific positions for the same query by combining multiple pin actions in a single rule.
+title: Pin several documents for a query
+description: Control the first positions of your results by combining several pin actions in one rule.
 ---
 
-Sometimes a single pinned document is not enough. When a query covers a whole topic, you might want to control the first two, three, or more result slots so the most helpful documents always appear together, in a specific order. A single rule with several pin actions covers this: each action targets one document and one position, and Meilisearch respects the order you define.
+import CodeSamplesSearchRulesGuidePinMultiple1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_pin_multiple_1.mdx';
 
-<Warning>
-Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Getting started](/capabilities/search_rules/getting_started#enable-the-experimental-flag).
-</Warning>
-
-## Example scenario
-
-On the same `support` help center, users who type "invoice" also benefit from seeing the "Download monthly statements" guide (`id: "download-monthly-statements"`) right after the "Billing workspace overview" article. You want the two billing documents at positions `0` and `1`, with organic results filling the rest of the page.
-
-One rule with two pin actions is enough: no need to create two separate rules for the same query condition.
+When customers search for "coffee", you know what they should see first: the espresso machine you promote this month, then the mug that goes with it. One pin controls one position, so a rule with several pin actions builds the top of your results in the order you choose. Organic results fill everything below.
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. Give the rule an ID, such as `coffee-top-picks`, and a description.
 
-### 1. Create or edit the rule
+### Pin the first document
 
-If you have already created an `invoice-help` rule (see [Pin one result for a query](/capabilities/search_rules/how_to/pin_one_result_for_query)), click it in the list to edit it. Otherwise, click **New rule** and fill in the Rule ID, Description, and Rank as usual.
+In the **Actions** block, click **Add action**, select **Pin a document**, then click **Next**. Choose the **Index**, then search the **Document** by its ID or its content. Set its **Position**, which starts at `1` for the first result, and click **Add action**.
 
-![Rule editor with General, Conditions, and Actions sections](/assets/images/cloud-search-rules/03-manage-rule.png)
+![Pin a document dialog with the index, the document, and the position](/assets/images/cloud-search-rules/pin-second-document.png)
 
-### 2. Add the query condition
+### Pin the next ones
 
-In the **Conditions** block, add a **Query words** condition with the word `invoice`. You only need one condition: both pins fire together whenever the query matches.
+Repeat the same steps for every document you want to place, here the coffee mug at position `2`. The **Actions** block numbers your pins and shows which document each one promotes.
 
-### 3. Add the first pin
+Pins do not have to follow each other. Pinning at positions `1` and `5` leaves organic results in between.
 
-In the **Actions** block, click **Add pin**. Configure:
+### Choose when the rule applies
 
-- **Index**: `support`
-- **Document**: `billing-workspace-overview`
-- **Position**: `0`
+In the **Conditions** block, set **Query** to `Contains all words`, then enter `coffee`. The rule now applies to every search containing that word, in any order, so it also covers "coffee machine" or "best coffee grinder".
 
-Click **Add pin** to save.
+![Actions block with two pins, and the query condition](/assets/images/cloud-search-rules/pin-rule-overview.png)
 
-![Add pin dialog with index, document, and position set for the first pin](/assets/images/cloud-search-rules/05-add-pin.png)
+Click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, a search containing "coffee" starts with your two picks, in the order you chose.
 
-### 4. Add the second pin
+## Set up on a self-hosted instance
 
-Click **Add pin** again. Configure:
+<Warning>
+Search rules must be turned on before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
+</Warning>
 
-- **Index**: `support`
-- **Document**: `download-monthly-statements`
-- **Position**: `1`
+<CodeSamplesSearchRulesGuidePinMultiple1 />
 
-Click **Add pin** to save.
+- Each entry in `pin` places one document at one position. The order of the entries does not matter, the `position` values do.
+- Positions count from `0` in the API, so `0` is the first result. The dashboard displays the same slot as position `1`.
+- If the current search filters exclude a pinned document, Meilisearch drops that pin and an organic result takes the slot. The other pins stay where you put them. See [specific behaviors](/capabilities/search_rules/advanced/specific_behaviors).
 
-The **Actions** block now lists two pins. Meilisearch inserts them at positions `0` and `1` when the rule fires.
-
-### 5. Save the rule
-
-Click **Create rule** (or **Save changes** when editing). The rule appears in the Search rules list with the two pin actions visible in the row.
-
-![Search rules list showing the rule with two pin actions](/assets/images/cloud-search-rules/06-rules-list.png)
-
-## Set up from the API
-
-Send a `PATCH /dynamic-search-rules/invoice-help` with two actions:
+Meilisearch answers with a summarized task containing a `taskUid`, because creating a rule is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations):
 
 ```json
 {
-  "description": "Show billing resources first for invoice searches",
-  "active": true,
-  "conditions": {
-    "query": {
-      "words": "invoice"
-    }
-  },
-  "actions": {
-    "pin": [
-      {
-        "indexUid": "support",
-        "id": "billing-workspace-overview",
-        "position": 0
-      },
-      {
-        "indexUid": "support",
-        "id": "download-monthly-statements",
-        "position": 1
-      }
-    ]
-  }
+  "taskUid": 46,
+  "indexUid": ".meili_dsr",
+  "status": "enqueued",
+  "type": "dsrUpdate",
+  "enqueuedAt": "2026-05-28T09:12:41.157267963Z"
 }
 ```
 
-- Positions in the API are zero-indexed. `0` is the first slot, `1` is the second, and so on.
-- Each action targets exactly one document. To pin three documents, add three actions.
-- You can mix documents from different indexes by setting a different `indexUid` per action. This is useful for federated search layouts where the same rule should promote results across multiple indexes.
+The rule applies to searches once this task reaches the `succeeded` status. To follow its progress, pass the `taskUid` to the [task API](/reference/api/tasks/get-task).
 
-## How Meilisearch evaluates the rule
-
-At search time, Meilisearch:
-
-1. Matches the search query against every active rule
-2. For each matching rule, verifies that every pinned document exists and passes the current search filters
-3. Inserts the surviving pinned documents at the positions you requested
-4. Fills the remaining positions with organic results and removes duplicates
-
-If one of the pins is filtered out but the other one is not, only the surviving pin is inserted. Meilisearch does not shift the other pin to fill the gap: it stays at the position you configured, and organic results fill the vacated slot.
-
-## Variations and tips
-
-- **Non-contiguous positions**: nothing stops you from pinning at positions `0` and `5`. The gap between the two pins is filled with organic results. Use this when you want to interleave pinned and organic content.
-- **Same document, same rule**: pinning the same document at two different positions is not useful. Meilisearch deduplicates the final result set, so the document only appears once.
-- **Competing rules on the same position**: if two rules both try to pin a different document at position `0`, the rule with the lower `precedence` value wins. See [Precedence between rules](/capabilities/search_rules/advanced/pinning_behavior#precedence-between-rules).
-- **Large pinned lists**: pinning many documents removes relevance control over those slots. Keep pinned sets small, usually two to five documents, and let organic ranking handle the rest.
+From then on, every search containing "coffee" starts with your two picks, in the order you chose, and the organic results follow.
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Pin one result for a query" href="/capabilities/search_rules/how_to/pin_one_result_for_query">
-    Start with the simplest pinning pattern
+  <Card title="Boost documents" href="/capabilities/search_rules/how_to/boost_documents">
+    Rank a selection of documents higher during a campaign
   </Card>
-  <Card title="Pinning behavior" href="/capabilities/search_rules/advanced/pinning_behavior">
-    Learn how pins interact with ranking, filters, and precedence
+  <Card title="Hide documents" href="/capabilities/search_rules/how_to/hide_documents">
+    Remove documents from the results without reindexing
   </Card>
-  <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">
-    Combine a query condition with a time window
-  </Card>
-  <Card title="Pause a rule" href="/capabilities/search_rules/how_to/pause_a_rule">
-    Temporarily disable a rule without deleting it
+  <Card title="Specific behaviors" href="/capabilities/search_rules/advanced/specific_behaviors">
+    See how pins interact with filters and with the other actions
   </Card>
   <Card title="API reference" href="/reference/api/search-rules/create-or-update-a-search-rule">
-    Full request and response shapes
+    Endpoints, rule fields, and update behavior
   </Card>
 </CardGroup>

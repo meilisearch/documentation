@@ -1,0 +1,26 @@
+---
+title: How search rules work
+sidebarTitle: How search rules work
+description: Learn how Meilisearch applies pinning, boosting, deboosting, and hiding to build the final result set.
+---
+
+Search rules run on top of organic search. Meilisearch still ranks your documents as usual, then applies the actions of every matching rule.
+
+```mermaid
+flowchart LR
+    Q[Search query] --> R[Matching rules]
+    Q --> O[Organic results]
+    R --> A[Boost, deboost, hide]
+    A --> O
+    R --> P[Pinned documents]
+    O --> M[Merge and deduplicate]
+    P --> M
+    M --> F[Final results]
+```
+
+1. Computes the organic results for the query
+2. Applies boost, deboost, and hide to the relevancy of the selected documents, which changes their order. Hidden documents leave the result set
+3. Inserts the pinned documents at the positions set in the rule
+4. Removes duplicates and returns the final result set
+
+Pinning and relevancy are independent: a pinned document keeps its position whatever its relevancy, while boosted and deboosted documents stay organic and only move up or down.

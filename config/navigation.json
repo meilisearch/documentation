@@ -342,14 +342,14 @@
           "group": "Search rules",
           "pages": [
             "capabilities/search_rules/overview",
-            "capabilities/search_rules/getting_started",
+            "capabilities/search_rules/create_your_first_rule",
             {
               "group": "How to",
               "pages": [
-                "capabilities/search_rules/how_to/pin_one_result_for_query",
                 "capabilities/search_rules/how_to/pin_multiple_results",
-                "capabilities/search_rules/how_to/curate_empty_query",
-                "capabilities/search_rules/how_to/schedule_promotion",
+                "capabilities/search_rules/how_to/boost_documents",
+                "capabilities/search_rules/how_to/deboost_documents",
+                "capabilities/search_rules/how_to/hide_documents",
                 "capabilities/search_rules/how_to/list_and_filter_rules",
                 "capabilities/search_rules/how_to/pause_a_rule"
               ]
@@ -357,9 +357,11 @@
             {
               "group": "Advanced",
               "pages": [
-                "capabilities/search_rules/advanced/pinning_behavior"
+                "capabilities/search_rules/advanced/how_search_rules_work",
+                "capabilities/search_rules/advanced/specific_behaviors"
               ]
-            }
+            },
+            "capabilities/search_rules/pricing"
           ]
         },
         {

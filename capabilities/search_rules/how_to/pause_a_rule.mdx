@@ -1,96 +1,61 @@
 ---
 title: Pause a rule without deleting it
-description: Temporarily stop a search rule from firing while keeping its configuration intact, so you can re-enable it later without rebuilding it.
+description: Stop a search rule from applying while keeping its configuration, so you can turn it back on later.
 ---
 
-Sometimes you need to stop a rule from applying without losing its configuration. A campaign ended early, a pinned document needs to be reviewed before going live again, or a rule is misbehaving in production and you want to disable it while you investigate. Flipping a rule to inactive stops it from firing at search time while preserving every condition, action, and metadata field, so you can reactivate it later in one click or one API call.
+import CodeSamplesSearchRulesGuidePause1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_pause_1.mdx';
 
-<Warning>
-Search rules are experimental. Enable the `dynamicSearchRules` flag with `PATCH /experimental-features` before creating rules. See [Getting started](/capabilities/search_rules/getting_started#enable-the-experimental-flag).
-</Warning>
-
-## Example scenario
-
-The `summer-sale-2026` rule is promoting a campaign landing page for "summer sale" queries, but marketing asked you to pull the landing page off the homepage for a few hours while they fix a typo. You want the pin to stop applying immediately, but you do not want to delete the rule: you will reactivate it once the landing page is back online.
-
-The right move is to set `active` to `false`. The rule stays in storage with all its conditions and actions, it just does not fire until you flip it back on.
+A campaign ends earlier than planned, or a rule behaves in a way you did not expect in production. You want it to stop applying right away, but you do not want to rebuild it from memory next week. Pausing a rule keeps every condition and action in place and only stops it from running at search time.
 
 ## Pause a rule from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab. Find your rule in the list, then click the **Active** toggle in its row.
 
-### 1. Locate the rule
+![Search rules list with the Active toggle on each row](/assets/images/cloud-search-rules/rules-list-with-actions.png)
 
-Find the rule in the Search rules list. Each row displays a status toggle on the right side, next to the edit and delete icons.
+Click the toggle again to run the rule once more. Nothing else changes, so the rule applies exactly as it did before.
 
-![Search rules list showing the active toggle on each row](/assets/images/cloud-search-rules/06-rules-list.png)
+## Pause a rule on a self-hosted instance
 
-### 2. Flip the Active toggle
+<Warning>
+Search rules must be turned on before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
+</Warning>
 
-Click the toggle to switch the rule from **Active** to **Inactive**. The change is saved immediately: the next search request no longer triggers this rule.
+<CodeSamplesSearchRulesGuidePause1 />
 
-When you are ready to reactivate the rule, flip the toggle back on. No other field is affected, so the rule fires exactly as it did before, with the same conditions and pin actions.
+The `PATCH` route only modifies the fields you send, so your conditions and actions stay untouched. Send `"active": true` to run the rule again.
 
-## Pause a rule from the API
-
-Send a `PATCH /dynamic-search-rules/{uid}` with only the `active` field:
-
-```json
-{
-  "active": false
-}
-```
-
-Because the `PATCH` route is an upsert that only modifies the fields you send, this request leaves every other field untouched. The response returns `202 Accepted` with the corresponding task for the asynchronous update.
-
-To reactivate the rule, send the same request with `true`:
+Meilisearch answers with a summarized task containing a `taskUid`, because updating a rule is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations):
 
 ```json
 {
-  "active": true
+  "taskUid": 45,
+  "indexUid": ".meili_dsr",
+  "status": "enqueued",
+  "type": "dsrUpdate",
+  "enqueuedAt": "2026-06-12T14:03:47.665870469Z"
 }
 ```
 
-## What changes and what stays the same
+The rule stops applying to searches once this task reaches the `succeeded` status. To follow its progress, pass the `taskUid` to the [task API](/reference/api/tasks/get-task).
 
-When a rule is paused:
+## Pause or delete
 
-- It remains stored and visible in `GET /dynamic-search-rules/{uid}` and `POST /dynamic-search-rules`
-- Its conditions, actions, priority, and description are unchanged
-- It is skipped at search time, no pin is inserted
-- Time conditions are evaluated normally if the rule is reactivated later. A rule reactivated after its `end` date still does not fire because the time condition fails
+A paused rule stays in your list, keeps its definition, and is skipped at search time. Deleting a rule with `DELETE /dynamic-search-rules/{uid}` is final: you have to create it again from scratch.
 
-When a rule is reactivated, it fires again from the next search request on, as soon as the corresponding asynchronous task has been processed.
-
-## Pause versus delete versus expire
-
-| Action | When to use | Reversible? |
-|--------|-------------|-------------|
-| Flip `active` to `false` | Short-term pause, known reactivation window, fast rollback | Yes |
-| Remove the offending condition or action | Rule needs to change, not stop | Yes (by reverting) |
-| `DELETE /dynamic-search-rules/{uid}` | Rule is permanently wrong or no longer relevant | No, you must recreate from scratch |
-| Let a time window expire naturally | Campaign end is known in advance | No reactivation needed, no cleanup |
-
-Prefer pausing over deleting whenever you think the rule might come back. Deletion is final, and rebuilding a rule from memory is error-prone.
-
-## Variations and tips
-
-- **Safe rollback after a bad edit**: if you just made changes to a rule and something looks off in production, flip `active` to `false` first, then investigate. Do not delete the rule while debugging.
-- **Seasonal rules on standby**: for recurring campaigns (Black Friday, summer sale), keep the rule paused between campaigns and reactivate it a few days before launch. Remember to update the time window before reactivating.
-- **Bulk pause**: the API has no bulk update, so pausing many rules at once requires a script that iterates over rule IDs. See [List or filter existing rules](/capabilities/search_rules/how_to/list_and_filter_rules) for how to enumerate rules first.
-- **Precedence interactions**: while a rule is paused, it does not participate in precedence comparisons. A late-precedence rule that would normally lose to the paused rule can now fire. Double-check after pausing an early-precedence rule.
+Pause the rules you may need again, such as the campaigns that come back every year. Delete the ones that are wrong or that you will never use again.
 
 ## Next steps
 
 <CardGroup cols={2}>
   <Card title="List or filter existing rules" href="/capabilities/search_rules/how_to/list_and_filter_rules">
-    Find rules to pause or reactivate
+    Find the rules to pause or to turn back on
   </Card>
-  <Card title="Schedule a promotion" href="/capabilities/search_rules/how_to/schedule_promotion">
-    Expire a rule automatically with a time window
+  <Card title="Boost documents" href="/capabilities/search_rules/how_to/boost_documents">
+    Rank a selection of documents higher during a campaign
   </Card>
-  <Card title="Pinning behavior" href="/capabilities/search_rules/advanced/pinning_behavior">
-    Learn how pins interact with ranking, filters, and precedence
+  <Card title="Hide documents" href="/capabilities/search_rules/how_to/hide_documents">
+    Remove documents from the results without reindexing
   </Card>
   <Card title="API reference" href="/reference/api/search-rules/create-or-update-a-search-rule">
     Full request and response shapes

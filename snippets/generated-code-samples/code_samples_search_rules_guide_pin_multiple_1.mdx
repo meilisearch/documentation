@@ -1,0 +1,32 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/coffee-top-picks' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Show our two coffee picks first for coffee searches",
+    "active": true,
+    "conditions": {
+      "query": {
+        "words": "coffee"
+      }
+    },
+    "actions": {
+      "pin": [
+        {
+          "indexUid": "products",
+          "id": "5",
+          "position": 0
+        },
+        {
+          "indexUid": "products",
+          "id": "3",
+          "position": 1
+        }
+      ]
+    }
+  }'
+```
+</CodeGroup>

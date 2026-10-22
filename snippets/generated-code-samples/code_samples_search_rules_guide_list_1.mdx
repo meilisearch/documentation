@@ -1,0 +1,17 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "offset": 0,
+    "limit": 20,
+    "filter": {
+      "query": "summer",
+      "active": true
+    }
+  }'
+```
+</CodeGroup>

@@ -1,5 +1,29 @@
 [
   {
+    "source": "/capabilities/search_rules/how_to/schedule_promotion",
+    "destination": "/capabilities/search_rules/how_to/boost_documents"
+  },
+  {
+    "source": "/capabilities/search_rules/how_to/curate_empty_query",
+    "destination": "/capabilities/search_rules/create_your_first_rule"
+  },
+  {
+    "source": "/capabilities/search_rules/how_to/pin_one_result_for_query",
+    "destination": "/capabilities/search_rules/create_your_first_rule"
+  },
+  {
+    "source": "/capabilities/search_rules/advanced/pinning_behavior",
+    "destination": "/capabilities/search_rules/advanced/specific_behaviors"
+  },
+  {
+    "source": "/capabilities/search_rules/getting_started",
+    "destination": "/capabilities/search_rules/create_your_first_rule"
+  },
+  {
+    "source": "/capabilities/search_rules/advanced/search_rules_pricing",
+    "destination": "/capabilities/search_rules/pricing"
+  },
+  {
     "source": "/resources/demos/voice_search",
     "destination": "/resources/demos/overview"
   },

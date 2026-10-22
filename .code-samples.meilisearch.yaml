@@ -1838,6 +1838,157 @@ delete_dynamic_search_rule_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
     -H 'Authorization: Bearer API_KEY'
+search_rules_guide_enable_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "dynamicSearchRules": true
+    }'
+search_rules_guide_create_rule_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/invoice-help' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Promote billing help for invoice searches",
+      "precedence": 0,
+      "active": true,
+      "conditions": {
+        "query": {
+          "words": "invoice"
+        }
+      },
+      "actions": {
+        "pin": [
+          {
+            "indexUid": "support",
+            "id": "billing-workspace-overview",
+            "position": 0
+          }
+        ]
+      }
+    }'
+search_rules_guide_get_rule_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/invoice-help' \
+    -H 'Authorization: Bearer API_KEY'
+search_rules_guide_search_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/indexes/support/search' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "invoice settings" }'
+search_rules_guide_boost_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/summer-sale' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Boost the products on sale during the summer sale",
+      "active": true,
+      "conditions": {
+        "time": {
+          "start": "2026-06-01T00:00:00Z",
+          "end": "2026-06-30T23:59:59Z"
+        }
+      },
+      "actions": {
+        "scale": [
+          {
+            "indexUid": "products",
+            "filter": "on_sale = true",
+            "weight": 1.5
+          }
+        ]
+      }
+    }'
+search_rules_guide_deboost_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/out-of-stock-last' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Show the out-of-stock products after the others",
+      "active": true,
+      "actions": {
+        "scale": [
+          {
+            "indexUid": "products",
+            "filter": "stock = 0",
+            "weight": 0.5
+          }
+        ]
+      }
+    }'
+search_rules_guide_hide_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/hide-discontinued' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Keep the discontinued products out of the results",
+      "active": true,
+      "actions": {
+        "scale": [
+          {
+            "indexUid": "products",
+            "filter": "discontinued = true",
+            "weight": 0
+          }
+        ]
+      }
+    }'
+search_rules_guide_list_1: |-
+  curl \
+    -X POST 'MEILISEARCH_URL/dynamic-search-rules' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "offset": 0,
+      "limit": 20,
+      "filter": {
+        "query": "summer",
+        "active": true
+      }
+    }'
+search_rules_guide_pause_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/summer-sale' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "active": false
+    }'
+search_rules_guide_pin_multiple_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/coffee-top-picks' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Show our two coffee picks first for coffee searches",
+      "active": true,
+      "conditions": {
+        "query": {
+          "words": "coffee"
+        }
+      },
+      "actions": {
+        "pin": [
+          {
+            "indexUid": "products",
+            "id": "5",
+            "position": 0
+          },
+          {
+            "indexUid": "products",
+            "id": "3",
+            "position": 1
+          }
+        ]
+      }
+    }'
 # get_indexes_indexUid_settings_foreign_keys
 get_foreign_keys_setting_1: |-
   curl \
