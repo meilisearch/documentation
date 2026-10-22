@@ -19,13 +19,13 @@ Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch
 
 Click **Enable Search Rules**. Your project can now store rules and apply them at search time.
 
-![Meilisearch Cloud Search rules tab with an "Enable Search Rules" button in the add-on panel](/assets/images/cloud-search-rules/01-activate-addon.png)
+![Meilisearch Cloud Search rules tab with an "Enable Search Rules" button in the add-on panel](/assets/images/cloud-search-rules/enable-search-rules.png)
 
 ### Create a new rule
 
 Click **New rule** to open the rule editor.
 
-![Search rules landing page with a "New rule" button in the top-right corner](/assets/images/cloud-search-rules/02-create-first-rule.png)
+![Search rules landing page with a "New rule" button in the top-right corner](/assets/images/cloud-search-rules/new-rule-button.png)
 
 ### Fill in the general information
 
@@ -36,13 +36,13 @@ Click **New rule** to open the rule editor.
 | **Rank** | Decides which rule wins when several rules match the same search. The lowest number wins |
 | **Active** | Turns the rule on and off. Keep it on to apply the rule at search time |
 
-![General block of the rule editor with the Rule ID, Description, Rank, and Active fields](/assets/images/cloud-search-rules/11-general-block.png)
+![General block of the rule editor with the Rule ID, Description, Rank, and Active fields](/assets/images/cloud-search-rules/general-block.png)
 
 ### Choose the action
 
 The **Actions** block decides what the rule does to your results.
 
-![Add action dialog with the pin, boost, deboost, and hide options](/assets/images/cloud-search-rules/07-add-action.png)
+![Add action dialog with the pin, boost, deboost, and hide options](/assets/images/cloud-search-rules/add-action-dialog.png)
 
 Select **Pin a document**, click **Next**, then fill in the three fields:
 
@@ -50,13 +50,13 @@ Select **Pin a document**, click **Next**, then fill in the three fields:
 - **Document**: the document itself, selected by its primary key. Meilisearch promotes this exact document and no other one, even if similar documents exist.
 - **Position**: the rank the document takes in the results, starting at `1` for the first result. It stays at this rank every time the rule matches, even when it does not match what the user typed.
 
-![Pin a document dialog with an index dropdown, a document selector, and a position input](/assets/images/cloud-search-rules/08-add-pin-action.png)
+![Pin a document dialog with an index dropdown, a document selector, and a position input](/assets/images/cloud-search-rules/pin-document-dialog.png)
 
 Click **Add action**.
 
 The **Actions** block now lists your action, with the index it targets, the documents you selected, the filter you used, and how many documents it finally affects. A rule can hold several actions: click **Add action** again to add another one.
 
-![Actions block listing one pin action with its index, document, filter, and affected documents](/assets/images/cloud-search-rules/09-actions-block.png)
+![Actions block listing one pin action with its index, document, filter, and affected documents](/assets/images/cloud-search-rules/actions-block.png)
 
 ### Choose the conditions
 
@@ -64,13 +64,13 @@ The **Conditions** block decides when the rule runs. A search must match every c
 
 For this first rule, set **Query** to `Empty query` and leave the other conditions as they are.
 
-![Conditions block with the Query list open on the "Empty query" option](/assets/images/cloud-search-rules/10-conditions-block.png)
+![Conditions block with the Query list open on the "Empty query" option](/assets/images/cloud-search-rules/conditions-block.png)
 
 ### Save the rule
 
 The bar at the bottom of the editor recaps what your rule contains.
 
-![Editor footer with the general, condition, and action recap next to the Create rule button](/assets/images/cloud-search-rules/12-create-rule.png)
+![Editor footer with the general, condition, and action recap next to the Create rule button](/assets/images/cloud-search-rules/create-rule-footer.png)
 
 Click **Create rule**.
 
@@ -80,7 +80,7 @@ Your rule is now live: every time a user opens the search on your index without 
 
 The Search rules tab lists every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
 
-![Search rules list with one rule showing its conditions, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/13-rules-list.png)
+![Search rules list with one rule showing its conditions, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/rules-list.png)
 
 Rule changes are applied asynchronously, so a rule you just created, updated, or deleted can take a moment to appear in the list.
 

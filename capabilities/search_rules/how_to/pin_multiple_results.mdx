@@ -15,7 +15,7 @@ Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch
 
 In the **Actions** block, click **Add action**, select **Pin a document**, then click **Next**. Choose the **Index**, then search the **Document** by its ID or its content. Set its **Position**, which starts at `1` for the first result, and click **Add action**.
 
-![Pin a document dialog with the index, the document, and the position](/assets/images/cloud-search-rules/20-pin-document.png)
+![Pin a document dialog with the index, the document, and the position](/assets/images/cloud-search-rules/pin-second-document.png)
 
 ### Pin the next ones
 
@@ -27,7 +27,7 @@ Pins do not have to follow each other. Pinning at positions `1` and `5` leaves o
 
 In the **Conditions** block, set **Query** to `Contains all words`, then enter `coffee`. The rule now applies to every search containing that word, in any order, so it also covers "coffee machine" or "best coffee grinder".
 
-![Actions block with two pins, and the query condition](/assets/images/cloud-search-rules/21-pin-rule.png)
+![Actions block with two pins, and the query condition](/assets/images/cloud-search-rules/pin-rule-overview.png)
 
 Click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, a search containing "coffee" starts with your two picks, in the order you chose.
 

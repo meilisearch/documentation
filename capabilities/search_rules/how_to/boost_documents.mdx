@@ -17,7 +17,7 @@ Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch
 
 In the **Actions** block, click **Add action**, select **Boost documents**, then click **Next**. Choose how to select the products: with a filter, or document by document. A filter fits here, because you want every product on sale, whichever they are at that moment.
 
-![Dialog asking whether to select documents with a filter or by hand](/assets/images/cloud-search-rules/19-select-documents.png)
+![Dialog asking whether to select documents with a filter or by hand](/assets/images/cloud-search-rules/select-documents-step.png)
 
 Pick **Use a filter**, then fill in the dialog:
 
@@ -27,13 +27,13 @@ Pick **Use a filter**, then fill in the dialog:
 
 The dialog tells you how many documents the action affects, so you can check your filter before saving. Click **Add action**.
 
-![Boost documents dialog with the index, the strength, and the filter](/assets/images/cloud-search-rules/14-boost-action.png)
+![Boost documents dialog with the index, the strength, and the filter](/assets/images/cloud-search-rules/boost-action-dialog.png)
 
 ### Limit the rule to the campaign
 
 In the **Conditions** block, set **Time** to **Apply within time range**, then enter the start and the end of your campaign. Times are in UTC, so convert your local window before entering it.
 
-![Actions block with the boost action, and the time range condition](/assets/images/cloud-search-rules/15-boost-rule.png)
+![Actions block with the boost action, and the time range condition](/assets/images/cloud-search-rules/boost-rule-overview.png)
 
 Click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, searches keep their usual results during the campaign, with the products on sale higher in the list.
 
