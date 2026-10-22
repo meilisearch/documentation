@@ -478,8 +478,7 @@
             "reference/api/headers",
             "reference/api/requests",
             "reference/api/pagination",
-            "reference/api/openapi",
-            "reference/errors/error_codes"
+            "reference/api/openapi"
           ]
         },
         {
@@ -916,6 +915,13 @@
             "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
             "directory": "reference/management-api"
           }
+        },
+        {
+          "group": "Errors",
+          "pages": [
+            "reference/errors/overview",
+            "reference/errors/error_codes"
+          ]
         }
       ]
     },
