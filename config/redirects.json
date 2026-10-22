@@ -4600,14 +4600,6 @@
     "destination": "/capabilities/platform/teams/how_to/manage_team_roles"
   },
   {
-    "source": "/capabilities/platform/security",
-    "destination": "/capabilities/security/overview"
-  },
-  {
-    "source": "/capabilities/platform/security/overview",
-    "destination": "/capabilities/security/overview"
-  },
-  {
     "source": "/capabilities/platform/security/getting_started",
     "destination": "/capabilities/security/getting_started"
   },
