@@ -5,13 +5,13 @@
  *
  * 1. The latest Meilisearch release assets (OpenAPI spec and error codes)
  *    from GitHub, written to assets/engine-release-assets/.
- * 2. The Meilisearch Cloud OpenAPI spec from the private
+ * 2. The Meilisearch Cloud OpenAPI spec and error messages from the private
  *    meilisearch/meilisearch-cloud repository, written to assets/cloud-assets/.
  *
  * Token: set GITHUB_PAT or GH_TOKEN.
  * - Optional for the release assets (higher API rate limits).
- * - Required for the Cloud OpenAPI spec (private repository). Without a
- *   token, the Cloud spec fetch is skipped with a warning.
+ * - Required for the Cloud assets (private repository). Without a token,
+ *   the Cloud fetches are skipped with a warning.
  */
 
 import fs from "fs";
@@ -33,6 +33,13 @@ const CLOUD_TARGET_DIR = path.join(REPO_ROOT, "assets", "cloud-assets");
 const CLOUD_OPENAPI_FILENAME = "meilisearch-cloud-openapi.yaml";
 const CLOUD_OPENAPI_URL =
   "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/swagger/v2/swagger.yaml?ref=main";
+
+// Meilisearch Cloud error messages. The Management API builds every error
+// response from the `messages` section of the API's i18n locale file, so that
+// section is the source of truth for its error codes.
+const CLOUD_ERROR_CODES_FILENAME = "meilisearch-cloud-error-codes.json";
+const CLOUD_ERROR_CODES_URL =
+  "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/config/locales/en.yml?ref=main";
 
 function getToken() {
   return process.env.GITHUB_PAT || process.env.GH_TOKEN;
@@ -124,9 +131,52 @@ async function fetchCloudOpenapi() {
   writeFile(CLOUD_TARGET_DIR, CLOUD_OPENAPI_FILENAME, content);
 }
 
+async function fetchCloudErrorCodes() {
+  if (!getToken()) return;
+
+  console.log("Fetching Meilisearch Cloud error messages...");
+  const content = await request(CLOUD_ERROR_CODES_URL, {
+    accept: "application/vnd.github.raw+json",
+    errorContext: "Download Cloud error messages",
+  });
+
+  let locale;
+  try {
+    locale = yaml.load(content);
+  } catch (err) {
+    throw new Error(`Cloud locale file is not valid YAML: ${err.message}`);
+  }
+
+  const messages = locale?.en?.messages;
+  if (messages == null || typeof messages !== "object") {
+    throw new Error("Cloud locale file has no 'en.messages' section.");
+  }
+
+  // Only keep the fields describing the response: the locale file is a Rails
+  // i18n file and may grow other keys over time.
+  const errorCodes = {};
+  for (const code of Object.keys(messages).sort()) {
+    const entry = messages[code];
+    if (entry == null || typeof entry !== "object") continue;
+    errorCodes[code] = {
+      statusCode: entry.status_http,
+      status: entry.status,
+      title: entry.message_title,
+      description: entry.message_description,
+    };
+  }
+
+  writeFile(
+    CLOUD_TARGET_DIR,
+    CLOUD_ERROR_CODES_FILENAME,
+    `${JSON.stringify(errorCodes, null, 2)}\n`
+  );
+}
+
 async function main() {
   await fetchReleaseAssets();
   await fetchCloudOpenapi();
+  await fetchCloudErrorCodes();
 }
 
 main().catch((err) => {
