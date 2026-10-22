@@ -43,6 +43,13 @@ Before saving your allowlist, make sure it includes every IP address that needs 
 Meilisearch Cloud's own IP addresses always remain allowed. This lets the Meilisearch team monitor the health of your instance. You do not need to add them to your allowlist.
 </Note>
 
+## Prerequisites
+
+Before you enable the IP allowlist, make sure you have:
+
+- A [Meilisearch Cloud project](/capabilities/platform/infrastructure/create_a_project)
+- The list of public IPv4 addresses that need access to your instance (for example, your servers, proxies, or office network)
+
 ## Pricing
 
 IP allowlist is a paid add-on billed **$10/month per project**. Each project can have up to **100 CIDR entries**.
@@ -52,11 +59,8 @@ Enterprise customers should contact the Meilisearch team to enable the add-on.
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Getting started" href="/capabilities/platform/security/getting_started">
-    Enable the IP allowlist add-on and restrict access to your project
-  </Card>
   <Card title="Manage the IP allowlist" href="/capabilities/platform/security/how_to/manage_ip_allowlist">
-    Add, remove, and clear entries
+    Enable the add-on, then add, remove, and clear entries
   </Card>
   <Card title="Disable the IP allowlist" href="/capabilities/platform/security/how_to/disable_ip_allowlist">
     Cancel the add-on and understand what happens to your rules
