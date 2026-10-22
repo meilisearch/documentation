@@ -1,0 +1,71 @@
+---
+title: Meilisearch Cloud security
+sidebarTitle: Overview
+description: Restrict network access to your Meilisearch Cloud project with an IP allowlist.
+---
+
+Meilisearch Cloud lets you control which networks can reach your project. With the **IP allowlist** add-on, only requests coming from IP addresses you trust can access your Meilisearch instance. All other requests are rejected.
+
+IP allowlist is only available on Meilisearch Cloud.
+
+<Note>
+The IP allowlist adds a network restriction on top of [API keys](/capabilities/security/how_to/manage_api_keys) and [tenant tokens](/capabilities/security/overview). It does not replace them: requests from allowed IP addresses still need a valid API key.
+</Note>
+
+## When to use an IP allowlist
+
+Use an IP allowlist when only a known, fixed set of machines should talk to your Meilisearch instance. Common examples include:
+
+- Your Meilisearch instance sits behind an internal proxy or API gateway
+- Only your backend servers query Meilisearch, and they have static outgoing IP addresses
+- Your company policy requires restricting access to your corporate network or VPN
+
+Do not use an IP allowlist if your users search directly from their browsers or mobile apps. In that case, requests come from your users' IP addresses, which you cannot know in advance. Use a [search API key](/capabilities/security/how_to/manage_api_keys) or [tenant tokens](/capabilities/security/overview) to protect public search instead.
+
+## How it works
+
+The allowlist is a list of IPv4 addresses and CIDR blocks configured for each project. Single IP addresses are saved as `/32` CIDR blocks.
+
+- If the list is **empty**, there is no restriction. Your instance accepts requests from any IP address.
+- If the list contains **at least one entry**, only requests from IP addresses inside those CIDR blocks are accepted.
+
+Requests from an IP address outside the allowlist receive a `403 Forbidden` response with the following message:
+
+```
+Access denied for this route or IP address
+```
+
+<Warning>
+Before saving your allowlist, make sure it includes every IP address that needs access to your instance: for example your servers, your proxies, and the networks your team works from. Requests from any address you forget are blocked immediately.
+</Warning>
+
+<Note>
+Meilisearch Cloud's own IP addresses always remain allowed. This lets the Meilisearch team monitor the health of your instance. You do not need to add them to your allowlist.
+</Note>
+
+## Prerequisites
+
+Before you enable the IP allowlist, make sure you have:
+
+- A [Meilisearch Cloud project](/capabilities/platform/infrastructure/create_a_project)
+- The list of public IPv4 addresses that need access to your instance (for example, your servers, proxies, or office network)
+
+## Pricing
+
+IP allowlist is a paid add-on billed **$10/month per project**. Each project can have up to **100 CIDR entries**.
+
+Enterprise customers should contact the Meilisearch team to enable the add-on.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Manage the IP allowlist" href="/capabilities/platform/security/manage_ip_allowlist">
+    Enable the add-on, then add, remove, and clear entries
+  </Card>
+  <Card title="Disable the IP allowlist" href="/capabilities/platform/security/disable_ip_allowlist">
+    Cancel the add-on and understand what happens to your rules
+  </Card>
+  <Card title="API keys and tenant tokens" href="/capabilities/security/overview">
+    Control who can read and write your data
+  </Card>
+</CardGroup>
