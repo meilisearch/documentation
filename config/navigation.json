@@ -346,10 +346,10 @@
             {
               "group": "How to",
               "pages": [
-                "capabilities/search_rules/how_to/pin_one_result_for_query",
                 "capabilities/search_rules/how_to/pin_multiple_results",
-                "capabilities/search_rules/how_to/curate_empty_query",
-                "capabilities/search_rules/how_to/schedule_promotion",
+                "capabilities/search_rules/how_to/boost_documents",
+                "capabilities/search_rules/how_to/deboost_documents",
+                "capabilities/search_rules/how_to/hide_documents",
                 "capabilities/search_rules/how_to/list_and_filter_rules",
                 "capabilities/search_rules/how_to/pause_a_rule"
               ]

@@ -1,0 +1,22 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/hide-discontinued' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Keep the discontinued products out of the results",
+    "active": true,
+    "actions": {
+      "scale": [
+        {
+          "indexUid": "products",
+          "filter": "discontinued = true",
+          "weight": 0
+        }
+      ]
+    }
+  }'
+```
+</CodeGroup>

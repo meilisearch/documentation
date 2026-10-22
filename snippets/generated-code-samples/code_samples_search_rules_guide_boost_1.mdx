@@ -1,0 +1,28 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/summer-sale' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Boost the products on sale during the summer sale",
+    "active": true,
+    "conditions": {
+      "time": {
+        "start": "2026-06-01T00:00:00Z",
+        "end": "2026-06-30T23:59:59Z"
+      }
+    },
+    "actions": {
+      "scale": [
+        {
+          "indexUid": "products",
+          "filter": "on_sale = true",
+          "weight": 1.5
+        }
+      ]
+    }
+  }'
+```
+</CodeGroup>

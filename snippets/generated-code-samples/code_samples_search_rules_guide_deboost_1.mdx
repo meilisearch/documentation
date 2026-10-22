@@ -1,0 +1,22 @@
+<CodeGroup>
+
+```bash cURL
+curl \
+  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/out-of-stock-last' \
+  -H 'Authorization: Bearer API_KEY' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "description": "Show the out-of-stock products after the others",
+    "active": true,
+    "actions": {
+      "scale": [
+        {
+          "indexUid": "products",
+          "filter": "stock = 0",
+          "weight": 0.5
+        }
+      ]
+    }
+  }'
+```
+</CodeGroup>
