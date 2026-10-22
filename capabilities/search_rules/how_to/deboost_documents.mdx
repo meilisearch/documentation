@@ -23,7 +23,7 @@ Click **Add action**.
 
 ![Deboost documents dialog with the index, the strength, and the filter](/assets/images/cloud-search-rules/deboost-action-dialog.png)
 
-Leave the **Conditions** block with its default values, so the rule applies to every search, then click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, out-of-stock products remain findable, but they come after the products you can ship.
+Leave the **Conditions** block with its default values, so the rule applies to every search, then click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, out-of-stock products remain findable, but they lose ground to the products you can ship.
 
 ## Set up on a self-hosted instance
 
@@ -52,7 +52,7 @@ Meilisearch answers with a summarized task containing a `taskUid`, because creat
 
 The rule applies to searches once this task reaches the `succeeded` status. To follow its progress, pass the `taskUid` to the [task API](/reference/api/tasks/get-task).
 
-From then on, a customer looking for an out-of-stock product still finds it, but every product you can ship right away comes first.
+From then on, out-of-stock products lose ground to the ones you can ship, and customers still find them. They do not always fall to the bottom: a product that matches the query much better than the others can still come first. Check a few typical searches and lower the weight if you want a stronger effect.
 
 ## Next steps
 
