@@ -1,6 +1,6 @@
 ---
 title: Disable the IP allowlist
-description: Cancel the IP allowlist add-on and understand what happens to your existing rules.
+description: Cancel the IP allowlist add-on, understand what happens to your existing rules, and reactivate it before the end of the billing cycle.
 ---
 
 You can disable the IP allowlist add-on at any time. Open your project's **Project Settings** tab, select **Security** in the side menu, and click **Disable add-on** in the **IP allowlist** block.
@@ -9,8 +9,18 @@ You can disable the IP allowlist add-on at any time. Open your project's **Proje
 
 Disabling the add-on does not remove your restrictions immediately:
 
-1. **Until the end of the current billing cycle**, the add-on stays active. The **Security** section shows the date on which it will be disabled. All your existing entries remain in place and keep restricting access. You can still edit or delete them during this period.
+1. **Until the end of the current billing cycle**, the add-on stays active. The **IP allowlist** block shows the date on which it will be disabled. All your existing entries remain in place and keep restricting access. You can still edit or delete them during this period.
 2. **At the end of the billing cycle**, the add-on is disabled and all entries are removed. Your instance accepts requests from any IP address again.
+
+## Reactivate the add-on
+
+If you change your mind before the end of the billing cycle, you can keep the add-on and your existing entries. In the **IP allowlist** block, click **reactivate the add-on** in the warning that shows the disable date.
+
+<Frame>
+  <img src="/assets/images/platform/security/6-reactivate-add-on.png" alt="IP allowlist block with the Allowlist enforced status, the list of allowed CIDR blocks, and a warning showing the date the add-on will be disabled with a link to reactivate it" />
+</Frame>
+
+The add-on is no longer scheduled for removal, and your allowlist keeps restricting access as before.
 
 ## Remove restrictions immediately
 

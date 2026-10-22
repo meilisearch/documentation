@@ -13,10 +13,10 @@ Collect every IP address that sends requests to your project before you start. O
 
 1. Log in to the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and open your project
 2. Click the **Project Settings** tab, then select **Security** in the side menu
-3. In the **IP allowlist** block, click **Enable IP allowlist** and confirm
+3. In the **Restrict access to your project with an IP allowlist** block, click **Enable add-on** and confirm
 
 <Frame>
-  <img src="/assets/images/platform/security/1-enable-add-on.png" alt="Security section of the Project Settings tab showing the disabled IP allowlist add-on and the Enable IP allowlist button" />
+  <img src="/assets/images/platform/security/1-enable-add-on.png" alt="Security section of the Project Settings tab showing the IP allowlist add-on presentation and the Enable add-on button" />
 </Frame>
 
 The add-on costs **$10/month per project**. Enterprise customers should contact the Meilisearch team to enable it.
@@ -37,7 +37,7 @@ Enabling the add-on does not restrict access by itself. As long as the allowlist
 
 Only valid IPv4 addresses and CIDR blocks are accepted. A counter below the field shows how many of the 100 available entries you are using.
 
-The confirmation step lists the entries that will be added and removed. Check them carefully, then click **Apply changes**. Click **Back** if you need to edit the list again.
+The confirmation step lists the entries that will be added and removed. Check them carefully, then click **Save changes**. Click **Back** if you need to edit the list again.
 
 <Frame>
   <img src="/assets/images/platform/security/3-confirm-allowlist-changes.png" alt="Confirm IP allowlist changes dialog listing the added CIDR blocks and a warning that requests from other IP addresses will be rejected" />
@@ -68,10 +68,10 @@ You can update the list of allowed CIDR blocks at any time. Changes apply to you
 3. In the **IP allowlist** block, click **Edit allowlist** (or **Add CIDR blocks** if the list is empty)
 4. Add, edit, or delete entries, one per line
 5. Click **Review changes** and check the list of entries that will be added and removed
-6. Click **Apply changes**
+6. Click **Save changes**
 
 <Frame>
-  <img src="/assets/images/platform/security/5-edit-access.png" alt="Confirm IP allowlist changes dialog listing the CIDR blocks that will be added and removed" />
+  <img src="/assets/images/platform/security/5-edit-access.png" alt="Confirm IP allowlist changes dialog listing the CIDR blocks that will be added and removed, with Back and Save changes buttons" />
 </Frame>
 
 <Warning>
@@ -80,7 +80,7 @@ Before removing an entry, make sure no server, proxy, or team member still sends
 
 ## Remove all restrictions
 
-An empty allowlist means no restriction. To allow requests from any IP address again, delete every entry from the list, then review and apply the changes. The **Network access** status switches back to **Open to all traffic**.
+An empty allowlist means no restriction. To allow requests from any IP address again, delete every entry from the list, then review and save the changes. The **Network access** status switches back to **Open to all traffic**.
 
 The add-on stays active, so you can add new entries later. If you no longer need IP filtering at all, you can also [disable the add-on](/capabilities/platform/security/disable_ip_allowlist).
 
