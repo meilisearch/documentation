@@ -415,8 +415,8 @@
               "group": "Security",
               "pages": [
                 "capabilities/platform/security/overview",
-                "capabilities/platform/security/how_to/manage_ip_allowlist",
-                "capabilities/platform/security/how_to/disable_ip_allowlist"
+                "capabilities/platform/security/manage_ip_allowlist",
+                "capabilities/platform/security/disable_ip_allowlist"
               ]
             },
             {
