@@ -4,6 +4,37 @@ description: "New features and improvements in Meilisearch"
 rss: true
 ---
 
+<Update label="v1.56" description="2026-10-26">
+
+## New Features
+
+### Approximate facet distribution with `sampledCount` sort
+
+Facet distribution now supports a new `sampledCount` sort option. This provides a faster, approximate estimate of facet distribution: per-facet document counts are exact, but the facet list is not exhaustive, meaning some facets that the `count` sort would include may be omitted.
+
+Use this when you need fast facet results and can accept a less complete facet list.
+
+## Improvements
+
+### Adaptive rate limiting for embedders during indexing
+
+Indexing now stops when the embedder cannot keep up with the workload. The new adaptive rate limiting behavior:
+- Tolerates slow embedders for small workloads while failing faster for large batches
+- Fails faster during embedder outages
+- Respects `Retry-After` headers from embedder APIs
+
+### General search performance optimization
+
+Internal improvements to search execution reduce overall query latency.
+
+### Corrected binary quantization state after embedder deletion
+
+A bug where binary quantization state was left in an incorrect state after deleting an embedder has been fixed.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.56.0)
+
+</Update>
+
 <Update label="v1.55" description="2026-10-12">
 
 ## New Features
