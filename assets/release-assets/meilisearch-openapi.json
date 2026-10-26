@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.55.0"
+    "version": "1.56.0"
   },
   "servers": [
     {
@@ -4608,7 +4608,7 @@
           "Settings"
         ],
         "summary": "Update chat",
-        "description": "Updates the `chat` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `chat` setting for the index.",
         "operationId": "patchchat",
         "parameters": [
           {
@@ -4623,10 +4623,19 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `chat` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChatSettings"
+                "$ref": "#/components/schemas/ChatSettings",
+                "example": {
+                  "description": "A movie database",
+                  "documentTemplate": "{{doc.title}}"
+                }
+              },
+              "example": {
+                "description": "A movie database",
+                "documentTemplate": "{{doc.title}}"
               }
             }
           },
@@ -4778,7 +4787,7 @@
           "Settings"
         ],
         "summary": "Update dictionary",
-        "description": "Updates the `dictionary` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `dictionary` setting for the index.",
         "operationId": "putdictionary",
         "parameters": [
           {
@@ -4793,6 +4802,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `dictionary` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -4800,8 +4810,16 @@
                 "items": {
                   "type": "string"
                 },
-                "uniqueItems": true
-              }
+                "uniqueItems": true,
+                "example": [
+                  "J. R. R.",
+                  "W. E. B."
+                ]
+              },
+              "example": [
+                "J. R. R.",
+                "W. E. B."
+              ]
             }
           },
           "required": true
@@ -5031,7 +5049,7 @@
           "Settings"
         ],
         "summary": "Update displayedAttributes",
-        "description": "Updates the `displayedAttributes` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `displayedAttributes` setting for the index.",
         "operationId": "putdisplayedAttributes",
         "parameters": [
           {
@@ -5046,14 +5064,27 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `displayedAttributes` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "type": "string"
-                }
-              }
+                },
+                "example": [
+                  "title",
+                  "overview",
+                  "genres",
+                  "release_date"
+                ]
+              },
+              "example": [
+                "title",
+                "overview",
+                "genres",
+                "release_date"
+              ]
             }
           },
           "required": true
@@ -5280,7 +5311,7 @@
           "Settings"
         ],
         "summary": "Update distinctAttribute",
-        "description": "Updates the `distinctAttribute` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `distinctAttribute` setting for the index.",
         "operationId": "putdistinctAttribute",
         "parameters": [
           {
@@ -5295,11 +5326,14 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `distinctAttribute` setting. Send `null` to reset it to its default value.",
           "content": {
             "text/plain": {
               "schema": {
-                "type": "string"
-              }
+                "type": "string",
+                "example": "movie_id"
+              },
+              "example": "movie_id"
             }
           },
           "required": true
@@ -5612,7 +5646,7 @@
           "Settings"
         ],
         "summary": "Update embedders",
-        "description": "Updates the `embedders` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `embedders` setting for the index.",
         "operationId": "patchembedders",
         "parameters": [
           {
@@ -5627,6 +5661,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `embedders` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -5636,6 +5671,22 @@
                 },
                 "propertyNames": {
                   "type": "string"
+                },
+                "example": {
+                  "default": {
+                    "source": "openAi",
+                    "apiKey": "OPENAI_API_KEY",
+                    "model": "text-embedding-3-small",
+                    "documentTemplate": "{{doc.title}}"
+                  }
+                }
+              },
+              "example": {
+                "default": {
+                  "source": "openAi",
+                  "apiKey": "OPENAI_API_KEY",
+                  "model": "text-embedding-3-small",
+                  "documentTemplate": "{{doc.title}}"
                 }
               }
             }
@@ -5784,7 +5835,7 @@
           "Settings"
         ],
         "summary": "Update facetSearch",
-        "description": "Updates the `facetSearch` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `facetSearch` setting for the index.",
         "operationId": "putfacetSearch",
         "parameters": [
           {
@@ -5799,11 +5850,14 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `facetSearch` setting. Send `null` to reset it to its default value.",
           "content": {
             "text/plain": {
               "schema": {
-                "type": "boolean"
-              }
+                "type": "boolean",
+                "example": true
+              },
+              "example": true
             }
           },
           "required": true
@@ -6110,7 +6164,7 @@
           "Settings"
         ],
         "summary": "Update faceting",
-        "description": "Updates the `faceting` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `faceting` setting for the index.",
         "operationId": "patchfaceting",
         "parameters": [
           {
@@ -6125,10 +6179,23 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `faceting` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FacetingSettings"
+                "$ref": "#/components/schemas/FacetingSettings",
+                "example": {
+                  "maxValuesPerFacet": 200,
+                  "sortFacetValuesBy": {
+                    "*": "alpha"
+                  }
+                }
+              },
+              "example": {
+                "maxValuesPerFacet": 200,
+                "sortFacetValuesBy": {
+                  "*": "alpha"
+                }
               }
             }
           },
@@ -6279,7 +6346,7 @@
           "Settings"
         ],
         "summary": "Update filterableAttributes",
-        "description": "Updates the `filterableAttributes` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `filterableAttributes` setting for the index.",
         "operationId": "putfilterableAttributes",
         "parameters": [
           {
@@ -6294,14 +6361,47 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `filterableAttributes` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/FilterableAttributesRule"
+                },
+                "example": [
+                  "genres",
+                  "director",
+                  {
+                    "attributePatterns": [
+                      "*_ratings"
+                    ],
+                    "features": {
+                      "facetSearch": false,
+                      "filter": {
+                        "equality": true,
+                        "comparison": true
+                      }
+                    }
+                  }
+                ]
+              },
+              "example": [
+                "genres",
+                "director",
+                {
+                  "attributePatterns": [
+                    "*_ratings"
+                  ],
+                  "features": {
+                    "facetSearch": false,
+                    "filter": {
+                      "equality": true,
+                      "comparison": true
+                    }
+                  }
                 }
-              }
+              ]
             }
           },
           "required": true
@@ -6531,7 +6631,7 @@
           "Settings"
         ],
         "summary": "Update foreignKeys",
-        "description": "Updates the `foreignKeys` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `foreignKeys` setting for the index.",
         "operationId": "putforeignKeys",
         "parameters": [
           {
@@ -6546,14 +6646,27 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `foreignKeys` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/ForeignKey"
+                },
+                "example": [
+                  {
+                    "foreignIndexUid": "directors",
+                    "fieldName": "director_id"
+                  }
+                ]
+              },
+              "example": [
+                {
+                  "foreignIndexUid": "directors",
+                  "fieldName": "director_id"
                 }
-              }
+              ]
             }
           },
           "required": true
@@ -6783,7 +6896,7 @@
           "Settings"
         ],
         "summary": "Update localizedAttributes",
-        "description": "Updates the `localizedAttributes` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `localizedAttributes` setting for the index.",
         "operationId": "putlocalizedAttributes",
         "parameters": [
           {
@@ -6798,14 +6911,35 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `localizedAttributes` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/LocalizedAttributesRuleView"
+                },
+                "example": [
+                  {
+                    "attributePatterns": [
+                      "*_ja"
+                    ],
+                    "locales": [
+                      "jpn"
+                    ]
+                  }
+                ]
+              },
+              "example": [
+                {
+                  "attributePatterns": [
+                    "*_ja"
+                  ],
+                  "locales": [
+                    "jpn"
+                  ]
                 }
-              }
+              ]
             }
           },
           "required": true
@@ -7036,7 +7170,7 @@
           "Settings"
         ],
         "summary": "Update nonSeparatorTokens",
-        "description": "Updates the `nonSeparatorTokens` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `nonSeparatorTokens` setting for the index.",
         "operationId": "putnonSeparatorTokens",
         "parameters": [
           {
@@ -7051,6 +7185,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `nonSeparatorTokens` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -7058,8 +7193,16 @@
                 "items": {
                   "type": "string"
                 },
-                "uniqueItems": true
-              }
+                "uniqueItems": true,
+                "example": [
+                  "@",
+                  "#"
+                ]
+              },
+              "example": [
+                "@",
+                "#"
+              ]
             }
           },
           "required": true
@@ -7366,7 +7509,7 @@
           "Settings"
         ],
         "summary": "Update pagination",
-        "description": "Updates the `pagination` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `pagination` setting for the index.",
         "operationId": "patchpagination",
         "parameters": [
           {
@@ -7381,10 +7524,17 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `pagination` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PaginationSettings"
+                "$ref": "#/components/schemas/PaginationSettings",
+                "example": {
+                  "maxTotalHits": 2000
+                }
+              },
+              "example": {
+                "maxTotalHits": 2000
               }
             }
           },
@@ -7532,7 +7682,7 @@
           "Settings"
         ],
         "summary": "Update prefixSearch",
-        "description": "Updates the `prefixSearch` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `prefixSearch` setting for the index.",
         "operationId": "putprefixSearch",
         "parameters": [
           {
@@ -7547,11 +7697,14 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `prefixSearch` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PrefixSearchSettings"
-              }
+                "$ref": "#/components/schemas/PrefixSearchSettings",
+                "example": "indexingTime"
+              },
+              "example": "indexingTime"
             }
           },
           "required": true
@@ -7778,7 +7931,7 @@
           "Settings"
         ],
         "summary": "Update proximityPrecision",
-        "description": "Updates the `proximityPrecision` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `proximityPrecision` setting for the index.",
         "operationId": "putproximityPrecision",
         "parameters": [
           {
@@ -7793,11 +7946,14 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `proximityPrecision` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ProximityPrecisionView"
-              }
+                "$ref": "#/components/schemas/ProximityPrecisionView",
+                "example": "byAttribute"
+              },
+              "example": "byAttribute"
             }
           },
           "required": true
@@ -8027,7 +8183,7 @@
           "Settings"
         ],
         "summary": "Update rankingRules",
-        "description": "Updates the `rankingRules` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `rankingRules` setting for the index.",
         "operationId": "putrankingRules",
         "parameters": [
           {
@@ -8042,14 +8198,31 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `rankingRules` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/RankingRuleView"
-                }
-              }
+                },
+                "example": [
+                  "words",
+                  "typo",
+                  "proximity",
+                  "attribute",
+                  "sort",
+                  "exactness"
+                ]
+              },
+              "example": [
+                "words",
+                "typo",
+                "proximity",
+                "attribute",
+                "sort",
+                "exactness"
+              ]
             }
           },
           "required": true
@@ -8278,7 +8451,7 @@
           "Settings"
         ],
         "summary": "Update searchCutoffMs",
-        "description": "Updates the `searchCutoffMs` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `searchCutoffMs` setting for the index.",
         "operationId": "putsearchCutoffMs",
         "parameters": [
           {
@@ -8293,13 +8466,16 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `searchCutoffMs` setting. Send `null` to reset it to its default value.",
           "content": {
             "text/plain": {
               "schema": {
                 "type": "integer",
                 "format": "u-int64",
-                "minimum": 0
-              }
+                "minimum": 0,
+                "example": 150
+              },
+              "example": 150
             }
           },
           "required": true
@@ -8529,7 +8705,7 @@
           "Settings"
         ],
         "summary": "Update searchableAttributes",
-        "description": "Updates the `searchableAttributes` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `searchableAttributes` setting for the index.",
         "operationId": "putsearchableAttributes",
         "parameters": [
           {
@@ -8544,14 +8720,25 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `searchableAttributes` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
                 "type": "array",
                 "items": {
                   "type": "string"
-                }
-              }
+                },
+                "example": [
+                  "title",
+                  "overview",
+                  "genres"
+                ]
+              },
+              "example": [
+                "title",
+                "overview",
+                "genres"
+              ]
             }
           },
           "required": true
@@ -8782,7 +8969,7 @@
           "Settings"
         ],
         "summary": "Update separatorTokens",
-        "description": "Updates the `separatorTokens` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `separatorTokens` setting for the index.",
         "operationId": "putseparatorTokens",
         "parameters": [
           {
@@ -8797,6 +8984,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `separatorTokens` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -8804,8 +8992,16 @@
                 "items": {
                   "type": "string"
                 },
-                "uniqueItems": true
-              }
+                "uniqueItems": true,
+                "example": [
+                  "|",
+                  "&"
+                ]
+              },
+              "example": [
+                "|",
+                "&"
+              ]
             }
           },
           "required": true
@@ -9036,7 +9232,7 @@
           "Settings"
         ],
         "summary": "Update sortableAttributes",
-        "description": "Updates the `sortableAttributes` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `sortableAttributes` setting for the index.",
         "operationId": "putsortableAttributes",
         "parameters": [
           {
@@ -9051,6 +9247,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `sortableAttributes` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -9058,8 +9255,16 @@
                 "items": {
                   "type": "string"
                 },
-                "uniqueItems": true
-              }
+                "uniqueItems": true,
+                "example": [
+                  "release_date",
+                  "rating"
+                ]
+              },
+              "example": [
+                "release_date",
+                "rating"
+              ]
             }
           },
           "required": true
@@ -9290,7 +9495,7 @@
           "Settings"
         ],
         "summary": "Update stopWords",
-        "description": "Updates the `stopWords` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `stopWords` setting for the index.",
         "operationId": "putstopWords",
         "parameters": [
           {
@@ -9305,6 +9510,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `stopWords` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -9312,8 +9518,18 @@
                 "items": {
                   "type": "string"
                 },
-                "uniqueItems": true
-              }
+                "uniqueItems": true,
+                "example": [
+                  "of",
+                  "the",
+                  "to"
+                ]
+              },
+              "example": [
+                "of",
+                "the",
+                "to"
+              ]
             }
           },
           "required": true
@@ -9549,7 +9765,7 @@
           "Settings"
         ],
         "summary": "Update synonyms",
-        "description": "Updates the `synonyms` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `synonyms` setting for the index.",
         "operationId": "putsynonyms",
         "parameters": [
           {
@@ -9564,6 +9780,7 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `synonyms` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
@@ -9576,7 +9793,25 @@
                 },
                 "propertyNames": {
                   "type": "string"
+                },
+                "example": {
+                  "wolverine": [
+                    "xmen",
+                    "logan"
+                  ],
+                  "logan": [
+                    "wolverine"
+                  ]
                 }
+              },
+              "example": {
+                "wolverine": [
+                  "xmen",
+                  "logan"
+                ],
+                "logan": [
+                  "wolverine"
+                ]
               }
             }
           },
@@ -9884,7 +10119,7 @@
           "Settings"
         ],
         "summary": "Update typoTolerance",
-        "description": "Updates the `typoTolerance` setting for the index. Send the new value in the request body; send null to reset to default.",
+        "description": "Updates the `typoTolerance` setting for the index.",
         "operationId": "patchtypoTolerance",
         "parameters": [
           {
@@ -9899,10 +10134,37 @@
           }
         ],
         "requestBody": {
+          "description": "The new value for the `typoTolerance` setting. Send `null` to reset it to its default value.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TypoSettings"
+                "$ref": "#/components/schemas/TypoSettings",
+                "example": {
+                  "enabled": true,
+                  "minWordSizeForTypos": {
+                    "oneTypo": 5,
+                    "twoTypos": 9
+                  },
+                  "disableOnWords": [
+                    "Star"
+                  ],
+                  "disableOnAttributes": [
+                    "title"
+                  ]
+                }
+              },
+              "example": {
+                "enabled": true,
+                "minWordSizeForTypos": {
+                  "oneTypo": 5,
+                  "twoTypos": 9
+                },
+                "disableOnWords": [
+                  "Star"
+                ],
+                "disableOnAttributes": [
+                  "title"
+                ]
               }
             }
           },
@@ -13711,17 +13973,11 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "The model does not call a function, and responds to the end-user.",
             "enum": [
-              "none"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "The model can pick between an end-user or calling a function.",
-            "enum": [
+              "none",
               "auto"
-            ]
+            ],
+            "description": "- `none`: The model does not call a function, and responds to the end-user.\n- `auto`: The model can pick between an end-user or calling a function."
           },
           {
             "type": "object",
@@ -14595,18 +14851,8 @@
           {
             "type": "string",
             "enum": [
-              "none"
-            ]
-          },
-          {
-            "type": "string",
-            "enum": [
-              "auto"
-            ]
-          },
-          {
-            "type": "string",
-            "enum": [
+              "none",
+              "auto",
               "required"
             ]
           },
@@ -16740,7 +16986,8 @@
         "type": "string",
         "enum": [
           "alpha",
-          "count"
+          "count",
+          "sampledCount"
         ]
       },
       "FacetingSettings": {
@@ -17195,17 +17442,11 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "The filter satifies all constraints in the condition",
             "enum": [
-              "satisfied"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "No filter condition",
-            "enum": [
+              "satisfied",
               "noConstraint"
-            ]
+            ],
+            "description": "- `satisfied`: The filter satifies all constraints in the condition\n- `noConstraint`: No filter condition"
           },
           {
             "type": "object",
@@ -17337,12 +17578,13 @@
       "FilterableAttributesRule": {
         "oneOf": [
           {
-            "type": "string"
+            "$ref": "#/components/schemas/FilterableAttributesPatterns"
           },
           {
-            "$ref": "#/components/schemas/FilterableAttributesPatterns"
+            "type": "string"
           }
-        ]
+        ],
+        "description": "A rule declaring which attributes can be used for filtering and faceting.\n\nA rule takes one of two forms. The object form lists attribute patterns\ntogether with the filtering and faceting features they enable. The string\nform names a single attribute and is a shorthand for an object matching that\nattribute with the default features."
       },
       "FinishReason": {
         "type": "string",
@@ -19471,17 +19713,11 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "The query contains all the words of the condition",
             "enum": [
-              "satisfied"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "No query words condition",
-            "enum": [
+              "satisfied",
               "noConstraint"
-            ]
+            ],
+            "description": "- `satisfied`: The query contains all the words of the condition\n- `noConstraint`: No query words condition"
           },
           {
             "type": "object",
@@ -19512,59 +19748,17 @@
         "oneOf": [
           {
             "type": "string",
-            "description": "Sorted by decreasing number of matched query terms.",
             "enum": [
-              "words"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Sorted by increasing number of typos.",
-            "enum": [
-              "typo"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Sorted by increasing distance between matched query terms.",
-            "enum": [
-              "proximity"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Documents with query words contained in more important\nattributes and at a closer-to-the-front position in it\nare considered better.",
-            "enum": [
-              "attribute"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Documents with query words contained in more important\nattributes are considered better. Position of the\nquery words in an attribute is not considered.",
-            "enum": [
-              "attributeRank"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Documents with query words that are closer to the front\nof an attribute are considered better. Attribute rank\nis not considered.",
-            "enum": [
-              "wordPosition"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Dynamically sort at query time the documents. None, one or multiple\nAsc/Desc sortable attributes can be used in place of this criterion at\nquery time.",
-            "enum": [
-              "sort"
-            ]
-          },
-          {
-            "type": "string",
-            "description": "Sorted by the similarity of the matched words with the query words.",
-            "enum": [
+              "words",
+              "typo",
+              "proximity",
+              "attribute",
+              "attributeRank",
+              "wordPosition",
+              "sort",
               "exactness"
-            ]
+            ],
+            "description": "- `words`: Sorted by decreasing number of matched query terms.\n- `typo`: Sorted by increasing number of typos.\n- `proximity`: Sorted by increasing distance between matched query terms.\n- `attribute`: Documents with query words contained in more important\nattributes and at a closer-to-the-front position in it\nare considered better.\n- `attributeRank`: Documents with query words contained in more important\nattributes are considered better. Position of the\nquery words in an attribute is not considered.\n- `wordPosition`: Documents with query words that are closer to the front\nof an attribute are considered better. Attribute rank\nis not considered.\n- `sort`: Dynamically sort at query time the documents. None, one or multiple\nAsc/Desc sortable attributes can be used in place of this criterion at\nquery time.\n- `exactness`: Sorted by the similarity of the matched words with the query words."
           },
           {
             "type": "object",
@@ -19592,7 +19786,8 @@
               }
             }
           }
-        ]
+        ],
+        "description": "A single ranking rule.\n\nAccepts one of the built-in rules (`words`, `typo`, `proximity`,\n`attribute`, `attributeRank`, `wordPosition`, `sort`, `exactness`) or a sort\nrule of the form `attribute:asc` or `attribute:desc`."
       },
       "RankingScoreThreshold": {
         "type": "number",
@@ -21102,8 +21297,20 @@
             },
             "description": "Attributes that can be used as [filters](https://www.meilisearch.com/docs/learn/filtering_and_sorting/filter_search_results) and [facets](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters). Strings or objects with `attributePatterns` and `features`.",
             "example": [
-              "release_date",
-              "genre"
+              "genres",
+              "director",
+              {
+                "attributePatterns": [
+                  "*_ratings"
+                ],
+                "features": {
+                  "facetSearch": false,
+                  "filter": {
+                    "equality": true,
+                    "comparison": true
+                  }
+                }
+              }
             ],
             "default": []
           },
@@ -21451,8 +21658,20 @@
             },
             "description": "Attributes that can be used as [filters](https://www.meilisearch.com/docs/learn/filtering_and_sorting/filter_search_results) and [facets](https://www.meilisearch.com/docs/learn/filtering_and_sorting/search_with_facet_filters). Strings or objects with `attributePatterns` and `features`.",
             "example": [
-              "release_date",
-              "genre"
+              "genres",
+              "director",
+              {
+                "attributePatterns": [
+                  "*_ratings"
+                ],
+                "features": {
+                  "facetSearch": false,
+                  "filter": {
+                    "equality": true,
+                    "comparison": true
+                  }
+                }
+              }
             ],
             "default": []
           },
