@@ -8262,11 +8262,11 @@
           },
           {
             "lang": "JS",
-            "source": "client.index('books').updateFaceting({\n  maxValuesPerFacet: 2\n  sortFacetValuesBy: {\n    '*': 'alpha',\n    genres: 'count'\n  }\n})"
+            "source": "client.index('books').updateFaceting({\n  maxValuesPerFacet: 2,\n  sortFacetValuesBy: {\n    '*': 'alpha',\n    genres: 'count',\n    language: 'sampledCount'\n  }\n})"
           },
           {
             "lang": "PHP",
-            "source": "$client->index('books')->updateFaceting([\n  'maxValuesPerFacet' => 2,\n  'sortFacetValuesBy' => ['*' => 'alpha', 'genres' => 'count']\n]);"
+            "source": "$client->index('books')->updateFaceting([\n  'maxValuesPerFacet' => 2,\n  'sortFacetValuesBy' => ['*' => 'alpha', 'genres' => 'count', 'language' => 'sampledCount']\n]);"
           },
           {
             "lang": "Python",
