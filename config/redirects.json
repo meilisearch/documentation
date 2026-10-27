@@ -4726,5 +4726,9 @@
   {
     "source": "/capabilities/conversational_search/advanced/chats_api",
     "destination": "/capabilities/agentic_search/advanced/chats_api"
+  },
+  {
+    "source": "/reference/api/template/render-template",
+    "destination": "/reference/api/render-templates/render-template"
   }
 ]
