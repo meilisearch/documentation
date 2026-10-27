@@ -14597,7 +14597,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.index('movies').getStats()"
+            "source": "client.index('movies').getStats({ showInternalDatabaseSizes: true, sizeFormat: 'human' })"
           },
           {
             "lang": "PHP",
@@ -16276,7 +16276,7 @@
           },
           {
             "lang": "JS",
-            "source": "client.getStats()"
+            "source": "client.getStats({ showInternalDatabaseSizes: true, sizeFormat: 'human' })"
           },
           {
             "lang": "PHP",
