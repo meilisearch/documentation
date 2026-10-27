@@ -9,7 +9,18 @@ const RELEASE_ASSETS_DIR = path.join(REPO_ROOT, "assets", "engine-release-assets
 const CLOUD_ASSETS_DIR = path.join(REPO_ROOT, "assets", "cloud-assets");
 const SOURCE_ERROR_CODES = path.join(RELEASE_ASSETS_DIR, "meilisearch-error-codes.json");
 const SOURCE_CLOUD_ERROR_CODES = path.join(CLOUD_ASSETS_DIR, "meilisearch-cloud-error-codes.json");
-const TARGET_ERROR_CODES = path.join(REPO_ROOT, "reference", "errors", "error_codes.mdx");
+// The two error pages are hand-written: the generated code lists are injected
+// between the markers below, so the prose around them stays editable and the
+// `#<code>` anchors the APIs link to live in the page itself.
+const TARGET_MEILISEARCH_ERRORS = path.join(REPO_ROOT, "reference", "errors.mdx");
+const TARGET_MANAGEMENT_ERRORS = path.join(
+  REPO_ROOT,
+  "reference",
+  "management-api-errors.mdx"
+);
+
+const GENERATED_START = "{/* generated:error-codes:start */}";
+const GENERATED_END = "{/* generated:error-codes:end */}";
 
 // The Cloud locale file documents every error the Meilisearch Cloud backend can
 // return, including the ones raised by dashboard-only flows: sign-up, sign-in,
@@ -97,6 +108,27 @@ function formatManagementCodes(errorCodes) {
   return { text: sections.join("\n"), skipped };
 }
 
+// Replaces the generated block of a hand-written page, leaving its prose alone.
+function injectGeneratedCodes(targetPath, codesText) {
+  if (!fs.existsSync(targetPath)) {
+    throw new Error(`Target page not found: ${targetPath}`);
+  }
+
+  const page = fs.readFileSync(targetPath, "utf8");
+  const start = page.indexOf(GENERATED_START);
+  const end = page.indexOf(GENERATED_END);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error(
+      `Target page ${targetPath} is missing the "${GENERATED_START}" / "${GENERATED_END}" markers.`
+    );
+  }
+
+  const before = page.slice(0, start + GENERATED_START.length);
+  const after = page.slice(end);
+  fs.writeFileSync(targetPath, `${before}\n\n${codesText}\n${after}`, "utf8");
+  console.log(`Written: ${targetPath}`);
+}
+
 async function main() {
   if (!fs.existsSync(SOURCE_ERROR_CODES)) {
     throw new Error(`Source error codes file not found: ${SOURCE_ERROR_CODES}`);
@@ -114,29 +146,8 @@ async function main() {
   const meilisearchText = formatMeilisearchCodes(meilisearchCodes);
   const { text: managementText, skipped } = formatManagementCodes(cloudCodes);
 
-  fs.writeFileSync(
-    TARGET_ERROR_CODES,
-    `---
-title: Error codes
-sidebarTitle: Error codes
-description: An exhaustive list of the error codes returned by the Meilisearch API and the Management API.
----
-
-Every Meilisearch error response contains a \`code\` field identifying the error. This page lists every code the two APIs can return. For the status codes, error types, and response format, see the [errors overview](/reference/errors/overview).
-
-## Meilisearch API error codes
-
-These codes are returned by the [Meilisearch API](/reference/api/authorization), both on Meilisearch Cloud and self-hosted deployments.
-
-${meilisearchText}
-## Management API error codes
-
-These codes are returned by the [Management API](/reference/management-api/authentication). They are only available on Meilisearch Cloud. Each code is listed with the HTTP status code and the \`message.title\` accompanying it.
-
-${managementText}`,
-    "utf8"
-  );
-  console.log(`Written: ${TARGET_ERROR_CODES}`);
+  injectGeneratedCodes(TARGET_MEILISEARCH_ERRORS, meilisearchText);
+  injectGeneratedCodes(TARGET_MANAGEMENT_ERRORS, managementText);
 
   if (skipped.length > 0) {
     console.log(

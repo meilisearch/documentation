@@ -209,7 +209,7 @@
   },
   {
     "source": "/reference/api/error_codes",
-    "destination": "/reference/errors/error_codes"
+    "destination": "/reference/errors"
   },
   {
     "source": "/reference/api/fields",
@@ -749,7 +749,7 @@
   },
   {
     "source": "/errors",
-    "destination": "/reference/errors/error_codes"
+    "destination": "/reference/errors"
   },
   {
     "source": "/learn/what_is_meilisearch/sdks",
@@ -2313,7 +2313,7 @@
   },
   {
     "source": "/learn/advanced/error_codes",
-    "destination": "/reference/errors/error_codes"
+    "destination": "/reference/errors"
   },
   {
     "source": "/learn/experimental_features/embedders",
@@ -2713,7 +2713,7 @@
   },
   {
     "source": "/reference/errors/vector_embedding_error",
-    "destination": "/reference/errors/error_codes"
+    "destination": "/reference/errors"
   },
   {
     "source": "/reference/api/settings/faceting",
@@ -3665,7 +3665,7 @@
   },
   {
     "source": "/errors/meili_data",
-    "destination": "/reference/errors/error_codes"
+    "destination": "/reference/errors"
   },
   {
     "source": "/resources/sdks",
@@ -4730,5 +4730,13 @@
   {
     "source": "/reference/api/template/render-template",
     "destination": "/reference/api/render-templates/render-template"
+  },
+  {
+    "source": "/reference/errors/error_codes",
+    "destination": "/reference/errors"
+  },
+  {
+    "source": "/reference/errors/overview",
+    "destination": "/reference/errors"
   }
 ]

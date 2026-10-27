@@ -110,7 +110,7 @@ npm run generate-mintlify-openapi-file -- --with-code-samples assets/engine-rele
 # Cloud (no code samples): writes assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml
 npm run generate-mintlify-openapi-file -- assets/cloud-assets/meilisearch-cloud-openapi.yaml
 ```
-3. **Generate the error code mdx file** (reads `assets/engine-release-assets/meilisearch-error-codes.json` and outputs `reference/errors/error_codes.mdx`):
+3. **Generate the error code lists** (reads `assets/engine-release-assets/meilisearch-error-codes.json` and `assets/cloud-assets/meilisearch-cloud-error-codes.json`, and injects the code lists into `reference/errors.mdx` and `reference/management-api-errors.mdx` between their `generated:error-codes` markers, leaving the surrounding prose untouched):
 
 ```bash
 npm run generate-error-codes

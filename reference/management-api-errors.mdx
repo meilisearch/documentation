@@ -1,0 +1,440 @@
+---
+title: Errors
+sidebarTitle: Errors
+description: How the Management API reports errors, with its status codes, error types, response format, and the exhaustive list of its error codes.
+---
+
+The Management API reports a failed request with a standard HTTP status code and a JSON body describing what went wrong. The body always contains a `code` field identifying the error. Branch on that `code` rather than on the human-readable `message`, which may change between releases.
+
+The Management API is only available on Meilisearch Cloud. The [Meilisearch API](/reference/api/authorization) reports its errors separately, in the same format. See [Meilisearch API errors](/reference/errors).
+
+## Status codes
+
+The Management API uses the following standard HTTP codes for a successful or failed API request:
+
+| Status code | Description                                                                                                     |
+| :---------- | :--------------------------------------------------------------------------------------------------------------- |
+| 200         | ✅ **Ok** Everything worked as expected.                                                                        |
+| 201         | ✅ **Created** The resource has been created                                                                    |
+| 202         | ✅ **Accepted** The operation has been accepted and is running in the background                                |
+| 204         | ✅ **No Content** The resource has been deleted or no content has been returned                                 |
+| 400         | ❌ **Bad Request** The request was unacceptable, often due to a missing or malformed parameter                  |
+| 401         | ❌ **Unauthorized** No valid personal access token provided                                                     |
+| 403         | ❌ **Forbidden** The token doesn't have the permissions to perform the request, or a plan limit has been reached |
+| 404         | ❌ **Not Found** The requested resource doesn't exist                                                           |
+| 409         | ❌ **Conflict** The resource conflicts with an existing one, such as a duplicate project name                   |
+| 422         | ❌ **Unprocessable Content** The request is well-formed but was rejected, usually after validation              |
+| 423         | ❌ **Locked** The resource is temporarily unavailable, such as a project that is not running                    |
+| 500         | ❌ **Internal Server Error** Something went wrong on the Meilisearch Cloud side                                 |
+
+## Error types
+
+Every error response carries a `type` field describing the broad category of the failure. It is derived from the HTTP status code:
+
+| Type                  | Description                                                                              |
+| :-------------------- | :---------------------------------------------------------------------------------------- |
+| **`auth`**            | The personal access token is missing or invalid. It is accompanied by the HTTP code `401` |
+| **`invalid_request`** | The request was rejected, usually because of its input. It is accompanied by any other HTTP code `4xx` |
+| **`internal`**        | Something went wrong on the Meilisearch Cloud side. It is accompanied by the HTTP code `5xx` |
+
+## Error format
+
+```json
+{
+  "message": "Project not found",
+  "code": "project_not_found",
+  "type": "invalid_request",
+  "link": "https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found"
+}
+```
+
+| Field         | Description                                       |
+| :------------ | :------------------------------------------------ |
+| **`message`** | Human-readable description of the error           |
+| **`code`**    | [Error code](#error-codes)                        |
+| **`type`**    | [Type](#error-types) of error returned            |
+| **`link`**    | Link to the relevant section of the documentation |
+
+### Validation errors
+
+When a request fails validation, the body carries an additional `errors` array with one entry per rejected field:
+
+```json
+{
+  "message": "Validation error",
+  "code": "validation_error",
+  "type": "invalid_request",
+  "link": "https://www.meilisearch.com/docs/reference/management-api-errors#validation_error",
+  "errors": [
+    {
+      "field": "teamId",
+      "code": "blank",
+      "message": "Team can't be blank"
+    }
+  ]
+}
+```
+
+| Field                | Description                                                 |
+| :------------------- | :----------------------------------------------------------- |
+| **`errors[].field`** | Name of the rejected field, in camelCase as in the request   |
+| **`errors[].code`**  | Stable identifier of the validation failure                  |
+| **`errors[].message`** | Human-readable description of the validation failure       |
+
+## Error codes
+
+These codes are returned by the Management API. Each one is listed with the HTTP status code and the `message` accompanying it.
+
+{/* generated:error-codes:start */}
+
+### `bad_request`
+
+`400` **Bad request**
+
+There is an error in your request
+
+### `billing_internal_error`
+
+`500` **Billing internal error**
+
+We have a problem regarding your billing. Please contact support
+
+### `change_plan_action_in_progress`
+
+`422` **Unable to change plan as an action is already in progress**
+
+Unable to change plan because an action is already in progress
+
+### `change_plan_failed_state`
+
+`422` **Impossible to change plan**
+
+Unable to change plan for this project, it is either in failed or update_failed state
+
+### `change_plan_region_invalid`
+
+`422` **Unable to change project region**
+
+Project region can not be modified
+
+### `change_plan_resource_invalid`
+
+`422` **Unable to change plan to the specified resource**
+
+### `forbidden`
+
+`403` **Forbidden request**
+
+Token has no right to perform this request
+
+### `internal_server_error`
+
+`500` **Internal server error**
+
+There is an error in the server, please contact support
+
+### `missing_parameter`
+
+`422` **Missing request parameter**
+
+### `not_found`
+
+`404` **Not found**
+
+Resource could not be found
+
+### `organization_delete_error`
+
+`500` **Unable to delete organization**
+
+There was a problem deleting this organization. Please contact support.
+
+### `organization_deletion_has_addons`
+
+`403` **Unable to delete organization because it still has active add-ons**
+
+Disable every add-on of this organization before deleting it
+
+### `organization_deletion_has_item_subscription`
+
+`403` **Unable to delete organization because its subscription still has items**
+
+Please contact support to delete this organization
+
+### `organization_deletion_has_project`
+
+`403` **Unable to delete organization because at least one active project has been found**
+
+Delete every project in this organization before deleting the organization
+
+### `organization_deletion_last_organization`
+
+`403` **Unable to delete your last organization**
+
+You must keep access to at least one organization
+
+### `organization_deletion_not_self_serve`
+
+`403` **Unable to delete an organization that is not self-serve**
+
+Please contact support to delete this organization
+
+### `organization_limit_reached`
+
+`403` **Organization limit reached**
+
+You have reached the maximum number of organizations allowed. Please contact support to increase it.
+
+### `organization_not_self_serve`
+
+`403` **Operation not allowed**
+
+This operation is not available for your organization. Please contact support.
+
+### `project_billing_address_missing`
+
+`422` **Missing billing address**
+
+The customer billing address is missing
+
+### `project_billing_information_missing`
+
+`422` **Missing billing information**
+
+The billing information are missing
+
+### `project_cannot_be_updated`
+
+`423` **Cannot update now**
+
+The project cannot be updated in its current state: maybe it's already updating, or it's not running at the moment?
+
+### `project_create_error`
+
+`500` **Unable to create project**
+
+There was a problem creating this project
+
+### `project_create_name_exists`
+
+`409` **Project name already exists**
+
+This project name is already used in a different project. Please try with a different project name.
+
+### `project_delete_error`
+
+`500` **Unable to delete project**
+
+There was a problem deleting this project
+
+### `project_export_error`
+
+`422` **Unable to export project**
+
+There was a problem exporting this project
+
+### `project_limit_reached`
+
+`403` **Project limit reached**
+
+You have reached the maximum number of projects allowed. Please contact support to increase it.
+
+### `project_manual_update_disabled`
+
+`423` **Cannot update instance**
+
+To update your instance, please contact our support team. We'll help you schedule and perform the update while ensuring minimal disruption to your service.
+
+### `project_master_key_rotation_failed`
+
+`500` **Unable to rotate master key**
+
+There was a problem rotating the master key of this project. Please contact support
+
+### `project_master_key_rotation_unavailable`
+
+`423` **Cannot rotate master key now**
+
+The master key can only be rotated while the project is running or failed
+
+### `project_name_invalid`
+
+`422` **Invalid project name**
+
+The project's name should be between 3 and 40 characters
+
+### `project_not_found`
+
+`404` **Project not found**
+
+Project does not exist
+
+### `project_payment_method_missing`
+
+`422` **Missing payment method**
+
+The payment method is missing
+
+### `project_resource_invalid`
+
+`422` **Invalid resource for project**
+
+The resource specified for this project is invalid or doesn't exist
+
+### `project_resource_missing`
+
+`422` **Missing resource for project**
+
+The resource is missing
+
+### `project_team_invalid`
+
+`403` **Invalid team ID for project**
+
+The team ID is incorrect
+
+### `project_team_missing`
+
+`422` **Missing team ID for project**
+
+The team ID is missing
+
+### `project_update_invalid_version`
+
+`422` **Selected version cannot be lower than current version**
+
+Downgrading an instance to an older Meilisearch version is not supported
+
+### `project_update_same_version`
+
+`422` **Invalid version**
+
+The project is already running this version
+
+### `project_update_version_invalid`
+
+`422` **Version is invalid**
+
+The version specified for this update is invalid or doesn't exist
+
+### `project_version_invalid`
+
+`422` **Invalid version for project**
+
+The version specified for this project is invalid or doesn't exist
+
+### `project_version_missing`
+
+`422` **Missing version for project**
+
+The version is missing
+
+### `team_create_error`
+
+`500` **Unable to create team**
+
+There was a problem creating this team
+
+### `team_delete_error`
+
+`500` **Unable to delete team**
+
+There was a problem deleting this team. Please contact support.
+
+### `team_deletion_has_addons`
+
+`403` **Unable to delete team because it still has active add-ons**
+
+Disable every add-on assigned to this team before deleting it
+
+### `team_deletion_has_project`
+
+`403` **Unable to delete team because at least one active project has been found**
+
+Delete every project in this team before deleting the team
+
+### `team_deletion_is_default_team`
+
+`403` **Unable to delete the default team**
+
+This is the default team of the organization. Please set another default team first.
+
+### `team_deletion_last_team`
+
+`403` **Unable to delete the last team**
+
+An organization must keep at least one team
+
+### `team_invitation_token_invalid`
+
+`422` **Invitation token is invalid**
+
+The invitation token is invalid or doesn't exist
+
+### `team_name_invalid`
+
+`422` **Invalid team name**
+
+The team's name should be between 3 and 40 characters
+
+### `team_owner_cant_be_removed`
+
+`400` **Team Owner can not be removed**
+
+The specified User is the Owner of the Team, and can't be removed from the Team
+
+### `team_user_already_invited`
+
+`400` **User has already been invited**
+
+The specified User has a pending invitation to the team
+
+### `team_user_is_member_already`
+
+`400` **User is already a member of the Team**
+
+The specified User is already a member of the team
+
+### `team_user_is_not_member`
+
+`400` **User is not a member of the Team**
+
+The specified User is not a member of the team
+
+### `transition_error`
+
+`422` **Transition error**
+
+### `unauthorized`
+
+`401` **Unauthorized request**
+
+Token is invalid or missing
+
+### `unprocessable_content`
+
+`422` **Unprocessable content**
+
+### `usage_invalid_range`
+
+`422` **Invalid usage date range**
+
+from and to must be ISO 8601 dates (YYYY-MM-DD) and from must not be after to
+
+### `usage_range_too_large`
+
+`422` **Usage date range too large**
+
+The usage date range can not exceed 93 days
+
+### `user_not_entitled_to_free_trial`
+
+`422` **Cannot create a free trial project**
+
+The user is not entitled to a free trial at the moment
+
+### `validation_error`
+
+`422` **Validation error**
+
+{/* generated:error-codes:end */}
