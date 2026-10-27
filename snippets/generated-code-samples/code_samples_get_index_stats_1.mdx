@@ -7,7 +7,7 @@ curl \
 ```
 
 ```javascript JS
-client.index('movies').getStats()
+client.index('movies').getStats({ showInternalDatabaseSizes: true, sizeFormat: 'human' })
 ```
 
 ```python Python
