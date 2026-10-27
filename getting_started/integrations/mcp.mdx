@@ -34,11 +34,9 @@ The default Search API key does not have permissions for `indexes.get` and `docu
 
 ## Connect an MCP client
 
-Register `https://your-host/mcp` as a remote MCP server and send the API key you created as a bearer token in the `Authorization` header. There is no OAuth flow. The API key is the only credential.
+Register `https://your-host/mcp` as a remote MCP server and send the API key you created as a bearer token in the `Authorization` header: `Authorization: Bearer YOUR_API_KEY`. There is no OAuth flow. The API key is the only credential, so if your client asks for a sign-in method, choose none.
 
-Most clients allow configuring MCP servers through their UI. Some clients prefer configuration files, or accept configuration through CLI commands.
-
-In Claude.ai, add Meilisearch as a [custom connector](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) with no sign-in, and set the `Authorization` header to `Bearer YOUR_API_KEY`.
+Most clients allow configuring MCP servers through their UI, for example as a custom connector. Some clients prefer configuration files, or accept configuration through CLI commands.
 
 <CodeGroup>
 
@@ -64,7 +62,11 @@ For ChatGPT, only the desktop app and Codex CLI work.
 Meilisearch uses MCP protocol version `2026-07-28`. Enable that version by setting `mcp_2026_07_28 = true` under `[features]` in `~/.codex/config.toml`, as shown in the Codex example. This flag is an [experimental workaround](https://github.com/openai/codex/issues/33952#issuecomment-5729806585). Restart the ChatGPT desktop app after you save the file. Quit Codex CLI and start it again.
 </Warning>
 
-See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/mcp) documentation for more information on how to configure MCP servers with custom headers.
+For more information on how to configure MCP servers with custom headers, read the documentation for your client:
+
+- [Claude (web)](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp)
+- [Claude Code](https://code.claude.com/docs/en/mcp-servers)
+- [Codex](https://developers.openai.com/codex/mcp)
 
 ## Available tools
 
