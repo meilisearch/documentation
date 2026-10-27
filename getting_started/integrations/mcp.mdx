@@ -38,6 +38,8 @@ Register `https://your-host/mcp` as a remote MCP server and send the API key you
 
 Most clients allow configuring MCP servers through their UI. Some clients prefer configuration files, or accept configuration through CLI commands.
 
+In Claude.ai, add Meilisearch as a [custom connector](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) with no sign-in, and set the `Authorization` header to `Bearer YOUR_API_KEY`.
+
 <CodeGroup>
 
 ```bash Claude Code
@@ -63,18 +65,6 @@ Meilisearch uses MCP protocol version `2026-07-28`. Enable that version by setti
 </Warning>
 
 See the [Claude Code](https://code.claude.com/docs/en/mcp-servers) and [Codex](https://developers.openai.com/codex/mcp) documentation for more information on how to configure MCP servers with custom headers.
-
-### Claude.ai
-
-Claude.ai connects through a custom connector:
-
-1. In Claude.ai, open **Settings** and go to **Connectors**
-2. Select **Add custom connector**
-3. Enter `https://your-host/mcp` as the MCP server URL
-4. Choose no sign-in, since Meilisearch does not use OAuth for the MCP route
-5. Add an `Authorization` header with the value `Bearer YOUR_API_KEY`
-
-See the Claude [custom connectors documentation](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) if the connector screens differ from these steps.
 
 ## Available tools
 
