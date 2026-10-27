@@ -69,7 +69,7 @@ client.Index("books").UpdateFaceting(&meilisearch.Faceting{
     MaxValuesPerFacet: 2,
     SortFacetValuesBy: {
        "*":      SortFacetTypeAlpha,
-       "genres": SortFacetTypeCount,
+       "genres": SortFacetTypeSampledCount,
     }
 })
 ```
