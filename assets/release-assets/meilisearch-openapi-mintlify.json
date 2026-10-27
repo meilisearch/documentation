@@ -8282,7 +8282,7 @@
           },
           {
             "lang": "Go",
-            "source": "client.Index(\"books\").UpdateFaceting(&meilisearch.Faceting{\n    MaxValuesPerFacet: 2,\n    SortFacetValuesBy: {\n       \"*\":      SortFacetTypeAlpha,\n       \"genres\": SortFacetTypeCount,\n    }\n})"
+            "source": "client.Index(\"books\").UpdateFaceting(&meilisearch.Faceting{\n    MaxValuesPerFacet: 2,\n    SortFacetValuesBy: {\n       \"*\":      SortFacetTypeAlpha,\n       \"genres\": SortFacetTypeSampledCount,\n    }\n})"
           },
           {
             "lang": "C#",
