@@ -34,7 +34,16 @@ A page has one mode. A two-to-four sentence orientation may sit at the top of an
 
 ## Compass
 
-`overview` is the capability's compass, in this order: what it is, when to use it, links to the tutorial, the how-tos, the explanation, and the API reference. One strong preference may sit here, such as which route to call.
+`overview` is the capability's compass. In this order:
+
+1. **What it is**: the feature and what it offers. Parameters live on the API reference.
+2. **When to use it**: one concrete business example.
+3. **Where next**: the "create your first X" tutorial, the how-tos, the explanation, the API reference.
+4. **Plan or license limits**: a link, only when the capability has them.
+
+One strong preference may sit here, such as which route to call.
+
+Done when a reader knows what the capability is, a case for using it, and where to go next.
 
 ## Outside the four modes
 

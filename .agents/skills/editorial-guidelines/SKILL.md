@@ -5,13 +5,24 @@ description: Editorial guidelines for Meilisearch docs. Use when writing or edit
 
 # Editorial guidelines
 
-Apply these guidelines to documentation you write or edit. A **hard miss** fails the piece. Done when voice, mechanics, names, claims, samples, and links each hold.
+Apply these guidelines to documentation you write or edit. A **hard miss** fails the piece. Done when voice, writing style, mechanics, names, claims, samples, and links each hold.
 
 ## Voice
 
-Welcome the reader into the community. Sound confident that Meilisearch is a practical, powerful way to build search. Use the everyday word when it carries the meaning.
+Welcome the reader into the community. Sound confident that Meilisearch is a practical, powerful way to build search.
 
 Address the reader as you, and the product as Meilisearch. "Meilisearch returns a task."
+
+## Writing style
+
+Write for a reader who may not be a native English speaker.
+
+- **Once.** A page states a fact once. Later mentions link back.
+- **Plain.** Short sentences, everyday words, no idioms.
+- **Clear over elegant.** Choose the sentence a reader parses on the first read.
+- **Tight.** A sentence stays when removing it loses information.
+
+Done when each sentence passes all four.
 
 ## Mechanics
 
@@ -50,6 +61,12 @@ A claim states its **bound**: the mechanism, and the limit that mechanism has.
 ## Samples
 
 A code sample is minimal and runnable, and it shows the concept.
+
+An example in a guide is a code sample, not raw code in the page. For cURL, `curl-code-samples` holds the steps. Reuse an existing sample when it already shows the concept.
+
+Names come from the reader's world: `products`, `shoes`, `movies`.
+
+Done when every example is a code sample, reused where one existed, with realistic names.
 
 ## Links
 

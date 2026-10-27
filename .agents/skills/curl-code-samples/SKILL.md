@@ -11,9 +11,9 @@ Done when every curl on the page is a mounted snippet, and every route sample is
 
 ## Reuse
 
-Search `.code-samples.meilisearch.yaml` for a key whose curl already makes this call.
+Search `.code-samples.meilisearch.yaml` and the snippets under `snippets/generated-code-samples/` for a sample that already shows the call this page needs. Reuse it. Add a key only when no existing sample shows the concept.
 
-Done when each curl this change needs is an existing key or marked new.
+Done when each curl this change needs is an existing key, or marked new because no existing sample shows it.
 
 ## Write
 
