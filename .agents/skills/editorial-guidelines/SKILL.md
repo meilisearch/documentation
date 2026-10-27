@@ -62,11 +62,11 @@ A claim states its **bound**: the mechanism, and the limit that mechanism has.
 
 A code sample is minimal and runnable, and it shows the concept.
 
-An example in a guide is a code sample, not raw code in the page. For cURL, `curl-code-samples` holds the steps. Reuse an existing sample when it already shows the concept.
+An example in a guide is a code sample, not raw code in the page. Readers see it in their preferred SDK, so the prose around it is language-neutral: "send this request", not "run this curl command". For cURL, `curl-code-samples` holds the steps. Reuse an existing sample when it already shows the concept.
 
 Names come from the reader's world: `products`, `shoes`, `movies`.
 
-Done when every example is a code sample, reused where one existed, with realistic names.
+Done when every example is a code sample, reused where one existed, with realistic names and language-neutral prose around it.
 
 ## Links
 
