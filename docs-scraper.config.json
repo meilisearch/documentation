@@ -38,6 +38,7 @@
           "typo",
           "attribute",
           "proximity",
+          "is_page:desc",
           "exactness",
           "page_rank:desc",
           "position:asc"
