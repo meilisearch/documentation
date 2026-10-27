@@ -500,7 +500,8 @@ update_faceting_settings_1: |-
       "maxValuesPerFacet": 2,
       "sortFacetValuesBy": {
         "*": "alpha",
-        "genres": "count"
+        "genres": "count",
+        "language": "sampledCount"
       }
     }'
 update_faceting_settings_max_values_per_facet_1: |-
