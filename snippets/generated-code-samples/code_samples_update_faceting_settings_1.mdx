@@ -17,10 +17,11 @@ curl \
 
 ```javascript JS
 client.index('books').updateFaceting({
-  maxValuesPerFacet: 2
+  maxValuesPerFacet: 2,
   sortFacetValuesBy: {
     '*': 'alpha',
-    genres: 'count'
+    genres: 'count',
+    language: 'sampledCount'
   }
 })
 ```
@@ -39,7 +40,7 @@ client.index('books').update_faceting_settings(params)
 ```php PHP
 $client->index('books')->updateFaceting([
   'maxValuesPerFacet' => 2,
-  'sortFacetValuesBy' => ['*' => 'alpha', 'genres' => 'count']
+  'sortFacetValuesBy' => ['*' => 'alpha', 'genres' => 'count', 'language' => 'sampledCount']
 ]);
 ```
 
