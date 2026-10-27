@@ -35,15 +35,25 @@ paths:
       - Meilisearch Versions
       security:
       - personal_access_token: []
+      parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       responses:
         '200':
           description: meilisearch versions list
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/MeilisearchVersion"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/MeilisearchVersion"
+                  required:
+                  - results
         '401':
           description: unauthorized
   "/api/v2/organizations":
@@ -53,15 +63,25 @@ paths:
       - Organizations
       security:
       - personal_access_token: []
+      parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       responses:
         '200':
           description: organizations list
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Organization"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Organization"
+                  required:
+                  - results
         '401':
           description: unauthorized
   "/api/v2/organizations/{id}":
@@ -102,6 +122,12 @@ paths:
                 "$ref": "#/components/schemas/Organization"
         '403':
           description: not the organization owner
+        '422':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
       requestBody:
         content:
           application/json:
@@ -120,7 +146,11 @@ paths:
         '204':
           description: organization deleted
         '422':
-          description: organization still has active projects
+          description: Organization deletion has project
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
         '403':
           description: not the organization owner
   "/api/v2/projects/{projectId}/cost":
@@ -329,6 +359,8 @@ paths:
       security:
       - personal_access_token: []
       parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       - name: teamId
         in: query
         required: false
@@ -340,9 +372,16 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Project"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Project"
+                  required:
+                  - results
         '401':
           description: unauthorized
     post:
@@ -449,15 +488,31 @@ paths:
       - Regions
       security:
       - personal_access_token: []
+      parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       responses:
         '200':
           description: regions list
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Region"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Region"
+                  required:
+                  - results
+        '400':
+          description: Invalid limit
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
         '401':
           description: unauthorized
   "/api/v2/resources":
@@ -468,6 +523,8 @@ paths:
       security:
       - personal_access_token: []
       parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       - name: regionId
         in: query
         required: false
@@ -479,9 +536,16 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Resource"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Resource"
+                  required:
+                  - results
         '401':
           description: unauthorized
   "/api/v2/team-members":
@@ -492,6 +556,8 @@ paths:
       security:
       - personal_access_token: []
       parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       - name: teamId
         in: query
         schema:
@@ -502,9 +568,16 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/TeamMember"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/TeamMember"
+                  required:
+                  - results
         '403':
           description: team not accessible
     post:
@@ -566,17 +639,31 @@ paths:
       - Teams
       security:
       - personal_access_token: []
+      parameters:
+      - "$ref": "#/components/parameters/Page"
+      - "$ref": "#/components/parameters/Limit"
       responses:
         '200':
           description: teams list
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  "$ref": "#/components/schemas/Team"
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        "$ref": "#/components/schemas/Team"
+                  required:
+                  - results
         '401':
-          description: unauthorized
+          description: Missing authorization header
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
     post:
       summary: Creates a team
       tags:
@@ -592,7 +679,11 @@ paths:
               schema:
                 "$ref": "#/components/schemas/Team"
         '403':
-          description: not the organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
       requestBody:
         content:
           application/json:
@@ -630,8 +721,12 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Team"
-        '403':
-          description: team not accessible
+        '404':
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
     patch:
       summary: Updates a team
       tags:
@@ -647,9 +742,17 @@ paths:
               schema:
                 "$ref": "#/components/schemas/Team"
         '422':
-          description: new owner is not a team member
-        '403':
-          description: not the team or organization owner
+          description: Team user is not member
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
       requestBody:
         content:
           application/json:
@@ -671,10 +774,39 @@ paths:
         '204':
           description: team deleted
         '422':
-          description: team still has active projects
-        '403':
-          description: not the team or organization owner
+          description: Team deletion has project
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Team not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
 components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      required: false
+      description: Page to return, starting at 1.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Number of items per page. Values above the maximum are capped to
+        it.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
   securitySchemes:
     personal_access_token:
       type: http
@@ -695,6 +827,65 @@ components:
             read: Read access (GET requests)
             write: Write access (all other requests)
   schemas:
+    Error:
+      type: object
+      description: Error body returned by every non-2xx response. Switch on `code`,
+        never on `message`.
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+          description: Stable snake_case identifier of the error.
+        type:
+          type: string
+          enum:
+          - invalid_request
+          - auth
+          - internal
+        link:
+          type: string
+          format: uri
+          description: Documentation of this error code.
+        errors:
+          type: array
+          description: Per-field details, only present on `validation_failed`.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              code:
+                type: string
+              message:
+                type: string
+            required:
+            - field
+            - code
+            - message
+      required:
+      - message
+      - code
+      - type
+      - link
+    Pagination:
+      type: object
+      description: Envelope of every list response, the items being in `results`.
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+          description: Number of items matching the request, all pages included.
+        totalPages:
+          type: integer
+      required:
+      - page
+      - limit
+      - total
+      - totalPages
     Organization:
       type: object
       properties:
@@ -906,6 +1097,7 @@ components:
           nullable: true
         masterKey:
           type: string
+          description: Only returned on project creation and master key rotation.
         teamId:
           type: integer
         resourceId:
@@ -940,7 +1132,6 @@ components:
       - id
       - name
       - projectUid
-      - masterKey
       - teamId
       - resourceId
       - msVersion
