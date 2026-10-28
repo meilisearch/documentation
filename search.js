@@ -1,6 +1,13 @@
 const MEILISEARCH_HOST = 'https://ms-909f535664f8-173.lon.meilisearch.io'
 const MEILISEARCH_KEY = '776dc6a11c118bd1640c3a9ff9679f920bc384238534fc4861fcde0152e7fd68' // Public search-only API key
-const MEILISEARCH_INDEX = 'mintlify-production'
+
+// Production docs (meilisearch.com/docs) use the production index and hybrid search.
+// Mintlify PR previews (*.mintlify.site), local dev, and other hosts use staging (no embedders).
+const isProductionDocsSite = () => {
+  const { hostname } = window.location
+  return hostname === 'www.meilisearch.com' || hostname === 'meilisearch.com'
+}
+const MEILISEARCH_INDEX = isProductionDocsSite() ? 'mintlify-production' : 'mintlify-staging'
 
 // Lucide-style icons (24 viewBox, stroke 2), same as the search icon
 const svgIcon = (size, paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`
@@ -599,10 +606,9 @@ function initializeMeilisearchIntegration() {
           cropLength: 100,
           highlightPreTag: HL_PRE,
           highlightPostTag: HL_POST,
-          hybrid: {
-            semanticRatio: 0.5,
-            embedder: 'default'
-          }
+          ...(isProductionDocsSite()
+            ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
+            : {})
         }
 
         // Create federated multi-search queries
