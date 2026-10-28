@@ -154,6 +154,11 @@
   padding: 8px;
 }
 
+/* No query, no results area */
+.meilisearch-modal__results:empty {
+  display: none;
+}
+
 .meilisearch-modal__result {
   display: flex;
   align-items: flex-start;
@@ -259,9 +264,9 @@
   color: var(--ms-accent-text, #C9277F);
 }
 
-/* Footer with keyboard hints */
+/* Footer with keyboard hints, only shown while there are results to navigate */
 .meilisearch-modal__footer {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 20px;
   padding: 10px 20px;
@@ -304,9 +309,9 @@
   background-color: rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 640px) {
-  .meilisearch-modal__footer {
-    display: none;
+@media (min-width: 641px) {
+  .meilisearch-modal:has(.meilisearch-modal__result) .meilisearch-modal__footer {
+    display: flex;
   }
 }
 

@@ -330,7 +330,6 @@ function initializeMeilisearchIntegration() {
     const filterContainer = document.createElement('div')
     filterContainer.id = 'meilisearch-filter-container'
     filterContainer.className = 'meilisearch-filter-container'
-    filterContainer.style.display = 'none'
 
     // Create filter title
     const filterTitle = document.createElement('div')
@@ -340,41 +339,53 @@ function initializeMeilisearchIntegration() {
     // Create filter tags container
     const filterTagsContainer = document.createElement('div')
     filterTagsContainer.className = 'meilisearch-filter-tags'
+    filterTagsContainer.setAttribute('role', 'tablist')
+    filterTagsContainer.setAttribute('aria-label', 'Section')
 
-    // Create filter tags for each section
+    // Sections work as tabs: "All" plus one tab per docs section. The `section`
+    // field is set on each record by scripts/search/post-scrape-edit.sh
     const sections = [
+      { key: null, label: 'All' },
       { key: 'getting_started', label: 'Getting started' },
       { key: 'capabilities', label: 'Capabilities' },
       { key: 'reference', label: 'Reference' },
-      { key: 'resources', label: 'Resources' },
-      { key: 'changelog', label: 'Changelog' }
+      { key: 'resources', label: 'Resources' }
     ]
-    const filterTags = {}
+    const filterTags = []
 
-    sections.forEach(({ key: section, label }) => {
+    // Select a section and rerun the search if there is a query
+    const selectSection = (index) => {
+      filterTags.forEach((tag, i) => {
+        tag.classList.toggle('active', i === index)
+        tag.setAttribute('aria-selected', String(i === index))
+      })
+
+      if (searchInput.value.trim().length >= 2) {
+        searchInput.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+    }
+
+    // Tab and Shift+Tab move between sections, wrapping around
+    const cycleSection = (step) => {
+      const current = filterTags.findIndex(tag => tag.classList.contains('active'))
+      selectSection((current + step + filterTags.length) % filterTags.length)
+    }
+
+    sections.forEach(({ key: section, label }, index) => {
       const tag = document.createElement('button')
       tag.className = 'meilisearch-filter-tag'
       tag.textContent = label
-      tag.dataset.section = section
+      tag.setAttribute('role', 'tab')
+      tag.tabIndex = -1
+      if (section) tag.dataset.section = section
       tag.addEventListener('click', () => {
-        tag.classList.toggle('active')
-
-        // Get current active filters
-        const activeFilters = Array.from(filterContainer.querySelectorAll('.meilisearch-filter-tag.active'))
-          .map(tag => tag.dataset.section)
-
-        // Show filter container if there are active filters
-        filterContainer.style.display = activeFilters.length > 0 ? 'block' : 'none'
-
-        // Trigger search with current filters if there's a search query
-        if (searchInput.value.trim().length >= 2) {
-          const inputEvent = new Event('input', { bubbles: true })
-          searchInput.dispatchEvent(inputEvent)
-        }
+        selectSection(index)
+        searchInput.focus()
       })
       filterTagsContainer.appendChild(tag)
-      filterTags[section] = tag
+      filterTags.push(tag)
     })
+    selectSection(0)
 
     // Add filter elements to container
     filterContainer.appendChild(filterTitle)
@@ -391,11 +402,15 @@ function initializeMeilisearchIntegration() {
     footer.innerHTML = `
       <span class="meilisearch-modal__hint">
         <kbd>${SVG_ARROW_UP}</kbd><kbd>${SVG_ARROW_DOWN}</kbd>
-        <span class="meilisearch-modal__hint-label">Select</span>
+        <span class="meilisearch-modal__hint-label">Navigate</span>
       </span>
       <span class="meilisearch-modal__hint">
         <kbd>${SVG_ENTER}</kbd>
         <span class="meilisearch-modal__hint-label">Open</span>
+      </span>
+      <span class="meilisearch-modal__hint">
+        <kbd>tab</kbd>
+        <span class="meilisearch-modal__hint-label">Switch section</span>
       </span>
       <span class="meilisearch-modal__hint meilisearch-modal__hint--end">
         <kbd>esc</kbd>
@@ -490,8 +505,15 @@ function initializeMeilisearchIntegration() {
         return false
       }
 
-      // Navigate results with the keyboard while the modal is open
+      // Same keyboard behavior as the cmd+K search on meilisearch.com:
+      // Tab switches section, Up/Down move through results, Enter opens the selected result
       if (modalOverlay.style.display === 'flex') {
+        if (e.key === 'Tab') {
+          e.preventDefault()
+          cycleSection(e.shiftKey ? -1 : 1)
+          return
+        }
+
         const rows = Array.from(resultsContainer.querySelectorAll('.meilisearch-modal__result'))
         if (rows.length === 0) return
 
@@ -499,10 +521,12 @@ function initializeMeilisearchIntegration() {
 
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
           e.preventDefault()
-          const step = e.key === 'ArrowDown' ? 1 : -1
-          const nextIndex = (currentIndex + step + rows.length) % rows.length
-          setActiveResult(resultsContainer, rows[nextIndex])
-          rows[nextIndex].scrollIntoView({ block: 'nearest' })
+          // No wrapping: Down stops on the last result, Up from the first result clears the selection
+          const nextIndex = e.key === 'ArrowDown'
+            ? Math.min(currentIndex + 1, rows.length - 1)
+            : Math.max(currentIndex - 1, -1)
+          setActiveResult(resultsContainer, rows[nextIndex] || null)
+          rows[nextIndex]?.scrollIntoView({ block: 'nearest' })
         } else if (e.key === 'Enter' && currentIndex >= 0) {
           e.preventDefault()
           rows[currentIndex].click()
@@ -551,7 +575,8 @@ function initializeMeilisearchIntegration() {
         const filterContainer = document.getElementById('meilisearch-filter-container')
         if (!filterContainer) return []
         const activeTags = filterContainer.querySelectorAll('.meilisearch-filter-tag.active')
-        return Array.from(activeTags).map(tag => tag.dataset.section)
+        // The "All" tab has no section
+        return Array.from(activeTags).map(tag => tag.dataset.section).filter(Boolean)
       }
 
       // Function to perform search with filters
@@ -560,7 +585,8 @@ function initializeMeilisearchIntegration() {
       const performSearch = (query, activeFilters = []) => {
         const requestId = ++latestRequestId
 
-        // Show loading indicator
+        // Show loading indicator, replacing any stale status message
+        resultsContainer.querySelectorAll('.meilisearch-modal__indicator, .meilisearch-modal__error').forEach(el => el.remove())
         const indicatorEl = document.createElement('div')
         indicatorEl.className = 'meilisearch-modal__indicator'
         indicatorEl.innerHTML = 'Searching…'
@@ -622,13 +648,10 @@ function initializeMeilisearchIntegration() {
 
             resultsContainer.innerHTML = ''
 
-            const filterContainer = document.getElementById('meilisearch-filter-container')
-
             // Handle federated multi-search response, hiding generated card anchors
             const allHits = (response.hits || []).filter(hit => !isGeneratedAnchor(hit))
 
             if (allHits.length === 0) {
-              if (filterContainer) filterContainer.style.display = 'none'
               const noResultsEl = document.createElement('div')
               noResultsEl.className = 'meilisearch-modal__indicator'
               noResultsEl.innerHTML = 'No results found'
@@ -636,16 +659,11 @@ function initializeMeilisearchIntegration() {
               return
             }
 
-            // Show filter container when there are results
-            if (filterContainer) filterContainer.style.display = 'block'
-
-            // Flat list in relevance order: page and anchor rows look different
+            // Flat list in relevance order: page and anchor rows look different.
+            // No result is selected until the user presses Down or hovers a row
             allHits.forEach(hit => {
               resultsContainer.appendChild(renderHit(hit))
             })
-
-            // Select the first result so Enter opens it
-            setActiveResult(resultsContainer, resultsContainer.querySelector('.meilisearch-modal__result'))
             resultsContainer.scrollTop = 0
 
           })
@@ -672,11 +690,6 @@ function initializeMeilisearchIntegration() {
         if (query.length < 2) {
           latestRequestId++
           resultsContainer.innerHTML = ''
-          const filterContainer = document.getElementById('meilisearch-filter-container')
-          // Show filter container if there are active filters, even when search is empty
-          if (filterContainer) {
-            filterContainer.style.display = activeFilters.length > 0 ? 'block' : 'none'
-          }
           return
         }
 
