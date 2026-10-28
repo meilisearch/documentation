@@ -4,7 +4,7 @@
 # (production is rebuilt by .github/workflows/scraper.yml when changes land on `main`).
 #
 # Requires Docker, jq, and a .env file at the repo root with:
-#   MEILISEARCH_API_KEY=...        admin key of the Meilisearch instance
+#   MEILISEARCH_API_KEY=...        master key of the Meilisearch instance (documents/edit needs it)
 #   MEILISEARCH_HOST_URL=...       optional, defaults to the docs search instance
 #   OPENAI_API_KEY=...             optional, enables the embedder. Without it, staging has no embedders
 #                                  and search.js must not use hybrid search against it
