@@ -414,6 +414,14 @@
               ]
             },
             {
+              "group": "Security",
+              "pages": [
+                "capabilities/platform/security/overview",
+                "capabilities/platform/security/manage_ip_allowlist",
+                "capabilities/platform/security/disable_ip_allowlist"
+              ]
+            },
+            {
               "group": "Management",
               "pages": [
                 "capabilities/platform/management/overview",
