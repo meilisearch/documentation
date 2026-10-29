@@ -1,0 +1,52 @@
+---
+title: Mission Log (WordPress)
+sidebarTitle: Mission Log (WordPress)
+description: A WordPress magazine of NASA science articles, searched by the Meilisearch WordPress plugin
+---
+
+<Info>
+**Live demo**: [mission-log.meilisearch.com](https://mission-log.meilisearch.com)
+</Info>
+
+Mission Log is a WordPress site with 743 NASA science articles. It shows what the [Meilisearch WordPress plugin](https://github.com/meilisearch/meilisearch-wordpress) gives an existing site: the theme's own search page now answers with Meilisearch, so search tolerates typos, highlights matches, and suggests results as you type. The theme needs no search code of its own.
+
+![Mission Log search results for the typo "saturn rngs", with topic and year counts and the Under the hood panel showing the Meilisearch request](/assets/images/demos/wordpress-mission-log-demo.png)
+
+## Key features
+
+- **The theme's search page, served by Meilisearch**: The plugin intercepts WordPress's main search query and sends it to Meilisearch. Results come back as regular posts, so the theme's templates, pagination, and "no results" message keep working.
+- **Typo tolerance**: Searching "saturn rngs" or "astronot" finds the right articles. WordPress's default MySQL search finds nothing for either.
+- **Highlighted excerpts**: Each result shows a short excerpt cropped around the matching words, with the matches highlighted.
+- **Autocomplete**: Suggestions appear under the search box as you type, each with its topic and date. The last row, "See all N results", opens the full search page.
+- **Filters from WordPress query vars**: The topic and year links on the results page are ordinary WordPress URLs. The plugin translates them into Meilisearch filters, for example a category filter on the topic.
+- **Under the hood panel**: A panel next to the results shows the exact request the plugin sent to Meilisearch for the current page, and the `WP_Query` it came from.
+- **Compare with MySQL**: A toggle runs the same search with WordPress's built-in MySQL search, side by side with Meilisearch's hit count and response time.
+
+## How it's built
+
+The site is a standard WordPress install with a block theme. Search comes entirely from the Meilisearch WordPress plugin:
+
+- **Indexing**: The plugin builds one document per post, with its title, content, excerpt, author, date, categories, and tags. It keeps the index in sync as posts are created, edited, or deleted. A full rebuild is a single command: `wp meilisearch reindex`.
+- **Search**: The plugin translates the `WP_Query` behind the search page (search terms, pagination, sort, categories, and date ranges) into a Meilisearch search request. When it cannot translate a query, or Meilisearch does not answer in time, WordPress runs its usual MySQL search, so search never breaks.
+- **Autocomplete**: The browser queries Meilisearch directly with a search-only API key that the plugin creates. Your admin key never reaches the page.
+
+The *Try* chips, the *Under the hood* panel, the topic and year counts, and the MySQL comparison are a small demo-only layer built on the plugin's public hooks. They are not part of the plugin.
+
+The articles come from [science.nasa.gov](https://science.nasa.gov) and are in the public domain. The demo is not endorsed by NASA.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://mission-log.meilisearch.com">
+    Search 743 NASA science articles
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/wordpress-meilisearch-demo">
+    The theme, the import, and the demo layer
+  </Card>
+  <Card title="Meilisearch WordPress plugin" icon="wordpress" href="https://github.com/meilisearch/meilisearch-wordpress">
+    Add Meilisearch to your WordPress site
+  </Card>
+  <Card title="Met Prints (WooCommerce)" icon="bag-shopping" href="/resources/demos/wordpress_met_prints">
+    The same plugin on a WooCommerce shop
+  </Card>
+</CardGroup>
