@@ -1,3 +1,8 @@
+---
+name: check-links
+description: Scan the documentation for broken internal links, orphaned pages, and redirect chain issues. Use when checking links, orphans, or redirects.
+---
+
 Scan the documentation for broken internal links, orphaned pages, and redirect chain issues.
 
 ## Steps
