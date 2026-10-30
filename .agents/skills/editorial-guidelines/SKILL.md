@@ -15,7 +15,7 @@ Address the reader as you, and the product as Meilisearch. "Meilisearch returns 
 
 ## Writing style
 
-Write for a reader who may not be a native English speaker.
+Use international and simplified technical English. Readers are not necessarily native English speakers.
 
 - **Once.** A page states a fact once. Later mentions link back.
 - **Plain.** Short sentences, everyday words, no idioms.
