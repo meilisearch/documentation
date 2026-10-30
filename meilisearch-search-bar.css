@@ -31,7 +31,7 @@
 }
 
 .meilisearch-search-bar__shortcut {
-  opacity: 0.7; 
+  opacity: 0.7;
   font-size: 12px;
 }
 
@@ -52,7 +52,8 @@
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
   display: none;
-  align-items: flex-start; /* Align to top */
+  align-items: flex-start;
+  /* Align to top */
   justify-content: center;
   padding-top: 0;
   box-sizing: border-box;
@@ -63,8 +64,9 @@
   border: 1px solid rgba(0, 0, 0, 0.5);
   width: 600px;
   max-width: 90%;
-  max-height: 80vh; 
-  margin-top: 70px; /* Fixed distance from top */
+  max-height: 80vh;
+  margin-top: 70px;
+  /* Fixed distance from top */
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -118,74 +120,212 @@
 .meilisearch-modal__results {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 0;
+  min-height: 0;
 }
 
 .meilisearch-modal__indicator {
-  padding: 20px; 
-  text-align: center; 
+  padding: 20px;
+  text-align: center;
 }
 
 .dark .meilisearch-modal__indicator {
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* Results: pages and anchors share a row layout but look different */
+.meilisearch-modal {
+  --ms-accent: #FF5CB2;
+  --ms-accent-text: #C9277F;
+  --ms-accent-tint: rgba(255, 92, 178, 0.1);
+  --ms-text: rgb(var(--gray-900, 17 24 39));
+  --ms-muted: rgba(0, 0, 0, 0.5);
+  --ms-line: rgba(0, 0, 0, 0.1);
+}
+
+.dark .meilisearch-modal {
+  --ms-accent-text: #FF5CB2;
+  --ms-accent-tint: rgba(255, 92, 178, 0.14);
+  --ms-text: #fff;
+  --ms-muted: rgba(255, 255, 255, 0.6);
+  --ms-line: rgba(255, 255, 255, 0.12);
+}
+
+.meilisearch-modal__results {
+  padding: 8px;
+}
+
+/* No query, no results area */
+.meilisearch-modal__results:empty {
+  display: none;
+}
+
 .meilisearch-modal__result {
-  display: block;
-  padding: 12px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--ms-text);
   text-decoration: none;
-  border-left: 3px solid transparent;
-  transition: background-color 0.2s, border-color 0.2s;
+  border: none;
+  transition: background-color 0.15s;
 }
 
-.dark .meilisearch-modal__result {
-  color: white;
+.meilisearch-modal__result:focus-visible {
+  outline: 2px solid var(--ms-accent);
+  outline-offset: -2px;
 }
 
-.meilisearch-modal__result:hover {
-  background-color:  rgba(0, 0, 0, 0.05);
-  border-left-color:  #f472b6;
+.meilisearch-modal__result.is-active {
+  background-color: var(--ms-accent-tint);
 }
 
-.dark .meilisearch-modal__result:hover {
-  background-color:  rgba(255, 255, 255, 0.05);
+.meilisearch-modal__result-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--ms-muted);
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.meilisearch-modal__category-header {
-  padding: 12px 20px 8px;
-  font-size: 14px;
+/* Page: icon in a bordered tile */
+.meilisearch-modal__result--page .meilisearch-modal__result-icon {
+  border: 1px solid var(--ms-line);
+  border-radius: 8px;
+}
+
+/* Anchor: bare "#", indented under where its page would sit */
+.meilisearch-modal__result--anchor .meilisearch-modal__result-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.meilisearch-modal__result.is-active .meilisearch-modal__result-icon {
+  color: var(--ms-accent-text);
+}
+
+.meilisearch-modal__result--page.is-active .meilisearch-modal__result-icon {
+  border-color: var(--ms-accent);
+}
+
+.meilisearch-modal__result-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.meilisearch-modal__result-title {
+  font-size: 15px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meilisearch-modal__result--page .meilisearch-modal__result-title {
   font-weight: 600;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
 }
 
-.dark .meilisearch-modal__category-header {
-  color: rgba(255, 255, 255, 0.5);
+.meilisearch-modal__result--anchor .meilisearch-modal__result-title {
+  font-weight: 400;
 }
 
-.meilisearch-modal__result-heading {
-  font-weight: 500; 
-  margin-bottom: 4px;
+.meilisearch-modal__result-crumb {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ms-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.meilisearch-modal__result-content {
-  font-size: 13px; 
-  color: rgba(0, 0, 0, 0.45);
+.meilisearch-modal__result-separator {
+  margin: 0 6px;
+  opacity: 0.7;
 }
 
-.dark .meilisearch-modal__result-content {
-  color: rgba(255, 255, 255, 0.6);
+.meilisearch-modal__result-snippet {
+  margin-top: 2px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ms-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .meilisearch-modal__category-em {
-  font-style: normal; 
-  color: #f472b6; 
-  font-weight: bold;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ms-accent-text, #C9277F);
+}
+
+/* Footer with keyboard hints, only shown while there are results to navigate */
+.meilisearch-modal__footer {
+  display: none;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--ms-line);
+  font-size: 12.5px;
+  color: var(--ms-muted);
+}
+
+.meilisearch-modal__hint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meilisearch-modal__hint-label {
+  margin-left: 4px;
+}
+
+.meilisearch-modal__hint--end {
+  margin-left: auto;
+}
+
+.meilisearch-modal__footer kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dark .meilisearch-modal__footer kbd {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (min-width: 641px) {
+  .meilisearch-modal:has(.meilisearch-modal__result) .meilisearch-modal__footer {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .meilisearch-modal__result,
+  .meilisearch-modal__result-icon {
+    transition: none;
+  }
 }
 
 .meilisearch-modal__error {
-  padding: 20px; 
-  text-align: center; 
+  padding: 20px;
+  text-align: center;
   color: #f87171;
 }
 
