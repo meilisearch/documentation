@@ -5,8 +5,8 @@ export const GITHUB_OWNER = "meilisearch";
 export const GITHUB_REPO = "meilisearch";
 
 export const CARD_COUNT = 10;
-export const CARD_GROUP_START = "<!-- changelog:cards:start -->";
-export const CARD_GROUP_END = "<!-- changelog:cards:end -->";
+export const CARD_GROUP_START = "{/* changelog:cards:start */}";
+export const CARD_GROUP_END = "{/* changelog:cards:end */}";
 
 export interface ParsedVersion {
   major: number;
@@ -81,11 +81,16 @@ export function listExistingVersions(versionsDir: string): VersionEntry[] {
   return entries;
 }
 
+export function versionPageTitle(label: string): string {
+  return `Meilisearch ${label} release notes`;
+}
+
 export function buildVersionPageFile(label: string, date: string, body: string): string {
   const trimmed = body.trim();
   return `---
-title: "${label}"
-description: "Released ${date}"
+title: "${versionPageTitle(label)}"
+sidebarTitle: "${label}"
+description: "Released ${formatEnglishDate(date)}"
 ---
 
 ${trimmed}
@@ -93,17 +98,32 @@ ${trimmed}
 `;
 }
 
+const englishDateFormat = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+export function formatEnglishDate(isoDate: string): string {
+  const match = isoDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return isoDate;
+
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  return englishDateFormat.format(date);
+}
+
 export function buildCardGroup(entries: VersionEntry[]): string {
   const cards = entries
     .slice(0, CARD_COUNT)
     .map(
-      (entry) => `  <Card title="${entry.label}" href="/changelog/${entry.label}">
-    Released ${entry.date}
+      (entry) => `  <Card title="Meilisearch ${entry.label}" href="/changelog/${entry.label}">
+    ${formatEnglishDate(entry.date)}
   </Card>`
     )
     .join("\n");
 
-  return `<CardGroup cols={2}>
+  return `<CardGroup cols={1}>
 ${cards}
 </CardGroup>`;
 }
