@@ -35,15 +35,9 @@ jobs:
             -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
             getmeili/docs-scraper:v0.12.8 pipenv run ./docs_scraper config.json
 
-      - name: Extract section from URLs using RHAI function
+      # Adds the `section` and `is_page` fields. The same script is used by `npm run rebuild-search-staging`
+      - name: Add section and is_page fields
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
           API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
-        run: |
-          curl -X POST "$HOST_URL/indexes/mintlify-production/documents/edit" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $API_KEY" \
-            --data-binary '{
-              "filter": "url IS NOT NULL",
-              "function": "let url_parts = doc.url.split(\"/docs/\"); if url_parts.len() > 1 { let after_docs = url_parts[1]; let section_parts = after_docs.split(\"/\"); if section_parts.len() > 0 { doc.section = section_parts[0]; } }"
-            }'
+        run: bash scripts/search/post-scrape-edit.sh "$HOST_URL" "$API_KEY" mintlify-production
