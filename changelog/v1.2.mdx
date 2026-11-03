@@ -13,7 +13,7 @@ You can now delete documents using filters with the new `/documents/delete` rout
 ```bash
 curl -X POST http://localhost:7700/indexes/dogs/documents/delete \
  -H 'Content-Type: application/json' \
- --data-binary '{ "filter": ["doggo = \"bernese mountain\"", "face = cute"] }'
+ --data-binary '{ "filter": ["doggo = 'bernese mountain'", "face = cute"] }'
 ```
 
 Fields must be set as filterable before you can use them as filters.

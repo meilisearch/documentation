@@ -41,7 +41,7 @@ Next, configure your network by setting up one `self` instance and multiple `rem
 curl \
  -X PATCH 'MEILISEARCH_URL/network/' \
  -H 'Content-Type: application/json' \
- --data-binary @- <<'EOF'
+ --data-binary <<'EOF'
 {
  "remotes": {
  "ms-0": {
@@ -64,9 +64,9 @@ Finally, make a `/multi-search` query with the new `federationOptions.remote` pa
 
 ```bash
 curl \
- -X POST 'MEILISEARCH_URL/multi-search' \
+ -X PATCH 'MEILISEARCH_URL/multi-search/' \
  -H 'Content-Type: application/json' \
- --data-binary @- <<'EOF'
+ --data-binary <<'EOF'
 {
  "federation": {},
  "queries": [

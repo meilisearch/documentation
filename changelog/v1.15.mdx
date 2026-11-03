@@ -11,7 +11,7 @@ description: "Released June 9, 2025"
 Set `typoTolerance.disableOnNumbers` to `true` to disable typo tolerance for numbers:
 
 ```bash
-curl -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+curl -X POST 'http://localhost:7700/indexes/movies/settings' \
  -H 'Content-Type: application/json' \
  -d '{
  "typoTolerance": {"disableOnNumbers": true}
