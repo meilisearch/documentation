@@ -207,6 +207,25 @@ paths:
       required: true
       schema:
         type: integer
+    get:
+      summary: Retrieves a project with its master key
+      tags:
+      - Projects
+      description: Returns the project including its current master key. Restricted
+        to team and organization owners.
+      security:
+      - personal_access_token: []
+      responses:
+        '200':
+          description: project with master key
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: unauthorized
+        '403':
+          description: not a team or organization owner
     patch:
       summary: Rotates the master key of a project
       tags:
@@ -1097,7 +1116,7 @@ components:
           nullable: true
         masterKey:
           type: string
-          description: Only returned on project creation and master key rotation.
+          description: Only returned on project creation and master key endpoints.
         teamId:
           type: integer
         resourceId:
