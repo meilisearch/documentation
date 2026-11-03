@@ -233,6 +233,7 @@ async function main() {
 
   if (releasesByMinor.size === 0) {
     console.log("\nNo new versions to process.");
+    return;
   }
 
   const sortedMinors = [...releasesByMinor.entries()].sort((a, b) => {
@@ -272,15 +273,14 @@ async function main() {
     const content = appendGithubLink(cleaned, minorVersion);
 
     const pagePath = versionPagePath(paths.versionsDir, minorVersion);
-    const tmpPath = `${pagePath}.tmp`;
-    fs.writeFileSync(tmpPath, buildVersionPageFile(minorVersion, releaseDate, content));
-    fs.renameSync(tmpPath, pagePath);
+    fs.writeFileSync(pagePath, buildVersionPageFile(minorVersion, releaseDate, content));
     console.log(`  Wrote: ${pagePath}`);
     added++;
   }
 
   if (added === 0) {
-    console.log("\nNo new changelog content to add. Syncing index and navigation anyway.");
+    console.log("\nNo new changelog content to add.");
+    return;
   }
 
   const allVersions = listExistingVersions(paths.versionsDir);
