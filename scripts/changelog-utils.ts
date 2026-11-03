@@ -184,9 +184,10 @@ export function syncChangelogNavigation(navJsonPath: string, versionLabels: stri
   const raw = fs.readFileSync(navJsonPath, "utf-8");
   const nav = JSON.parse(raw) as { tabs: NavTab[] };
 
-  const pages = ["changelog", ...versionLabels.map((label) => versionNavSlug(label))];
+  const pages = versionLabels.map((label) => versionNavSlug(label));
   const changelogGroup = {
     group: "Changelog",
+    root: "changelog",
     expanded: false,
     pages,
   };
