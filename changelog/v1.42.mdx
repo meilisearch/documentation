@@ -70,6 +70,25 @@ Configure foreign keys and filterable attributes in your index settings:
 }
 ```
 
+Then make the attributes you want to filter on filterable in the foreign index (`actors`):
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": ["birthDate", "popularity"],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
 Use the `_foreign` filter in search queries to filter on foreign index attributes:
 
 ```json

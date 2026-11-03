@@ -14,7 +14,7 @@ Use the new `federation` setting of the `/multi-search` route to return a single
 curl \
  -X POST 'http://localhost:7700/multi-search' \
  -H 'Content-Type: application/json' \
- --data-binary << 'EOF'
+ --data-binary @- << 'EOF'
 {
  "federation": {
  "offset": 5,
@@ -50,8 +50,8 @@ Response includes results merged in descending ranking score order with federati
     }
   ],
   "processingTimeMs": 0,
-  "limit": 20,
-  "offset": 0,
+  "limit": 10,
+  "offset": 5,
   "estimatedTotalHits": 2,
   "semanticHitCount": 0
 }
@@ -63,7 +63,7 @@ Control the relevancy weight of each index using `federationOptions` in each que
 curl \
  -X POST 'http://localhost:7700/multi-search' \
  -H 'Content-Type: application/json' \
- --data-binary << 'EOF'
+ --data-binary @- << 'EOF'
 {
  "federation": {},
  "queries": [
@@ -98,7 +98,7 @@ Set languages during indexing with `localizedAttributes`:
 curl \
  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
  -H 'Content-Type: application/json' \
- --data-binary << 'EOF'
+ --data-binary @- << 'EOF'
 {
  "localizedAttributes": [
  {
@@ -118,7 +118,7 @@ curl \
  "attributePatterns": ["latin.*"]
  },
  {
- "locales": ,
+ "locales": [],
  "attributePatterns": ["*"]
  }
  ]

@@ -14,7 +14,7 @@ Meilisearch can now automatically generate embeddings using OpenAI, HuggingFace,
 curl \
  -X PATCH 'http://localhost:7700/indexes/movies/settings' \
  -H 'Content-Type: application/json' \
- --data-binary << 'EOF'
+ --data-binary @- << 'EOF'
 {
  "embedders": {
  "default": {

@@ -37,7 +37,7 @@ curl \
 curl \
  -X PUT 'http://localhost:7700/indexes/books/settings/prefix-search' \
  -H 'Content-Type: application/json' \
- --data-binary 'disabled'
+ --data-binary '"disabled"'
 ```
 
 When `prefixSearch` is disabled, queries like `he` will no longer match `hello`, but indexing is significantly faster.

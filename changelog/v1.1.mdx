@@ -37,7 +37,7 @@ The endpoint returns an array of results for each queried index:
  "results": [
  {
  "indexUid": "products",
- "hits": ,
+ "hits": [],
  "query": "Nike",
  "processingTimeMs": 1,
  "limit": 1,
@@ -46,7 +46,7 @@ The endpoint returns an array of results for each queried index:
  },
  {
  "indexUid": "brands",
- "hits": ,
+ "hits": [],
  "query": "Nike",
  "processingTimeMs": 0,
  "limit": 1,
@@ -74,7 +74,7 @@ Response:
 
 ```json
 {
- "hits": ,
+ "hits": [],
  "facetDistribution": {
  "price": {}
  },
@@ -96,7 +96,7 @@ curl \
  -X POST 'http://localhost:7700/indexes/restaurants/search' \
  -H 'Content-type: application/json' \
  --data-binary '{
- "filter": "_geoBoundingBox([45.472735, 9.184019], [45.473711, 9.185613])"
+ "filter": "_geoBoundingBox([45.473711, 9.185613], [45.472735, 9.184019])"
  }'
 ```
 
