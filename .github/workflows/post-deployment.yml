@@ -59,13 +59,17 @@ jobs:
             echo "No changes in the Git working directory."
           fi
 
-  # Fetches the Meilisearch release assets (OpenAPI spec and error codes files).
-  # We need to wait for build-code-samples to commit first so we can push a separate commit
+  # Fetches the assets the documentation is generated from:
+  # - the Meilisearch release assets (OpenAPI spec and error codes files)
+  # - the Meilisearch Cloud OpenAPI spec (from the private meilisearch-cloud repository,
+  #   not related to a release)
+  # Each changed file is committed separately to keep history clear.
+  # We need to wait for build-code-samples to commit first so we can push separate commits
   # (avoid stacking both changes in one run and keep history clear).
-  # Runs even if build-code-samples failed: fetching the release assets does not
+  # Runs even if build-code-samples failed: fetching the assets does not
   # depend on the code samples.
-  fetch-release-assets:
-    name: Fetch Meilisearch release assets
+  fetch-assets:
+    name: Fetch assets
     runs-on: ubuntu-latest
     needs: [build-code-samples]
     if: ${{ !cancelled() }}
@@ -86,39 +90,55 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch latest release assets from Meilisearch release
-        run: npm run fetch-meilisearch-release-assets
+      - name: Fetch assets (Meilisearch release assets and Cloud OpenAPI spec)
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run fetch-assets
 
-      - name: Check for changes
-        id: release_assets_changes
+      # One commit per changed file, pushed right away so a failure in the
+      # following steps does not block the release assets updates.
+      - name: Commit release assets changes (one commit per file)
         run: |
-          if git diff --quiet assets/release-assets/meilisearch-openapi.json assets/release-assets/meilisearch-error-codes.json; then
-            echo "has_changes=false" >> "$GITHUB_ENV"
-          else
-            echo "has_changes=true" >> "$GITHUB_ENV"
+          git config user.name "meili-bot"
+          git config user.email "robot@meilisearch.com"
+          for file in assets/engine-release-assets/meilisearch-openapi.json assets/engine-release-assets/meilisearch-error-codes.json; do
+            if [ -n "$(git status --porcelain -- "$file")" ]; then
+              echo "There are changes in $file."
+              git add "$file"
+              git commit -m "[AUTOMATION POST DEPLOYMENT] Update $(basename "$file") from latest Meilisearch release"
+            else
+              echo "No changes in $file."
+            fi
+          done
+          if [ "$(git rev-list --count origin/main..HEAD)" -gt 0 ]; then
+            git push origin main
           fi
 
-      - name: Commit changes
+      # Validate the Cloud OpenAPI spec before committing it, so a broken
+      # spec never lands on main.
+      - name: Validate Cloud OpenAPI spec with Mintlify CLI
+        run: npx mint openapi-check assets/cloud-assets/meilisearch-cloud-openapi.yaml
+
+      - name: Commit Cloud OpenAPI spec changes
         run: |
-          if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the OpenAPI or error codes files."
-            git config user.name "meili-bot"
-            git config user.email "robot@meilisearch.com"
-            git add assets/release-assets/meilisearch-openapi.json
-            git add assets/release-assets/meilisearch-error-codes.json
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update OpenAPI and error codes files from latest Meilisearch release"
+          file=assets/cloud-assets/meilisearch-cloud-openapi.yaml
+          if [ -n "$(git status --porcelain -- "$file")" ]; then
+            echo "There are changes in $file."
+            git add "$file"
+            git commit -m "[AUTOMATION POST DEPLOYMENT] Update Meilisearch Cloud OpenAPI spec"
             git push origin main
           else
-            echo "No changes in the OpenAPI and error codes files."
+            echo "No changes in $file."
           fi
 
-  # Runs after fetch-release-assets: generate Mintlify OpenAPI file, validate with mint openapi-check, commit if valid.
+  # Runs after fetch-assets: generate the Mintlify OpenAPI files (engine with code
+  # samples, Cloud without), validate them with mint openapi-check, commit if valid.
   # Runs even if an upstream job failed (it regenerates from whatever is on main),
-  # but waits for fetch-release-assets to finish to avoid concurrent pushes to main.
+  # but waits for fetch-assets to finish to avoid concurrent pushes to main.
   generate-and-check-mintlify-openapi:
-    name: Generate and check Mintlify OpenAPI file
+    name: Generate and check Mintlify OpenAPI files
     runs-on: ubuntu-latest
-    needs: [fetch-release-assets]
+    needs: [fetch-assets]
     if: ${{ !cancelled() }}
 
     steps:
@@ -137,35 +157,34 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Mintlify OpenAPI file
-        run: npm run generate-mintlify-openapi-file
-
-      - name: Validate OpenAPI with Mintlify CLI
-        run: npx mint openapi-check assets/release-assets/meilisearch-openapi-mintlify.json
-
-      - name: Check for changes on mintlify OpenAPI changes
-        id: mintlify_changes
+      - name: Generate Mintlify OpenAPI files
         run: |
-          if git diff --quiet assets/release-assets/meilisearch-openapi-mintlify.json; then
-            echo "has_changes=false" >> "$GITHUB_ENV"
-          else
-            echo "has_changes=true" >> "$GITHUB_ENV"
-          fi
+          npm run generate-mintlify-openapi-file -- --with-code-samples assets/engine-release-assets/meilisearch-openapi.json
+          npm run generate-mintlify-openapi-file -- assets/cloud-assets/meilisearch-cloud-openapi.yaml
 
-      - name: Commit changes
+      - name: Validate OpenAPI files with Mintlify CLI
         run: |
-          if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the Mintlify OpenAPI file."
-            git config user.name "meili-bot"
-            git config user.email "robot@meilisearch.com"
-            git add assets/release-assets/meilisearch-openapi-mintlify.json
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update meilisearch-openapi-mintlify.json"
+          npx mint openapi-check assets/engine-release-assets/meilisearch-openapi-mintlify.json
+          npx mint openapi-check assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml
+
+      - name: Commit changes (one commit per file)
+        run: |
+          git config user.name "meili-bot"
+          git config user.email "robot@meilisearch.com"
+          for file in assets/engine-release-assets/meilisearch-openapi-mintlify.json assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml; do
+            if [ -n "$(git status --porcelain -- "$file")" ]; then
+              echo "There are changes in $file."
+              git add "$file"
+              git commit -m "[AUTOMATION POST DEPLOYMENT] Update $(basename "$file")"
+            else
+              echo "No changes in $file."
+            fi
+          done
+          if [ "$(git rev-list --count origin/main..HEAD)" -gt 0 ]; then
             git push origin main
-          else
-            echo "No changes in the Mintlify OpenAPI file."
           fi
 
-  # Generate reference/errors/error_codes.mdx from assets/release-assets/meilisearch-error-codes.json.
+  # Generate reference/errors/error_codes.mdx from assets/engine-release-assets/meilisearch-error-codes.json.
   # It also runs when the JSON file is updated manually, so the page never goes stale.
   # It waits for generate-and-check-mintlify-openapi to finish (whatever its result) to
   # avoid concurrent pushes to main, but runs even if an upstream job failed: the
