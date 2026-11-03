@@ -14,11 +14,20 @@ Update the changelog from GitHub releases.
 
 2. **Review the output**: Check for any errors or warnings from the script.
 
-3. **Verify the generated files**: Look at the changelog directory for new or updated entries. Show the user a summary of what releases were added or updated.
+3. **Verify the generated files**:
+   - New version page under `changelog/vX.Y.mdx`
+   - Index cards updated in root `changelog.mdx` (latest 10 versions)
+   - `config/navigation.json` Changelog group lists the new page
 
-4. **Check docs.json**: If new changelog pages were generated, verify they are included in the Changelog tab navigation in docs.json. Add any missing entries.
+4. **One-time migration** (already done on main): split the legacy monolith with `npm run split-changelog` if `changelog/changelog.mdx` still exists.
 
 5. **Report**: Summarize what was generated:
    - Number of new releases added
    - Any releases that failed to generate
-   - Whether docs.json navigation needs updating
+   - Whether navigation was updated automatically
+
+## URLs
+
+- Index: `/changelog` (`changelog.mdx`)
+- Version: `/changelog/vX.Y` (`changelog/vX.Y.mdx`)
+- Legacy `/changelog/changelog` redirects to `/changelog`

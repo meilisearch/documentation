@@ -1,0 +1,97 @@
+---
+title: "v1.15"
+description: "Released 2025-06-09"
+---
+
+## New Features
+
+### Disable typo tolerance for numbers
+
+Set `typoTolerance.disableOnNumbers` to `true` to disable typo tolerance for numbers:
+
+```bash
+curl -X POST 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "typoTolerance": {"disableOnNumbers": true}
+ }'
+```
+
+Deactivating typo tolerance on numbers can reduce false positives, such as a query term `2024` returning results that include `2025` and `2004`. It may also improve indexing performance.
+
+### Lexicographic string filters
+
+You can now filter strings lexicographically using comparison operators (`<`, `<=`, `>`, `>=`, `TO`) on string values:
+
+```bash
+curl -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "filter": "release_date >= '2024-06'"
+ }'
+```
+
+This is particularly useful when filtering human-readable dates.
+
+### Chat with your indexes
+
+Create a chat workspace with the appropriate settings to enable conversational features:
+
+```bash
+curl -X POST 'http://localhost:7700/chats/my-assistant/settings' \
+ -H 'Content-Type: application/json' \
+ -d '{
+ "source": "openAi",
+ "apiKey": "sk-abc..."
+ }'
+```
+
+Then use the official OpenAI SDK to chat with your indexes:
+
+```javascript
+import OpenAI from 'openai';
+
+const client = new OpenAI({
+ baseURL: 'http://localhost:7700/chats/my-assistant',
+ apiKey: 'YOUR_MEILISEARCH_CHAT_API_KEY',
+});
+
+const completion = await client.chat.completions.create({
+ model: 'gpt-3.5-turbo',
+ messages: [{ role: 'user', content: 'What is Meilisearch?' }],
+ stream: true,
+});
+
+for await (const chunk of completion) {
+ console.log(chunk.choices[0]?.delta?.content || '');
+}
+```
+
+A guide is available for setting up a good chat interface for your indexes.
+
+## Improvements
+
+* Allow cancelling an upgrade to a new Meilisearch version by rolling back all upgraded indexes
+* Support EC private key as SSL certificate
+* Stop compacting snapshots when passing the relevant CLI option, speeding up snapshot generation
+* Add new `batchStrategy` field in the batches stats
+* Add log field tracking time spent searching in the vector store
+* Improve filterable error messages
+* Improve error messages on embeddings dimension mismatch
+* Update `/network` URL validation error message format
+* Expose the task queue's status size in Prometheus metrics
+* Fix `_matchesPosition` length calculation to improve client-side cropping
+* Fix `_geo` ranking rule
+
+## Other
+
+* Fix a panic in search that could occur when looking for typos with a search prefix having more than 65k possible hits
+* Ensure that passing `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS` set to 0 results in Meilisearch never processing any tasks
+* Forbid value `0` for `maxTotalHits` in index settings
+* Allow `documentTemplate`s to use array filters on documents (e.g., `join`)
+* Fix searchable attributes database bug where some searchable fields were removed from the searchable databases when removed from `filterableAttributes` setting
+* Fix chat route missing base URL and Mistral error handling
+* Fix various issues with embedding regeneration
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.15.0)
+

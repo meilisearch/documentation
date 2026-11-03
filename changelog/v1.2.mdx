@@ -1,0 +1,139 @@
+---
+title: "v1.2"
+description: "Released 2023-06-05"
+---
+
+## New Features
+
+### Delete documents by filter
+
+You can now delete documents using filters with the new `/documents/delete` route:
+
+```bash
+curl -X POST http://localhost:7700/indexes/dogs/documents/delete \
+ -H 'Content-Type: application/json' \
+ --data-binary '{ "filter": ["doggo = 'bernese mountain'", "face = cute"] }'
+```
+
+Fields must be set as filterable before you can use them as filters.
+
+Meilisearch returns a task object:
+
+```json
+{
+  "taskUid": 242,
+  "indexUid": "dogs",
+  "status": "enqueued",
+  "type": "documentDeletion",
+  "enqueuedAt": "2023-05-03T11:01:58.721841Z"
+}
+```
+
+Use the returned `taskUid` to check the task status.
+
+### Get documents by filter
+
+You can now use filters in the `GET` endpoint of the `/documents` route:
+
+```bash
+curl -X GET 'http://localhost:7700/indexes/dogs/documents?limit=1&filter=doggo=bernese'
+```
+
+You can also use the new `/documents/fetch` route to handle complex filters:
+
+```bash
+curl -X POST http://localhost:7700/indexes/dogs/documents/fetch \
+ -H 'Content-Type: application/json' \
+ --data-binary '{ "limit": 1, "filter": "doggo = bernese" }'
+```
+
+The `/documents/fetch` route accepts: `limit`, `offset`, `fields`, and `filter`.
+
+Fields must be set as filterable before you can use them as filters.
+
+### New filter operators: `IS EMPTY` and `IS NULL`
+
+Two new filter operators have been added:
+
+- `IS EMPTY` matches existing fields with a valid, but empty value
+- `IS NULL` matches existing fields with an explicit `null` value
+
+Given the following documents:
+
+```json
+[
+ {
+ "id": 0,
+ "color": 
+ },
+ {
+ "id": 1,
+ "color": null
+ },
+ {
+ "id": 2
+ }
+]
+```
+
+`color IS EMPTY` matches document `0`.
+
+`color IS NULL` matches document `1`.
+
+Both operators work with the `NOT` operator: `color IS NOT EMPTY` and `NOT color IS EMPTY` match document `1`. `color IS NOT NULL` and `NOT color IS NULL` match document `0`.
+
+Neither operator matches documents missing the specified field.
+
+## Improvements
+
+### Search performance and relevancy
+
+The search engine has been significantly refactored to improve performance and relevancy:
+
+**Performance improvements:**
+
+- The fastest 75 percent of queries now consistently answer below 50ms
+- Single terms are limited to 150 possible typo matches for queries with 1 typo, and 50 for queries with 2 typos
+- Both single word and multi-word queries consider a maximum of 50 synonyms
+- The total number of words for all synonyms of a single term cannot exceed 100
+- Queries can now contain a maximum of 1000 words
+- Geo search performance improvements: faster sorting of small document sets, and descending sort is now as performant as ascending sort
+
+**Relevancy improvements:**
+
+- The `exactness` ranking rule no longer treats synonyms as exact matches, boosting documents containing the query exactly as typed
+- Results are always sorted as if the `words` ranking rule has higher priority than `attributes`, `exactness`, `typo`, and `proximity` ranking rules
+- Split words are now treated as possible digrams, so `whit ehorse` may match `white horse`
+- N-grams and split words are ranked lower than exact words in the `typo` ranking rule
+- Ranking rule behavior is now consistent regardless of the number of ranked documents
+
+### Automated task deletion
+
+The task queue now has a maximum limit of 1M tasks. When the limit is reached, Meilisearch automatically deletes the oldest 100k tasks (if they are finished). This prevents database issues when the task queue becomes full.
+
+A hard limit of 10GiB of tasks has been added. When this is reached, Meilisearch will attempt to delete unfinished tasks automatically before rejecting new tasks.
+
+### Language support improvements
+
+- Split camelCase in Latin segmenter
+- Improved Arabic normalization and segmentation
+
+### CSV boolean support
+
+CSV documents now support boolean values.
+
+### Other improvements
+
+- Add experimental feature to reduce RAM usage
+- Improve geosort error messages
+- Improve error message when payload is too large
+- Improve the `GET /health` route by ensuring the internal database is accessible
+
+## Other
+
+### Breaking changes in v1.2.1
+
+After upgrading to v1.2.1, you must re-index your dataset. The easiest way is to create a dump and import it into v1.2.1 when starting Meilisearch. This is necessary due to changes in how document deletion statistics are calculated.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.2.0)
+

@@ -1,0 +1,163 @@
+---
+title: "v1.12"
+description: "Released 2024-12-23"
+---
+
+## New Features
+
+### Significant indexing speed improvements
+
+Meilisearch v1.12 introduces major performance improvements for indexing:
+
+- More than twice as fast for raw document insertion tasks
+- More than 4x faster for incrementally updating documents in large databases
+- Embeddings generation improved up to 1.5x for some workloads
+- Performance is maintained or improved on smaller machines
+- Task cancellation is also faster
+
+### New index settings: `facetSearch` and `prefixSearch`
+
+Two new index settings allow you to skip parts of the indexing process for additional speed improvements, though this may impact search experience in some use cases.
+
+**`facetSearch`** toggles facet search for all filterable attributes. Default is `true`:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/books/settings/facet-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary 'true'
+```
+
+**`prefixSearch`** configures prefix search capability. Accepts:
+- `"indexingTime"`: enables prefix processing during indexing (default)
+- `"disabled"`: deactivates prefix search completely
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/books/settings/prefix-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary 'disabled'
+```
+
+When `prefixSearch` is disabled, queries like `he` will no longer match `hello`, but indexing is significantly faster.
+
+### New API route: `/batches`
+
+Query information about task batches with the new `/batches` endpoint.
+
+`GET /batches` returns a list of batch objects with the same query parameters as `GET /tasks`:
+
+```bash
+curl -X GET 'http://localhost:7700/batches'
+```
+
+`GET /batches/:uid` retrieves information about a single batch:
+
+```bash
+curl -X GET 'http://localhost:7700/batches/BATCH_UID'
+```
+
+Batch objects include progress tracking, statistics, and task information:
+
+```json
+{
+  "uid": 160,
+  "progress": {
+    "steps": [
+      {
+        "currentStep": "processing tasks",
+        "finished": 0,
+        "total": 2
+      },
+      {
+        "currentStep": "indexing",
+        "finished": 2,
+        "total": 3
+      },
+      {
+        "currentStep": "extracting words",
+        "finished": 3,
+        "total": 13
+      },
+      {
+        "currentStep": "document",
+        "finished": 12300,
+        "total": 19546
+      }
+    ],
+    "percentage": 37.986263
+  },
+  "details": {
+    "receivedDocuments": 19547,
+    "indexedDocuments": null
+  },
+  "stats": {
+    "totalNbTasks": 1,
+    "status": {
+      "processing": 1
+    },
+    "types": {
+      "documentAdditionOrUpdate": 1
+    },
+    "indexUids": {
+      "mieli": 1
+    }
+  },
+  "duration": null,
+  "startedAt": "2024-12-12T09:44:34.124726733Z",
+  "finishedAt": null
+}
+```
+
+Task objects now include a `batchUid` field to link tasks to their batch:
+
+```json
+{
+  "uid": 154,
+  "batchUid": 142,
+  "indexUid": "movies_test2",
+  "status": "succeeded",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy": null,
+  "details": {
+    "receivedDocuments": 1,
+    "indexedDocuments": 1
+  },
+  "error": null,
+  "duration": "PT0.027766819S",
+  "enqueuedAt": "2024-12-02T14:07:34.974430765Z",
+  "startedAt": "2024-12-02T14:07:34.99021667Z",
+  "finishedAt": "2024-12-02T14:07:35.017983489Z"
+}
+```
+
+## Improvements
+
+### Phrase search with `showMatchesPosition`
+
+Phrase searches with `showMatchesPosition` set to `true` now return a single location for the whole phrase instead of individual term locations.
+
+### Array field match positions
+
+When a query finds matching terms in document fields with array values, Meilisearch now includes an `indices` field in `_matchesPosition` specifying which array elements contain the matches.
+
+### New query parameter for `/tasks`
+
+The `GET /tasks` endpoint now accepts a `reverse` parameter. When set to `true`, tasks are returned in reversed order from oldest to newest.
+
+### New Prometheus metrics
+
+Additional Prometheus metrics have been added for better monitoring and observability.
+
+### Better error messages
+
+Error messages now include the index name for improved clarity when debugging issues.
+
+## Other
+
+### Breaking change: `vectorStore` field distribution
+
+The `vectorStore` field in field distribution no longer contains `_vectors`. The previous value was incorrect, and there is no current use case for the fixed value.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.12.0)
+

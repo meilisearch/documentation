@@ -1,0 +1,37 @@
+---
+title: "v1.25"
+description: "Released 2025-11-10"
+---
+
+## New Features
+
+### Search personalization
+
+Add the ability to dynamically rerank search results using Cohere with a personalized prompt. This experimental feature allows you to customize result ordering based on user preferences and context.
+
+### Upload snapshot tarballs to S3
+
+Add the ability to upload snapshots directly to S3. This experimental feature streams the entire snapshot process and utilizes multipart technology to send chunks of data in parallel, making snapshot uploads more efficient.
+
+## Improvements
+
+### German word segmentation
+
+Improved German text segmentation to skip segmenting unknown words instead of breaking them into bigrams. This ensures that German words not in the dictionary remain intact during indexing.
+
+**Note:** If you have a Meilisearch database containing German words, you must reindex your data manually.
+
+### Chinese text segmentation with numbers and English
+
+Enhanced Chinese text segmentation to prevent splitting of numbers and English words that appear alongside Chinese characters. Numbers and English text are now segmented consistently.
+
+**Note:** If you have a Meilisearch database containing Chinese words, you must reindex your data manually.
+
+## Other
+
+### Breaking change: Authorization header redaction in webhooks
+
+The value of the `Authorization` header is now redacted when getting webhooks or in responses from posting a new webhook or deleting a webhook. Previously, the header value was returned in these responses, which posed a security risk. If you were relying on retrieving the `Authorization` header value through the API, this will no longer be possible.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.25.0)
+

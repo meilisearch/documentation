@@ -1,0 +1,35 @@
+---
+title: "v1.51"
+description: "Released 2026-07-27"
+---
+
+## New Features
+
+**Filter conditions for Dynamic Search Rules**
+
+Dynamic Search Rules now support a `filter` condition. A rule activates when the search filter matches at least one branch of the condition, giving you finer control over when rules apply.
+
+**New `lastUpdatedAt` field for Dynamic Search Rules**
+
+DSR listings now include a `lastUpdatedAt` field automatically populated with the timestamp of the last modification task. Listings are also sorted by `lastUpdatedAt` in descending order (most recently modified first).
+
+## Improvements
+
+**Faster search on large datasets**
+
+Disk reads have been reduced to a single operation across the entire search pipeline, yielding up to 5.4x performance improvements on datasets with many distinct fields.
+
+**Dumpless upgrade stabilized**
+
+The `--experimental-dumpless-upgrade` flag is now stable and has been renamed `--upgrade-db`. Functionality is unchanged.
+
+## Bug Fixes
+
+- Restored legacy shorthand filterable attributes syntax support
+
+## Breaking Changes
+
+- Removed `--experimental-replication-parameters`, `--experimental-no-edition-2024-for-dumps`, and `--experimental-no-snapshot-compaction` flags
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.51.0)
+

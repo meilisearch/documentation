@@ -1,0 +1,21 @@
+---
+title: "v1.38"
+description: "Released 2026-03-09"
+---
+
+## New Features
+
+## Improvements
+
+Embeddings indexing performance significantly improved by upgrading to the latest version of Hannoy. The indexing process no longer requires full database scans, making it much more efficient to add embeddings to large databases.
+
+Task deletion has been optimized and fixed to properly clean up orphan tasks and batches from the task queue.
+
+Connection reliability improved when using remote embedders like OpenAI or VoyageAI. Fixed intermittent "connection reset by peer" errors that could occur when embedding documents or search queries.
+
+## Other
+
+Routes in the codebase must now be declared using the `routes::routes` and `routes::path` macros to ensure they appear in the API reference documentation. This is now a mandatory requirement for new routes.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.38.0)
+

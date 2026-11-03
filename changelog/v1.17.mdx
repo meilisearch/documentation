@@ -1,0 +1,28 @@
+---
+title: "v1.17"
+description: "Released 2025-08-12"
+---
+
+## New Features
+
+**Webhook API support**
+A new Webhook API is now available, allowing you to set up webhooks for various events in Meilisearch.
+
+**Chat completions route**
+A new chat completions endpoint enables you to turn search queries into conversations. This works with your favorite LLMs and is easy to integrate into your applications.
+
+## Improvements
+
+**STARTS_WITH filter optimization**
+The `STARTS_WITH` filter has been optimized and stabilized for better performance. You no longer need to activate the experimental feature to use this operator.
+
+**OpenAPI file publishing**
+The OpenAPI specification file is now published with each release as a release asset for easier integration with tools and SDKs.
+
+## Other
+
+**Chat settings endpoint change**
+The chat settings endpoint has changed from `PUT` to `PATCH`. If you have integrations or custom implementations using the old `PUT` method, you'll need to update them to use `PATCH` instead.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.17.0)
+

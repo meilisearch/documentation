@@ -1,0 +1,28 @@
+---
+title: "v1.28"
+description: "Released 2025-12-01"
+---
+
+## New Features
+
+### Better language support for Thai, Khmer, and German
+Improved word segmentation for Thai, Khmer, and German languages through an upgrade to Charabia v0.9.9. This provides more accurate text processing and search results for these languages.
+
+### Batch progress traces on metrics route
+Batch progress information is now exposed on the metrics route, improving the debugging experience when monitoring indexing operations.
+
+## Improvements
+
+### Separated Community and Enterprise editions
+Meilisearch now offers separate binary editions. Community Edition binaries retain their original names and remain under the MIT license. Enterprise Edition binaries are identified by "enterprise" in their names and are available under the BUSL-1.1 license. Docker images for the Enterprise Edition are available in the [`getmeili/meilisearch-enterprise`](https://hub.docker.com/r/getmeili/meilisearch-enterprise) repository.
+
+## Other
+
+### Document sorting fix
+Fixed an issue where documents without a sortable attribute were incorrectly handled when using the sort parameter on the `/documents` endpoint. Documents without the sortable attribute are now correctly returned after those that have the attribute.
+
+### Metrics route memory usage fix
+Fixed a critical bug in the Prometheus metrics route (`/metrics`) that could cause high memory usage and out-of-memory errors when an instance has too many tasks. If you are using the metrics route, upgrade to v1.28.2 or later, or clean up succeeded or failed tasks using the task management API.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.28.0)
+

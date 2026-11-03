@@ -1,0 +1,36 @@
+---
+title: "v1.32"
+description: "Released 2026-01-12"
+---
+
+## New Features
+
+### Skip field-ID-based database cleanup during upgrades
+Introduces a `MEILI_EXPERIMENTAL_DISABLE_FID_BASED_DATABASES_CLEANUP` environment variable that allows you to opt out of the field ID-based database cleanup when upgrading from Meilisearch versions prior to 1.32.0. This provides flexibility for users who need to control the upgrade process.
+
+## Improvements
+
+### Enhanced search performance visibility with detailed logging
+Adds comprehensive progress tracking and logging for search operations, including detailed timing information for each step of the search process. This enables better observability and performance analysis for your search queries.
+
+### Parallel document operation extraction for faster indexing
+Accelerates document indexing by processing document operations in parallel during the payload preparation phase. This includes parallel extraction of changes and internal ID assignment. Performance improvements scale with CPU availability - testing shows approximately 7x speedup on four-million-document insertions using four CPUs.
+
+Note: The `indexedDocuments` field in tasks using skipCreation may report higher counts than the actual number of operations for `POST` and `PUT` requests. The documents are indexed correctly; only the reported count may be impacted as speed is prioritized over perfect accuracy in this optimization.
+
+## Other
+
+### Vector sort bucketing fix
+Fixed vector sort to properly group documents with identical similarity scores, ensuring subsequent ranking rules are applied correctly to bucketed results.
+
+### Document deletion from field-ID-based databases
+Resolved a bug where changing `searchableAttributes` from `["*"]` to a subset of fields left orphaned data in field-ID-based databases, causing corruption and warnings during search operations.
+
+### Graph link rebuilding for dumpless upgrades
+Updated hannoy to v0.1.3-nested-rtxns, which fixes graph-related recall issues and adds functionality to rebuild graph links for recovering previously malformed graphs. Also fixed a minor issue in the dumpless upgrade flow where upgrade descriptions were not displayed correctly.
+
+### Fixed panic on dumpless upgrade with empty indexes
+Resolved a panic that occurred when performing dumpless upgrades on empty indexes with configured embeddings.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.32.0)
+

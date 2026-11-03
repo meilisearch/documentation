@@ -1,0 +1,35 @@
+---
+title: "v1.19"
+description: "Released 2025-08-25"
+---
+
+## New Features
+
+### Automatically shard documents to scale horizontally
+
+Meilisearch can now automatically distribute documents between multiple instances using the new sharding feature. This allows you to scale Meilisearch horizontally by spreading your data across multiple instances.
+
+**Note:** Sharding is available exclusively in Meilisearch Enterprise Edition (EE). The EE features are governed by the Business Source License 1.1, which allows you to use, test, and develop with sharding for free in non-production environments. Please contact sales before using it in production.
+
+## Improvements
+
+### Enhance hybrid search with filter performance
+
+Hybrid search combined with filters has been optimized. In previous versions, mixing hybrid search with filters could significantly increase search time:
+
+```json
+{
+  "q": "hello world",
+  "limit": 100,
+  "filter": "tag=science",
+  "hybrid": {
+    "semanticRatio": 0.5,
+    "embedder": "default"
+  }
+}
+```
+
+Meilisearch now directly computes semantic distance with filtered candidates when only a few candidates match the filter, instead of searching for the closest embeddings in the vector database. This results in substantially faster search times when combining hybrid search with filters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.19.0)
+

@@ -1,0 +1,190 @@
+---
+title: "v1.9"
+description: "Released 2024-07-01"
+---
+
+## New Features
+
+### Hybrid search updates
+
+Meilisearch v1.9 introduces multiple enhancements to hybrid search functionality:
+
+- The `_vectors` field now accepts object values in addition to embedding arrays, allowing you to specify embeddings with additional metadata:
+
+```json
+{
+  "id": 42,
+  "_vectors": {
+    "default": [
+      0.1,
+      0.2
+    ],
+    "text": {
+      "embeddings": [
+        [
+          0.1,
+          0.2,
+          0.3
+        ],
+        [
+          0.4,
+          0.5,
+          0.6
+        ]
+      ],
+      "regenerate": false
+    },
+    "translation": {
+      "embeddings": [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "regenerate": true
+    }
+  }
+}
+```
+
+The `embeddings` field replaces a document's embeddings, while `regenerate` controls whether embeddings are regenerated on future document updates. Set `regenerate: true` to import embeddings as a one-shot process, or `regenerate: false` to preserve embeddings through document updates.
+
+- Use the new `retrieveVectors` search parameter to include the `_vectors` field in search results (performance improvement makes this opt-in by default):
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/INDEX_NAME/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "SEARCH QUERY",
+ "retrieveVectors": true
+ }'
+```
+
+### Ranking score threshold
+
+Filter search results by minimum quality using the `rankingScoreThreshold` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "Badman dark returns 1",
+ "showRankingScore": true,
+ "limit": 5,
+ "rankingScoreThreshold": 0.2
+ }'
+```
+
+Documents below the threshold are excluded from results and do not count towards `estimatedTotalHits` or `totalHits`.
+
+### Get similar documents endpoint
+
+Find documents similar to a given document using the new `/indexes/{indexUid}/similar` endpoint:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/:indexUid/similar' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "id": "23",
+ "offset": 0,
+ "limit": 2,
+ "filter": "release_date > 1521763199",
+ "embedder": "default",
+ "attributesToRetrieve": ["*"],
+ "showRankingScore": false,
+ "showRankingScoreDetails": false
+ }'
+```
+
+Parameters:
+- `id`: Document ID to find similar results for (required)
+- `offset`: Number of results to skip (optional, defaults to `0`)
+- `limit`: Number of results to return (optional, defaults to `20`)
+- `filter`: Filter expression to apply to results (optional)
+- `embedder`: Embedder to use for similarity matching (optional, defaults to `"default"`)
+- `attributesToRetrieve`: Fields to include in results (optional, defaults to all)
+- `showRankingScore`: Include ranking scores (optional, defaults to `false`)
+- `showRankingScoreDetails`: Include detailed ranking scores (optional, defaults to `false`)
+- `rankingScoreThreshold`: Minimum ranking score threshold (optional)
+
+Supports both `GET` (URL parameters) and `POST` (request body) routes.
+
+### `frequency` matching strategy
+
+Prioritize results containing less frequent query terms using the new `frequency` matching strategy:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/{index_uid}/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "cheval blanc",
+ "matchingStrategy": "frequency"
+ }'
+```
+
+### Set distinct attribute at search time
+
+Specify the distinct attribute for a search without modifying index settings using the `distinct` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/{index_uid}/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "kefir le double poney",
+ "distinct": "book.isbn"
+ }'
+```
+
+A search-time `distinct` attribute takes precedence over the index settings.
+
+## Improvements
+
+### Indexing performance
+
+Settings updates are now significantly faster with reduced disk usage. When changing embedding settings, only embedders with modified settings regenerate their embeddings. When only the `documentTemplate` is modified, embeddings regenerate only for documents where the modification affects the text to embed.
+
+### Search performance
+
+- Filter AND operations are now faster during search
+- Facet distribution calculations are optimized for improved performance
+
+### Language support
+
+- Added new normalizer to normalize œ to oe and æ to ae
+- Fixed `chinese-normalization-pinyin` feature flag compilation
+
+### Relevancy improvements
+
+All fields now have the same impact on relevancy when `searchableAttributes: ["*"]`. Fixed `searchableAttributes` behavior when handling nested fields.
+
+### Prometheus metrics (experimental)
+
+Use HTTP path patterns instead of full paths in metrics for better grouping and analysis.
+
+## Other
+
+### Breaking changes
+
+- Empty `_vectors.embedder` arrays are now interpreted as having no vector embedding (previously interpreted as a single embedding of dimension 0)
+- The `_vectors` field is no longer included in search results by default when the experimental `vectorStore` feature is enabled (use `retrieveVectors: true` to opt-in)
+- Meilisearch no longer preserves the exact representation of embeddings in `_vectors`. Vectors are stored in a canonicalized float representation (e.g., `3` may be represented as `3.0`)
+
+### Deprecations
+
+The `exportPuffinReport` experimental feature has been removed. Use logs routes and logs modes instead.
+
+### Bug fixes
+
+- Fixed security issue in Rustls dependency
+- Fixed embedding settings reset when changing the `source` of an embedder, preventing misleading error messages
+- Fixed panic in hybrid search when removing all embedders
+- Fixed hybrid search to respect `offset` and `limit` parameters when returning keyword results early
+- Fixed issue where dumps with user-provided embedders and documents opting out of vectors would fail to import correctly (v1.9.1)
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.9.0)
+

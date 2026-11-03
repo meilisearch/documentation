@@ -1,0 +1,24 @@
+---
+title: "v1.53"
+description: "Released 2026-08-10"
+---
+
+## New Features
+
+**Index size metrics**
+
+Two new metrics are now available in the `GET /indexes/{index_uid}/stats` and `GET /stats` endpoints:
+
+- `indexSize`: the total size of the index on disk
+- `usedIndexSize`: the portion of that size actively used by data
+
+These metrics help you monitor storage usage per index and across your whole Meilisearch instance.
+
+## Improvements
+
+**Sharding support for foreign filters**
+
+Foreign filters now support sharding. Document retrieval during filter evaluation is performed through the network layer, allowing foreign filters to work correctly in sharded setups. In addition, the maximum number of documents a foreign filter can retrieve has been increased from 100 to 1000.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.53.0)
+

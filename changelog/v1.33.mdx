@@ -1,0 +1,30 @@
+---
+title: "v1.33"
+description: "Released 2026-01-19"
+---
+
+## New Features
+
+### Fields endpoint
+A new POST `/indexes/{indexUid}/fields` endpoint returns detailed metadata about all fields in an index. This provides comprehensive information about each field's configuration, including display, search, filtering, and localization settings.
+
+## Improvements
+
+### Faster dumpless upgrades
+The dumpless upgrade process for instances before v1.32.0 is now significantly faster. By multi-threading database fetches during parallel cleanup of old field IDs, upgrade times have improved from approximately 2 hours 50 minutes to less than 7 minutes.
+
+### Enhanced vector search quality
+The vector store has been updated to improve search performance and result quality on larger databases. Linear scanning now triggers more intelligently, particularly when the number of filtered candidates is small relative to the total documents in the index.
+
+### Better ranking with vector search and sorting
+Fixed a bug where only the first non-blocking buckets were considered for non-final ranking rules. Search results are now higher quality when vector search and sorting are combined, especially when the search cutoff is triggered.
+
+## Other
+
+### Security fix: Dump import vulnerability
+All versions of Meilisearch before v1.33.0 are vulnerable to a path traversal vulnerability in the dump import functionality. Importing a specially crafted dump could grant access to arbitrary files on the file system of the Meilisearch instance.
+
+If you allow importing dumps from untrusted sources, update to v1.33.1 or later. Cloud users require no action as there is no evidence of exploitation on Meilisearch Cloud.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.33.0)
+

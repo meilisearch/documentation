@@ -1,0 +1,281 @@
+---
+title: "v1.10"
+description: "Released 2024-08-26"
+---
+
+## New Features
+
+### Federated search
+
+Use the new `federation` setting of the `/multi-search` route to return a single search result object combining results from multiple indexes:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "federation": {
+ "offset": 5,
+ "limit": 10
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+EOF
+```
+
+Response includes results merged in descending ranking score order with federation metadata:
+
+```json
+{
+  "hits": [
+    {
+      "id": 42,
+      "title": "Batman returns",
+      "overview": "..",
+      "_federation": {
+        "indexUid": "movies",
+        "queriesPosition": 0
+      }
+    }
+  ],
+  "processingTimeMs": 0,
+  "limit": 20,
+  "offset": 0,
+  "estimatedTotalHits": 2,
+  "semanticHitCount": 0
+}
+```
+
+Control the relevancy weight of each index using `federationOptions` in each query:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "federation": {},
+ "queries": [
+ {
+ "q": "apple red",
+ "indexUid": "fruits",
+ "federationOptions": {
+ "weight": 3.0
+ }
+ },
+ {
+ "q": "apple red",
+ "indexUid": "fruits",
+ "federationOptions": {
+ "weight": 0.5
+ }
+ }
+ ]
+}
+EOF
+```
+
+The `weight` parameter controls how likely results from each index appear in the final results. Values less than 1.0 make results less likely to appear, while values greater than 1.0 make them more likely. Default is 1.0.
+
+### Language settings
+
+Explicitly define which languages are used in your documents for better search accuracy, particularly helpful for datasets with multiple languages or those that previously required workarounds.
+
+Set languages during indexing with `localizedAttributes`:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "localizedAttributes": [
+ {
+ "locales": ["jpn"],
+ "attributePatterns": ["*_ja"]
+ },
+ {
+ "locales": ["eng"],
+ "attributePatterns": ["*_en"]
+ },
+ {
+ "locales": ["cmn"],
+ "attributePatterns": ["*_zh"]
+ },
+ {
+ "locales": ["fra", "ita"],
+ "attributePatterns": ["latin.*"]
+ },
+ {
+ "locales": ,
+ "attributePatterns": ["*"]
+ }
+ ]
+}
+EOF
+```
+
+Supported language codes include: `epo`, `eng`, `rus`, `cmn`, `spa`, `por`, `ita`, `ben`, `fra`, `deu`, `ukr`, `kat`, `ara`, `hin`, `jpn`, `heb`, `yid`, `pol`, `amh`, `jav`, `kor`, `nob`, `dan`, `swe`, `fin`, `tur`, `nld`, `hun`, `ces`, `ell`, `bul`, `bel`, `mar`, `kan`, `ron`, `slv`, `hrv`, `srp`, `mkd`, `lit`, `lav`, `est`, `tam`, `vie`, `urd`, `tha`, `guj`, `uzb`, `pan`, `aze`, `ind`, `tel`, `pes`, `mal`, `ori`, `mya`, `nep`, `sin`, `khm`, `tuk`, `aka`, `zul`, `sna`, `afr`, `lat`, `slk`, `cat`, `tgl`, `hye`.
+
+Set language at search time with the `locales` parameter:
+
+```bash
+curl \
+ -X POST http://localhost:7700/indexes/movies/search \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "進撃の巨人", "locales": ["jpn"]}'
+```
+
+### Experimental: CONTAINS filter operator
+
+Enable the `containsFilter` experimental feature to filter results containing partial string matches:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"containsFilter": true}'
+```
+
+Use the `CONTAINS` operator in filter expressions:
+
+```bash
+curl \
+ -X POST http://localhost:7700/indexes/movies/search \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "super hero", "filter": "synopsis CONTAINS spider"}'
+```
+
+### Experimental: Edit documents with a Rhai function
+
+Update a subset of your documents using a function directly from Meilisearch without needing to fetch, modify, and reindex them.
+
+First, enable the experimental feature:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"editDocumentsByFunction": true}'
+```
+
+Then use the `/documents/edit` route:
+
+```bash
+curl http://localhost:7700/indexes/movies/documents/edit \
+ -H 'content-type: application/json' \
+ --data-binary '{"function": "doc.title = `✨ ${doc.title.to_upper} ✨`", "filter": "id > 3000"}'
+```
+
+The `function` parameter accepts [Rhai](https://rhai.rs/book/) code that can modify document fields. Use the `filter` parameter to target specific documents and `context` to pass data to your function.
+
+## Improvements
+
+### Search performance
+
+Implemented intersection at the end of the search pipeline for faster search operations.
+
+### Indexing performance
+
+Stopped opening indexes just to check if they exist, reducing unnecessary overhead during indexing operations.
+
+### AI-powered search enhancements
+
+Several quality-of-life improvements for REST embedders and remote embedding services:
+
+- Add custom headers to REST embedders using the optional `headers` parameter to include additional headers in requests to remote embedders
+- Add optional `url` parameter to OpenAI embedder to specify a custom embedding endpoint
+- `dimensions` parameter now available for Ollama embedders
+- Improved error messages when embeddings are missing or model configurations cannot be loaded
+- Exponential backoff duration is now randomized when REST embedder requests fail
+- OpenAI embeddings that exceed max tokens are now truncated rather than embedded by chunk
+
+### Error handling and messaging
+
+- Improved tenant token error messages for better debugging
+- Wrong HTTP status and confusing error messages on incorrect payloads have been fixed
+- Errors at the main Meilisearch binary level are now logged with `ERROR` level for better visibility
+
+### Improved documentation of natural language processing
+
+Added null byte as hard context separator and included all math symbols in the default separator list for better text processing across languages.
+
+### Heavy load handling
+
+- Optimized search queue handling to spawn only one search queue in actix-web
+- Improved index scheduler reliability to prevent stopping during heavy loads
+- Explicitly drop search permits to free resources more efficiently
+- Stop processing searches that take longer than one minute to prevent resource exhaustion
+
+### Document operations
+
+Made autobatching of document deletions with document deletions by filter possible, unclogging the task queue for users performing these operations heavily.
+
+### Search configuration
+
+Added experimental CLI flags to fine-tune search behavior:
+
+- `--experimental-nb-searches-per-core`: Configure how many searches Meilisearch can process concurrently per core
+- `--experimental-drop-search-after`: Set how many seconds before Meilisearch considers a search irrelevant and drops it without processing
+
+## Other
+
+### Breaking changes
+
+#### REST embedder configuration
+
+The REST embedder configuration has been simplified and changed in v1.10:
+
+Old v1.9 format:
+```json
+{
+  "source": "rest",
+  "url": "https://localhost:10006",
+  "query": {
+    "model": "minillm"
+  },
+  "inputField": [
+    "prompt"
+  ],
+  "inputType": "text",
+  "embeddingObject": [
+    "embedding"
+  ]
+}
+```
+
+New v1.10 format:
+```json
+{
+  "source": "rest",
+  "url": "https://localhost:10006",
+  "request": {
+    "model": "minillm",
+    "prompt": "{{text}}"
+  },
+  "response": {
+    "embedding": "{{embedding}}"
+  }
+}
+```
+
+The `request` object represents the request sent to the remote embedder, with `{{text}}` as a placeholder for the text to embed. The `response` object represents the response structure, with `{{embedding}}` as a placeholder for the embedding vector.
+
+If you have dumps with REST embedder configurations from v1.9, you must remove embedders with source `"rest"` before importing into v1.10. Attempting to import will result in an error about unknown fields.
+
+### Minimum Ubuntu version requirement
+
+Meilisearch now requires Ubuntu 20.04 or later. Ubuntu 18.04 is no longer supported due to GitHub Actions runner requirements.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.10.0)
+

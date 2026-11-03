@@ -1640,8 +1640,8 @@
     "destination": "/reference/api/logs/update-target-of-the-console-logs"
   },
   {
-    "source": "/changelog",
-    "destination": "/changelog/changelog"
+    "source": "/changelog/changelog",
+    "destination": "/changelog"
   },
   {
     "source": "/guides/ai/computing_hugging_face_embeddings_gpu",
@@ -2341,7 +2341,7 @@
   },
   {
     "source": "/release-notes",
-    "destination": "/changelog/changelog"
+    "destination": "/changelog"
   },
   {
     "source": "/learn/core_concepts/search",
@@ -3077,7 +3077,7 @@
   },
   {
     "source": "/learn/whats_new",
-    "destination": "/changelog/changelog"
+    "destination": "/changelog"
   },
   {
     "source": "/learn/self_hosted/enterprise_and_community_editions",
@@ -4565,7 +4565,7 @@
   },
   {
     "source": "/learn/architecture/changelog",
-    "destination": "/changelog/changelog"
+    "destination": "/changelog"
   },
   {
     "source": "/learn/relevancy/hybrid_search",

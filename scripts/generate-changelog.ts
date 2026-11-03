@@ -2,61 +2,30 @@ import { Octokit } from "@octokit/rest";
 import Anthropic from "@anthropic-ai/sdk";
 import * as fs from "fs";
 import * as path from "path";
-
-const GITHUB_OWNER = "meilisearch";
-const GITHUB_REPO = "meilisearch";
+import {
+  GITHUB_OWNER,
+  GITHUB_REPO,
+  buildVersionPageFile,
+  getMinorVersion,
+  getProjectPaths,
+  listExistingVersions,
+  parseVersion,
+  regenerateIndexCards,
+  syncChangelogNavigation,
+  versionPagePath,
+} from "./changelog-utils.js";
 
 const octokit = new Octokit();
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
-const PROJECT_ROOT = path.dirname(SCRIPT_DIR);
-const CHANGELOG_MDX = path.join(PROJECT_ROOT, "changelog", "changelog.mdx");
-
-const CHANGELOG_HEADER = `---
-title: "Changelog"
-description: "New features and improvements in Meilisearch"
----
-
-`;
+const paths = getProjectPaths(path.dirname(SCRIPT_DIR));
 
 interface Release {
   tag_name: string;
   name: string;
   body: string;
   published_at: string;
-}
-
-interface ParsedVersion {
-  major: number;
-  minor: number;
-  patch: number;
-}
-
-function parseVersion(tag: string): ParsedVersion | null {
-  const match = tag.match(/^v?(\d+)\.(\d+)\.(\d+)/);
-  if (!match) return null;
-  return {
-    major: parseInt(match[1]),
-    minor: parseInt(match[2]),
-    patch: parseInt(match[3]),
-  };
-}
-
-function getMinorVersion(version: ParsedVersion): string {
-  return `v${version.major}.${version.minor}`;
-}
-
-function getVersionsFromChangelog(): Set<string> {
-  const versions = new Set<string>();
-  if (!fs.existsSync(CHANGELOG_MDX)) return versions;
-
-  const content = fs.readFileSync(CHANGELOG_MDX, "utf-8");
-  const matches = content.matchAll(/<Update\s+label="([^"]+)"/g);
-  for (const match of matches) {
-    versions.add(match[1]);
-  }
-  return versions;
 }
 
 function formatJsonBlocks(content: string): string {
@@ -84,7 +53,7 @@ function reorderSections(content: string): string {
     } else if (part.startsWith("## Other")) {
       sections["## Other"] = part.trim();
     } else if (part.trim()) {
-      preamble = part.trim();
+      preamble = preamble ? `${preamble}\n\n${part.trim()}` : part.trim();
     }
   }
 
@@ -118,18 +87,19 @@ function cleanContent(content: string): string {
   return cleaned;
 }
 
-function buildUpdateBlock(version: string, date: string, content: string): string {
-  const tag = `${version}.0`;
-  const githubUrl = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tag/${tag}`;
-  return `<Update label="${version}" description="${date}">
+function githubReleaseUrl(minorVersion: string): string {
+  return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases/tag/${minorVersion}.0`;
+}
 
-${content}
+function appendGithubLink(content: string, minorVersion: string): string {
+  const url = githubReleaseUrl(minorVersion);
+  const link = `[Find more information on GitHub](${url})`;
+  if (content.includes(link)) return content;
+  return `${content}\n\n${link}`;
+}
 
-[Find more information on GitHub](${githubUrl})
-
-</Update>
-
-`;
+function getExistingVersionLabels(): Set<string> {
+  return new Set(listExistingVersions(paths.versionsDir).map((v) => v.label));
 }
 
 async function fetchNewReleases(existingVersions: Set<string>): Promise<Release[]> {
@@ -154,7 +124,6 @@ async function fetchNewReleases(existingVersions: Set<string>): Promise<Release[
       const version = parseVersion(release.tag_name);
       if (!version) continue;
 
-      // Skip pre-v1.0 releases
       if (version.major < 1) continue;
 
       const minorKey = getMinorVersion(version);
@@ -169,8 +138,6 @@ async function fetchNewReleases(existingVersions: Set<string>): Promise<Release[
       });
     }
 
-    // GitHub returns releases newest first — if every release on this page
-    // belongs to a minor version already in the changelog, older pages will too
     if (allKnown) break;
 
     page++;
@@ -245,11 +212,11 @@ If there's no relevant changelog content (only bug fixes, maintenance, etc.), re
 }
 
 async function main() {
-  // Get versions already in changelog.mdx
-  const existingVersions = getVersionsFromChangelog();
+  fs.mkdirSync(paths.versionsDir, { recursive: true });
+
+  const existingVersions = getExistingVersionLabels();
   console.log(`Changelog already has ${existingVersions.size} version(s)`);
 
-  // Fetch only releases for minor versions not yet in the changelog
   const releases = await fetchNewReleases(existingVersions);
   const releasesByMinor = new Map<string, Release[]>();
 
@@ -269,10 +236,9 @@ async function main() {
     return;
   }
 
-  // Sort minor versions newest first
   const sortedMinors = [...releasesByMinor.entries()].sort((a, b) => {
-    const vA = parseVersion(a[0] + ".0");
-    const vB = parseVersion(b[0] + ".0");
+    const vA = parseVersion(`${a[0]}.0`);
+    const vB = parseVersion(`${b[0]}.0`);
     if (!vA || !vB) return 0;
     if (vA.major !== vB.major) return vB.major - vA.major;
     return vB.minor - vA.minor;
@@ -280,11 +246,10 @@ async function main() {
 
   console.log(`\n--- Processing ${sortedMinors.length} new version(s) ---`);
 
-  const newBlocks: string[] = [];
+  let added = 0;
   for (const [minorVersion, patches] of sortedMinors) {
     console.log(`\nProcessing ${minorVersion}...`);
 
-    // Sort patches oldest first to get first release date
     patches.sort((a, b) => {
       const vA = parseVersion(a.tag_name);
       const vB = parseVersion(b.tag_name);
@@ -298,41 +263,33 @@ async function main() {
       .join("\n\n---\n\n");
 
     const rawContent = await extractChangelog(mergedBody);
-    const content = cleanContent(rawContent);
+    const content = appendGithubLink(cleanContent(rawContent), minorVersion);
 
-    if (content.trim()) {
-      newBlocks.push(buildUpdateBlock(minorVersion, releaseDate, content));
-      console.log(`  Done: ${minorVersion}`);
-    } else {
+    if (!content.trim()) {
       console.log(`  Skipped (no notable changes): ${minorVersion}`);
+      continue;
     }
+
+    const pagePath = versionPagePath(paths.versionsDir, minorVersion);
+    fs.writeFileSync(pagePath, buildVersionPageFile(minorVersion, releaseDate, content));
+    console.log(`  Wrote: ${pagePath}`);
+    added++;
   }
 
-  if (newBlocks.length === 0) {
+  if (added === 0) {
     console.log("\nNo new changelog content to add.");
     return;
   }
 
-  // Insert new blocks into existing changelog.mdx right after the header
-  if (fs.existsSync(CHANGELOG_MDX)) {
-    const existing = fs.readFileSync(CHANGELOG_MDX, "utf-8");
-    const headerEnd = existing.indexOf("---", existing.indexOf("---") + 3);
-    if (headerEnd !== -1) {
-      let insertPos = existing.indexOf("\n", headerEnd) + 1;
-      while (insertPos < existing.length && existing[insertPos] === "\n") {
-        insertPos++;
-      }
-      const before = existing.slice(0, insertPos);
-      const after = existing.slice(insertPos);
-      fs.writeFileSync(CHANGELOG_MDX, before + newBlocks.join("") + after);
-    }
-  } else {
-    fs.mkdirSync(path.dirname(CHANGELOG_MDX), { recursive: true });
-    fs.writeFileSync(CHANGELOG_MDX, CHANGELOG_HEADER + newBlocks.join(""));
-  }
+  const allVersions = listExistingVersions(paths.versionsDir);
+  regenerateIndexCards(paths.indexMdx, allVersions);
+  syncChangelogNavigation(
+    paths.navJson,
+    allVersions.map((v) => v.label)
+  );
 
-  console.log(`\nUpdated: ${CHANGELOG_MDX}`);
-  console.log(`Added ${newBlocks.length} new version(s)`);
+  console.log(`\nUpdated index: ${paths.indexMdx}`);
+  console.log(`Added ${added} new version(s)`);
 }
 
 main().catch(console.error);

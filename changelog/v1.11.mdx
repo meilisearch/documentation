@@ -1,0 +1,144 @@
+---
+title: "v1.11"
+description: "Released 2024-10-28"
+---
+
+## New Features
+
+### AI-powered search improvements
+
+Meilisearch v1.11 introduces several changes to AI-powered search as part of stabilization efforts:
+
+- **Binary quantization for embeddings**: Enable the new `binaryQuantized` option to convert floating-point embeddings into boolean values. This significantly improves performance and reduces database size (up to 10x reduction and 6x faster indexing) but impacts relevancy. This option cannot be reverted once enabled.
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "embedders": {
+ "image2text": {
+ "binaryQuantized": true
+ }
+ }
+ }'
+```
+
+- **Document template improvements**: The `documentTemplate` field now includes a new `field.is_searchable` property. The default template now filters out empty fields and non-searchable attributes for better embedding quality.
+
+- **New embedder option**: `documentTemplateMaxBytes` allows you to truncate document template text when it exceeds a specified byte limit.
+
+- **Updated default OpenAI model**: The default embedding model is now `text-embedding-3-small` instead of `text-embedding-ada-002`.
+
+### Federated search enhancements
+
+Two new federated search options have been added to support facet queries:
+
+- **`facetsByIndex`**: Request facet distribution and stats for each index separately in federated searches
+
+```json
+POST /multi-search
+{
+ "federation": {
+ "limit": 20,
+ "offset": 0,
+ "facetsByIndex": {
+ "movies": ["title", "id"],
+ "comics": ["title"]
+ }
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+```
+
+- **`mergeFacets`**: Merge facet data from multiple indexes into a single result set
+
+```json
+POST /multi-search
+{
+ "federation": {
+ "limit": 20,
+ "offset": 0,
+ "facetsByIndex": {
+ "movies": ["title", "id"],
+ "comics": ["title"]
+ },
+ "mergeFacets": {
+ "maxValuesPerFacet": 10
+ }
+ },
+ "queries": [
+ {
+ "q": "Batman",
+ "indexUid": "movies"
+ },
+ {
+ "q": "Batman",
+ "indexUid": "comics"
+ }
+ ]
+}
+```
+
+### Experimental STARTS WITH filter operator
+
+A new experimental `STARTS WITH` filter operator is available. Enable it through experimental features:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "containsFilter": true
+ }'
+```
+
+Then use it in search filters:
+
+```json
+{
+  "filter": "hero STARTS WITH spider"
+}
+```
+
+### Language support improvements
+
+- Added ISO-639-1 language variants and automatic conversion to ISO-639-3
+- New German language tokenizer
+- Improved Turkish language support
+- Fixed Swedish character normalization so `å`, `ä`, and `ö` are no longer normalized
+
+## Improvements
+
+- Improved error handling when using `query.facets` with federated search (now returns appropriate error instead of silently ignoring the parameter)
+- Fixed facet value truncation to correctly apply `maxValuesPerFacet` limits
+- Improved task cancellation when vectors are used
+- Better timeout handling for embedding requests during search (3s timeout added)
+- Added timeouts to read and write operations
+- Retry logic added for deserialization failures in remote embedding providers (REST/OpenAI/ollama)
+- Improved vector display when no custom vectors were provided
+- Updated Rhai to fix errors when updating documents with functions
+- Batch failed logs now appear at error level
+- Removed forced capitalization in search UI fields
+
+## Other
+
+### Breaking changes
+
+- When performing AI-powered searches, `hybrid.embedder` is now **mandatory** in `GET` and `POST` `/indexes/{:indexUid}/search`
+- `hybrid` must now be passed even for pure semantic searches
+- `embedder` is now **mandatory** in `GET` and `POST` `/indexes/{:indexUid}/similar`
+- `semanticRatio` is ignored for queries that include `vector` but not `q` (performs pure semantic search instead)
+- When using federated search, `query.facets` at the query level now returns an error instead of being silently ignored. Use `federation.facetsByIndex` instead.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.11.0)
+

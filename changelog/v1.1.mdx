@@ -1,0 +1,165 @@
+---
+title: "v1.1"
+description: "Released 2023-04-03"
+---
+
+## New Features
+
+### Multi-index search
+
+Perform searches across multiple indexes in a single HTTP request using the new `/multi-search` endpoint:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/multi-search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "queries": [
+ {
+ "indexUid": "products",
+ "q": "Nike",
+ "limit": 1
+ },
+ {
+ "indexUid": "brands",
+ "q": "Nike",
+ "limit": 1
+ }
+ ]
+ }'
+```
+
+The endpoint returns an array of results for each queried index:
+
+```json
+{
+ "results": [
+ {
+ "indexUid": "products",
+ "hits": ,
+ "query": "Nike",
+ "processingTimeMs": 1,
+ "limit": 1,
+ "offset": 0,
+ "estimatedTotalHits": 17
+ },
+ {
+ "indexUid": "brands",
+ "hits": ,
+ "query": "Nike",
+ "processingTimeMs": 0,
+ "limit": 1,
+ "offset": 0,
+ "estimatedTotalHits": 7
+ }
+ ]
+}
+```
+
+### facetStats for numerical facets
+
+Queries using the `facets` parameter now automatically include a `facetStats` object containing the minimum and maximum values for each numerical facet:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "facets": ["price"]
+ }'
+```
+
+Response:
+
+```json
+{
+ "hits": ,
+ "facetDistribution": {
+ "price": {}
+ },
+ "facetStats": {
+ "price": {
+ "min": 2,
+ "max": 60
+ }
+ }
+}
+```
+
+### Geosearch with bounding box
+
+Use the new `_geoBoundingBox` filter to search for results within a specific geographic area:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/restaurants/search' \
+ -H 'Content-type: application/json' \
+ --data-binary '{
+ "filter": "_geoBoundingBox([45.472735, 9.184019], [45.473711, 9.185613])"
+ }'
+```
+
+The `_geoBoundingBox` filter accepts two coordinate arrays: the top right corner and the bottom left corner of your search area.
+
+### Prometheus metrics monitoring (experimental)
+
+An experimental feature for monitoring Meilisearch with Prometheus is now available. Launch Meilisearch with the `--experimental-enable-metrics` flag to enable it:
+
+```bash
+meilisearch --experimental-enable-metrics
+```
+
+Metrics will be available at the `/metrics` endpoint in Prometheus-compatible format. This feature is experimental and its API may change between versions.
+
+## Improvements
+
+### Unlimited indexes and index size
+
+Meilisearch no longer enforces limits on the number of indexes or their individual size. You can now create unlimited indexes, with the maximum size determined only by your operating system's memory address space (approximately 80TiB under Linux).
+
+### Customizable CSV delimiters
+
+When adding or updating documents, you can now customize the CSV delimiter using the `csvDelimiter` parameter. The default delimiter remains a comma (`,`).
+
+### Improved language support
+
+- Enhanced Greek support with diacritics normalization and final sigma handling
+- Enhanced Arabic support by ignoring Tatweel characters
+- Improved language detection during indexing, reducing incorrect language recognition during search
+
+### Better error messages
+
+Meilisearch now provides "did you mean...?" suggestions when you make typos in search parameters, making it easier to identify and correct mistakes.
+
+### Faster indexing with automatic task batching
+
+Addition and deletion tasks are now automatically batched together to improve indexing performance.
+
+### API key and tenant token wildcards
+
+Wildcards (`*`) can now be used at the end of index names when creating API keys or tenant tokens.
+
+### Enhanced geo field handling
+
+The `_geo` field now accepts `null` as a valid value when importing or updating documents.
+
+### Reduced crate size
+
+The Meilisearch crate size has been significantly reduced from approximately 200MB to 50MB through dictionary compression.
+
+### Cached index statistics
+
+Index statistics are now cached to improve performance.
+
+## Other
+
+### Database corruption issue in v1.1.0
+
+v1.1.1 disables the auto-batching feature introduced in v1.1.0 due to a critical bug that could corrupt databases. If your database was affected, the only recovery option is to reindex your documents in a fresh index.
+
+### Task queue overflow protection
+
+Meilisearch now stops receiving new tasks once the task queue reaches capacity, preventing potential issues from task queue overflow.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.1.0)
+

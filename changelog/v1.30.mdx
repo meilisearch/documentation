@@ -1,0 +1,118 @@
+---
+title: "v1.30"
+description: "Released 2025-12-15"
+---
+
+## Improvements
+
+### Network scaling with dynamic topology changes
+
+Meilisearch Enterprise Edition now supports modifying the number of participants in a sharded network without restarting or migrating to a new cluster. You can scale up by adding new remotes or scale down by removing existing ones.
+
+**Setting up the initial network:**
+
+1. Designate a leader machine that will receive all write operations. Any write request to a non-leader machine will return a `not_a_leader` error.
+
+2. Configure your network topology by calling `PATCH /network` on the leader:
+
+```json
+{
+  "self": "ms0",
+  "leader": "ms0",
+  "remotes": {
+    "ms0": {
+      "url": "URL_OF_MS0",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS0",
+      "writeApiKey": "WRITE_API_KEY_OF_MS0"
+    },
+    "ms1": {
+      "url": "URL_OF_MS1",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS1",
+      "writeApiKey": "WRITE_API_KEY_OF_MS1"
+    }
+  }
+}
+```
+
+3. The network configuration is automatically propagated to all members.
+
+4. Send documents and settings only to the leader, they will be distributed across all network participants with automatic sharding.
+
+**Adding a new remote:**
+
+Call `PATCH /network` on the leader with the new remote's information:
+
+```json
+{
+  "remotes": {
+    "ms2": {
+      "url": "URL_OF_MS2",
+      "searchApiKey": "SEARCH_API_KEY_OF_MS2",
+      "writeApiKey": "WRITE_API_KEY_OF_MS2"
+    }
+  }
+}
+```
+
+A `networkTopologyChange` task will automatically rebalance documents across all remotes, including the new one.
+
+**Removing a remote:**
+
+Call `PATCH /network` on the leader and set the remote to `null`:
+
+```json
+{
+  "remotes": {
+    "ms2": null
+  }
+}
+```
+
+A `networkTopologyChange` task will automatically redistribute documents from the removed remote to the remaining participants.
+
+### macOS binary availability restored
+
+The `meilisearch-enterprise-macos-amd64` and `meilisearch-macos-amd64` binaries are now available again after being unavailable in v1.29.
+
+### Improved task handling during index operations
+
+Tasks are now properly attributed during index swaps to prevent cross-index task loss.
+
+### Search stability improvement
+
+Fixed an issue that could cause search requests to fail with an internal error about missing field weights. The system now logs a warning instead of crashing when encountering incomplete field weight mappings.
+
+## Other
+
+### Breaking changes for network sharding users
+
+These changes only affect Enterprise Edition users with automatic sharding enabled (`network.leader` set). Standard feature users are not affected.
+
+**Network object structure changes:**
+- The `sharding` boolean field has been removed
+- A new `leader` field (optional string) has been added to designate the cluster leader
+- A new `version` field (UUID) has been added to track network state
+
+**Write operation restrictions:**
+The following routes now return a `not_a_leader` error when called on non-leader machines:
+- `POST /indexes`
+- `PATCH` or `DELETE /indexes/{indexUid}`
+- `POST`, `PUT`, or `DELETE /indexes/{indexUid}/documents`
+- `POST /indexes/{indexUid}/documents/delete`
+- `POST /indexes/{indexUid}/documents/delete-batch`
+- `POST /indexes/{indexUid}/documents/edit`
+- `PATCH` or `DELETE /indexes/{indexUid}/settings` and related settings routes
+- `PATCH /network` (when changing the leader)
+- `POST /swap-indexes`
+
+**PATCH /network response change:**
+When a leader is configured, `PATCH /network` now returns a `NetworkTopologyChange` task summary instead of the network object itself.
+
+**Dump import behavior:**
+When importing dumps, the `self` and `leader` fields are dropped from the network configuration.
+
+**Network topology change task cancellation:**
+`NetworkTopologyChange` tasks can be cancelled. When cancelled, documents that have already been moved remain in their new locations, while the network topology reverts to its previous state.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.30.0)
+

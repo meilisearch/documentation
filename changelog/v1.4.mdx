@@ -1,0 +1,101 @@
+---
+title: "v1.4"
+description: "Released 2023-09-25"
+---
+
+## New Features
+
+### Customize text separators
+
+Meilisearch word segmentation now supports customization through two new index settings: `separatorTokens` and `nonSeparatorTokens`.
+
+Add a character to the `separatorTokens` list to use it as a word separator:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/separator-tokens' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["&sect;", "&sep"]'
+```
+
+Add a character to the `nonSeparatorTokens` list when you don't want Meilisearch to use it to separate words:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/non-separator-tokens' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["@", "#", "&"]'
+```
+
+### Load user-defined dictionaries
+
+Expand Meilisearch's default language-based dictionaries with domain-specific terms using the new `dictionary` index setting. This improves word segmentation accuracy for specialized vocabularies:
+
+```bash
+curl \
+ -X PUT 'http://localhost:7700/indexes/articles/settings/dictionary' \
+ -H 'Content-Type: application/json' \
+ --data-binary '["J. R. R.", "J.R.R."]'
+```
+
+The `dictionary` setting works alongside existing `stopWords` and `synonyms` settings:
+
+```json
+{
+  "dictionary": [
+    "J. R. R.",
+    "J.R.R."
+  ],
+  "synonyms": {
+    "J.R.R.": [
+      "jrr",
+      "J. R. R."
+    ],
+    "J. R. R.": [
+      "jrr",
+      "J.R.R."
+    ],
+    "jrr": [
+      "J.R.R.",
+      "J. R. R."
+    ]
+  }
+}
+```
+
+## Improvements
+
+### Enhanced data privacy in error messages
+
+Hidden document fields are no longer displayed in error messages. When attempting to sort by a non-sortable field while other non-displayed sortable fields exist, you'll see a message like:
+
+```text
+Available sortable attributes are: price, stock, <..hidden-attributes>.
+```
+
+### Improved filter parameter handling with backslashes
+
+Fixed a bug preventing proper use of backslash characters in `filter` search parameter expressions. This change requires updating how backslashes are escaped in filters.
+
+If you use backslashes in filter expressions, you must now escape them. For example:
+- Before v1.4.0: `path = "my\\test\\path"`
+- From v1.4.0: `path = "my\\\\test\\\\path"`
+
+The JSON layer unescapes `\\\\` to `\\`, and then Meilisearch unescapes `\\` to a single `\`.
+
+### Search performance improvements
+
+Improved indexing speed when importing dumps by using buffered readers and writers.
+
+## Other
+
+### Breaking change: Backslash escaping in filter expressions
+
+Users with backslash characters in `filter` search parameters must update their filter expressions. All backslashes now require escaping at the Meilisearch filter level (in addition to any JSON escaping).
+
+For a document with `path: "my\test\path"` stored as `"my\\test\\path"` in JSON, the filter syntax changed:
+- Previously: `path = "my\\test\\path"` (only JSON escaping)
+- Now: `path = "my\\\\test\\\\path"` (JSON + Meilisearch filter escaping)
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.4.0)
+

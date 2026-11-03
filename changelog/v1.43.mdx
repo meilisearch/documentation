@@ -1,0 +1,40 @@
+---
+title: "v1.43"
+description: "Released 2026-05-04"
+---
+
+## New Features
+
+### New settings indexer
+
+The new settings indexer provides more efficient handling of index settings modifications. It now supports filterable, sortable, facet search, and custom (asc/desc) attributes in addition to the previously-supported searchable, exact, proximity precision, and embedders.
+
+- For Meilisearch Cloud users, the new settings indexer is disabled by default and can be enabled on a case-by-case basis for scaling purposes.
+- For OSS users, the new settings indexer can be disabled by setting the `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS` environment variable to `true`.
+
+## Improvements
+
+### Improve facet search indexing performance
+
+Facet search indexing is now faster. The internal data structure generation previously performed multiple full scans on internal entries; it now scans only specific entries dedicated to facet searchable fields.
+
+### Improve task queue compaction integration
+
+The `GET /health` route now returns HTTP 500 after a successful task queue compaction to signal that Meilisearch should be restarted so that tasks can be enqueued again. For Meilisearch Cloud users, this ensures that compacting the task queue will automatically restart the instance after the compaction.
+
+## Other
+
+### Fixed lexicographic filters on strings
+
+Fixed a bug where string facet values used in `<`, `<=`, `>`, `>=`, and `IN` filters were not normalized before comparison to facet values. This caused some values in documents (for example, `2026-01-01T00:00:00`) to appear to have different ordering than expected due to normalization differences (becoming `2026-01-01t00:00:00`).
+
+### Fixed typo tolerance regression
+
+Fixed the `WordDelta::added_or_deleted_words` function that was causing typo tolerance issues introduced in v1.41.
+
+### Security fix in v1.43.1
+
+v1.43.1 contains a fix for an authenticated SSRF vulnerability. Self-hosting users are recommended to upgrade if they allow third parties to configure Meilisearch instances. Meilisearch Cloud users are not required to update.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.43.0)
+

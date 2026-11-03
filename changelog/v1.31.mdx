@@ -1,0 +1,29 @@
+---
+title: "v1.31"
+description: "Released 2025-12-22"
+---
+
+## New Features
+
+### Allow strict document update without creating missing documents
+
+Added an optional `skipCreation` query parameter to document update endpoints. When set to `true` on `POST` or `PUT` requests to `/indexes/{index}/documents`, documents that don't exist in the index are silently ignored rather than created. The default value is `false`, which preserves the existing behavior of creating new documents.
+
+Example usage:
+
+```http
+POST /indexes/my-index/documents?skipCreation=true
+```
+
+## Improvements
+
+### S3-streaming snapshots now available as Enterprise Edition feature
+
+S3-streaming snapshots functionality is now exclusively available in the Enterprise Edition. This requires a license for self-hosted deployments. On-disk snapshots remain available in all editions. If you're using the Community Edition between versions 1.25 and 1.30, you can continue using S3 Streaming without a license.
+
+### AWS IRSA authentication support for S3 snapshots
+
+Added support for AWS IRSA (IAM Roles for Service Accounts) authentication when performing snapshots to S3. This allows the use of short-lived access and secret keys for more secure snapshot uploads. This feature is available in the Enterprise Edition and can be configured through new experimental CLI parameters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.31.0)
+

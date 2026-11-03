@@ -1,0 +1,25 @@
+---
+title: "v1.22"
+description: "Released 2025-09-24"
+---
+
+## New Features
+
+### Geojson Filtering Support
+
+A new geo backend has been introduced to store and filter geojson data. You can now:
+
+1. Make the `_geojson` field filterable in your index settings
+2. Send documents with a `_geojson` field containing valid [geojson](https://datatracker.ietf.org/doc/html/rfc7946)
+3. Filter your documents using the new `_geoPolygon` filter, or continue using the existing `_geoBoundingBox` and `_geoPoints` filters
+
+## Improvements
+
+### Remote Federated Search Timeout Configuration
+
+The timeout for remote federated search has been made configurable. Previously set to a fixed 30 seconds, you can now customize this value by setting the `MEILI_EXPERIMENTAL_REMOTE_SEARCH_TIMEOUT_SECONDS` environment variable to a positive integer. This allows you to better accommodate different search configurations and network conditions.
+
+Note: This configuration is only available via environment variable; no CLI flag or configuration file entry is available at this time.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.22.0)
+

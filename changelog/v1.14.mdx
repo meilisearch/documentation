@@ -1,0 +1,172 @@
+---
+title: "v1.14"
+description: "Released 2025-04-14"
+---
+
+## New Features
+
+### Granular filterable attribute settings
+
+Control which types of filters you want to enable for each attribute in your documents. Use `PATCH /indexes/INDEX_NAME/settings` to specify filter features like equality, comparison, and facet search on a per-attribute basis:
+
+```json
+{
+  "filterableAttributes": [
+    {
+      "attributePatterns": [
+        "genre",
+        "artist"
+      ],
+      "features": {
+        "facetSearch": true,
+        "filter": {
+          "equality": true,
+          "comparison": false
+        }
+      }
+    },
+    {
+      "attributePatterns": [
+        "rank"
+      ],
+      "features": {
+        "facetSearch": false,
+        "filter": {
+          "equality": true,
+          "comparison": true
+        }
+      }
+    }
+  ]
+}
+```
+
+This allows you to further optimize indexing speeds by enabling only the filter features you need for each attribute.
+
+### Composite embedders
+
+Use different embedders at search and indexing time to optimize AI-powered search performance. For example, use a remote embedder during indexing (higher bandwidth) and a local embedder during search queries (lower latency).
+
+To use composite embedders:
+
+1. Enable the feature with the `/experimental-features` route:
+
+```bash
+curl MEILISEARCH_URL/experimental-features \
+ -H 'Content-Type: application/json' \
+ -d '{"compositeEmbedders": true}'
+```
+
+2. Create an embedder with `source` set to `"composite"`, defining both `searchEmbedder` and `indexingEmbedder`:
+
+```json
+{
+  "embedders": {
+    "text": {
+      "source": "composite",
+      "searchEmbedder": {
+        "source": "huggingFace",
+        "model": "baai/bge-base-en-v1.5",
+        "revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a"
+      },
+      "indexingEmbedder": {
+        "source": "rest",
+        "url": "https://URL.endpoints.huggingface.cloud",
+        "apiKey": "hf_XXXXXXX",
+        "documentTemplate": "Your {{doc.template}}",
+        "request": {
+          "inputs": [
+            "{{text}}",
+            "{{..}}"
+          ]
+        },
+        "response": [
+          "{{embedding}}",
+          "{{..}}"
+        ]
+      }
+    }
+  }
+}
+```
+
+Meilisearch will use the `indexingEmbedder` during indexing and the `searchEmbedder` when responding to search queries.
+
+### Retrieve multiple documents by ID
+
+Fetch multiple documents at once by providing their IDs:
+
+```bash
+curl -H 'Content-Type: application/json' MEILISEARCH_URL/indexes/INDEX_UID/documents -d '{ "ids": ["cody", "finn", "brandy", "gambit"] }'
+```
+
+```json
+{
+  "results": [
+    {
+      "id": "brandy",
+      "info": 13765493
+    },
+    {
+      "id": "finn",
+      "info": 35863
+    },
+    {
+      "id": "cody",
+      "info": 122263
+    },
+    {
+      "id": "gambit",
+      "info": 22222
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 4
+}
+```
+
+Note: Documents are not returned in the queried order, and non-existent documents are ignored.
+
+## Improvements
+
+### Batch document requests
+
+You can now batch together `/documents` requests using either `PUT` or `POST` methods, improving efficiency when working with multiple documents.
+
+### Enhanced batch progress tracking
+
+The `/batches` route now displays timestamped internal indexing steps, giving you better visibility into the indexing process. Batch progress view has also been extended to include indexing of vectors.
+
+### Exhaustive facet count parameter
+
+The `/facet-search` route now supports an `exhaustiveFacetCount` parameter to retrieve an exact facet count instead of estimates.
+
+### Reduced memory consumption
+
+Arroy (the vector storage component) now uses less RAM, improving overall memory efficiency for vector operations.
+
+### Experimental embedding cache
+
+An experimental feature to cache embeddings during search is now available, potentially improving search performance for repeated queries.
+
+### Armenian character handling
+
+Armenian characters are no longer case-sensitive in searches, improving search accuracy for Armenian language content.
+
+### Optimized reindexing
+
+Searchable attributes no longer trigger reindexing when only their order changes, reducing unnecessary processing.
+
+### Improved task handling
+
+Cancellation tasks can now be accepted even when the disk is full, ensuring better reliability of task management.
+
+## Other
+
+### Breaking behavior change
+
+Enabling `rankingScoreThreshold` no longer causes `_rankingScore` to be miscalculated, fixing a significant issue with ranking score accuracy when using threshold filters.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.14.0)
+

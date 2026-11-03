@@ -1,0 +1,101 @@
+---
+title: "v1.34"
+description: "Released 2026-01-26"
+---
+
+## New Features
+
+### Network-wide search with `useNetwork` parameter
+
+You can now search across your entire network of Meilisearch machines with a single request using the new `useNetwork` parameter. This simplifies distributed search by automatically querying all remotes in your network without manually setting up federated queries.
+
+The `useNetwork` parameter is available in three ways:
+
+**In regular search requests:**
+
+```http
+POST /indexes/{indexUid}/search
+```
+
+```json
+{
+  "q": "Batman dark knight returns 1",
+  "filter": "genres IN [Action, Adventure]",
+  "facets": [
+    "genres"
+  ],
+  "useNetwork": true,
+  "limit": 5
+}
+```
+
+Or as a query parameter:
+
+```http
+GET /indexes/{indexUid}/search?useNetwork=true&q=Batman
+```
+
+**In multi-search requests:**
+
+Add `useNetwork` to individual queries within a federated search:
+
+```json
+{
+  "federation": {
+    "limit": 5
+  },
+  "queries": [
+    {
+      "q": "Batman returns",
+      "indexUid": "movies",
+      "useNetwork": true
+    },
+    {
+      "q": "Superman returns",
+      "indexUid": "movies",
+      "useNetwork": true
+    }
+  ]
+}
+```
+
+When `useNetwork: true` is set, Meilisearch automatically queries all remotes in your network and merges the results. The response includes `_federation` metadata showing which remote each result came from. This feature requires the `network` experimental feature to be enabled.
+
+**Limitations:** Facet search and chat routes do not currently support `useNetwork`.
+
+### Federated search pagination
+
+Federated searches now support exhaustive pagination with `federation.page` and `federation.hitsPerPage` parameters, allowing you to paginate through aggregated results from all remotes in the same way as regular searches.
+
+## Improvements
+
+### Faster settings updates when removing searchable attributes
+
+Settings changes are now processed more efficiently when you remove searchable attributes from your index configuration.
+
+## Other
+
+### Security fix: Restrict outbound requests to non-global IP networks
+
+Meilisearch now prevents outbound web requests (webhooks, embedders, and network machine connections) from reaching non-global IP addresses by default. This blocks requests to private networks like `192.168.x.x`, `10.x.x.x`, and localhost, preventing potential firewall bypasses.
+
+**If you need to allow requests to private networks**, use the `--experimental-allowed-ip-networks` CLI flag or `MEILI_EXPERIMENTAL_ALLOWED_IP_NETWORKS` environment variable:
+
+- **Default (not set):** All requests to non-global IPs are blocked
+- **Comma-separated CIDR networks:** Allow requests only to specified networks, e.g. `192.168.0.0/16,10.0.0.0/8`
+- **`any`:** Allow all requests regardless of target IP (use only in controlled environments)
+
+Example:
+
+```bash
+meilisearch --experimental-allowed-ip-networks "192.168.0.0/16,10.0.0.0/8"
+```
+
+This is a breaking change made for security reasons. Users with API keys that have write permissions to instance configuration could previously configure Meilisearch to send requests to private network addresses, bypassing firewalls.
+
+### Database size increase for authentication
+
+The authentication store database size has been increased to 2 GiB to support indexing more API keys.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.34.0)
+

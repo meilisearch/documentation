@@ -568,7 +568,9 @@
             },
             {
               "group": "MCP",
-              "pages": ["POST /mcp"]
+              "pages": [
+                "POST /mcp"
+              ]
             },
             {
               "group": "Chats",
@@ -1083,7 +1085,70 @@
     {
       "tab": "Changelog",
       "pages": [
-        "changelog/changelog"
+        {
+          "group": "Changelog",
+          "expanded": false,
+          "pages": [
+            "changelog",
+            "changelog/v1.56",
+            "changelog/v1.55",
+            "changelog/v1.54",
+            "changelog/v1.53",
+            "changelog/v1.52",
+            "changelog/v1.51",
+            "changelog/v1.50",
+            "changelog/v1.49",
+            "changelog/v1.48",
+            "changelog/v1.47",
+            "changelog/v1.46",
+            "changelog/v1.45",
+            "changelog/v1.44",
+            "changelog/v1.43",
+            "changelog/v1.42",
+            "changelog/v1.41",
+            "changelog/v1.40",
+            "changelog/v1.39",
+            "changelog/v1.38",
+            "changelog/v1.37",
+            "changelog/v1.36",
+            "changelog/v1.35",
+            "changelog/v1.34",
+            "changelog/v1.33",
+            "changelog/v1.32",
+            "changelog/v1.31",
+            "changelog/v1.30",
+            "changelog/v1.29",
+            "changelog/v1.28",
+            "changelog/v1.27",
+            "changelog/v1.26",
+            "changelog/v1.25",
+            "changelog/v1.24",
+            "changelog/v1.23",
+            "changelog/v1.22",
+            "changelog/v1.21",
+            "changelog/v1.20",
+            "changelog/v1.19",
+            "changelog/v1.18",
+            "changelog/v1.17",
+            "changelog/v1.16",
+            "changelog/v1.15",
+            "changelog/v1.14",
+            "changelog/v1.13",
+            "changelog/v1.12",
+            "changelog/v1.11",
+            "changelog/v1.10",
+            "changelog/v1.9",
+            "changelog/v1.8",
+            "changelog/v1.7",
+            "changelog/v1.6",
+            "changelog/v1.5",
+            "changelog/v1.4",
+            "changelog/v1.3",
+            "changelog/v1.2",
+            "changelog/v1.1",
+            "changelog/v1.0"
+          ]
+        }
       ]
     }
   ]
