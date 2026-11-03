@@ -1,3 +1,8 @@
+---
+name: new-comparison
+description: Create a comparison page for Meilisearch vs another product. Use when adding a comparison page.
+---
+
 Create a new comparison page for Meilisearch vs another product.
 
 Arguments: $ARGUMENTS (the product name, e.g. `Typesense` or `Elasticsearch`)

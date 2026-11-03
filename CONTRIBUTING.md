@@ -28,10 +28,7 @@ npm install
 
 ## Docs writing
 
-Before writing or editing documentation content:
-
-- **If you use a generative AI tool:** an [AGENTS.md](AGENTS.md) file exists in this repo with instructions for agents. Point your AI tool to it so that it follows our documentation philosophy, quality checklist, and writing-style rules.
-- **Otherwise:** read [AGENTS.md](AGENTS.md) carefully. In particular, use the **documentation philosophy** and **quality checklist** when writing or reviewing docs, and follow the **prose and writing-style rules** (spelling, terminology, grammar, style, and wording).
+Before writing or editing documentation content, read our guide on [Contributing to our documentation](https://www.meilisearch.com/docs/resources/help/contributing_docs).
 
 ## Run the docs locally
 

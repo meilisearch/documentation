@@ -1,3 +1,8 @@
+---
+name: update-changelog
+description: Update the changelog from GitHub releases. Use when generating changelog pages from GitHub releases.
+---
+
 Update the changelog from GitHub releases.
 
 ## Steps

@@ -1,3 +1,8 @@
+---
+name: update-api-ref
+description: Update the API reference from the OpenAPI spec. Use when updating the API reference, fetching OpenAPI assets, regenerating error codes, or checking route and code-sample coverage.
+---
+
 Update the API reference documentation from the OpenAPI spec.
 
 ## Steps

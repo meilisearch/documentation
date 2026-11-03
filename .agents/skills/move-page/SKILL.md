@@ -1,3 +1,8 @@
+---
+name: move-page
+description: Move a documentation page from one path to another, handling navigation, redirects, and internal links. Use when moving a docs page.
+---
+
 Move a documentation page from one path to another, handling all side effects.
 
 Arguments: $ARGUMENTS (format: `<old-path> <new-path>`, e.g. `resources/self_hosting/docker resources/self_hosting/getting_started/docker`)
