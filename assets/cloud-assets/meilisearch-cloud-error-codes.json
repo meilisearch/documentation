@@ -23,6 +23,12 @@
     "title": "Unable to change plan as an action is already in progress",
     "description": "Unable to change plan because an action is already in progress"
   },
+  "change_plan_downgrade_not_allowed": {
+    "statusCode": 422,
+    "status": "error",
+    "title": "Unable to downgrade the project resource",
+    "description": "A resource-based project can not be moved to a smaller resource"
+  },
   "change_plan_failed_state": {
     "statusCode": 422,
     "status": "error",
@@ -93,6 +99,12 @@
     "status": "error",
     "title": "Invalid recovery code",
     "description": "The provided recovery code is invalid or has already been used."
+  },
+  "mfa_locked": {
+    "statusCode": 423,
+    "status": "error",
+    "title": "Verification temporarily locked",
+    "description": "Too many incorrect verification codes. Please try again in 30 minutes."
   },
   "mfa_not_enabled": {
     "statusCode": 400,
