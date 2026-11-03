@@ -19,9 +19,7 @@ Update the changelog from GitHub releases.
    - Index cards updated in root `changelog.mdx` (latest 10 versions)
    - `config/navigation.json` Changelog group lists the new page
 
-4. **One-time migration** (already done on main): split the legacy monolith with `npm run split-changelog` if `changelog/changelog.mdx` still exists.
-
-5. **Report**: Summarize what was generated:
+4. **Report**: Summarize what was generated:
    - Number of new releases added
    - Any releases that failed to generate
    - Whether navigation was updated automatically

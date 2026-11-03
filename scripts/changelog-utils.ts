@@ -25,7 +25,6 @@ export function getProjectPaths(projectRoot: string) {
     projectRoot,
     indexMdx: path.join(projectRoot, "changelog.mdx"),
     versionsDir: path.join(projectRoot, "changelog"),
-    legacyMonolith: path.join(projectRoot, "changelog", "changelog.mdx"),
     navJson: path.join(projectRoot, "config", "navigation.json"),
   };
 }
@@ -185,19 +184,4 @@ export function syncChangelogNavigation(navJsonPath: string, versionLabels: stri
   }
 
   fs.writeFileSync(navJsonPath, `${JSON.stringify(nav, null, 2)}\n`);
-}
-
-export function parseUpdateBlocks(content: string): Array<{ label: string; date: string; body: string }> {
-  const blocks: Array<{ label: string; date: string; body: string }> = [];
-  const regex = /<Update\s+label="([^"]+)"\s+description="([^"]+)">\s*([\s\S]*?)<\/Update>/g;
-
-  for (const match of content.matchAll(regex)) {
-    blocks.push({
-      label: match[1],
-      date: match[2],
-      body: match[3].trim(),
-    });
-  }
-
-  return blocks;
 }
