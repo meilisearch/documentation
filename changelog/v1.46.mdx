@@ -1,0 +1,40 @@
+---
+title: "Meilisearch v1.46 release notes"
+sidebarTitle: "v1.46"
+description: "Released June 8, 2026"
+---
+
+## New Features
+
+**Queue document fetch routes (experimental)**
+
+A new experimental feature, `queueDocumentsFetch`, makes the `GET /indexes/:uid/documents` and `POST /indexes/:uid/documents/fetch` routes wait in the search queue when no thread is available to process them, improving stability under heavy load.
+
+## Improvements
+
+**Expanded new settings indexer support**
+
+The new settings indexer now handles more parameters, so changing them no longer requires a full re-indexing:
+
+- Exact words and disable-on-words
+- Exact and disable settings on numbers
+- Prefix search settings (prefix computation)
+
+This makes the engine more efficient when updating these settings.
+
+## Other
+
+**Fixed deletion batching regression**
+
+Fixed a regression introduced in v1.45.0 affecting the auto-batching of deletion by filter together with document additions and updates. This operation is now batched correctly.
+
+**Fixed S3 multipart upload part size**
+
+Meilisearch now respects the configured multipart part size when uploading snapshots to S3, never creating a part larger than the defined size (except for the last part).
+
+**Fixed panic on incomplete filters**
+
+An incomplete filter now returns an error instead of causing an internal panic.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.46.0)
+

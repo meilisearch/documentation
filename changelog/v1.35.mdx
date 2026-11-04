@@ -1,0 +1,130 @@
+---
+title: "Meilisearch v1.35 release notes"
+sidebarTitle: "v1.35"
+description: "Released February 2, 2026"
+---
+
+## New Features
+
+### Search Performance Observability
+
+All search routes now support a `showPerformanceDetails` parameter that returns detailed performance metrics for your searches. When enabled, the response includes a `performanceDetails` field with timing information for each stage of the search pipeline.
+
+**Affected routes:**
+- `POST /indexes/<index_uid>/search`
+- `GET /indexes/<index_uid>/search`
+- `POST /multi-search`
+- `POST /indexes/<index_uid>/similar`
+- `GET /indexes/<index_uid>/similar`
+
+#### Search Example
+
+Request:
+```json
+{
+  "q": "glass",
+  "showPerformanceDetails": true
+}
+```
+
+Response:
+```json
+{
+ "hits": ,
+ "query": "glass",
+ "processingTimeMs": 5,
+ "limit": 20,
+ "offset": 0,
+ "estimatedTotalHits": 1,
+ "requestUid": "<uuid>",
+ "performanceDetails": {
+ "wait for permit": "295.29µs",
+ "search > tokenize": "436.67µs",
+ "search > resolve universe": "649.00µs",
+ "search > keyword search": "515.71µs",
+ "search > format": "288.54µs",
+ "search": "3.56ms"
+ }
+}
+```
+
+#### Multi-search Example
+
+Request:
+```json
+{
+  "queries": [
+    {
+      "indexUid": "<index_uid>",
+      "q": "glass",
+      "showPerformanceDetails": true
+    }
+  ]
+}
+```
+
+#### Federated Search Example
+
+Request:
+```json
+{
+  "federation": {
+    "showPerformanceDetails": true
+  },
+  "queries": [
+    {
+      "indexUid": "<index_uid>",
+      "q": "glass"
+    }
+  ]
+}
+```
+
+#### Similar Documents Example
+
+Request:
+```json
+{
+  "id": 143,
+  "embedder": "manual",
+  "showPerformanceDetails": true
+}
+```
+
+## Improvements
+
+### Multithreaded Post-processing Now Always Enabled
+
+Multithreaded post-processing of facets and prefixes is now permanently enabled, removing the experimental feature flag. This results in faster indexing on multi-core machines.
+
+## Other
+
+### Breaking Change: Fields Endpoint Response Format
+
+The `POST /indexes/<index_uid>/fields` route now returns a paginated object instead of a direct array. This allows you to see how many fields match a given filter.
+
+Before:
+```json
+[
+  {}
+]
+```
+
+After:
+```json
+{
+  "results": [
+    {}
+  ],
+  "offset": 0,
+  "limit": 20,
+  "total": 0
+}
+```
+
+### Fields Endpoint Pattern Filtering Fix
+
+Fixed incorrect pattern matching where parent fields were incorrectly matching child field patterns. For example, a `title` field will no longer match the pattern `title.en`.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.35.0)
+

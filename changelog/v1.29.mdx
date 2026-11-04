@@ -1,0 +1,30 @@
+---
+title: "Meilisearch v1.29 release notes"
+sidebarTitle: "v1.29"
+description: "Released December 8, 2025"
+---
+
+## Improvements
+
+### New settings indexer supports searchable and exact attributes
+
+The improved settings indexer now handles changes to `searchableAttributes`, `exactAttributes`, `proximityPrecision`, and `embedders` settings. This indexer provides better scalability, near-instant cancellations, and displays indexing progress.
+
+The new indexer is enabled automatically when a settings batch contains only changes to these fields. Any other settings changes will use the legacy indexer. For OSS users, you can disable the new settings indexer by setting the `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS` environment variable to `true`.
+
+### New vector store enabled by default for new indexes
+
+Starting with v1.29.0, newly created indexes will automatically use the improved vector store backend introduced in v1.21.0, which provides better performance and relevancy. Existing indexes remain unchanged and continue using their current backend.
+
+### Additional HuggingFace embedder models supported
+
+The `huggingFace` embedder now supports models with XLM Roberta architecture, giving you more options for local CPU and GPU-based embeddings.
+
+## Other
+
+### Build requirement change
+
+The git binary must now be present at build time to populate the `commitSha1` field in the `/version` endpoint response. This change was made to improve build performance.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.29.0)
+

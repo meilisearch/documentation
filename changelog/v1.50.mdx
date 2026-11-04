@@ -1,0 +1,40 @@
+---
+title: "Meilisearch v1.50 release notes"
+sidebarTitle: "v1.50"
+description: "Released July 20, 2026"
+---
+
+## New Features
+
+**Scalable Dynamic Search Rules**
+
+The Dynamic Search Rules API has been revamped to scale to 75,000 rules without impacting search performance. Key changes include:
+
+- New `DELETE /dynamic-search-rules` route to delete all rules at once
+- `priority` field renamed to `precedence`
+- `conditions` restructured with separate `query` and `time` condition objects
+- A DSR Fuel system with configurable limits via environment variables
+
+**Federated document fetching in sharded configurations**
+
+Document retrieval routes now fetch from all shards by default in network configurations. Use the new `useNetwork: false` parameter to limit retrieval to the local instance.
+
+**Facet wildcard support**
+
+The `facets` search parameter now accepts wildcard patterns (for example, `dogs.*`) to match multiple facet fields at once.
+
+## Breaking Changes
+
+- `PATCH` and `DELETE /dynamic-search-rules/{uid}` now return tasks instead of immediate responses
+- `DELETE /dynamic-search-rules/{uid}` no longer returns 404 for non-existent rules
+- The `POST /dynamic-search-rules` filter parameter uses `query` instead of `attributePatterns`
+
+## Bug Fixes
+
+- Fixed migration failures when upgrading from v1.48 with empty synonyms
+- Fixed quadratic memory consumption in filter processing
+- Fixed escaped character handling in filter expressions
+- Improved fault tolerance for AWS S3 multipart snapshot uploads
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.50.0)
+

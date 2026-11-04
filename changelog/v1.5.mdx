@@ -1,0 +1,53 @@
+---
+title: "Meilisearch v1.5 release notes"
+sidebarTitle: "v1.5"
+description: "Released November 20, 2023"
+---
+
+## New Features
+
+### Snapshots on-demand
+
+A new `/snapshots` API route allows you to create snapshots manually whenever needed:
+
+```bash
+curl -X POST http://localhost:7700/snapshots
+```
+
+This route returns a summarized task object. By default, snapshots are created in the `/snapshots` directory, which you can customize using the `--snapshot-dir` configuration option.
+
+### Experimental feature: Export Puffin reports
+
+Meilisearch can now automatically export `.puffin` reports to help diagnose performance issues. Enable this experimental feature using the `/experimental-features` endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"exportPuffinReports": true}'
+```
+
+## Improvements
+
+### Indexing speed improvements
+
+Indexing speed has been improved for text-heavy datasets. Datasets with fields containing more than 100 words should see a 5% to 20% reduction in indexing times. Gains are proportional to the amount of words in a document. Note: indexing speed improvements may not be visible in datasets with fewer than 20 words per field.
+
+Please be aware that this optimization might result in minor impact to search result relevancy for queries containing 4 words or more. Contact the Meilisearch team if this significantly affects your application.
+
+### Additional improvements
+
+* The experimental `/metrics` route can now be activated via HTTP in addition to CLI flags
+* Added Khmer language support
+* The `meilitool` command-line interface is now integrated into the Meilisearch Docker image, providing commands to enforce task cancellation and dump creation for stuck instances. Use `meilitool --help` in the running container for usage information
+
+## Other
+
+### Breaking changes and fixes
+
+* Vector size validation: The API now throws an error when a vector in a search query does not match the size of already indexed vectors
+* Fixed search operations on the processing index from hanging
+* Fixed search on exact attributes using `attributeToSearchOn`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.5.0)
+

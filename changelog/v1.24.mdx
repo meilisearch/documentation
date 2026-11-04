@@ -1,0 +1,21 @@
+---
+title: "Meilisearch v1.24 release notes"
+sidebarTitle: "v1.24"
+description: "Released October 20, 2025"
+---
+
+## New Features
+
+### Search Metadata Header
+A new `Meili-Include-Metadata` header is now available on search requests. When included, the response will contain a metadata field with information about each query, including a unique identifier (uid), the `indexUid`, and the index's primary key.
+
+## Improvements
+
+### Vector Store Search Cutoff
+Improved the interaction between the vector store and the `searchCutoffMs` parameter when using the `"vectorStore": "experimental"` index setting. This provides better control over search performance and timeout behavior when working with vector-based searches.
+
+### Compaction Behavior
+Enhanced compaction interactions with task cancellation, resulting in more reliable behavior when managing background indexing tasks.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.24.0)
+

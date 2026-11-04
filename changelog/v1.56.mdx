@@ -1,0 +1,37 @@
+---
+title: "Meilisearch v1.56 release notes"
+sidebarTitle: "v1.56"
+description: "Released October 26, 2026"
+---
+
+## New Features
+
+### Approximate facet distribution with `sampledCount` sort
+
+Facet distribution now supports a new `sampledCount` sort option. It gives a faster, approximate estimate of the facet distribution than the `count` sort. The document count for each facet is exhaustive, but the list of facets is not: some facets that the `count` sort would list may be skipped.
+
+Use `sampledCount` when you need fast facet results and can accept an incomplete facet list.
+
+## Improvements
+
+### Adaptive rate limiting for embedders
+
+Meilisearch now uses an adaptive strategy to handle embedder load and outages:
+
+- For small workloads with few documents, Meilisearch accepts slower embedder services
+- For large updates with thousands of documents, Meilisearch gives up early to avoid long delays
+- If the embedder server is unavailable for too long, Meilisearch abandons indexing early
+- Meilisearch respects the `Retry-After` header (in seconds) to avoid unnecessary retries during brief service interruptions
+
+### General search performance optimization
+
+Overall search performance has been optimized for better responsiveness and efficiency.
+
+## Bug Fixes
+
+### Corrected binary quantization state after embedder deletion
+
+Fixed a bug that left binary quantization in an incorrect state after deleting an embedder.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.56.0)
+

@@ -1,0 +1,111 @@
+---
+title: "Meilisearch v1.0 release notes"
+sidebarTitle: "v1.0"
+description: "Released February 6, 2023"
+---
+
+## New Features
+
+### Language Support Enhancements
+Korean language support has been added to Meilisearch. Chinese language support has been significantly improved with character normalization into Pinyin, optimized segmentation algorithm, and unified character variants handling. Hebrew, Thai, Arabic, and Latin language support has also been enhanced with improved diacritics and non-spacing marks normalization.
+
+### Improved Primary Key Inference
+When documents are added to an index without a specified primary key, Meilisearch now intelligently searches for attributes ending with `id` (such as `puid` or `_id`). If exactly one such attribute is found, it becomes the primary key. If multiple candidates are detected, you must explicitly specify the primary key instead of Meilisearch choosing one automatically. This provides better control and prevents unexpected behavior.
+
+### Multi-Version Dump Migration
+You can now migrate from any old version of Meilisearch that supports dumps directly to the latest version using a single dump file, making upgrades to v1.0.0 smoother and more straightforward.
+
+## Improvements
+
+### Search and Indexing Performance
+Memory usage for search requests containing multiple long words has been significantly improved. The `exactness` ranking rule now performs much better for search requests with many words. Multi-word synonyms are now translated into phrases during query interpretation, which improves result relevancy and stabilizes search latency, particularly for queries with many multi-word synonyms. The `proximity` ranking rule performance has been improved for searches ending with short words. Incremental indexing time for the proximity ranking rule has been reduced. Soft-deletion computation has been improved.
+
+### Configuration and Settings
+Settings updates that don't require reindexing no longer trigger unnecessary reindexing, reducing processing time. The `--schedule-snapshot` option now accepts an optional integer value specifying the interval in seconds, consolidating snapshot configuration.
+
+### Error Messages
+Error messages have been clarified, particularly when database and engine versions are incompatible, making troubleshooting easier.
+
+### Installation
+The `download-latest.sh` script now includes support for Apple Silicon binaries.
+
+## Other
+
+### Security Changes
+Master keys in production environments must now be at least 16 bytes long. Keys shorter than this will be rejected as a security measure.
+
+### CLI Configuration Changes
+The `--max-index-size` and `--max-task-db` configuration options have been removed. These options were not effectively limiting disk space usage. If these limits impact your usage, please reach out to the Meilisearch team.
+
+The `--disable-auto-batching` CLI option and `MEILI_DISABLE_AUTO_BATCHING` environment variable have been removed. This option was introduced as a temporary workaround and is no longer necessary.
+
+The `--dumps-dir` option has been renamed to `--dump-dir` for consistency.
+
+The `--snapshot-interval-sec` option has been removed. Use `--schedule-snapshot` with an optional integer value instead.
+
+The `--log-level` option and `MEILI_LOG_LEVEL` environment variable now only accept these values: `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`, and `OFF`.
+
+Hidden CLI arguments `--nb-max-chunks` and `--log-every-n` have been removed.
+
+### Binary Package Name
+When installing Meilisearch with `apt`, the command is now `apt install meilisearch` instead of `apt install meilisearch-http`. To install versions before v1.0.0, use `apt install meilisearch-http`.
+
+### Error Code Changes
+All task error responses now consistently include an `error` field with a JSON-formatted response containing an error `code` and `type`. Many error codes have been updated for clarity:
+
+**Index Operations** (`POST /indexes`, `PUT /indexes/:uid`, `GET /indexes`):
+- `missing_index_uid` replaces `bad_request` when `uid` is missing
+- `invalid_index_primary_key` replaces `bad_request` for invalid `primaryKey`
+- `invalid_index_limit` and `invalid_index_offset` replace `bad_request` for pagination errors
+
+**Document Operations** (`GET /indexes/:uid/documents`, `POST /indexes/:uid/documents`):
+- `invalid_document_fields`, `invalid_document_limit`, and `invalid_document_offset` replace `bad_request`
+- `invalid_geo_field` replaces `invalid_document_geo_field`
+- Attempting to update the primary key when adding documents now returns an error
+
+**Search Parameters** (`GET /indexes/:uid/search`, `POST /indexes/:uid/search`):
+- `invalid_search_q`, `invalid_search_offset`, `invalid_search_limit`, `invalid_search_page`, `invalid_search_hits_per_page` replace `bad_request`
+- `invalid_search_attributes_to_retrieve`, `invalid_search_attributes_to_crop`, `invalid_search_show_matches_position` replace `bad_request`
+- `invalid_search_filter` replaces `invalid_filter`
+- `invalid_search_sort` replaces `invalid_sort`
+- `invalid_search_facets`, `invalid_search_highlight_pre_tag`, `invalid_search_highlight_post_tag`, `invalid_search_matching_strategy` replace `bad_request`
+
+**Index Swap** (`POST /indexes/swap-indexes`):
+- `invalid_swap_duplicate_index_found` replaces `duplicate_index_found`
+- `invalid_swap_indexes` replaces `bad_request` when swap array doesn't contain exactly 2 indexes
+- `missing_swap_indexes` replaces `missing_parameter` when `indexes` field is missing
+
+**Settings Routes** (all `/settings` and sub-routes):
+- `invalid_settings_displayed_attributes`, `invalid_settings_searchable_attributes`, `invalid_settings_filterable_attributes`, `invalid_settings_sortable_attributes` replace `bad_request`
+- `invalid_settings_ranking_rules` replaces `bad_request`
+- `invalid_settings_stop_words`, `invalid_settings_synonyms` replace `bad_request`
+- `invalid_settings_distinct_attribute` replaces `bad_request`
+- `invalid_settings_typo_tolerance` replaces `invalid_typo_tolerance_min_word_size_for_typos` and `bad_request`
+- `invalid_settings_faceting`, `invalid_settings_pagination` replace `bad_request`
+
+**Task Filters** (`GET /tasks`):
+- `invalid_task_uids` replaces `invalid_task_uids_filter`
+- `invalid_task_types` replaces `invalid_task_types_filter`
+- `invalid_task_statuses` replaces `invalid_task_statuses_filter`
+- `invalid_task_cancel_by` replaces `invalid_task_canceled_by_filter`
+- `invalid_task_before_enqueued_at`, `invalid_task_after_enqueued_at`, `invalid_task_before_started_at`, `invalid_task_after_started_at`, `invalid_task_before_finished_at`, `invalid_task_after_finished_at` replace `invalid_task_date_filter`
+
+**API Key Operations** (`GET /keys`, `POST /keys`, `PATCH /keys`):
+- `invalid_api_key_limit`, `invalid_api_key_offset` replace `bad_request`
+- `missing_api_key_actions`, `missing_api_key_indexes`, `missing_api_key_expire_at` replace `missing_parameter`
+- `immutable_api_key_uid`, `immutable_api_key_actions`, `immutable_api_key_indexes`, `immutable_api_key_expires_at`, `immutable_api_key_created_at`, `immutable_api_key_updated_at` replace `immutable_field`
+
+**System Errors**:
+- `no_space_left_on_device` replaces `internal` when disk space is exhausted
+- `io_error` replaces `internal` for I/O errors
+- `too_many_open_files` replaces `internal` when the open files limit is exceeded
+- All errors of type `system` now return HTTP status code `500`
+
+**Synchronous Error Validation**:
+The following errors are now returned synchronously instead of as failed tasks:
+- `invalid_index_uid`
+- `invalid_settings_ranking_rules`
+- `invalid_settings_typo_tolerance` when `oneTypo` and `twoTypos` are filled but invalid for `minWordSizeForTypos`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.0.0)
+

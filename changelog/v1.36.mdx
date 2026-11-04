@@ -1,0 +1,33 @@
+---
+title: "Meilisearch v1.36 release notes"
+sidebarTitle: "v1.36"
+description: "Released February 23, 2026"
+---
+
+## New Features
+
+### New Ranking Rules: `attributeRank` and `wordPosition`
+
+Meilisearch now includes two new ranking rules that improve search relevance:
+
+- `attributeRank`: Documents rank higher when query words match in higher-priority searchable attributes, regardless of word position within those attributes.
+- `wordPosition`: Documents rank higher when query words appear closer to the beginning of an attribute.
+
+These rules were previously used internally as part of the `attribute` ranking rule. Now you can use them independently for more fine-grained control over search relevance. This is the first significant update to ranking rules since v1.0.
+
+### Automatic Vector Store Migration
+
+When upgrading to v1.36.0, Meilisearch automatically migrates indexes from the old Annoy vector store to the new Hannoy vector store. This migration happens without requiring a data dump and restore, though it may take a couple of minutes for indexes with large numbers of embeddings.
+
+To have more control over the migration timing, you can manually change the vector store backend beforehand by enabling the `vectorStoreSetting` experimental feature and setting the `vectorStore` root setting to `experimental`.
+
+Note: This vector store change affects ranking scores for vector search results.
+
+## Other
+
+### Breaking Change: OpenAPI Documentation File Relocation
+
+The `meilisearch-openapi-mintlify.json` file is no longer included in release assets. If you were using this file, you can now find it in the [public documentation repository](https://github.com/meilisearch/documentation/blob/main/assets/release-assets/meilisearch-openapi-mintlify.json).
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.36.0)
+

@@ -1,0 +1,29 @@
+---
+title: "Meilisearch v1.21 release notes"
+sidebarTitle: "v1.21"
+description: "Released September 15, 2025"
+---
+
+## New Features
+
+### Vector Store Backend
+A new vector store backend is now available for improved performance, especially when using binary quantization. To use it:
+
+1. Enable the `vectorStoreSetting` experimental feature
+2. Change the `vectorSetting` index setting to `"experimental"` for the indexes where you want to try the new vector store
+
+### Persian Language Support
+Added support for Persian language through an update to the character analysis library.
+
+## Improvements
+
+### Indexing Progress Trace
+Fixed an issue where observing the progress trace during indexing could cause parts of the trace to be lost.
+
+## Other
+
+### Dumpless Upgrade Fix
+If you encountered a decoding error when upgrading with a `rest` embedder, use the dumpless upgrade to v1.21 to fix this issue.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.21.0)
+

@@ -1,0 +1,36 @@
+---
+title: "Meilisearch v1.47 release notes"
+sidebarTitle: "v1.47"
+description: "Released June 15, 2026"
+---
+
+## New Features
+
+**Search personalization on federated search**
+
+You can now use [search personalization](/capabilities/personalization/overview) in federated search requests. As with `page`/`hitsPerPage` and `limit`/`offset`, the personalization option must be set inside the `federation` object. If you place it on an individual query instead, Meilisearch returns an error reminding you to move it into `federation`.
+
+## Improvements
+
+**The new settings indexer is now feature complete**
+
+The new settings indexer now handles tokenizer-related settings, including locales, dictionary, synonyms, stop words, separator tokens, and non-separator tokens. With this addition, all settings tasks are handled by the new indexer unless you set `MEILI_EXPERIMENTAL_NO_EDITION_2024_FOR_SETTINGS=true`. This brings better scaling behavior, much faster task cancellation, and a more precise progress view when updating settings.
+
+**More observability metrics**
+
+Meilisearch now exposes additional Prometheus metrics, including document throughput, making it easier to monitor indexing performance and debug your instance.
+
+## Other
+
+**Search pipeline refactor**
+
+The search pipeline has been refactored so that all search requests run through a unified federated search implementation under the hood. This introduces a small breaking change: some error messages have been updated and a few error codes have changed (for example, in certain cases `MultiSearchError` may now be returned where `SearchError` was previously returned, and vice versa). If your application inspects error codes, review your error handling when upgrading.
+
+**Bug fixes**
+
+- Placing `attributeRank` or `wordPosition` before `words` in `rankingRules` no longer removes hits from the response.
+- `searchCutoffMs` is no longer ignored under certain conditions when embedding documents.
+- Remote federated search and `useNetwork: true` requests no longer fail when a filter contains a single quote (`'`).
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.47.0)
+

@@ -1,0 +1,170 @@
+---
+title: "Meilisearch v1.7 release notes"
+sidebarTitle: "v1.7"
+description: "Released March 11, 2024"
+---
+
+## New Features
+
+### New OpenAI embedding models
+
+When configuring OpenAI embedders, you can now specify two new models:
+- `text-embedding-3-small` with a default dimension of 1536
+- `text-embedding-3-large` with a default dimension of 3072
+
+These new models are cheaper and improve search result relevancy.
+
+### Custom OpenAI model dimensions
+
+You can configure `dimensions` for sources using the new OpenAI models: `text-embedding-3-small` and `text-embedding-3-large`. Dimensions must be greater than 0 and smaller than the model size:
+
+```json
+{
+  "embedders": {
+    "new_model": {
+      "source": "openAi",
+      "model": "text-embedding-3-large",
+      "dimensions": 512
+    },
+    "legacy_model": {
+      "source": "openAi",
+      "model": "text-embedding-ada-002"
+    }
+  }
+}
+```
+
+You cannot customize dimensions for older OpenAI models such as `text-embedding-ada-002`. Setting `dimensions` to any value except the default size of these models will result in an error.
+
+### GPU support for Hugging Face embeddings
+
+Activate CUDA to use Nvidia GPUs when computing Hugging Face embeddings. This can significantly improve embedding generation speeds.
+
+To enable GPU support through CUDA:
+
+1. Install CUDA dependencies
+2. Clone and compile Meilisearch with the `cuda` feature: `cargo build --release --package meilisearch --features cuda`
+3. Launch your freshly compiled Meilisearch binary
+4. Activate vector search
+5. Add a Hugging Face embedder
+
+### Stabilized `showRankingScoreDetails`
+
+The `showRankingScoreDetails` search parameter is now a stable feature. Use it with the `/search` endpoint to view detailed scores per ranking rule for each returned document:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"q": "Batman Returns", "showRankingScoreDetails": true}'
+```
+
+When `showRankingScoreDetails` is set to `true`, returned documents include a `_rankingScoreDetails` field with detailed scoring information for each ranking rule.
+
+### Experimental JSON log output
+
+Configure Meilisearch to output logs in JSON format by passing `json` to the `--experimental-logs-mode` command-line option:
+
+```bash
+./meilisearch --experimental-logs-mode json
+```
+
+The `--experimental-logs-mode` option accepts two values:
+
+- `human`: default human-readable output
+- `json`: JSON structured logs
+
+### Experimental `/logs/stream` and `/logs/stderr` routes
+
+Two new experimental API routes allow you to manage log output:
+
+**Activate the routes** using the `/experimental-features` endpoint:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"logsRoute": true}'
+```
+
+**`/logs/stream`** - Stream logs in real-time:
+
+```bash
+curl \
+ -X POST http://localhost:7700/logs/stream \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"mode": "human", "target": "actix=off,debug"}'
+```
+
+Parameters:
+- `target`: Defines log level and which part of the engine to apply it to. Format: `code_part=log_level`. Valid log levels: `trace`, `debug`, `info`, `warn`, `error`, or `off`
+- `mode`: Accepts `fmt` (basic) or `profile` (verbose trace)
+
+Stop streaming with:
+
+```bash
+curl -X DELETE http://localhost:7700/logs/stream
+```
+
+You may only have one listener at a time.
+
+**`/logs/stderr`** - Configure default log output:
+
+```bash
+curl \
+ -X POST http://localhost:7700/logs/stderr \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"target": "debug"}'
+```
+
+Parameters:
+- `target`: Defines log level and which part of the engine to apply it to. Format: `code_part=log_level`. Valid log levels: `trace`, `debug`, `info`, `warn`, `error`, or `off`
+
+### Experimental cluster mode
+
+New experimental feature to change the behavior of Meilisearch to run in a cluster by externalizing the task queue.
+
+## Improvements
+
+### Improved indexing speed and reduced memory usage
+
+- Auto-batch task deletion reduces indexing time
+- Hybrid search experimental feature indexing is now more than 10 times faster
+- Capped the maximum memory of grenade sorters to reduce memory usage
+- Multiple technical improvements to indexing pipeline
+- Enhanced facet incremental indexing
+- Improved threshold triggering incremental indexing
+
+### Improved logging
+
+Log messages now follow a new pattern:
+
+```text
+2024-02-06T14:54:11Z INFO actix_server::builder: 200: starting 10 workers
+```
+
+This replaces the previous format:
+
+```text
+[2024-02-06T14:54:11Z INFO actix_server::builder] starting 10 workers
+```
+
+### Multiple language support improvements
+
+Expanded support for multiple languages, including improved Vietnamese normalization (Ð and Đ are now normalized to d). Updated to Charabia v0.8.7.
+
+### Additional improvements
+
+- Added content type to webhook requests
+- Skip reindexing when modifying unknown faceted fields
+- Added timeout to webhook requests
+- Enhanced Prometheus experimental feature with job variable in Grafana dashboard
+
+## Other
+
+### Breaking changes - Log output format
+
+Log messages now follow a different pattern. If you have automated tasks based on log output parsing, you may need to update them to work with the new format.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.7.0)
+

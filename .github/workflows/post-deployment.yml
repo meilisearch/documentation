@@ -331,12 +331,12 @@ jobs:
 
       - name: Commit changes
         run: |
-          if git diff --quiet changelog/; then
+          if git diff --quiet changelog.mdx changelog/ config/navigation.json; then
             echo "No changelog changes detected."
           else
             git config user.name "meili-bot"
             git config user.email "robot@meilisearch.com"
-            git add changelog/
+            git add changelog.mdx changelog/ config/navigation.json
             git commit -m "[AUTOMATION POST DEPLOYMENT] Update changelog with latest Meilisearch release"
             git push origin main
           fi

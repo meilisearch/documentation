@@ -1,0 +1,143 @@
+---
+title: "Meilisearch v1.6 release notes"
+sidebarTitle: "v1.6"
+description: "Released January 15, 2024"
+---
+
+## New Features
+
+### Automated embeddings generation for vector search
+
+Meilisearch can now automatically generate embeddings using OpenAI, HuggingFace, or your own pre-computed vectors. Configure embedders in your index settings:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+ -H 'Content-Type: application/json' \
+ --data-binary << 'EOF'
+{
+ "embedders": {
+ "default": {
+ "source": "openAi",
+ "apiKey": "<your-OpenAI-API-key>",
+ "model": "text-embedding-ada-002",
+ "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+ },
+ "image": {
+ "source": "userProvided",
+ "dimensions": 512
+ },
+ "translation": {
+ "source": "huggingFace",
+ "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+ "documentTemplate": "A movie titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}"
+ }
+ }
+}
+EOF
+```
+
+The `documentTemplate` field uses Liquid format to define what content gets embedded. The `model` parameter specifies which OpenAI or HuggingFace model to use.
+
+### Hybrid search
+
+Combine keyword and semantic search in a single query using the new `hybrid` parameter:
+
+```bash
+curl \
+ -X POST 'http://localhost:7700/indexes/movies/search' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "q": "Plumbers and dinosaurs",
+ "hybrid": {
+ "semanticRatio": 0.9,
+ "embedder": "default"
+ }
+ }'
+```
+
+The `semanticRatio` controls the balance between semantic and keyword search (0 = pure keyword search, 1 = pure semantic search, default = 0.5).
+
+### Task queue webhook
+
+Receive notifications when Meilisearch finishes processing tasks by configuring a webhook:
+
+```bash
+./meilisearch \
+ --task-webhook-url=https://example.com/example-webhook?foo=bar&number=8 \
+ --task-webhook-authorization-header=Bearer aSampleAPISearchKey
+```
+
+You can also set these via `MEILI_TASK_WEBHOOK_URL` and `MEILI_TASK_WEBHOOK_AUTHORIZATION_HEADER` environment variables or in your configuration file.
+
+### Experimental: Limit batched tasks
+
+Control how many tasks Meilisearch batches together to improve system stability:
+
+```bash
+./meilisearch --experimental-max-number-of-batched-tasks 100
+```
+
+Configure via `MEILI_EXPERIMENTAL_MAX_NUMBER_OF_BATCHED_TASKS` environment variable or in your configuration file.
+
+## Improvements
+
+### Indexing performance
+
+Meilisearch v1.6 significantly improves indexing speed by storing less internal data and only re-indexing the specific fields you update. On a 2.5GB e-commerce dataset, initial document addition is over 50% faster. Partial document updates show 50-75% performance improvements depending on your dataset and indexing patterns.
+
+### Disk space reduction
+
+Database disk usage is now 40-50% smaller on typical datasets due to reduced internal data storage. Database growth is also more stable with new document additions.
+
+### Proximity ranking rule precision
+
+Control the accuracy and performance of proximity-based ranking:
+
+```bash
+curl \
+ -X PATCH 'http://localhost:7700/indexes/books/settings/proximity-precision' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{
+ "proximityPrecision": "byAttribute"
+ }'
+```
+
+Choose between `byWord` (exact distance, default) or `byAttribute` (faster but less precise, checks only if words appear in the same field).
+
+## Other
+
+### Vector search breaking changes
+
+If you've used vector search in v1.3.0 through v1.5.0, update your implementation:
+
+- When using both `q` and `vector` parameters together, you must now include the `hybrid` parameter
+- Vectors must be JSON objects instead of arrays:
+
+```json
+{
+  "_vectors": {
+    "image2text": [
+      0,
+      0.1,
+      0.2
+    ]
+  }
+}
+```
+
+- Define a model in your embedder settings (previously optional for user-provided embeddings):
+
+```json
+{
+  "embedders": {
+    "default": {
+      "source": "userProvided",
+      "dimensions": 512
+    }
+  }
+}
+```
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.6.0)
+

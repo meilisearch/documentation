@@ -1,0 +1,34 @@
+---
+title: "Meilisearch v1.27 release notes"
+sidebarTitle: "v1.27"
+description: "Released November 24, 2025"
+---
+
+## New Features
+
+None in this release.
+
+## Improvements
+
+### Better error messages for S3 snapshot uploads
+Errors that occur during S3 snapshot uploads are now displayed in the task queue, making it easier to debug snapshot upload issues.
+
+### Improved task ingestion performance
+The default batch size for batched tasks now defaults to half of the max indexing memory, providing better performance during task ingestion.
+
+## Other
+
+### Fixed embedding operation skipping documents
+A bug has been fixed that could cause Meilisearch to skip documents during embedding operations:
+- When using a Hugging Face embedder, every `available_parallelism`th document in a batch was ignored
+- When using a REST embedder with only one embedding per request, every 40th document in a batch was ignored
+
+To verify if documents in your database have been affected:
+1. Enable the `multimodal` experimental feature
+2. Search or fetch with filter: `NOT _vectors EXISTS` to find documents without vectors
+
+### Fixed document pagination bug
+The `/documents/fetch` endpoint no longer returns duplicated results when paginating through sorted documents.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.27.0)
+

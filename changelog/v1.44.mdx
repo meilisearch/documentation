@@ -1,0 +1,89 @@
+---
+title: "Meilisearch v1.44 release notes"
+sidebarTitle: "v1.44"
+description: "Released May 18, 2026"
+---
+
+## New Features
+
+### Remote federated facet search
+
+Facet search now supports searching across all shards in a network. When using the `network` experimental feature with a `leader` defined, facet search calls to `POST /indexes/{indexUid}/facet-search` now default to remote federated search, fetching and merging results from all shards.
+
+You can control this behavior explicitly using the new `useNetwork` parameter in the facet search request body.
+
+### Human-formatted database sizes and detailed internal database breakdown
+
+The stats endpoints now support two new query parameters to give you better visibility into your index storage:
+
+- `showInternalDatabaseSizes`: When set to `true`, index stats include an `internalDatabaseSizes` object showing the size of each internal database component
+- `sizeFormat`: Set to `human` to get human-readable sizes (MiB, GiB, etc.) instead of bytes
+
+Example with both parameters:
+
+```bash
+curl -X GET "http://localhost:7700/indexes/movies/stats?showInternalDatabaseSizes=true&sizeFormat=human"
+```
+
+```json
+{
+  "numberOfDocuments": 31944,
+  "rawDocumentDbSize": "19.64 MiB",
+  "avgDocumentSize": "636 B",
+  "isIndexing": false,
+  "internalDatabaseSizes": {
+    "wordPairProximityDocids": "96.16 MiB",
+    "documents": "19.64 MiB",
+    "wordPositionDocids": "17.83 MiB",
+    "wordFidDocids": "10.22 MiB",
+    "wordPrefixPositionDocids": "9.78 MiB",
+    "wordDocids": "9.02 MiB",
+    "wordPrefixFidDocids": "4.39 MiB",
+    "wordPrefixDocids": "3.27 MiB",
+    "main": "1.36 MiB",
+    "externalDocumentsIds": "976 KiB",
+    "fieldIdWordCountDocids": "240 KiB",
+    "exactWordPrefixDocids": "16 KiB",
+    "celluliteMetadata": "16 KiB"
+  },
+  "fieldDistribution": {
+    "genres": 31944,
+    "id": 31944,
+    "overview": 31944,
+    "poster": 31944,
+    "release_date": 31944,
+    "title": 31944
+  }
+}
+```
+
+The same parameters work with `GET /stats` for global statistics.
+
+## Improvements
+
+### Reduced memory usage during indexing
+
+Indexing memory consumption has been reduced through optimizations in prefix computation and by avoiding unnecessary deserialization. If you still experience high memory usage during post-processing, enable the `--experimental-reduce-indexing-memory-usage` option.
+
+### Improved GeoJSON indexing performance
+
+GeoJSON indexing is now faster and more efficient. The optimization avoids reprocessing documents already indexed in dense cells, handling only newly added documents incrementally as they descend through the spatial cell tree.
+
+### Network settings propagation
+
+Settings changes made through individual settings subroutes are now correctly propagated to other remotes in your network.
+
+### Improved Mistral provider compatibility
+
+Fixed an issue where the chat route could fail when using Mistral as a provider.
+
+## Other
+
+### Breaking changes
+
+**Remote federated facet search is now the default**: When using the `network` experimental feature with sharding enabled (`leader` is not `null`), `POST /indexes/{indexUid}/facet-search` calls now default to remote federated search instead of local-only search. The behavior can be controlled via the new `useNetwork` parameter.
+
+**Embedder timeout now tied to search cutoff**: The timeout for calling an external REST embedder at search time is now based on the `searchCutOffMs` setting in the index, rather than using a fixed timeout. If you observe missing semantic results or HTTP 500 errors for pure semantic search after upgrading, increase the value of `searchCutOffMs` in your index settings.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.44.0)
+

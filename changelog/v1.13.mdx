@@ -1,0 +1,117 @@
+---
+title: "Meilisearch v1.13 release notes"
+sidebarTitle: "v1.13"
+description: "Released February 17, 2025"
+---
+
+## New Features
+
+### AI-powered search is now stable and enabled by default
+
+AI-powered search is available to all users by default and no longer requires manual activation. Vector search, semantic search, and hybrid search capabilities are now production-ready.
+
+### Dumpless upgrades
+
+Upgrade to new Meilisearch releases without generating a dump file. Use the `--experimental-dumpless-upgrade` flag when starting Meilisearch after updating the binary:
+
+```bash
+./meilisearch --experimental-dumpless-upgrade
+```
+
+This faster and more efficient process replaces the traditional dump-based upgrade method.
+
+> **Warning**: Meilisearch recommends generating a backup snapshot before upgrading. This is an experimental feature, and failed upgrades may lead to database corruption.
+
+### Remote federated search requests
+
+Query multiple Meilisearch instances simultaneously using the `/multi-search` route. This is particularly useful when handling very large databases.
+
+First, enable the `network` experimental feature:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/experimental-features/' \
+ -H 'Content-Type: application/json' \
+ --data-binary '{"network": true}'
+```
+
+Next, configure your network by setting up one `self` instance and multiple `remotes` using the `/network` endpoint:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/network/' \
+ -H 'Content-Type: application/json' \
+ --data-binary <<'EOF'
+{
+ "remotes": {
+ "ms-0": {
+ "url": "http://ms-1235.example.meilisearch.io",
+ "searchApiKey": "Ecd1SDDi4pqdJD6qYLxD3y7VZAEb4d9j6LJgt4d6xas"
+ },
+ "ms-1": {
+ "url": "http://ms-4242.example.meilisearch.io",
+ "searchApiKey": "hrVu-OMcjPGElK7692K7bwriBoGyHXTMvB5NmZkMKqQ"
+ }
+ },
+ "self": "ms-0"
+}
+EOF
+```
+
+Repeat this process with every instance in your network. Do not send the same documents to different instances.
+
+Finally, make a `/multi-search` query with the new `federationOptions.remote` parameter:
+
+```bash
+curl \
+ -X PATCH 'MEILISEARCH_URL/multi-search/' \
+ -H 'Content-Type: application/json' \
+ --data-binary <<'EOF'
+{
+ "federation": {},
+ "queries": [
+ {
+ "q": "Batman returns dark",
+ "indexUid": "movies",
+ "federationOptions": {
+ "remote": "ms-0"
+ }
+ },
+ {
+ "q": "Batman returns dark",
+ "indexUid": "movies",
+ "federationOptions": {
+ "remote": "ms-1"
+ }
+ }
+ ]
+}
+EOF
+```
+
+## Improvements
+
+### Enhanced monitoring and performance insights
+
+- New `usedDatabaseSize` field on the `/stats` route to track actual database usage
+- Embeddings information now exposed on the `/stats` route
+- Prometheus metrics added to measure task queue latency
+- Faster listing of indexes
+- Improved task auto-batching with ability to limit total batch size
+
+### Better error messages
+
+Improved error message when an attribute is not filterable, making it easier to debug search configuration issues.
+
+## Other
+
+### Breaking changes
+
+- `vectorStore` is no longer an accepted value for the `/experimental-features` route
+- Ollama URLs must end with either `/api/embed` or `/api/embeddings`
+- Error codes have been refined:
+ - `invalid_embedder` has been split into `invalid_search_embedder` and `invalid_similar_embedder` for search and similar endpoints
+ - `invalid_hybrid_query` has been renamed to `invalid_search_hybrid_query`
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.13.0)
+

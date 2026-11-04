@@ -1,0 +1,14 @@
+---
+title: "Meilisearch v1.49 release notes"
+sidebarTitle: "v1.49"
+description: "Released July 6, 2026"
+---
+
+## Improvements
+
+**Faster synonym search**
+
+Meilisearch now loads synonyms lazily, only when a query word actually matches a synonym. Previously, all synonyms were loaded for every search request regardless of relevance, which caused noticeable slowdowns for instances with large synonym lists. Depending on your synonym count, this can deliver performance improvements of up to 13x.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.49.0)
+

@@ -1,0 +1,30 @@
+---
+title: "Meilisearch v1.52 release notes"
+sidebarTitle: "v1.52"
+description: "Released August 3, 2026"
+---
+
+## New Features
+
+**SSE streaming routes for tasks and batches (experimental)**
+
+Two new Server-Sent Events (SSE) routes allow you to subscribe to live updates instead of polling:
+
+- `GET /tasks/stream`: streams task status updates in real time
+- `GET /batches/stream`: streams batch status updates in real time
+
+These routes are experimental. Enable them with the `tasksStreamingRoute` experimental feature flag before use.
+
+## Improvements
+
+**Faster document retrieval**
+
+Document formatting has been optimized from O(n) to O(1) complexity, delivering significant speed improvements when retrieving large numbers of documents (more than 20 items).
+
+## Bug Fixes
+
+- Fixed duplicate pins appearing in federated search results
+- Fixed unnecessary settings updates when configuration remains unchanged
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.52.0)
+

@@ -1,0 +1,96 @@
+---
+title: "Meilisearch v1.26 release notes"
+sidebarTitle: "v1.26"
+description: "Released November 17, 2025"
+---
+
+## New Features
+
+### Custom metadata for document tasks
+
+You can now attach custom metadata to document-related tasks to easily track which documents were processed by Meilisearch. When you create or update documents, add the `customMetadata` query parameter to any supported route:
+
+```bash
+POST /indexes/{indexUid}/documents?customMetadata=my-metadata-for-the-task
+```
+
+The metadata value must be URL-encoded. The custom metadata will appear in task responses from the tasks route and in webhooks.
+
+Supported routes:
+- `POST /indexes/{indexUid}/documents`
+- `PUT /indexes/{indexUid}/documents`
+- `DELETE /indexes/{indexUid}/documents/{documentId}`
+- `POST /indexes/{indexUid}/documents/delete-batch`
+- `POST /indexes/{indexUid}/documents/delete`
+- `POST /indexes/{indexUid}/documents/edit`
+- `DELETE /indexes/{indexUid}/documents`
+
+Example task response with metadata:
+
+```json
+{
+  "results": [
+    {
+      "uid": 37,
+      "batchUid": 37,
+      "indexUid": "mieli",
+      "status": "succeeded",
+      "type": "documentDeletion",
+      "canceledBy": null,
+      "details": {
+        "deletedDocuments": 31944
+      },
+      "error": null,
+      "duration": "PT0.511099S",
+      "enqueuedAt": "2025-11-06T16:33:37.816237Z",
+      "startedAt": "2025-11-06T16:33:37.821591Z",
+      "finishedAt": "2025-11-06T16:33:38.33269Z",
+      "customMetadata": "removeall"
+    }
+  ],
+  "total": 38,
+  "limit": 2,
+  "from": 36,
+  "next": 35
+}
+```
+
+### More models for HuggingFace embedder
+
+The HuggingFace embedder now supports models with the `modernBERT` architecture for local CPU or GPU embeddings. This includes models like [Ruri v3](https://huggingface.co/cl-nagoya/ruri-v3-30m) and other `modernBERT` models available on HuggingFace.
+
+## Improvements
+
+### Embedder failure modes (Experimental)
+
+You can now configure how Meilisearch handles embedder-related errors. Choose to ignore:
+
+1. Document template rendering failures
+2. Embedder request failures (including missing vectors in `userProvided` embedders)
+3. Both types of errors
+
+When errors are ignored, documents without embeddings will not cause the task batch to fail. Use this feature carefully, as ignoring errors makes it harder to detect embedder issues.
+
+To enable this experimental feature:
+
+- **Cloud customers:** Contact support
+- **OSS users:** Set the `MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES` environment variable to a comma-separated list of error types to ignore:
+ - `ignore_document_template_failures`
+ - `ignore_embedder_failures`
+ 
+Example:
+```bash
+export MEILI_EXPERIMENTAL_CONFIG_EMBEDDER_FAILURE_MODES=ignore_document_template_failures,ignore_embedder_failures
+```
+
+### REST embedder timeout control (Experimental)
+
+You can now configure the timeout duration for REST embedder requests.
+
+To enable this experimental feature:
+
+- **Cloud customers:** Contact support
+- **OSS users:** Set the `MEILI_EXPERIMENTAL_REST_EMBEDDER_TIMEOUT_SECONDS` environment variable to a positive integer representing seconds
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.26.0)
+

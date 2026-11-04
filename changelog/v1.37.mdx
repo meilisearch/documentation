@@ -1,0 +1,126 @@
+---
+title: "Meilisearch v1.37 release notes"
+sidebarTitle: "v1.37"
+description: "Released March 2, 2026"
+---
+
+## New Features
+
+### Replicated sharding
+
+Replicated sharding is now available in Meilisearch Enterprise Edition, allowing you to configure multiple remotes to own the same shards for data redundancy.
+
+The `network` object now includes a new `shards` field that defines how documents are distributed across remotes:
+
+```json
+{
+  "leader": "ms-00",
+  "self": "ms-01",
+  "remotes": {
+    "ms-00": {},
+    "ms-01": {},
+    "ms-02": {}
+  },
+  "shards": {
+    "shard-a": {
+      "remotes": [
+        "ms-00",
+        "ms-01"
+      ]
+    },
+    "shard-b": {
+      "remotes": [
+        "ms-01",
+        "ms-02"
+      ]
+    },
+    "shard-c": {
+      "remotes": [
+        "ms-02",
+        "ms-00"
+      ]
+    }
+  }
+}
+```
+
+Each shard can be owned by multiple remotes, enabling full or partial replication across your network.
+
+#### Managing shards with convenience fields
+
+When updating the network configuration via `PATCH /network`, use `addRemotes` and `removeRemotes` for easier shard management:
+
+```json
+{
+  "shards": {
+    "shard-a": {
+      "addRemotes": [
+        "ms-00"
+      ]
+    }
+  }
+}
+```
+
+```json
+{
+  "shards": {
+    "shard-a": {
+      "removeRemotes": [
+        "ms-02"
+      ]
+    }
+  }
+}
+```
+
+#### Filtering by shard
+
+When the network feature is enabled, you can now filter documents by their shard assignment using the `_shard` filter:
+
+```text
+_shard = "shard-a"
+_shard != "shard-a"
+_shard IN ["shard-a", "shard-b"]
+```
+
+This is useful for manual federated search queries across specific shards in your network.
+
+### Shard-aware federated search with `useNetwork`
+
+When you use `useNetwork: true` in search queries, Meilisearch automatically expands the query to ensure each shard in your network configuration is queried exactly once, preventing duplicate or missing results in replicated sharding setups.
+
+## Improvements
+
+### Stabilized new vector store
+
+The hannoy HNSW vector store is now the default and only supported vector store. All existing indexes using the legacy arroy vector store are automatically migrated during upgrade.
+
+### Faster embedding indexing
+
+Vector indexing performance has been significantly improved. On databases with 20M documents, indexing batches of 1100 documents now complete 300 seconds faster.
+
+### Enhanced mini-dashboard security
+
+The local web interface (mini-dashboard) now stores API keys in RAM instead of browser storage, and dependencies with potential security vulnerabilities have been updated.
+
+## Other
+
+### Breaking changes for network feature
+
+If you are using the `network` experimental feature, the following changes apply:
+
+- The `network` object structure has changed. When `leader` is not `null`, you must now include at least one `shard` object with at least one remote in the `shards` field.
+
+- Existing databases are automatically migrated when upgraded with `--experimental-dumpless-upgrade`. The migration creates shards with the same names as existing remotes, mapping each remote to its corresponding shard. This migration does not reshard any documents.
+
+- When updating a network using dumpless upgrade, follow these guidelines:
+ - Wait for all remotes to finish updating before calling `PATCH /network`
+ - If using `useNetwork: true` search queries, call them on non-updated remotes first, as updated remotes will reject search requests from remotes that don't yet support the new `_shard` filters
+
+### Removed `vectorStoreSetting` experimental feature
+
+The `vectorStoreSetting` experimental feature has been removed since the new hannoy vector store is now the only supported option.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.37.0)
+
