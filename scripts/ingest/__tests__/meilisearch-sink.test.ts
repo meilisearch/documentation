@@ -29,6 +29,7 @@ describe("buildSettings", () => {
     expect(settings).toEqual({
       filterableAttributes: ["page", "tab", "group", "content_type"],
       searchableAttributes: ["title", "hierarchy", "content", "description"],
+      sortableAttributes: ["chunk_index"],
       embedders: {
         voyage: {
           source: "rest",
@@ -76,6 +77,7 @@ describe.skipIf(!process.env.MEILI_TEST_URL)("MeilisearchSink", () => {
     const settings = await index.getSettings();
     expect(settings.filterableAttributes).toEqual(["page", "tab", "group", "content_type"]);
     expect(settings.searchableAttributes).toEqual(["title", "hierarchy", "content", "description"]);
+    expect(settings.sortableAttributes).toEqual(["chunk_index"]);
   });
 
   it("stores chunks and reads back the hash of each page", async () => {

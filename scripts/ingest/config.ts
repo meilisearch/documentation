@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { ChunkingConfig, IngestConfig, MeilisearchConfig } from "./types.ts";
 
 /** Bump when chunking or cleaning logic changes, to force a full re-sync. */
-export const PIPELINE_VERSION = 1;
+export const PIPELINE_VERSION = 2;
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "../..");
@@ -12,7 +12,6 @@ export const DEFAULT_CHUNKING: ChunkingConfig = {
   splitDepth: 3,
   maxChars: 2000,
   minChars: 200,
-  overlapChars: 200,
 };
 
 export const DEFAULT_CONFIG: IngestConfig = {

@@ -8,7 +8,6 @@ const chunking: ChunkingConfig = {
   splitDepth: 3,
   maxChars: 2000,
   minChars: 0,
-  overlapChars: 0,
 };
 
 function makePage(body: string, overrides: Partial<RawPage> = {}): RawPage {
@@ -91,7 +90,7 @@ describe("chunkPage", () => {
         url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#getting-started",
         hierarchy: ["Personalization", "Getting started"],
         breadcrumb: "Capabilities > Personalization > Personalization > Getting started",
-        content: "Install the SDK.\n\n#### Requirements\n\nNode 20.",
+        content: "## Getting started\n\nInstall the SDK.\n\n#### Requirements\n\nNode 20.",
       },
       {
         id: "capabilities__personalization__overview-2",
@@ -100,12 +99,12 @@ describe("chunkPage", () => {
         url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#configure-ranking",
         hierarchy: ["Personalization", "Configure ranking"],
         breadcrumb: "Capabilities > Personalization > Personalization > Configure ranking",
-        content: "Set ranking rules.",
+        content: "## Configure ranking\n\nSet ranking rules.",
       },
     ]);
   });
 
-  it("nests h3 sections under their h2 and drops sections without content of their own", () => {
+  it("nests h3 sections under their h2 and carries headings without content of their own into the next chunk", () => {
     const page = makePage(
       [
         "## Search modes",
@@ -124,17 +123,17 @@ describe("chunkPage", () => {
       {
         hierarchy: ["Personalization", "Search modes", "Keyword search"],
         anchor: "keyword-search",
-        content: "Matches words.",
+        content: "## Search modes\n\n### Keyword search\n\nMatches words.",
       },
       {
         hierarchy: ["Personalization", "Search modes", "Semantic search"],
         anchor: "semantic-search",
-        content: "Matches meaning.",
+        content: "### Semantic search\n\nMatches meaning.",
       },
       {
         hierarchy: ["Personalization", "Limits"],
         anchor: "limits",
-        content: "Ten indexes.",
+        content: "## Limits\n\nTen indexes.",
       },
     ]);
   });
@@ -271,19 +270,19 @@ describe("chunkPage", () => {
         hierarchy: ["Changelog", "v1.56", "New Features", "Sampled facet counts"],
         anchor: "sampled-facet-counts",
         breadcrumb: "Changelog > Changelog > v1.56 > New Features > Sampled facet counts",
-        content: "Faster facet distribution.",
+        content: "# v1.56\n\n## New Features\n\n### Sampled facet counts\n\nFaster facet distribution.",
       },
       {
         hierarchy: ["Changelog", "v1.56", "Bug Fixes", "Quantization state"],
         anchor: "quantization-state",
         breadcrumb: "Changelog > Changelog > v1.56 > Bug Fixes > Quantization state",
-        content: "Fixed after embedder deletion.",
+        content: "## Bug Fixes\n\n### Quantization state\n\nFixed after embedder deletion.",
       },
       {
         hierarchy: ["Changelog", "v1.55", "New Features", "Sampled facet counts"],
         anchor: "sampled-facet-counts-1",
         breadcrumb: "Changelog > Changelog > v1.55 > New Features > Sampled facet counts",
-        content: "Earlier wording.",
+        content: "# v1.55\n\n## New Features\n\n### Sampled facet counts\n\nEarlier wording.",
       },
     ]);
   });
@@ -314,13 +313,13 @@ describe("chunkPage", () => {
         id: "capabilities__personalization__overview-1",
         hierarchy: ["Personalization", "Setup"],
         anchor: "setup",
-        content: "Install the package with npm.\n\n### Note\n\nTiny.",
+        content: "## Setup\n\nInstall the package with npm.\n\n### Note\n\nTiny.",
       },
       {
         id: "capabilities__personalization__overview-2",
         hierarchy: ["Personalization", "Usage"],
         anchor: "usage",
-        content: "Call search on the index you created.",
+        content: "## Usage\n\nCall search on the index you created.",
       },
     ]);
   });
@@ -334,15 +333,13 @@ describe("chunkPage", () => {
     });
 
     expect(chunks.map(({ hierarchy, content }) => ({ hierarchy, content }))).toEqual([
-      { hierarchy: ["Personalization", "Setup"], content: "Install the package with npm." },
-      { hierarchy: ["Personalization", "Setup", "Note"], content: "Tiny." },
+      { hierarchy: ["Personalization", "Setup"], content: "## Setup\n\nInstall the package with npm." },
+      { hierarchy: ["Personalization", "Setup", "Note"], content: "### Note\n\nTiny." },
     ]);
   });
 
-  // Blocks are packed greedily up to maxChars. Each later part then starts with the last
-  // overlapChars characters of the previous part (moved forward to the next word start),
-  // followed by a blank line, so a part can exceed maxChars by the overlap.
-  it("splits a section longer than maxChars at paragraph boundaries with overlapping context", () => {
+  // Blocks are packed greedily up to maxChars. Parts do not repeat any text.
+  it("splits a section longer than maxChars at paragraph boundaries without duplicating text", () => {
     const page = makePage(
       [
         "## Indexes",
@@ -353,7 +350,7 @@ describe("chunkPage", () => {
     );
 
     const chunks = chunkPage(page, {
-      chunking: { ...chunking, maxChars: 60, overlapChars: 15 },
+      chunking: { ...chunking, maxChars: 60 },
       baseUrl: BASE_URL,
     });
 
@@ -365,21 +362,21 @@ describe("chunkPage", () => {
         chunk_index: 0,
         hierarchy: ["Personalization", "Indexes"],
         anchor: "indexes",
-        content: "Meilisearch stores documents in indexes.",
+        content: "## Indexes\n\nMeilisearch stores documents in indexes.",
       },
       {
         id: "capabilities__personalization__overview-1",
         chunk_index: 1,
         hierarchy: ["Personalization", "Indexes"],
         anchor: "indexes",
-        content: "in indexes.\n\nEach index has its own settings.",
+        content: "Each index has its own settings.",
       },
       {
         id: "capabilities__personalization__overview-2",
         chunk_index: 2,
         hierarchy: ["Personalization", "Indexes"],
         anchor: "indexes",
-        content: "own settings.\n\nSettings control ranking and filtering.",
+        content: "Settings control ranking and filtering.",
       },
     ]);
   });
@@ -404,16 +401,16 @@ describe("chunkPage", () => {
     expect(chunks[0].content).toBe("| Field | Description |\n| - | - |\n| `id` | Primary key of the document |");
   });
 
-  it("splits a table longer than maxChars between rows", () => {
+  it("splits a table longer than maxChars between rows and repeats its header", () => {
     const page = makePage(
       ["| Field | Type |", "| --- | --- |", "| `uid` | string |", "| `primaryKey` | string |", "| `createdAt` | date |"].join("\n"),
     );
 
-    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 50 }, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 72 }, baseUrl: BASE_URL });
 
     expect(chunks.map(({ content }) => content)).toEqual([
-      "| Field | Type |\n| - | - |\n| `uid` | string |",
-      "| `primaryKey` | string |\n| `createdAt` | date |",
+      "| Field | Type |\n| - | - |\n| `uid` | string |\n| `primaryKey` | string |",
+      "| Field | Type |\n| - | - |\n| `createdAt` | date |",
     ]);
   });
 
@@ -474,8 +471,34 @@ describe("chunkPage", () => {
     const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
 
     expect(chunks.map(({ hierarchy, anchor, content }) => ({ hierarchy, anchor, content }))).toEqual([
-      { hierarchy: ["Personalization", "Create an index"], anchor: "create-an-index", content: "Name it movies." },
-      { hierarchy: ["Personalization", "npm", "Install"], anchor: "install", content: "Run npm install." },
+      { hierarchy: ["Personalization", "Create an index"], anchor: "create-an-index", content: "### Create an index\n\nName it movies." },
+      { hierarchy: ["Personalization", "npm", "Install"], anchor: "install", content: "## npm\n\n### Install\n\nRun npm install." },
     ]);
+  });
+
+  it("rebuilds the page markdown by joining the title and the chunks", () => {
+    const longParagraphs = Array.from({ length: 6 }, (_, i) => `Paragraph ${i} ${"word ".repeat(20)}`.trim());
+    const body = [
+      "Intro.",
+      "## Setup",
+      "### Install",
+      "Install it.",
+      "### Note",
+      "Tiny.",
+      "## Long section",
+      ...longParagraphs,
+      "## Limits",
+      "Ten indexes.",
+    ].join("\n\n");
+
+    const chunks = chunkPage(makePage(body), {
+      chunking: { splitDepth: 3, maxChars: 400, minChars: 20 },
+      baseUrl: BASE_URL,
+    });
+
+    expect(["# Personalization", ...chunks.map(({ content }) => content)].join("\n\n")).toBe(
+      ["# Personalization", body].join("\n\n"),
+    );
+    expect(chunks.length).toBeGreaterThan(3);
   });
 });

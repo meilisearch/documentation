@@ -5,7 +5,7 @@ import YAML from "yaml";
 import { PIPELINE_VERSION } from "../config.ts";
 import type { ChunkingConfig, RawPage } from "../types.ts";
 
-type NavGroup = { group: string; pages?: NavEntry[] };
+type NavGroup = { group: string; root?: string; pages?: NavEntry[] };
 type NavEntry = string | NavGroup;
 type NavTab = { tab: string; groups?: NavGroup[]; pages?: NavEntry[] };
 type NavLocation = { page: string; tab: string; group: string };
@@ -25,7 +25,9 @@ function* walkEntries(entries: NavEntry[], tab: string, groups: string[]): Gener
     if (typeof entry === "string") {
       yield { page: entry, tab, group: groups.join(" > ") };
     } else {
-      yield* walkEntries(entry.pages ?? [], tab, [...groups, entry.group]);
+      const entryGroups = [...groups, entry.group];
+      if (entry.root) yield { page: entry.root, tab, group: entryGroups.join(" > ") };
+      yield* walkEntries(entry.pages ?? [], tab, entryGroups);
     }
   }
 }
