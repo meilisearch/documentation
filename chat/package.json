@@ -1,0 +1,30 @@
+{
+  "name": "meilisearch-docs-chat",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/react": "^4.0.166",
+    "@meilisearch/ai-sdk": "^0.1.0",
+    "@openrouter/ai-sdk-provider": "^3.1.0",
+    "ai": "^7.0.162",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "streamdown": "^2.7.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^5.0.0",
+    "vite": "^8.3.5"
+  }
+}

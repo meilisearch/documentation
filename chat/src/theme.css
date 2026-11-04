@@ -1,0 +1,121 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "streamdown/styles.css";
+
+@source "../node_modules/streamdown/dist/*.js";
+
+/* Dark mode follows Mintlify's `html.dark` class (mirrored on our wrapper), not the OS setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand: #ff5cb2;
+  --color-ink-dark: #1a1033;
+  --color-ink-darker: #1a003b;
+}
+
+/* Matches the custom search bar in meilisearch-search-bar.css. */
+.meili-ask-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  color: rgba(25, 25, 25, 0.7);
+  font-size: 14px;
+  line-height: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.meili-ask-button:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.dark .meili-ask-button {
+  background: rgba(25, 17, 53, 0.5);
+  color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.dark .meili-ask-button:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.meili-ask-button kbd {
+  font: inherit;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Markdown rendered by Streamdown */
+.meili-prose {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.meili-prose>*+* {
+  margin-top: 0.75em;
+}
+
+.meili-prose a {
+  color: var(--color-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.meili-prose ul {
+  list-style: disc;
+  padding-left: 1.25em;
+}
+
+.meili-prose ol {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+.meili-prose li+li {
+  margin-top: 0.25em;
+}
+
+.meili-prose h1,
+.meili-prose h2,
+.meili-prose h3,
+.meili-prose h4 {
+  font-weight: 600;
+  margin-top: 1em;
+}
+
+.meili-prose h1 {
+  font-size: 1.25em;
+}
+
+.meili-prose h2 {
+  font-size: 1.125em;
+}
+
+.meili-prose code:not(pre code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+  background: rgba(127, 127, 127, 0.18);
+}
+
+.meili-prose table {
+  display: block;
+  overflow-x: auto;
+  font-size: 13px;
+}
+
+.meili-prose th,
+.meili-prose td {
+  padding: 4px 10px;
+  border: 1px solid rgba(127, 127, 127, 0.3);
+}
