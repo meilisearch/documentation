@@ -139,6 +139,7 @@ yarn-error.log
 
 # Script output
 broken-links.txt
+.ingest/
 
 # Claude Code (local only, not committed)
 .claude/superpowers
