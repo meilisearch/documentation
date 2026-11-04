@@ -20,6 +20,17 @@ export function searchQuery(part: Part): string | undefined {
   return typeof input?.q === "string" ? input.q : undefined;
 }
 
+export function isExpandPart(part: Part): part is Part & { type: "tool-expand_page"; state: string } {
+  return part.type === "tool-expand_page";
+}
+
+/** Page title once the tool has returned, the requested page path before. */
+export function expandedPageLabel(part: Part): string | undefined {
+  const { input, output } = part as { input?: { page?: unknown }; output?: { title?: unknown } };
+  if (typeof output?.title === "string") return output.title;
+  return typeof input?.page === "string" ? input.page : undefined;
+}
+
 const MAX_SOURCES = 8;
 
 /** Unique pages found by all completed searches in a message, in order of appearance. */
