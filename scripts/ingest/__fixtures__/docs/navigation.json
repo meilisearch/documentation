@@ -1,0 +1,44 @@
+{
+  "tabs": [
+    {
+      "tab": "Getting started",
+      "groups": [
+        {
+          "group": "Introduction",
+          "pages": [
+            "getting_started/overview",
+            "getting_started/first_project",
+            {
+              "group": "SDKs",
+              "pages": ["getting_started/sdks/javascript"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tab": "Reference",
+      "groups": [
+        {
+          "group": "API routes",
+          "openapi": {
+            "source": "assets/open-api/meilisearch-openapi.json",
+            "directory": "reference/api"
+          },
+          "pages": [
+            "reference/api/overview",
+            {
+              "group": "Indexes",
+              "pages": ["GET /indexes"]
+            },
+            "getting_started/overview"
+          ]
+        }
+      ]
+    },
+    {
+      "tab": "Changelog",
+      "pages": ["changelog/changelog"]
+    }
+  ]
+}
