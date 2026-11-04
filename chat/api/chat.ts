@@ -1,20 +1,34 @@
 import { meilisearchSearch } from "@meilisearch/ai-sdk";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { convertToModelMessages, isStepCount, streamText, type UIMessage } from "ai";
+import { convertToModelMessages, isStepCount, streamText, tool, type UIMessage } from "ai";
+import { Meilisearch } from "meilisearch";
+import { z } from "zod";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
 const MAX_MESSAGES = 30;
 const MAX_TEXT_LENGTH = 4000;
+/** About 8k tokens. Safety net for the largest pages. */
+const MAX_PAGE_CHARS = 30_000;
+/** Default `pagination.maxTotalHits`. */
+const MAX_PAGE_CHUNKS = 1000;
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
 Rules:
 - Always call the search tool before answering a question about Meilisearch. You may call it several times with different queries.
-- Answer only from the search results. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
+- Search results are short snippets. If a snippet is too partial to answer fully (for example a cut-off step list or table), call the expand_page tool with the "page" field of that result to read the whole page. Do not expand pages you do not need.
+- Answer only from the search results and expanded pages. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
 - Be concise and direct. Use short paragraphs, lists, and code blocks. Write for readers who may not be native English speakers.
-- Cite your sources inline as Markdown links to the page the information came from, using the "url" field of the result (append "#anchor" when "anchor" is not null). Never link to a URL that was not in the search results.
+- Cite your sources inline as Markdown links to the page the information came from, using the "url" field of the result (append "#anchor" when "anchor" is not null). For an expanded page, use the "url" it returns, or the URL of a search result from that page. Never link to a URL that was not in the search results or returned by expand_page, and never guess an anchor.
 - Do not use em dashes.
 - If the question is not about Meilisearch or search, politely decline and say what you can help with.`;
+
+/** Cuts `text` to at most `max` characters, on a paragraph boundary when possible. */
+function truncate(text: string, max: number): { text: string; truncated: boolean } {
+  if (text.length <= max) return { text, truncated: false };
+  const cut = text.lastIndexOf("\n\n", max);
+  return { text: text.slice(0, cut > 0 ? cut : max), truncated: true };
+}
 
 function isAllowedOrigin(origin: string | null): boolean {
   if (!origin) return process.env.NODE_ENV !== "production";
@@ -93,16 +107,50 @@ export async function POST(request: Request): Promise<Response> {
     searchParams: {
       limit: 8,
       hybrid: { embedder: "voyage", semanticRatio: 0.5 },
-      attributesToRetrieve: ["title", "url", "anchor", "breadcrumb", "content"],
+      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content"],
+    },
+  });
+
+  // `meilisearchSearch` only accepts a query, so reading a whole page needs its own tool.
+  // Chunks are exact, non-overlapping slices of the page (see scripts/ingest), so joining them rebuilds it.
+  const index = new Meilisearch({ host: MEILISEARCH_URL, apiKey: MEILISEARCH_KEY }).index("docs-chunks");
+  const expandPage = tool({
+    description:
+      "Read the full content of one documentation page. Use it when a search result is too partial to answer, for example a cut-off step list or table. Pass the `page` field of a search result.",
+    inputSchema: z.object({
+      page: z
+        .string()
+        .min(1)
+        .max(300)
+        .regex(/^[\w\-/.]+$/)
+        .describe('The "page" field of a search result, for example "capabilities/personalization/overview"'),
+    }),
+    execute: async ({ page }) => {
+      const { hits, estimatedTotalHits } = await index.search("", {
+        filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
+        sort: ["chunk_index:asc"],
+        limit: MAX_PAGE_CHUNKS,
+        attributesToRetrieve: ["title", "url", "content"],
+      });
+      if (hits.length === 0) return { error: `No page found for "${page}". Use the page field of a search result.` };
+
+      const markdown = [`# ${hits[0].title}`, ...hits.map((hit) => hit.content)].join("\n\n");
+      const { text, truncated } = truncate(markdown, MAX_PAGE_CHARS);
+      return {
+        title: hits[0].title as string,
+        url: (hits[0].url as string).split("#")[0],
+        markdown: text,
+        truncated: truncated || (estimatedTotalHits ?? hits.length) > hits.length,
+      };
     },
   });
 
   const result = streamText({
-    model: openrouter(CHAT_MODEL || DEFAULT_MODEL),
+    model: openrouter(CHAT_MODEL || DEFAULT_MODEL, { reasoning: { effort: "high" } }),
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
-    tools: { search },
-    stopWhen: isStepCount(5),
+    tools: { search, expand_page: expandPage },
+    stopWhen: isStepCount(7),
   });
 
   return result.toUIMessageStreamResponse({

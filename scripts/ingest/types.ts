@@ -3,7 +3,6 @@ export type ChunkingConfig = {
   splitDepth: number;
   maxChars: number;
   minChars: number;
-  overlapChars: number;
 };
 
 export type EmbedderConfig = {

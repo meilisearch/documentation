@@ -80,6 +80,28 @@ describe("loadPages", () => {
     ]);
   });
 
+  it("includes the root page of a group before its pages and keeps it once if it is also listed", async () => {
+    const rootDir = await makeDocs(
+      {
+        tabs: [
+          {
+            tab: "Changelog",
+            pages: [{ group: "Changelog", root: "changelog", pages: ["changelog/v1.2", "changelog", "changelog/v1.1"] }],
+          },
+        ],
+      },
+      ["changelog", "changelog/v1.2", "changelog/v1.1"],
+    );
+
+    const pages = await loadPages({ rootDir, navigation: "navigation.json", chunking: DEFAULT_CHUNKING });
+
+    expect(locations(pages)).toEqual([
+      { page: "changelog", tab: "Changelog", group: "Changelog" },
+      { page: "changelog/v1.2", tab: "Changelog", group: "Changelog" },
+      { page: "changelog/v1.1", tab: "Changelog", group: "Changelog" },
+    ]);
+  });
+
   it("skips OpenAPI route entries and keeps only the first occurrence of a duplicated page", async () => {
     const pages = await loadPages({ rootDir: FIXTURE_DIR, navigation: "navigation.json", chunking: DEFAULT_CHUNKING });
 

@@ -5,6 +5,7 @@ export function buildSettings(embedder?: EmbedderConfig | null): Settings {
   const settings: Settings = {
     filterableAttributes: ["page", "tab", "group", "content_type"],
     searchableAttributes: ["title", "hierarchy", "content", "description"],
+    sortableAttributes: ["chunk_index"],
   };
   if (embedder) {
     settings.embedders = {

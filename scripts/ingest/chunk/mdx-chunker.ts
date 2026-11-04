@@ -49,13 +49,35 @@ function splitSections(tree: Root, title: string, splitDepth: number): Section[]
   return sections;
 }
 
+/**
+ * Serializes each section together with its own heading, so that joining the chunks rebuilds the page.
+ * A section without content of its own (an h2 directly followed by an h3) is carried into the next section,
+ * which keeps the anchor and hierarchy of the deepest heading.
+ */
+function serializeSections(sections: Section[]): SerializedSection[] {
+  const serialized: SerializedSection[] = [];
+  let pending: RootContent[] = [];
+
+  for (const { blocks, heading, ...section } of sections) {
+    const nodes = [...pending, ...(heading ? [heading] : []), ...blocks];
+    if (serialize(blocks) === "") {
+      pending = nodes;
+      continue;
+    }
+    pending = [];
+    serialized.push({ ...section, heading, content: serialize(nodes) });
+  }
+
+  return serialized;
+}
+
 function mergeSmallSections(sections: SerializedSection[], chunking: ChunkingConfig): SerializedSection[] {
   const merged: SerializedSection[] = [];
 
   for (const section of sections) {
     const previous = merged[merged.length - 1];
     if (previous && section.heading && section.content.length < chunking.minChars) {
-      const content = `${previous.content}\n\n${serialize([section.heading])}\n\n${section.content}`;
+      const content = `${previous.content}\n\n${section.content}`;
       if (content.length <= chunking.maxChars) {
         previous.content = content;
         continue;
@@ -65,17 +87,6 @@ function mergeSmallSections(sections: SerializedSection[], chunking: ChunkingCon
   }
 
   return merged;
-}
-
-function overlapOf(text: string, overlapChars: number): string {
-  if (overlapChars <= 0) return "";
-  const start = Math.max(0, text.length - overlapChars);
-  let tail = text.slice(start);
-  if (start > 0 && /\S/.test(text[start - 1]) && /\S/.test(tail[0])) {
-    const nextSpace = tail.search(/\s/);
-    tail = nextSpace === -1 ? "" : tail.slice(nextSpace);
-  }
-  return tail.trim();
 }
 
 function hardSplit(block: string, maxChars: number): string[] {
@@ -112,22 +123,38 @@ function packBlocks(blocks: string[], maxChars: number, separator: string): stri
   return parts;
 }
 
+const TABLE_DELIMITER = /^\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?$/;
+
+/** Splits an oversized table between rows, repeating the header and delimiter rows in every piece. */
+function splitTable(block: string, maxChars: number): string[] | null {
+  const [head, delimiter, ...rows] = block.split("\n");
+  if (delimiter === undefined || !head.includes("|") || !TABLE_DELIMITER.test(delimiter)) return null;
+  const header = `${head}\n${delimiter}`;
+  const budget = maxChars - header.length - 1;
+  if (budget < maxChars / 2) return null;
+  const pieces = packBlocks(
+    rows.flatMap((row) => hardSplit(row, budget)),
+    budget,
+    "\n",
+  );
+  return pieces.map((piece) => `${header}\n${piece}`);
+}
+
 /** Splits an oversized block between lines (keeping table rows and list items whole), then between words. */
 function splitBlock(block: string, maxChars: number): string[] {
   if (block.length <= maxChars) return [block];
+  const table = splitTable(block, maxChars);
+  if (table) return table;
   const lines = block.split("\n").flatMap((line) => hardSplit(line, maxChars));
   return packBlocks(lines, maxChars, "\n");
 }
 
+/** Splits at block boundaries. Only the first part starts with the section heading. */
 function splitLargeSection(section: SerializedSection, chunking: ChunkingConfig): SerializedSection[] {
   if (section.content.length <= chunking.maxChars) return [section];
 
   const blocks = section.content.split("\n\n").flatMap((block) => splitBlock(block, chunking.maxChars));
-  const parts = packBlocks(blocks, chunking.maxChars, "\n\n");
-  return parts.map((part, index) => {
-    const overlap = index > 0 ? overlapOf(parts[index - 1], chunking.overlapChars) : "";
-    return { ...section, content: overlap ? `${overlap}\n\n${part}` : part };
-  });
+  return packBlocks(blocks, chunking.maxChars, "\n\n").map((content) => ({ ...section, content }));
 }
 
 function parse(page: RawPage): Root {
@@ -144,9 +171,7 @@ export function chunkPage(page: RawPage, options: ChunkPageOptions): Chunk[] {
   const title = page.frontmatter.title;
   const pageUrl = `${options.baseUrl}/${page.page}`;
   const sections = mergeSmallSections(
-    splitSections(tree, title, options.chunking.splitDepth)
-      .map(({ blocks, ...section }) => ({ ...section, content: serialize(blocks) }))
-      .filter((section) => section.content !== ""),
+    serializeSections(splitSections(tree, title, options.chunking.splitDepth)),
     options.chunking,
   ).flatMap((section) => splitLargeSection(section, options.chunking));
 

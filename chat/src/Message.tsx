@@ -1,7 +1,18 @@
 import type { UIMessage } from "ai";
 import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
-import { collectSources, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
+import { collectSources, expandedPageLabel, isExpandPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
+
+function ToolStatus({ state, label }: { state: string; label: string }) {
+  const done = state === "output-available";
+  const failed = state === "output-error";
+  return (
+    <div className="my-1 flex items-center gap-2 text-[12.5px] text-black/50 dark:text-white/50">
+      <span className={done || failed ? "" : "animate-pulse"}>{failed ? "!" : done ? "✓" : "●"}</span>
+      <span className="truncate">{label}</span>
+    </div>
+  );
+}
 
 function Link({ href, children }: ComponentProps<"a">) {
   return (
@@ -47,17 +58,24 @@ export const Message = memo(function Message({ message, streaming }: { message: 
 
         if (isSearchPart(part)) {
           const q = searchQuery(part);
-          const done = part.state === "output-available";
-          const failed = part.state === "output-error";
-          return (
-            <div key={index} className="my-1 flex items-center gap-2 text-[12.5px] text-black/50 dark:text-white/50">
-              <span className={done || failed ? "" : "animate-pulse"}>{failed ? "!" : done ? "✓" : "●"}</span>
-              <span className="truncate">
-                {failed ? "Search failed" : done ? "Searched the docs" : "Searching the docs"}
-                {q ? `: “${q}”` : ""}
-              </span>
-            </div>
-          );
+          const verb =
+            part.state === "output-error"
+              ? "Search failed"
+              : part.state === "output-available"
+                ? "Searched the docs"
+                : "Searching the docs";
+          return <ToolStatus key={index} state={part.state} label={`${verb}${q ? `: “${q}”` : ""}`} />;
+        }
+
+        if (isExpandPart(part)) {
+          const page = expandedPageLabel(part);
+          const verb =
+            part.state === "output-error"
+              ? "Could not read the page"
+              : part.state === "output-available"
+                ? "Read the full page"
+                : "Reading the full page";
+          return <ToolStatus key={index} state={part.state} label={`${verb}${page ? `: ${page}` : ""}`} />;
         }
 
         return null;
