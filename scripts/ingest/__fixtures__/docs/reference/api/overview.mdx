@@ -1,0 +1,14 @@
+---
+title: API reference
+description: Learn how the Meilisearch HTTP API is organized.
+---
+
+The Meilisearch API is a RESTful HTTP API. Every request and response body uses JSON. Routes are grouped by resource, such as indexes, documents, and tasks.
+
+## Authorization
+
+Protected instances require an API key in the `Authorization` header of each request. Use the master key only to manage other API keys.
+
+## Asynchronous operations
+
+Most write operations are asynchronous. They return a summarized task object that you can use to track progress.

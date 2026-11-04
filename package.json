@@ -5,15 +5,31 @@
   "repository": "meilisearch/documentation",
   "bugs": "https://github.com/meilisearch/documentation/issues",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
     "@octokit/rest": "^22.0.1",
+    "github-slugger": "^2.0.0",
     "js-yaml": "^5.4.3",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-to-markdown": "^2.2.2",
+    "mdast-util-to-string": "^4.0.0",
+    "meilisearch": "^0.62.0",
     "node-fetch": "^2.7.0",
-    "@anthropic-ai/sdk": "^0.39.0"
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.2.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
+    "@types/mdast": "^4.0.4",
     "@types/node": "^20.0.0",
+    "mdast-util-mdx": "^3.0.0",
     "mint": "^4.2.791",
-    "typescript": "^5.0.0"
+    "tsx": "^4.23.15",
+    "typescript": "^5.0.0",
+    "vitest": "^3.2.7"
   },
   "scripts": {
     "generate-mintlify-openapi-file": "node scripts/generate-mintlify-openapi.mjs",
@@ -26,6 +42,9 @@
     "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs",
     "generate-changelog": "npx tsx scripts/generate-changelog.ts",
     "generate-error-codes": "node scripts/generate-error-codes.mjs",
-    "check-broken-links": "node scripts/check-broken-links.mjs"
+    "check-broken-links": "node scripts/check-broken-links.mjs",
+    "ingest": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/index.ts",
+    "ingest:query": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/query.ts",
+    "test:ingest": "vitest run scripts/ingest"
   }
 }
