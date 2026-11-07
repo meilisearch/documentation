@@ -4,7 +4,7 @@ sidebarTitle: CLI
 description: Get started with Meilisearch from your terminal using the meili command line tool in 5 minutes.
 ---
 
-This guide walks you through setting up Meilisearch with `meili`, the Meilisearch command line tool. `meili` works with Meilisearch Cloud projects and with self-hosted instances. The guide uses a Meilisearch Cloud project by default.
+This guide walks you through setting up Meilisearch with `meili`, the Meilisearch command line tool. `meili` works with Meilisearch Cloud projects and with self-hosted instances.
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ meili auth login
 meili config sync-with-cloud --all
 ```
 
-When you are an admin of the project's team, the CLI also saves the project's master key. Otherwise, the CLI saves the project without an API key. Create an API key for the project, then add it to the config file:
+When you are an admin of the project's team, the CLI also saves the project's master key. Otherwise, the CLI saves the project without an API key. Ask an admin of the team for an API key, then add it to the config file:
 
 ```bash
 meili config update --project PROJECT_NAME --project-api-key YOUR_API_KEY
@@ -76,23 +76,25 @@ List the projects of the config file:
 meili config list
 ```
 
-Every command takes the project name with `--project`. This guide uses a project named `local`. Replace it with the name of your project, then check that the instance is available:
+Every command takes the project name with `--project` (or `-p`). Check that the instance is available:
 
 ```bash
 meili health --project local
-# {"status":"available"}
+# status  available
 ```
 
 ## 3. Add documents
 
 Create a `movies.json` file:
 
-```json
+```bash
+cat > movies.json << 'EOF'
 [
   { "id": 1, "title": "The Matrix", "genres": ["Action", "Sci-Fi"], "year": 1999 },
   { "id": 2, "title": "Inception", "genres": ["Action", "Thriller"], "year": 2010 },
   { "id": 3, "title": "Interstellar", "genres": ["Drama", "Sci-Fi"], "year": 2014 }
 ]
+EOF
 ```
 
 Add the documents to the `movies` index:
@@ -109,20 +111,17 @@ Meilisearch creates the `movies` index if it does not exist. Adding documents is
 meili search --project local --index movies --q matrix
 ```
 
-The CLI prints the JSON response:
+The CLI prints the results as a table:
 
-```json
-{
-  "hits": [
-    { "id": 1, "title": "The Matrix", "genres": ["Action", "Sci-Fi"], "year": 1999 }
-  ],
-  "query": "matrix",
-  "processingTimeMs": 1,
-  "limit": 20,
-  "offset": 0,
-  "estimatedTotalHits": 1
-}
+```text
+Showing 1 of about 1
+query matrix • processingTimeMs 1 • limit 20 • offset 0
+
+ID  TITLE       GENRES          YEAR
+1   The Matrix  Action, Sci-Fi  1999
 ```
+
+Add `--json` to print the JSON response of Meilisearch instead.
 
 ## 5. Search with filters
 
@@ -147,10 +146,10 @@ Without `--q`, Meilisearch runs a placeholder search and returns all documents t
 meili config set --project local --project-url http://localhost:7700 --project-api-key YOUR_API_KEY
 
 # Add documents
-meili document add --project local --index movies --file movies.json --wait
+meili document add -p local -i movies --file movies.json --wait
 
 # Search
-meili search --project local --index movies --q inter
+meili search -p local -i movies --q inter
 ```
 
 ## Explore the commands
@@ -160,6 +159,13 @@ meili search --project local --index movies --q inter
 ```bash
 meili --help
 meili search --help
+```
+
+`meili schema` describes every command as JSON. `meili schema --command <name>` describes one command in full, with its flags, the Meilisearch routes it calls, and examples. Scripts and AI agents can use it to discover the commands:
+
+```bash
+meili schema
+meili schema --command search
 ```
 
 Other commands manage [tasks](/capabilities/indexing/tasks_and_batches/async_operations), API keys, settings, and Meilisearch Cloud projects. `meili teleport` moves a self-hosted instance to a new Meilisearch Cloud project.
