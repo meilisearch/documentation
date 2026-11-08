@@ -58,8 +58,7 @@ meili config sync-with-cloud --all
 When you are an admin of the project's team, the CLI also saves the project's master key. Otherwise, the CLI saves the project without an API key. Ask an admin of the team for an API key, then add it to the config file:
 
 ```bash
-meili config update --project PROJECT_NAME \
-  --project-api-key YOUR_API_KEY
+meili config update --project PROJECT_NAME --project-api-key YOUR_API_KEY
 ```
 </Tab>
 <Tab title="Self-hosted">
@@ -103,8 +102,7 @@ EOF
 Add the documents to the `movies` index (`--index` or `-i`):
 
 ```bash
-meili document add --project local --index movies \
-  --file movies.json --wait
+meili document add --project local --index movies --file movies.json --wait
 ```
 
 Meilisearch creates the `movies` index if it does not exist. Adding documents is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations): without `--wait`, the CLI prints the task and returns at once. `--wait` follows the task until indexing is complete, then prints the final task.
