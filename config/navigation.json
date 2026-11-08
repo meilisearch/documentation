@@ -14,6 +14,14 @@
           ]
         },
         {
+          "group": "Tools",
+          "pages": [
+            "getting_started/cli",
+            "getting_started/integrations/postman",
+            "getting_started/integrations/meilisearch_importer"
+          ]
+        },
+        {
           "group": "Back-end SDKs",
           "pages": [
             "getting_started/sdks/javascript",
@@ -54,8 +62,6 @@
             "getting_started/integrations/langchain",
             "getting_started/integrations/firebase",
             "getting_started/integrations/vercel",
-            "getting_started/integrations/postman",
-            "getting_started/integrations/meilisearch_importer",
             {
               "group": "Kestra",
               "pages": [

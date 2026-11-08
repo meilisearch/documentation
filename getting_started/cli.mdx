@@ -1,0 +1,196 @@
+---
+title: Meilisearch CLI quick start
+sidebarTitle: CLI
+description: Get started with Meilisearch from your terminal using the meili command line tool in 5 minutes.
+---
+
+This guide walks you through setting up Meilisearch with `meili`, the Meilisearch command line tool. `meili` works with Meilisearch Cloud projects and with self-hosted instances.
+
+## Prerequisites
+
+- A Meilisearch instance ([Cloud](https://cloud.meilisearch.com) or [self-hosted](/resources/self_hosting/getting_started/quick_start))
+- Node.js 22 or later, only if you install the CLI with npm
+
+## 1. Install the CLI
+
+<Tabs>
+<Tab title="npm">
+```bash
+npm install -g @meilisearch/cli
+```
+</Tab>
+<Tab title="Homebrew">
+```bash
+brew install meilisearch/tap/meili
+
+# to upgrade
+brew update && brew upgrade meilisearch/tap/meili
+```
+</Tab>
+<Tab title="Install script">
+```bash
+curl -fsSL https://raw.githubusercontent.com/meilisearch/cli/main/scripts/install.sh | sh
+```
+
+The script works on macOS and Linux. Run it again to update the CLI.
+</Tab>
+</Tabs>
+
+Check the installation:
+
+```bash
+meili version
+```
+
+## 2. Connect to Meilisearch
+
+The CLI stores your projects in a config file, `~/.config/meili/config.json` by default. Each project has a name, a URL, and an API key.
+
+<Tabs>
+<Tab title="Meilisearch Cloud">
+Log in to Meilisearch Cloud in your browser, then add your Cloud projects to the config file:
+
+```bash
+meili auth login
+meili config sync-with-cloud --all
+```
+
+When you are an admin of the project's team, the CLI also saves the project's master key. Otherwise, the CLI saves the project without an API key. Ask an admin of the team for an API key, then add it to the config file:
+
+```bash
+meili config update --project PROJECT_NAME --project-api-key YOUR_API_KEY
+```
+</Tab>
+<Tab title="Self-hosted">
+Add your instance to the config file:
+
+```bash
+meili config set --project local \
+  --project-url http://localhost:7700 \
+  --project-api-key YOUR_API_KEY
+```
+</Tab>
+</Tabs>
+
+List the projects of the config file:
+
+```bash
+meili config list
+```
+
+Every command takes the project name with `--project` (or `-p`). Check that the instance is available:
+
+```bash
+meili health --project local
+# status  available
+```
+
+## 3. Add documents
+
+Create a `movies.json` file:
+
+```bash
+cat > movies.json << 'EOF'
+[
+  { "id": 1, "title": "The Matrix", "genres": ["Action", "Sci-Fi"], "year": 1999 },
+  { "id": 2, "title": "Inception", "genres": ["Action", "Thriller"], "year": 2010 },
+  { "id": 3, "title": "Interstellar", "genres": ["Drama", "Sci-Fi"], "year": 2014 }
+]
+EOF
+```
+
+Add the documents to the `movies` index (`--index` or `-i`):
+
+```bash
+meili document add --project local --index movies --file movies.json --wait
+```
+
+Meilisearch creates the `movies` index if it does not exist. Adding documents is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations): without `--wait`, the CLI prints the task and returns at once. `--wait` follows the task until indexing is complete, then prints the final task.
+
+## 4. Search
+
+```bash
+meili search --project local --index movies --q matrix
+```
+
+The CLI prints the results as a table:
+
+```text
+Showing 1 of about 1
+query matrix • processingTimeMs 1 • limit 20 • offset 0
+
+ID  TITLE       GENRES          YEAR
+1   The Matrix  Action, Sci-Fi  1999
+```
+
+Add `--json` to print the JSON response of Meilisearch instead.
+
+## 5. Search with filters
+
+First, configure filterable attributes:
+
+```bash
+meili settings update --project local --index movies \
+  --filterable-attributes genres,year --wait
+```
+
+Then search with filters:
+
+```bash
+meili search --project local --index movies \
+  --filter 'genres = "Sci-Fi" AND year > 2000'
+```
+
+Without `--q`, Meilisearch runs a placeholder search and returns all documents that match the filter, here `Interstellar`.
+
+## Full example
+
+```bash
+# Connect to your instance
+meili config set --project local \
+  --project-url http://localhost:7700 \
+  --project-api-key YOUR_API_KEY
+
+# Add documents
+meili document add -p local -i movies --file movies.json --wait
+
+# Search
+meili search -p local -i movies --q inter
+```
+
+## Explore the commands
+
+`meili --help` lists every command. Add `--help` to any command to see its flags and examples:
+
+```bash
+meili --help
+meili search --help
+```
+
+`meili schema` describes every command as JSON. `meili schema --command <name>` describes one command in full, with its flags, the Meilisearch routes it calls, and examples. Scripts and AI agents can use it to discover the commands:
+
+```bash
+meili schema
+meili schema --command search
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Full-text search" icon="magnifying-glass" href="/capabilities/full_text_search/relevancy/relevancy">
+    Configure ranking and relevancy
+  </Card>
+  <Card title="Filtering" icon="filter" href="/capabilities/filtering_sorting_faceting/getting_started">
+    Add filters and facets
+  </Card>
+  <Card title="AI-powered search" icon="brain" href="/capabilities/hybrid_search/getting_started">
+    Add semantic search
+  </Card>
+  <Card title="API reference" icon="code" href="/reference/api/search/search-with-post">
+    Explore all search parameters
+  </Card>
+</CardGroup>
+
+## Resources
+
+- [Meilisearch CLI on GitHub](https://github.com/meilisearch/cli)
