@@ -158,6 +158,16 @@ meili document add -p local -i movies --file movies.json --wait
 meili search -p local -i movies --q inter
 ```
 
+## Move a self-hosted instance to Meilisearch Cloud
+
+Move your self-hosted instance, local or in production, to Meilisearch Cloud in one CLI command:
+
+```bash
+meili teleport
+```
+
+The command creates your Cloud account if needed, creates the project, and sends your data to it. See [Migrating to Meilisearch Cloud](/resources/migration/migrating_cloud).
+
 ## Explore the commands
 
 `meili --help` lists every command. Add `--help` to any command to see its flags and examples:
@@ -177,14 +187,8 @@ meili schema --command search
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Full-text search" icon="magnifying-glass" href="/capabilities/full_text_search/relevancy/relevancy">
-    Configure ranking and relevancy
-  </Card>
-  <Card title="Filtering" icon="filter" href="/capabilities/filtering_sorting_faceting/getting_started">
-    Add filters and facets
-  </Card>
-  <Card title="AI-powered search" icon="brain" href="/capabilities/hybrid_search/getting_started">
-    Add semantic search
+  <Card title="Migrate to Cloud" icon="cloud" href="/resources/migration/migrating_cloud">
+    Move a self-hosted instance with `meili teleport`
   </Card>
   <Card title="API reference" icon="code" href="/reference/api/search/search-with-post">
     Explore all search parameters

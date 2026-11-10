@@ -1,23 +1,78 @@
 ---
 title: Migrating to Meilisearch Cloud
 sidebarTitle: Migrating to Meilisearch Cloud
-description: Meilisearch Cloud is the recommended way of using Meilisearch. This guide walks you through migrating Meilisearch from a self-hosted installation to Meilisearch Cloud.
+description: Meilisearch Cloud is the recommended way of using Meilisearch. Move your self-hosted instance, local or in production, to Meilisearch Cloud in one CLI command with meili teleport, or with the export API.
 ---
 
 import CodeSamplesExportPost1 from '/snippets/generated-code-samples/code_samples_export_post_1.mdx';
 
-
 ## Requirements
 
-- A running Meilisearch instance
+- A running Meilisearch instance, v1.16 or later
+- If the instance has a master key, that master key or an API key with the `export` action
 - A command-line terminal
-- A Meilisearch Cloud account and project
+
+You do not need a Meilisearch Cloud account. `meili teleport` creates one for you.
+
+---
+
+## Teleport with the CLI
+
+### 1. Install the CLI
+
+<Tabs>
+<Tab title="npm">
+```bash
+npm install -g @meilisearch/cli
+```
+
+Installing with npm requires Node.js 22 or later.
+</Tab>
+<Tab title="Homebrew">
+```bash
+brew install meilisearch/tap/meili
+
+# to upgrade
+brew update && brew upgrade meilisearch/tap/meili
+```
+</Tab>
+<Tab title="Install script">
+```bash
+curl -fsSL https://raw.githubusercontent.com/meilisearch/cli/main/scripts/install.sh | sh
+```
+
+The script works on macOS and Linux. Run it again to update the CLI.
+</Tab>
+</Tabs>
+
+### 2. Run `meili teleport`
+
+```bash
+meili teleport
+```
+
+The command asks its questions in the terminal. It:
+
+1. Asks for the instance to move, from your CLI config file or by its URL and API key
+2. Checks that the API key can export data
+3. Logs you in to Meilisearch Cloud in your browser, and creates your account if you do not have one
+4. Creates the Cloud project: a free trial project if your account has not used its free trial yet, or a project on the plan you choose. Paid plans require a payment method in your Cloud account. See the [pricing page](https://www.meilisearch.com/pricing).
+5. Adds the new project to your CLI config file
+6. Sends your data to the new project and waits until it is indexed
+
+### 3. Verify the migration
+
+Open your [Cloud project](https://cloud.meilisearch.com) and run a few searches to confirm all data transferred correctly.
+
+<Tip>
+To migrate without questions, for example in a script, first run `meili auth login` yourself: it opens your browser to log in to Meilisearch Cloud. The script can then run `meili project add` and `meili export`. See the [CLI README](https://github.com/meilisearch/cli#readme).
+</Tip>
 
 ---
 
 ## Export API
 
-The export API pushes your data directly from your self-hosted instance to a remote Meilisearch instance without creating any intermediate files.
+If you prefer not to use the CLI, the export API pushes your data directly from your self-hosted instance to a remote Meilisearch instance without creating any intermediate files.
 
 ### 1. Create a Meilisearch Cloud project
 
@@ -35,12 +90,12 @@ Meilisearch returns a task object. [Use the `taskUid` to monitor its progress.](
 
 ### 3. Verify the migration
 
-Once the task status is `succeeded`, open your Cloud project and run a few searches to confirm all data transferred correctly.
+Once the task status is `succeeded`, open your [Cloud project](https://cloud.meilisearch.com) and run a few searches to confirm all data transferred correctly.
+
+---
 
 <Warning>
 Meilisearch Cloud automatically generates a new master key during project creation. If you are using [security keys](/resources/self_hosting/security/basic_security), update your application to use the newly generated Meilisearch Cloud API keys.
 </Warning>
-
----
 
 Congratulations, you have migrated to Meilisearch Cloud. If you encounter any problems, reach out to our support team on [Discord](https://discord.meilisearch.com).
