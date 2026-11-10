@@ -356,7 +356,8 @@ function initializeMeilisearchIntegration() {
       { key: 'getting_started', label: 'Getting started' },
       { key: 'capabilities', label: 'Capabilities' },
       { key: 'reference', label: 'Reference' },
-      { key: 'resources', label: 'Resources' }
+      { key: 'resources', label: 'Resources' },
+      { key: 'changelog', label: 'Changelog' }
     ]
     const filterTags = []
 
