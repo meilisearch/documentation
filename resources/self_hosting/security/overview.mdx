@@ -12,7 +12,7 @@ Meilisearch's security model has three layers:
 
 1. **Master key**: a secret you set at launch. It is never used directly in API requests, but generates the default API keys
 2. **API keys**: credentials used to authenticate API requests. Meilisearch creates two default keys (admin and search) when you set a master key
-3. **Tenant tokens**: short-lived, client-side tokens derived from API keys. They enforce per-user search rules without exposing your API keys
+3. **Tenant tokens**: short-lived, client-side tokens derived from API keys. They enforce per-user search rules (`searchRules`) without exposing your API keys
 
 ```mermaid
 flowchart LR

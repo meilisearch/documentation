@@ -9,7 +9,7 @@ import CodeSamplesTenantTokenGuideSearchNoSdk1 from '/snippets/generated-code-sa
 
 Generating tenant tokens without a library is possible, but not recommended. This guide summarizes the necessary steps.
 
-The full process requires you to create a token header, prepare the data payload with at least one set of search rules, and then sign the token with an API key.
+The full process requires you to create a token header, prepare the data payload with at least one set of [tenant token search rules](/capabilities/security/advanced/tenant_token_payload#search-rules), and then sign the token with an API key.
 
 ## Prepare token header
 
@@ -28,7 +28,7 @@ The token header must specify a `JWT` type and an encryption algorithm. Supporte
 
 ## Build token payload
 
-First, create a set of search rules:
+First, create a set of search rules (`searchRules`):
 
 <CodeGroup>
 

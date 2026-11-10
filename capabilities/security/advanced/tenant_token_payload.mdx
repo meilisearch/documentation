@@ -1,10 +1,12 @@
 ---
 title: Tenant token payload reference
 sidebarTitle: Tenant token payload reference
-description: "Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: search rules, an API key UID, and an optional expiration date."
+description: "Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: tenant token search rules, an API key UID, and an optional expiration date."
 ---
 
-Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: [search rules](#search-rules), an [API key UID](#api-key-uid), and an optional [expiration date](#expiry-date).
+import TenantTokenSearchRulesNote from '/snippets/tenant_token_search_rules_note.mdx';
+
+Meilisearch's tenant tokens are JSON web tokens (JWTs). Their payload is made of three elements: [tenant token search rules](#search-rules) (`searchRules`), an [API key UID](#api-key-uid), and an optional [expiration date](#expiry-date).
 
 <Tip>
 You can use [jwt.io](https://jwt.io) to inspect and debug tenant tokens during development. Paste a token into the tool to view its decoded header, payload, and signature.
@@ -29,6 +31,8 @@ You can use [jwt.io](https://jwt.io) to inspect and debug tenant tokens during d
 </CodeGroup>
 
 ## Search rules
+
+<TenantTokenSearchRulesNote />
 
 The search rules object is a set of instructions defining search parameters Meilisearch enforces in every query made with a specific tenant token.
 
