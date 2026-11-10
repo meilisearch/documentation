@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
+```bash CLI
+meili key list \
+  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \
+  --limit 3
+```
+
 ```javascript JS
 client.getKeys({ limit: 3 })
 ```

@@ -10,6 +10,11 @@ const SDK = [
     project: 'documentation'
   },
   {
+    language: 'bash',
+    label: 'CLI',
+    project: 'cli'
+  },
+  {
     language: 'javascript',
     label: 'JS',
     project: 'meilisearch-js'

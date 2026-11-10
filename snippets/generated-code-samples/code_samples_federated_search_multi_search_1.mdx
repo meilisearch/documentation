@@ -23,4 +23,16 @@ curl \
     ]
   }'
 ```
+
+```bash CLI
+meili multi-search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  \
+  --federation '{}' \
+  --queries '[
+    { "indexUid": "chats", "q": "natasha" },
+    { "indexUid": "profiles", "q": "natasha" },
+    { "indexUid": "tickets", "q": "natasha" }
+  ]'
+```
 </CodeGroup>

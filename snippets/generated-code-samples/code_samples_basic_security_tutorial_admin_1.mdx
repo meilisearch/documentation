@@ -11,6 +11,12 @@ curl \
   }'
 ```
 
+```bash CLI
+meili index add \
+  --project-url MEILISEARCH_URL --project-api-key DEFAULT_ADMIN_API_KEY \
+  --id medical_records --primary-key id
+```
+
 ```rust Rust
 let client = Client::new("MEILISEARCH_URL", Some("DEFAULT_ADMIN_API_KEY"));
 let task = client

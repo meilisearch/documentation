@@ -13,6 +13,13 @@ curl \
 }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --q classic --facets genres,rating,language
+```
+
 ```javascript JS
 client.index('books').search('classic', { facets: ['genres', 'rating', 'language'] })
 ```

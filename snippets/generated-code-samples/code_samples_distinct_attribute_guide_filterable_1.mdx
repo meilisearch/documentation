@@ -12,6 +12,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index products \
+  --filterable-attributes product_id,sku,url
+```
+
 ```javascript JS
 client.index('products').updateFilterableAttributes(['product_id', 'sku', 'url'])
 ```

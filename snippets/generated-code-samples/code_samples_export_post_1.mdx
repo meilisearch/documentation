@@ -15,6 +15,13 @@ curl \
   }'
 ```
 
+```bash CLI
+meili export \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  \
+  --url TARGET_INSTANCE_URL --indexes '{"*":{"overrideSettings":true}}'
+```
+
 ```python Python
 client.export(
   url='https://remote-meilisearch-instance.com',

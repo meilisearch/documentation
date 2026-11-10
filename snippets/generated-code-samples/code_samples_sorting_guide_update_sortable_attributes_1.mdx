@@ -11,6 +11,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --sortable-attributes author,price
+```
+
 ```javascript JS
 client.index('books').updateSortableAttributes([
     'author',

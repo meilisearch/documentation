@@ -8,6 +8,13 @@ curl \
   --data-binary '{ "disableOnAttributes": ["title"] }'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --typo-tolerance '{"disableOnAttributes":["title"]}'
+```
+
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   disableOnAttributes: ['title']

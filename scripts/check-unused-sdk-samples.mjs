@@ -19,6 +19,7 @@ import * as yaml from 'js-yaml';
 import fetch from 'node-fetch';
 
 const SDK = [
+  { label: 'CLI', project: 'cli' },
   { label: 'JS', project: 'meilisearch-js' },
   { label: 'Python', project: 'meilisearch-python' },
   { label: 'PHP', project: 'meilisearch-php' },

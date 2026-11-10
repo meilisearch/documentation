@@ -8,6 +8,12 @@ curl \
   --data-binary '{ "q": "botman" }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key aSampleMasterKey \
+  --index movies --q botman
+```
+
 ```javascript JS
 client.index('movies').search('botman').then((res) => console.log(res))
 ```

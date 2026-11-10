@@ -10,4 +10,12 @@ curl \
     "filter": "_foreign(skills, (language = \"Python\" AND proficiency = \"advanced\") OR (language = \"JavaScript\" AND proficiency = \"advanced\"))"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index employees \
+  --q fullstack \
+  --filter '_foreign(skills, (language = "Python" AND proficiency = "advanced") OR (language = "JavaScript" AND proficiency = "advanced"))'
+```
 </CodeGroup>

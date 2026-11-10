@@ -10,4 +10,12 @@ curl \
     "filter": "_foreign(tags, name = \"security\" AND name = \"encryption\")"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index articles \
+  --q cryptography \
+  --filter '_foreign(tags, name = "security" AND name = "encryption")'
+```
 </CodeGroup>

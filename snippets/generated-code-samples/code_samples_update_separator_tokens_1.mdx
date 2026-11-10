@@ -8,6 +8,13 @@ curl \
   --data-binary '["|", "&hellip;"]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index articles \
+  --separator-tokens '|,&hellip;'
+```
+
 ```javascript JS
 client.index('books').updateSeparatorTokens(['|', '&hellip;'])
 ```

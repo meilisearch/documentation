@@ -10,6 +10,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index games \
+  --filterable-attributes release_timestamp
+```
+
 ```javascript JS
 client.index('games').updateFilterableAttributes(['release_timestamp'])
 ```

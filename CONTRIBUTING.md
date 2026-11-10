@@ -58,14 +58,14 @@ npx mint broken-links
 |--------|----------------|
 | `npm run check-code-samples-usage` | Ensures every entry in `.code-samples.meilisearch.yaml` is either mapped to an OpenAPI route or used in an MDX snippet. Exits with error if not. |
 | `npm run check-openapi-code-samples` | Checks the Mintlify OpenAPI file for missing cURL code samples per route. Use with `curl-check` or `info` (see script header). |
-| `npm run check-unused-sdk-samples` | Fetches each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in SDKs). |
-| `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to each SDK’s samples and lists, per SDK, which imported keys are missing on the SDK side. |
+| `npm run check-unused-sdk-samples` | Fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in the CLI and SDKs). |
+| `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the SDK side. |
 
 ## Code samples
 
 ### What they are
 
-Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) (and in each SDK repo). They map operation names (e.g. `get_indexes`) to code snippets in multiple languages. The docs use them in the API reference (via the OpenAPI Mintlify file) and in guides (via generated MDX snippets).
+Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) (and in the [CLI repo](https://github.com/meilisearch/cli) and each SDK repo). They map operation names (e.g. `get_indexes`) to code snippets in multiple languages. The docs use them in the API reference (via the OpenAPI Mintlify file) and in guides (via generated MDX snippets).
 
 **When adding a cURL example in `/learn/` or `/reference/api/`:** prefer adding a new entry in `.code-samples.meilisearch.yaml`, then running the snippet generator and importing the generated snippet in the page, rather than writing the example inline in the MDX.
 
@@ -78,7 +78,7 @@ Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.mei
 npm run generate-code-sample-snippets-file
 ```
 
-This script reads the local [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) and fetches each SDK’s `.code-samples.meilisearch.yaml` from GitHub, then generates one MDX file per operation in `snippets/generated-code-samples/` with a `<CodeGroup>` for all languages.
+This script reads the local [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) and fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` from GitHub, then generates one MDX file per operation in `snippets/generated-code-samples/` with a `<CodeGroup>` for all languages. The CLI tab comes right after cURL.
 
 ## OpenAPI Mintlify file
 
@@ -98,7 +98,7 @@ npm run fetch-meilisearch-release-assets
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` for higher API rate limits.
 
-2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
+2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo, the CLI repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
 
 ```bash
 npm run generate-mintlify-openapi-file

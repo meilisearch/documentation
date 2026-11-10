@@ -18,4 +18,17 @@ curl \
     }
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key MEILISEARCH_KEY \
+  --index INDEX_NAME \
+  --embedders '{
+    "default": {
+      "source": "openAi",
+      "model": "text-embedding-3-small",
+      "distribution": { "mean": 0.7, "sigma": 0.3 }
+    }
+  }'
+```
 </CodeGroup>

@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili task list \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --limit 2 --from 10
+```
+
 ```javascript JS
 client.tasks.getTasks({ limit: 2, from: 10 })
 ```

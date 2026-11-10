@@ -6,6 +6,11 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
+```bash CLI
+meili key list \
+  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY
+```
+
 ```javascript JS
 const client = new MeiliSearch({ host: 'MEILISEARCH_URL', apiKey: 'masterKey' })
 client.getKeys()

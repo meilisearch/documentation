@@ -9,4 +9,11 @@ curl \
     "filter": "genres = Action AND rating > 8"
   }'
 ```
+
+```bash CLI
+meili document list \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --filter 'genres = Action AND rating > 8'
+```
 </CodeGroup>

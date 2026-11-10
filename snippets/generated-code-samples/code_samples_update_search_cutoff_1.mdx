@@ -8,6 +8,13 @@ curl \
   --data-binary '150'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --search-cutoff-ms 150
+```
+
 ```javascript JS
 client.index('movies').updateSearchCutoffMs(150)
 ```

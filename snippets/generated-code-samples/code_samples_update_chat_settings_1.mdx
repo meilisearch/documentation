@@ -11,4 +11,15 @@ curl \
     "documentTemplateMaxBytes": 400
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
+  --chat '{
+    "description": "An index of movies.",
+    "documentTemplate": "A movie titled '\''{{doc.title}}'\'' released in {{ doc.release_date }}",
+    "documentTemplateMaxBytes": 400
+  }'
+```
 </CodeGroup>

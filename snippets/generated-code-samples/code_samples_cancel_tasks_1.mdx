@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili task cancel \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --ids 1,2
+```
+
 ```javascript JS
 client.tasks.cancelTasks({ uids: [1, 2] })
 ```

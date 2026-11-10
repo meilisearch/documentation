@@ -8,6 +8,13 @@ curl \
   --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000)" }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index restaurants \
+  --filter '_geoRadius(45.472735, 9.184019, 2000)'
+```
+
 ```javascript JS
 client.index('restaurants').search('', {
   filter: ['_geoRadius(45.472735, 9.184019, 2000)'],

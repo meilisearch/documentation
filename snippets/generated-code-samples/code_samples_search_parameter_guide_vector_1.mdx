@@ -13,6 +13,13 @@ curl \
   }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
+  --vector 0,1,2 --hybrid '{"embedder":"EMBEDDER_NAME"}'
+```
+
 ```python Python
 client.index('books').search('',{
   "vector": [0, 1, 2],

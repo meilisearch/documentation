@@ -11,4 +11,11 @@ curl \
     "exhaustiveFacetCount": true
   }'
 ```
+
+```bash CLI
+meili facet-search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --facet-name genres --facet-query c --exhaustive-facet-count
+```
 </CodeGroup>

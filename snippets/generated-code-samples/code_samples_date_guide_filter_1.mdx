@@ -11,6 +11,14 @@ curl \
   }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index games \
+  --q '' \
+  --filter 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'
+```
+
 ```javascript JS
 client.index('games').search('', {
   filter: 'release_timestamp >= 1514761200 AND release_timestamp < 1672527600'

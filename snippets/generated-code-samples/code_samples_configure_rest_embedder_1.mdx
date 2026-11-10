@@ -24,4 +24,22 @@ curl \
     }
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
+  --embedders '{
+    "EMBEDDER_NAME": {
+      "source": "rest",
+      "url": "PROVIDER_URL",
+      "request": { "model": "MODEL_NAME", "input": ["{{text}}", "{{..}}"] },
+      "response": {
+        "data": [{ "embedding": "{{embedding}}" }, "{{..}}"]
+      },
+      "apiKey": "PROVIDER_API_KEY",
+      "documentTemplate": "SHORT_AND_RELEVANT_DOCUMENT_TEMPLATE"
+    }
+  }'
+```
 </CodeGroup>
