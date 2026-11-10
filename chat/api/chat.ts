@@ -151,6 +151,12 @@ export async function POST(request: Request): Promise<Response> {
     messages: await convertToModelMessages(messages),
     tools: { search, expand_page: expandPage },
     stopWhen: isStepCount(7),
+    onStepFinish: ({ toolCalls }) => {
+      for (const call of toolCalls) {
+        const { q, page } = call.input as { q?: string; page?: string };
+        console.log(`[chat] ${call.toolName}: ${q ?? page}`);
+      }
+    },
   });
 
   return result.toUIMessageStreamResponse({
