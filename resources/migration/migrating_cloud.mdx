@@ -20,11 +20,30 @@ You do not need a Meilisearch Cloud account. `meili teleport` creates one for yo
 
 ### 1. Install the CLI
 
+<Tabs>
+<Tab title="npm">
 ```bash
 npm install -g @meilisearch/cli
 ```
 
-You can also install the CLI with Homebrew or an install script. See [Install the CLI](/getting_started/cli#1-install-the-cli).
+Installing with npm requires Node.js 22 or later.
+</Tab>
+<Tab title="Homebrew">
+```bash
+brew install meilisearch/tap/meili
+
+# to upgrade
+brew update && brew upgrade meilisearch/tap/meili
+```
+</Tab>
+<Tab title="Install script">
+```bash
+curl -fsSL https://raw.githubusercontent.com/meilisearch/cli/main/scripts/install.sh | sh
+```
+
+The script works on macOS and Linux. Run it again to update the CLI.
+</Tab>
+</Tabs>
 
 ### 2. Run `meili teleport`
 
