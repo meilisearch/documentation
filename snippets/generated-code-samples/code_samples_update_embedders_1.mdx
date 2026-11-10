@@ -15,6 +15,21 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index INDEX_NAME \
+  --embedders '{
+    "default": {
+      "source": "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "A document titled '\''{{doc.title}}'\'' whose description starts with {{doc.overview|truncatewords: 20}}"
+    }
+  }'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updateEmbedders({
   default: {

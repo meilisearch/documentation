@@ -6,6 +6,13 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili task delete --project PROJECT_NAME --ids 1,2 --yes
+```
+
 ```javascript JS
 client.tasks.deleteTasks({ uids: [1, 2] })
 ```

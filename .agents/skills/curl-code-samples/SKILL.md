@@ -5,7 +5,7 @@ description: cURL code samples for Meilisearch docs. Use when adding or changing
 
 # cURL code samples
 
-A page mounts a **snippet**. The curl lives in `.code-samples.meilisearch.yaml` and is the language-neutral source of the sample: SDK repos translate it under the same key, so readers see their preferred SDK, usually not curl. The generator writes `snippets/generated-code-samples/code_samples_<key>.mdx`, a `<CodeGroup>` of that curl plus the SDK samples. A fenced curl in MDX is a **hard miss**.
+A page mounts a **snippet**. The curl lives in `.code-samples.meilisearch.yaml` and is the language-neutral source of the sample: SDK repos translate it under the same key, so readers see their preferred SDK, usually not curl. The generator writes `snippets/generated-code-samples/code_samples_<key>.mdx`, a `<CodeGroup>` of that curl plus the CLI and SDK samples. A fenced curl in MDX is a **hard miss**.
 
 Done when every curl on the page is a mounted snippet, and every route sample is the key bound to that route.
 

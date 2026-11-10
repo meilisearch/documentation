@@ -8,6 +8,14 @@ curl \
   --data-binary 'false'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index INDEX_UID \
+  --facet-search false
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updateFacetSearch(false);
 ```

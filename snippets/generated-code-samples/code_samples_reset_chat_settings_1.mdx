@@ -5,4 +5,11 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \
   -H 'Authorization: Bearer API_KEY'
 ```
+
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index INDEX_NAME --chat null
+```
 </CodeGroup>

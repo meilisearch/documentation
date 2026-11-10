@@ -6,6 +6,13 @@ curl \
   -H 'Authorization: Bearer aSampleMasterKey'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key aSampleMasterKey
+
+meili task view --project PROJECT_NAME --id 0
+```
+
 ```javascript JS
 client.tasks.getTask(0)
 ```

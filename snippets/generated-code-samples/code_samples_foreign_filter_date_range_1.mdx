@@ -10,4 +10,12 @@ curl \
     "filter": "_foreign(company, last_funding_date >= \"2023-01-01\")"
   }'
 ```
+
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili search --project PROJECT_NAME --index deals \
+  --q '' --filter '_foreign(company, last_funding_date >= "2023-01-01")'
+```
 </CodeGroup>

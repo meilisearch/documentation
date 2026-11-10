@@ -11,6 +11,15 @@ curl \
   }' \
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili search --project PROJECT_NAME --index movie_ratings \
+  --q 'Planet of the Apes' \
+  --filter 'release_date > 1577884550 AND (NOT director = "Tim Burton")'
+```
+
 ```javascript JS
 client.index('movie_ratings').search('Planet of the Apes', {
   filter: "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"

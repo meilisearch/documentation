@@ -13,6 +13,15 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY
+
+meili key add --project PROJECT_NAME \
+  --description 'Add documents: Products API key' --actions documents.add \
+  --indexes products --expires-at 2042-04-02T00:42:42Z
+```
+
 ```javascript JS
 client.createKey({
   description: 'Add documents: Products API key',

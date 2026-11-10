@@ -11,6 +11,14 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key DEFAULT_SEARCH_API_KEY
+
+meili similar --project PROJECT_NAME --index INDEX_NAME \
+  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME
+```
+
 ```javascript JS
 client.index('INDEX_NAME').searchSimilarDocuments({ id: 'TARGET_DOCUMENT_ID', embedder: 'default' })
 ```

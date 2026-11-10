@@ -8,6 +8,14 @@ curl \
   --data-binary @movies.json
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key aSampleMasterKey
+
+meili document add --project PROJECT_NAME --index movies \
+  --primary-key id --file movies.json
+```
+
 ```javascript JS
 // With npm:
 // npm install meilisearch

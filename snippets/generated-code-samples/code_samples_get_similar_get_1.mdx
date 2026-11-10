@@ -5,4 +5,12 @@ curl \
   -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME' \
   -H 'Authorization: Bearer API_KEY'
 ```
+
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili similar --project PROJECT_NAME --index INDEX_NAME \
+  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME
+```
 </CodeGroup>

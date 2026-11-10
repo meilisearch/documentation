@@ -14,6 +14,17 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index books \
+  --typo-tolerance '{
+    "minWordSizeForTypos": { "oneTypo": 4, "twoTypos": 10 },
+    "disableOnAttributes": ["title"]
+  }'
+```
+
 ```javascript JS
 client.index('books').updateTypoTolerance({
   minWordSizeForTypos: {

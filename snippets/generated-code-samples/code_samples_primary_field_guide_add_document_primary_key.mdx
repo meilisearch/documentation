@@ -19,6 +19,23 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili document add --project PROJECT_NAME --index books \
+  --primary-key reference_number \
+  --data '[
+    {
+      "reference_number": 287947,
+      "title": "Diary of a Wimpy Kid",
+      "author": "Jeff Kinney",
+      "genres": ["comedy", "humor"],
+      "price": 5
+    }
+  ]'
+```
+
 ```javascript JS
 client.index('books').addDocuments([
   {

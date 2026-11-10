@@ -8,6 +8,14 @@ curl \
   --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc"] }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili search --project PROJECT_NAME --index restaurants \
+  --data '{"sort":["_geoPoint(48.8561446,2.2978204):asc"]}'
+```
+
 ```javascript JS
 client.index('restaurants').search('', {
   sort: ['_geoPoint(48.8561446, 2.2978204):asc'],

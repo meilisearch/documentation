@@ -11,4 +11,16 @@ curl \
     { "attributePatterns": ["*_fr"], "locales": ["fra"] }
   ]'
 ```
+
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index INDEX_NAME \
+  --localized-attributes '[
+    { "attributePatterns": ["*_en"], "locales": ["eng"] },
+    { "attributePatterns": ["*_de"], "locales": ["deu"] },
+    { "attributePatterns": ["*_fr"], "locales": ["fra"] }
+  ]'
+```
 </CodeGroup>

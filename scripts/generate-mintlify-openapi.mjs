@@ -3,8 +3,10 @@
 /**
  * Generates a Mintlify-ready OpenAPI file from assets/release-assets/meilisearch-openapi.json.
  *
- * - Fetches code samples from the docs repo and SDK repos (.code-samples.meilisearch.yaml),
+ * - Fetches code samples from the docs repo, the CLI repo and SDK repos (.code-samples.meilisearch.yaml),
  *   maps them to OpenAPI operation keys (e.g. get_indexes), and injects x-codeSamples.
+ *   cURL and CLI samples share the cURL lang, with the "HTTP request" and "Meili CLI" labels,
+ *   so the CLI sample shows as a sub-example of the cURL tab.
  * - Removes null or "null" description fields in tags (and nested objects) for Mintlify.
  *
  * Output: assets/release-assets/meilisearch-openapi-mintlify.json
@@ -26,8 +28,10 @@ const LOCAL_CODE_SAMPLES = path.join(REPO_ROOT, ".code-samples.meilisearch.yaml"
 
 const HTTP_METHODS = ["get", "post", "put", "patch", "delete"];
 
+// Ordered by label: a sample with a label is a sub-example of its lang tab (e.g. CLI under cURL).
 const CODE_SAMPLES_ORDER = [
-  "cURL",
+  "HTTP request",
+  "Meili CLI",
   "JS",
   "PHP",
   "Python",
@@ -40,12 +44,17 @@ const CODE_SAMPLES_ORDER = [
   "Swift",
 ];
 
-const DOCS_LANG = "cURL";
-
 const CODE_SAMPLES_SOURCES = [
   {
     url: "https://raw.githubusercontent.com/meilisearch/documentation/refs/heads/main/.code-samples.meilisearch.yaml",
     lang: "cURL",
+    label: "HTTP request",
+    local: true,
+  },
+  {
+    url: "https://raw.githubusercontent.com/meilisearch/cli/refs/heads/main/.code-samples.meilisearch.yaml",
+    lang: "cURL",
+    label: "Meili CLI",
   },
   {
     url: "https://raw.githubusercontent.com/meilisearch/meilisearch-dotnet/refs/heads/main/.code-samples.meilisearch.yaml",
@@ -194,7 +203,7 @@ function pathToKey(pathStr, method) {
 }
 
 /**
- * Fetches all code samples and returns a Map: openapiKey -> [{ lang, source }, ...]
+ * Fetches all code samples and returns a Map: openapiKey -> [{ lang, label, source }, ...]
  */
 async function fetchAllCodeSamples(options = {}) {
   const { debug = false } = options;
@@ -208,29 +217,29 @@ async function fetchAllCodeSamples(options = {}) {
   const docsContent = fs.readFileSync(LOCAL_CODE_SAMPLES, "utf8");
 
   const openapiKeyToSampleId = buildOpenapiKeyMapping(docsContent);
-  const allSamples = new Map(); // openapiKey -> [{ lang, source }]
+  const allSamples = new Map(); // openapiKey -> [{ lang, label, source }]
 
-  for (const { url, lang } of CODE_SAMPLES_SOURCES) {
+  for (const { url, lang, label, local } of CODE_SAMPLES_SOURCES) {
     let content;
-    if (lang === DOCS_LANG) {
+    if (local) {
       content = docsContent;
     } else {
       try {
         content = await fetchUrl(url);
       } catch (err) {
-        console.warn(`Warning: Failed to fetch code samples for ${lang}: ${err.message}`);
+        console.warn(`Warning: Failed to fetch code samples for ${label ?? lang}: ${err.message}`);
         continue;
       }
     }
 
-    const sampleIdToCode = parseCodeSamplesFromFile(content, { lang, url });
+    const sampleIdToCode = parseCodeSamplesFromFile(content, { lang: label ?? lang, url });
     if (sampleIdToCode === null) continue;
 
     for (const [openapiKey, sampleId] of openapiKeyToSampleId) {
       const source = sampleIdToCode.get(sampleId);
       if (source !== undefined) {
         if (!allSamples.has(openapiKey)) allSamples.set(openapiKey, []);
-        allSamples.get(openapiKey).push({ lang, source });
+        allSamples.get(openapiKey).push({ lang, label, source });
       }
     }
   }
@@ -242,7 +251,7 @@ async function fetchAllCodeSamples(options = {}) {
     }
     console.error("\n=== Code Samples ===\n");
     for (const key of [...allSamples.keys()].sort()) {
-      const langs = allSamples.get(key).map((s) => s.lang);
+      const langs = allSamples.get(key).map((s) => s.label ?? s.lang);
       console.error(`  ${key} -> ${langs.join(", ")}`);
     }
   }
@@ -271,13 +280,17 @@ function addCodeSamplesToOpenapi(openapi, codeSamples, options = {}) {
       if (samples && samples.length > 0) {
         routesWithSamples.push(key);
         const sorted = [...samples].sort((a, b) => {
-          const posA = CODE_SAMPLES_ORDER.indexOf(a.lang);
-          const posB = CODE_SAMPLES_ORDER.indexOf(b.lang);
+          const nameA = a.label ?? a.lang;
+          const nameB = b.label ?? b.lang;
+          const posA = CODE_SAMPLES_ORDER.indexOf(nameA);
+          const posB = CODE_SAMPLES_ORDER.indexOf(nameB);
           const idxA = posA === -1 ? CODE_SAMPLES_ORDER.length : posA;
           const idxB = posB === -1 ? CODE_SAMPLES_ORDER.length : posB;
-          return idxA - idxB || a.lang.localeCompare(b.lang);
+          return idxA - idxB || nameA.localeCompare(nameB);
         });
-        operation["x-codeSamples"] = sorted.map(({ lang, source }) => ({ lang, source }));
+        operation["x-codeSamples"] = sorted.map(({ lang, label, source }) =>
+          label ? { lang, label, source } : { lang, source }
+        );
       } else {
         routesWithoutSamples.push(key);
       }

@@ -8,6 +8,14 @@ curl \
   --data-binary '"byAttribute"'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index books \
+  --proximity-precision byAttribute
+```
+
 ```javascript JS
 client.index('books').updateProximityPrecision('byAttribute')
 ```

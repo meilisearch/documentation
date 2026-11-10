@@ -6,6 +6,14 @@ curl \
   -H 'Authorization: Bearer MASTER_KEY'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY
+
+meili key delete --project PROJECT_NAME --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \
+  --yes
+```
+
 ```javascript JS
 client.deleteKey('6062abda-a5aa-4414-ac91-ecd7944c0f8d')
 ```

@@ -21,6 +21,26 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index movies \
+  --data '{
+    "filterableAttributes": [
+      "genres",
+      "director",
+      {
+        "attributePatterns": ["*_ratings"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": true, "comparison": false }
+        }
+      }
+    ]
+  }'
+```
+
 ```javascript JS
 client.index('movies')
   .updateFilterableAttributes([

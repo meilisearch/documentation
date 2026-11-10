@@ -10,6 +10,14 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili settings update --project PROJECT_NAME --index INDEX_NAME \
+  --localized-attributes '[{"locales":["jpn"],"attributePatterns":["*_ja"]}]'
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updateLocalizedAttributes([
   { attributePatterns: ['*_ja'], locales: ['jpn'] },

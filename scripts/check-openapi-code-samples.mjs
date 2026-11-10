@@ -7,6 +7,9 @@
  *
  * curl-check: Exits 1 if any route (method + path) has no cURL code sample.
  * info: Prints report of missing code sample langs per route (never exits with error).
+ *
+ * A sample is named by its label, or its lang when it has none: the CLI sample shares
+ * the cURL lang with the cURL sample, and only their labels tell them apart.
  */
 
 import { readFileSync } from 'fs';
@@ -35,13 +38,16 @@ function getOperations() {
   return ops;
 }
 
+const CLI_LABEL = 'Meili CLI';
+
 function getLangs(samples) {
   if (!Array.isArray(samples)) return [];
-  return samples.map((s) => s?.lang).filter(Boolean);
+  return samples.map((s) => s?.label ?? s?.lang).filter(Boolean);
 }
 
 function hasCurl(samples) {
-  return getLangs(samples).some((lang) => String(lang) === 'cURL');
+  if (!Array.isArray(samples)) return false;
+  return samples.some((s) => String(s?.lang) === 'cURL' && s?.label !== CLI_LABEL);
 }
 
 // --- curl-check mode: fail if any route has no cURL sample
@@ -67,8 +73,8 @@ function runInfo() {
   for (const { operation } of getOperations()) {
     const samples = operation['x-codeSamples'];
     if (Array.isArray(samples)) {
-      for (const s of samples) {
-        if (s?.lang) allLangs.add(String(s.lang));
+      for (const lang of getLangs(samples)) {
+        allLangs.add(String(lang));
       }
     }
   }

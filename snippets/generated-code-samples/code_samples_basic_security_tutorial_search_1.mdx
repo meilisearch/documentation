@@ -8,6 +8,13 @@ curl \
   --data-binary '{ "q": "appointments" }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key DEFAULT_SEARCH_API_KEY
+
+meili search --project PROJECT_NAME --index medical_records --q appointments
+```
+
 ```rust Rust
 let client = Client::new("MEILISEARCH_URL", Some("DEFAULT_SEARCH_API_KEY"));
 let index = client.index("medical_records");

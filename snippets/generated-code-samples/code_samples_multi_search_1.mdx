@@ -25,6 +25,18 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili multi-search --project PROJECT_NAME \
+  --queries '[
+    { "indexUid": "movies", "q": "pooh", "limit": 5 },
+    { "indexUid": "movies", "q": "nemo", "limit": 5 },
+    { "indexUid": "movie_ratings", "q": "us" }
+  ]'
+```
+
 ```javascript JS
 client.multiSearch({ queries: [
   {

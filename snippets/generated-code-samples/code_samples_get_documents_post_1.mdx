@@ -12,6 +12,15 @@ curl \
   }'
 ```
 
+```bash CLI
+meili config set --project PROJECT_NAME \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY
+
+meili document list --project PROJECT_NAME --index books \
+  --filter '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English' \
+  --fields title,genres,rating,language --limit 3
+```
+
 ```javascript JS
 client.index('books').getDocuments({
   filter: '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English',
