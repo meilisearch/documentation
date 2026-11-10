@@ -1,6 +1,6 @@
 ---
 title: List or filter existing rules
-description: Browse, paginate, and filter your stored search rules to audit campaigns or prepare bulk edits.
+description: Browse, paginate, and filter your stored rules to audit campaigns or prepare bulk edits.
 ---
 
 import CodeSamplesSearchRulesGuideList1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_list_1.mdx';
@@ -9,7 +9,7 @@ As your rule set grows, you need to know what is running. Before launching a new
 
 ## Browse rules from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab. The table lists every rule with its conditions, its actions, its rank, its last update, and its state.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and go to Search Rules. The rules list shows every rule with its conditions, its actions, its rank, its last update, and its state.
 
 Search the list by rule ID or description, or use **Filters** to narrow it down. The row toggle pauses a rule, and the icons on the right edit or delete it.
 
@@ -18,7 +18,7 @@ Search the list by rule ID or description, or use **Filters** to narrow it down.
 ## List rules on a self-hosted instance
 
 <Warning>
-Search rules must be turned on before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
+Turn on Search Rules before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
 </Warning>
 
 <CodeSamplesSearchRulesGuideList1 />

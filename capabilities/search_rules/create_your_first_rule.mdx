@@ -1,7 +1,7 @@
 ---
 title: Create your first rule
 sidebarTitle: Getting started
-description: Turn on search rules and create a rule that pins a document to the top of your search results.
+description: Turn on Search Rules and create a rule that pins a document to the top of your search results.
 ---
 
 import CodeSamplesSearchRulesGuideEnable1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_enable_1.mdx';
@@ -9,13 +9,13 @@ import CodeSamplesSearchRulesGuideCreateRule1 from '/snippets/generated-code-sam
 import CodeSamplesSearchRulesGuideGetRule1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_get_rule_1.mdx';
 import CodeSamplesSearchRulesGuideSearch1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_search_1.mdx';
 
-This guide shows you how to turn search rules on and build your first rule: pin one document to the top of your search results.
+This guide shows you how to turn on Search Rules and build your first rule: pin one document to the top of your search results.
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and go to Search Rules.
 
-### Turn on search rules
+### Turn on Search Rules
 
 Click **Enable Search Rules**. Your project can now store rules and apply them at search time.
 
@@ -78,7 +78,7 @@ Your rule is now live: every time a user opens the search on your index without 
 
 ### Review and manage your rules
 
-The Search rules tab lists every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
+The rules list shows every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
 
 ![Search rules list with one rule showing its conditions, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/rules-list.png)
 
@@ -86,11 +86,11 @@ Rule changes are applied asynchronously, so a rule you just created, updated, or
 
 ## Set up on a self-hosted instance
 
-### Turn on search rules
+### Turn on Search Rules
 
 <CodeSamplesSearchRulesGuideEnable1 />
 
-Until search rules are turned on, the `/dynamic-search-rules` routes reject your requests and stored rules do not apply at search time.
+Until you turn on Search Rules, the `/dynamic-search-rules` routes reject your requests and stored rules do not apply at search time.
 
 ### Create a rule
 
@@ -106,7 +106,7 @@ This rule means: every time a user searches the `support` index with a query con
 
 Meilisearch answers with a summarized task containing a `taskUid`, because creating a rule is an [asynchronous operation](/capabilities/indexing/tasks_and_batches/async_operations). The rule only applies to searches once this task reaches the `succeeded` status. To follow its progress, pass the `taskUid` to the [task API](/reference/api/tasks/get-task).
 
-For the full list of conditions and actions a rule accepts, see the [search rules API reference](/reference/api/search-rules/create-or-update-a-search-rule).
+For the full list of conditions and actions a rule accepts, see the [Search Rules API reference](/reference/api/search-rules/create-or-update-a-search-rule).
 
 ### Check the stored rule
 
@@ -155,7 +155,7 @@ The document `billing-workspace-overview` comes back first, followed by your org
   <Card title="Hide documents" href="/capabilities/search_rules/how_to/hide_documents">
     Remove documents from the results without reindexing
   </Card>
-  <Card title="How search rules work" href="/capabilities/search_rules/advanced/how_search_rules_work">
+  <Card title="How Search Rules work" href="/capabilities/search_rules/advanced/how_search_rules_work">
     See how Meilisearch builds the final result set
   </Card>
   <Card title="API reference" href="/reference/api/search-rules/create-or-update-a-search-rule">

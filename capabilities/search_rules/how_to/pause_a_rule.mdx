@@ -1,6 +1,6 @@
 ---
 title: Pause a rule without deleting it
-description: Stop a search rule from applying while keeping its configuration, so you can turn it back on later.
+description: Stop a rule from applying while keeping its configuration, so you can turn it back on later.
 ---
 
 import CodeSamplesSearchRulesGuidePause1 from '/snippets/generated-code-samples/code_samples_search_rules_guide_pause_1.mdx';
@@ -9,7 +9,7 @@ A campaign ends earlier than planned, or a rule behaves in a way you did not exp
 
 ## Pause a rule from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and select the **Search rules** tab. Find your rule in the list, then click the **Active** toggle in its row.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com) and go to Search Rules. Find your rule in the list, then click the **Active** toggle in its row.
 
 ![Search rules list with the Active toggle on each row](/assets/images/cloud-search-rules/rules-list-with-actions.png)
 
@@ -18,7 +18,7 @@ Click the toggle again to run the rule once more. Nothing else changes, so the r
 ## Pause a rule on a self-hosted instance
 
 <Warning>
-Search rules must be turned on before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
+Turn on Search Rules before you call the `/dynamic-search-rules` routes, otherwise Meilisearch returns an error. See [Create your first rule](/capabilities/search_rules/create_your_first_rule#turn-on-search-rules-2).
 </Warning>
 
 <CodeSamplesSearchRulesGuidePause1 />
