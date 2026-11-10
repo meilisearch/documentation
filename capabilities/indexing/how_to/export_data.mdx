@@ -11,6 +11,10 @@ The export endpoint transfers data directly from one Meilisearch instance to ano
 - **Creating replicas**: Set up a second instance with the same data for redundancy or load distribution.
 - **Scaling**: Transfer indexes to a larger instance when your data outgrows the current one.
 
+<Tip>
+Moving to Meilisearch Cloud? [`meili teleport`](/resources/migration/migrating_cloud) creates the Cloud project and exports your data in one CLI command.
+</Tip>
+
 ## Export data to a remote instance
 
 Send a `POST` request to `/export` on the source instance, specifying the destination URL and (optionally) an API key:
