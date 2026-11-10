@@ -11,18 +11,22 @@ Hiding solves this in one rule, and takes effect without reindexing your documen
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. Give the rule an ID, such as `hide-discontinued`, and a description.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. The visual editor opens. For a walkthrough of the editor, see [Create your first rule](/capabilities/search_rules/create_your_first_rule).
 
-In the **Actions** block, click **Add action**, select **Hide documents**, then click **Next**. Pick **Use a filter** to hide a whole set of documents at once, or **Pick documents by hand** for a short list, then fill in the dialog:
+Choose the index, here `products`. In the **Your rule** panel, keep **Anything** selected, so the rule applies to every search.
+
+Hover a result card, then click its hide icon. To hide only the document on the card, select **This document only**. To hide a whole set of documents at once, click **Choose a filter…**, then fill in the dialog:
 
 - **Index**: the index holding the documents, here `products`.
-- **Filter**: the condition selecting them, here `discontinued = true`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
+- **Matching a filter**: the condition selecting them, here `status = Discontinued`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
 
 The dialog tells you how many documents disappear from the results. Click **Add action**.
 
-![Hide documents dialog with the index and the filter](/assets/images/cloud-search-rules/hide-action-dialog.png)
+<img src="/assets/images/cloud-search-rules/hide-filter-dialog.png" alt="Hide documents dialog with the index, the filter, and the number of documents it hides" width="480" />
 
-Leave the **Conditions** block with its default values, so the rule applies to every search, then click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, the discontinued products no longer appear in any search, and nothing was removed from your index. To bring them back, pause the rule or delete it.
+In the preview, hidden documents appear faded after the other results, so you can check what your users no longer see.
+
+Click **Save rule**. In the **Review and save** dialog, name the rule, such as `hide-discontinued`, then click **Save and activate**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, the discontinued products no longer appear in any search, and nothing was removed from your index. To bring them back, pause the rule or delete it.
 
 ## Set up on a self-hosted instance
 
