@@ -14,10 +14,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili document delete --project PROJECT_NAME --index movies \
+meili document delete \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
   --ids 23488,153738,437035,363869 --yes
 ```
 

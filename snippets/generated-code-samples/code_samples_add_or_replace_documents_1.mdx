@@ -17,10 +17,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili document add --project PROJECT_NAME --index movies \
+meili document add \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
   --data '[
     {
       "id": 287947,

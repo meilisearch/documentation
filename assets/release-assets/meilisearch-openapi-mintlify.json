@@ -309,7 +309,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili batch list --project PROJECT_NAME"
+            "source": "meili batch list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -522,7 +522,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili batch view --project PROJECT_NAME --id 0"
+            "source": "meili batch view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id 0"
           },
           {
             "lang": "JS",
@@ -2055,7 +2055,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili export --project PROJECT_NAME \\\n  --url TARGET_INSTANCE_URL --indexes '{\"*\":{\"overrideSettings\":true}}'"
+            "source": "meili export \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  \\\n  --url TARGET_INSTANCE_URL --indexes '{\"*\":{\"overrideSettings\":true}}'"
           },
           {
             "lang": "Python",
@@ -2105,7 +2105,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili health --project PROJECT_NAME"
+            "source": "meili health \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -2242,7 +2242,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili index list --project PROJECT_NAME --limit 3"
+            "source": "meili index list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --limit 3"
           },
           {
             "lang": "JS",
@@ -2356,7 +2356,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili index add --project PROJECT_NAME --id movies --primary-key id"
+            "source": "meili index add \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --primary-key id"
           },
           {
             "lang": "JS",
@@ -2489,7 +2489,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili index view --project PROJECT_NAME --id movies"
+            "source": "meili index view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies"
           },
           {
             "lang": "JS",
@@ -2621,7 +2621,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili index delete --project PROJECT_NAME --id movies --yes"
+            "source": "meili index delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --yes"
           },
           {
             "lang": "JS",
@@ -2763,7 +2763,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili index update --project PROJECT_NAME --id movies --primary-key id"
+            "source": "meili index update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --primary-key id"
           },
           {
             "lang": "JS",
@@ -3108,7 +3108,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document list --project PROJECT_NAME --index movies \\\n  --limit 2 --filter genres=action"
+            "source": "meili document list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --limit 2 --filter genres=action"
           },
           {
             "lang": "JS",
@@ -3289,7 +3289,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document update --project PROJECT_NAME --index movies \\\n  --data '[{\"id\":287947,\"title\":\"Shazam ⚡️\",\"genres\":\"comedy\"}]'"
+            "source": "meili document update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '[{\"id\":287947,\"title\":\"Shazam ⚡️\",\"genres\":\"comedy\"}]'"
           },
           {
             "lang": "JS",
@@ -3470,7 +3470,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document add --project PROJECT_NAME --index movies \\\n  --data '[\n    {\n      \"id\": 287947,\n      \"title\": \"Shazam\",\n      \"poster\": \"https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg\",\n      \"overview\": \"A boy is given the ability to become an adult superhero in times of need with a single magic word.\",\n      \"release_date\": \"2019-03-23\"\n    }\n  ]'"
+            "source": "meili document add \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '[\n    {\n      \"id\": 287947,\n      \"title\": \"Shazam\",\n      \"poster\": \"https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg\",\n      \"overview\": \"A boy is given the ability to become an adult superhero in times of need with a single magic word.\",\n      \"release_date\": \"2019-03-23\"\n    }\n  ]'"
           },
           {
             "lang": "JS",
@@ -3612,7 +3612,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document delete --project PROJECT_NAME --index movies --all --yes"
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --all --yes"
           },
           {
             "lang": "JS",
@@ -3766,7 +3766,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document delete --project PROJECT_NAME --index movies \\\n  --filter 'genres = action OR genres = adventure' --yes"
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --filter 'genres = action OR genres = adventure' --yes"
           },
           {
             "lang": "JS",
@@ -3917,7 +3917,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document delete --project PROJECT_NAME --index movies \\\n  --ids 23488,153738,437035,363869 --yes"
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ids 23488,153738,437035,363869 --yes"
           },
           {
             "lang": "JS",
@@ -4185,7 +4185,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document list --project PROJECT_NAME --index books \\\n  --filter '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English' \\\n  --fields title,genres,rating,language --limit 3"
+            "source": "meili document list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --filter '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English' \\\n  --fields title,genres,rating,language --limit 3"
           },
           {
             "lang": "JS",
@@ -4353,7 +4353,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document view --project PROJECT_NAME --index movies --id 25684 \\\n  --fields id,title,poster,release_date"
+            "source": "meili document view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --id 25684 \\\n  --fields id,title,poster,release_date"
           },
           {
             "lang": "JS",
@@ -4505,7 +4505,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili document delete --project PROJECT_NAME --index movies --ids 25684 --yes"
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --ids 25684 --yes"
           },
           {
             "lang": "JS",
@@ -4655,7 +4655,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili facet-search --project PROJECT_NAME --index books \\\n  --facet-query fiction --facet-name genres --filter 'rating > 3'"
+            "source": "meili facet-search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --facet-query fiction --facet-name genres --filter 'rating > 3'"
           },
           {
             "lang": "JS",
@@ -5269,7 +5269,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili search --project PROJECT_NAME --index movies --q 'american ninja'"
+            "source": "meili search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --q 'american ninja'"
           },
           {
             "lang": "JS",
@@ -5394,7 +5394,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili search --project PROJECT_NAME --index movies --q 'american ninja'"
+            "source": "meili search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --q 'american ninja'"
           },
           {
             "lang": "JS",
@@ -5618,7 +5618,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings view --project PROJECT_NAME --index movies"
+            "source": "meili settings view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies"
           },
           {
             "lang": "JS",
@@ -5750,7 +5750,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings delete --project PROJECT_NAME --index movies --yes"
+            "source": "meili settings delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --yes"
           },
           {
             "lang": "JS",
@@ -5892,7 +5892,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:desc,rank:desc \\\n  --distinct-attribute movie_id --searchable-attributes title,overview,genres \\\n  --displayed-attributes title,overview,genres,release_date \\\n  --stop-words the,a,an --sortable-attributes title,release_date \\\n  --synonyms '{\"wolverine\":[\"xmen\",\"logan\"],\"logan\":[\"wolverine\"]}' \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 8, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }' \\\n  --pagination '{\"maxTotalHits\":5000}' --faceting '{\"maxValuesPerFacet\":200}' \\\n  --search-cutoff-ms 150"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:desc,rank:desc \\\n  --distinct-attribute movie_id --searchable-attributes title,overview,genres \\\n  --displayed-attributes title,overview,genres,release_date \\\n  --stop-words the,a,an --sortable-attributes title,release_date \\\n  --synonyms '{\"wolverine\":[\"xmen\",\"logan\"],\"logan\":[\"wolverine\"]}' \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 8, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }' \\\n  --pagination '{\"maxTotalHits\":5000}' --faceting '{\"maxValuesPerFacet\":200}' \\\n  --search-cutoff-ms 150"
           },
           {
             "lang": "JS",
@@ -6107,7 +6107,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME --chat null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME --chat null"
           }
         ]
       },
@@ -6218,7 +6218,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME \\\n  --chat '{\n    \"description\": \"An index of movies.\",\n    \"documentTemplate\": \"A movie titled '\\''{{doc.title}}'\\'' released in {{ doc.release_date }}\",\n    \"documentTemplateMaxBytes\": 400\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --chat '{\n    \"description\": \"An index of movies.\",\n    \"documentTemplate\": \"A movie titled '\\''{{doc.title}}'\\'' released in {{ doc.release_date }}\",\n    \"documentTemplateMaxBytes\": 400\n  }'"
           }
         ]
       }
@@ -6456,7 +6456,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --dictionary 'J. R. R.,W. E. B.'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --dictionary 'J. R. R.,W. E. B.'"
           },
           {
             "lang": "JS",
@@ -6584,7 +6584,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books --dictionary null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --dictionary null"
           },
           {
             "lang": "JS",
@@ -6864,7 +6864,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --displayed-attributes title,overview,genres,release_date"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --displayed-attributes title,overview,genres,release_date"
           },
           {
             "lang": "JS",
@@ -6996,7 +6996,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --displayed-attributes null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --displayed-attributes null"
           },
           {
             "lang": "JS",
@@ -7264,7 +7264,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index shoes \\\n  --distinct-attribute skuid"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index shoes \\\n  --distinct-attribute skuid"
           },
           {
             "lang": "JS",
@@ -7396,7 +7396,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index shoes \\\n  --distinct-attribute null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index shoes \\\n  --distinct-attribute null"
           },
           {
             "lang": "JS",
@@ -7629,7 +7629,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME --embedders null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME --embedders null"
           },
           {
             "lang": "Python",
@@ -7766,7 +7766,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME \\\n  --embedders '{\n    \"default\": {\n      \"source\": \"openAi\",\n      \"apiKey\": \"OPEN_AI_API_KEY\",\n      \"model\": \"text-embedding-3-small\",\n      \"documentTemplate\": \"A document titled '\\''{{doc.title}}'\\'' whose description starts with {{doc.overview|truncatewords: 20}}\"\n    }\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --embedders '{\n    \"default\": {\n      \"source\": \"openAi\",\n      \"apiKey\": \"OPEN_AI_API_KEY\",\n      \"model\": \"text-embedding-3-small\",\n      \"documentTemplate\": \"A document titled '\\''{{doc.title}}'\\'' whose description starts with {{doc.overview|truncatewords: 20}}\"\n    }\n  }'"
           },
           {
             "lang": "JS",
@@ -8002,7 +8002,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_UID \\\n  --facet-search false"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --facet-search false"
           },
           {
             "lang": "JS",
@@ -8122,7 +8122,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_UID \\\n  --facet-search null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --facet-search null"
           },
           {
             "lang": "JS",
@@ -8361,7 +8361,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books --faceting null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --faceting null"
           },
           {
             "lang": "JS",
@@ -8512,7 +8512,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --faceting '{\n    \"maxValuesPerFacet\": 2,\n    \"sortFacetValuesBy\": {\n      \"*\": \"alpha\",\n      \"genres\": \"count\",\n      \"language\": \"sampledCount\"\n    }\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --faceting '{\n    \"maxValuesPerFacet\": 2,\n    \"sortFacetValuesBy\": {\n      \"*\": \"alpha\",\n      \"genres\": \"count\",\n      \"language\": \"sampledCount\"\n    }\n  }'"
           },
           {
             "lang": "JS",
@@ -8812,7 +8812,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --data '{\n    \"filterableAttributes\": [\n      \"genres\",\n      \"director\",\n      {\n        \"attributePatterns\": [\"*_ratings\"],\n        \"features\": {\n          \"facetSearch\": false,\n          \"filter\": { \"equality\": true, \"comparison\": false }\n        }\n      }\n    ]\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '{\n    \"filterableAttributes\": [\n      \"genres\",\n      \"director\",\n      {\n        \"attributePatterns\": [\"*_ratings\"],\n        \"features\": {\n          \"facetSearch\": false,\n          \"filter\": { \"equality\": true, \"comparison\": false }\n        }\n      }\n    ]\n  }'"
           },
           {
             "lang": "JS",
@@ -8944,7 +8944,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --filterable-attributes null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --filterable-attributes null"
           },
           {
             "lang": "JS",
@@ -9200,7 +9200,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --foreign-keys '[\n    { \"foreignIndexUid\": \"authors\", \"fieldName\": \"author\" },\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"related_authors\"\n    }\n  ]'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --foreign-keys '[\n    { \"foreignIndexUid\": \"authors\", \"fieldName\": \"author\" },\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"related_authors\"\n    }\n  ]'"
           },
           {
             "lang": "JS",
@@ -9304,7 +9304,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books --foreign-keys null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --foreign-keys null"
           },
           {
             "lang": "JS",
@@ -9556,7 +9556,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME \\\n  --localized-attributes '[{\"locales\":[\"jpn\"],\"attributePatterns\":[\"*_ja\"]}]'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --localized-attributes '[{\"locales\":[\"jpn\"],\"attributePatterns\":[\"*_ja\"]}]'"
           },
           {
             "lang": "JS",
@@ -9676,7 +9676,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_NAME \\\n  --localized-attributes null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --localized-attributes null"
           },
           {
             "lang": "JS",
@@ -9946,7 +9946,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index articles \\\n  --non-separator-tokens '@,#'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --non-separator-tokens '@,#'"
           },
           {
             "lang": "JS",
@@ -10078,7 +10078,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index articles \\\n  --non-separator-tokens null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --non-separator-tokens null"
           },
           {
             "lang": "JS",
@@ -10329,7 +10329,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books --pagination null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --pagination null"
           },
           {
             "lang": "JS",
@@ -10474,7 +10474,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --pagination '{\"maxTotalHits\":100}'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --pagination '{\"maxTotalHits\":100}'"
           },
           {
             "lang": "JS",
@@ -10726,7 +10726,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_UID \\\n  --prefix-search disabled"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --prefix-search disabled"
           },
           {
             "lang": "JS",
@@ -10846,7 +10846,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index INDEX_UID \\\n  --prefix-search null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --prefix-search null"
           },
           {
             "lang": "JS",
@@ -11098,7 +11098,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --proximity-precision byAttribute"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --proximity-precision byAttribute"
           },
           {
             "lang": "JS",
@@ -11226,7 +11226,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --proximity-precision null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --proximity-precision null"
           },
           {
             "lang": "JS",
@@ -11510,7 +11510,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:asc,rank:desc"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:asc,rank:desc"
           },
           {
             "lang": "JS",
@@ -11642,7 +11642,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies --ranking-rules null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --ranking-rules null"
           },
           {
             "lang": "JS",
@@ -11910,7 +11910,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --search-cutoff-ms 150"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --search-cutoff-ms 150"
           },
           {
             "lang": "JS",
@@ -12038,7 +12038,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --search-cutoff-ms null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --search-cutoff-ms null"
           },
           {
             "lang": "JS",
@@ -12316,7 +12316,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --searchable-attributes title,overview,genres"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --searchable-attributes title,overview,genres"
           },
           {
             "lang": "JS",
@@ -12448,7 +12448,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --searchable-attributes null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --searchable-attributes null"
           },
           {
             "lang": "JS",
@@ -12730,7 +12730,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index articles \\\n  --separator-tokens '|,&hellip;'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --separator-tokens '|,&hellip;'"
           },
           {
             "lang": "JS",
@@ -12862,7 +12862,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index articles \\\n  --separator-tokens null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --separator-tokens null"
           },
           {
             "lang": "JS",
@@ -13144,7 +13144,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --sortable-attributes price,author"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --sortable-attributes price,author"
           },
           {
             "lang": "JS",
@@ -13276,7 +13276,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --sortable-attributes null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --sortable-attributes null"
           },
           {
             "lang": "JS",
@@ -13560,7 +13560,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --stop-words the,of,to"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --stop-words the,of,to"
           },
           {
             "lang": "JS",
@@ -13692,7 +13692,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies --stop-words null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --stop-words null"
           },
           {
             "lang": "JS",
@@ -13994,7 +13994,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies \\\n  --synonyms '{\n    \"wolverine\": [\"xmen\", \"logan\"],\n    \"logan\": [\"wolverine\", \"xmen\"],\n    \"wow\": [\"world of warcraft\"]\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --synonyms '{\n    \"wolverine\": [\"xmen\", \"logan\"],\n    \"logan\": [\"wolverine\", \"xmen\"],\n    \"wow\": [\"world of warcraft\"]\n  }'"
           },
           {
             "lang": "JS",
@@ -14126,7 +14126,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index movies --synonyms null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --synonyms null"
           },
           {
             "lang": "JS",
@@ -14377,7 +14377,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books --typo-tolerance null"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --typo-tolerance null"
           },
           {
             "lang": "JS",
@@ -14542,7 +14542,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili settings update --project PROJECT_NAME --index books \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 4, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }'"
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 4, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }'"
           },
           {
             "lang": "JS",
@@ -14794,7 +14794,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili similar --project PROJECT_NAME --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
+            "source": "meili similar \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
           }
         ]
       },
@@ -14911,7 +14911,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key DEFAULT_SEARCH_API_KEY\n\nmeili similar --project PROJECT_NAME --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
+            "source": "meili similar \\\n  --project-url MEILISEARCH_URL --project-api-key DEFAULT_SEARCH_API_KEY \\\n  --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
           },
           {
             "lang": "JS",
@@ -15060,7 +15060,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili stats --project PROJECT_NAME --index movies"
+            "source": "meili stats \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies"
           },
           {
             "lang": "JS",
@@ -15205,7 +15205,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY\n\nmeili key list --project PROJECT_NAME --limit 3"
+            "source": "meili key list \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --limit 3"
           },
           {
             "lang": "JS",
@@ -15327,7 +15327,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY\n\nmeili key add --project PROJECT_NAME \\\n  --description 'Add documents: Products API key' --actions documents.add \\\n  --indexes products --expires-at 2042-04-02T00:42:42Z"
+            "source": "meili key add \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  \\\n  --description 'Add documents: Products API key' --actions documents.add \\\n  --indexes products --expires-at 2042-04-02T00:42:42Z"
           },
           {
             "lang": "JS",
@@ -15470,7 +15470,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY\n\nmeili key view --project PROJECT_NAME --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d"
+            "source": "meili key view \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d"
           },
           {
             "lang": "JS",
@@ -15589,7 +15589,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY\n\nmeili key delete --project PROJECT_NAME --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --yes"
+            "source": "meili key delete \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --yes"
           },
           {
             "lang": "JS",
@@ -15740,7 +15740,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY\n\nmeili key update --project PROJECT_NAME --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --name 'Products/Reviews API key' \\\n  --description 'Manage documents: Products/Reviews API key'"
+            "source": "meili key update \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --name 'Products/Reviews API key' \\\n  --description 'Manage documents: Products/Reviews API key'"
           },
           {
             "lang": "JS",
@@ -16191,7 +16191,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili multi-search --project PROJECT_NAME \\\n  --queries '[\n    { \"indexUid\": \"movies\", \"q\": \"pooh\", \"limit\": 5 },\n    { \"indexUid\": \"movies\", \"q\": \"nemo\", \"limit\": 5 },\n    { \"indexUid\": \"movie_ratings\", \"q\": \"us\" }\n  ]'"
+            "source": "meili multi-search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  \\\n  --queries '[\n    { \"indexUid\": \"movies\", \"q\": \"pooh\", \"limit\": 5 },\n    { \"indexUid\": \"movies\", \"q\": \"nemo\", \"limit\": 5 },\n    { \"indexUid\": \"movie_ratings\", \"q\": \"us\" }\n  ]'"
           },
           {
             "lang": "JS",
@@ -16791,7 +16791,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili stats --project PROJECT_NAME"
+            "source": "meili stats \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -17226,7 +17226,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili task list --project PROJECT_NAME"
+            "source": "meili task list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -17527,7 +17527,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili task delete --project PROJECT_NAME --ids 1,2 --yes"
+            "source": "meili task delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --ids 1,2 --yes"
           },
           {
             "lang": "JS",
@@ -17814,7 +17814,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili task cancel --project PROJECT_NAME --ids 1,2"
+            "source": "meili task cancel \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --ids 1,2"
           },
           {
             "lang": "JS",
@@ -18097,7 +18097,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili task view --project PROJECT_NAME --id 1"
+            "source": "meili task view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id 1"
           },
           {
             "lang": "JS",
@@ -18294,7 +18294,7 @@
           {
             "lang": "cURL",
             "label": "Meili CLI",
-            "source": "meili config set --project PROJECT_NAME \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY\n\nmeili info --project PROJECT_NAME"
+            "source": "meili info \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",

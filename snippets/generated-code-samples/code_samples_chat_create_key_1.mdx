@@ -15,10 +15,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key MEILISEARCH_KEY
-
-meili key add --project PROJECT_NAME \
+meili key add \
+  --project-url MEILISEARCH_URL --project-api-key MEILISEARCH_KEY \
+  \
   --name 'Chat API Key' --description 'API key for chat completions' \
   --actions search,chatCompletions --indexes '*' --expires-at null
 ```

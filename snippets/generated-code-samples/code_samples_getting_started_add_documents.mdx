@@ -9,10 +9,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key aSampleMasterKey
-
-meili document add --project PROJECT_NAME --index movies \
+meili document add \
+  --project-url MEILISEARCH_URL --project-api-key aSampleMasterKey \
+  --index movies \
   --primary-key id --file movies.json
 ```
 

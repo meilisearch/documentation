@@ -12,10 +12,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili search --project PROJECT_NAME --index books --q butler --sort author:desc
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books --q butler --sort author:desc
 ```
 
 ```javascript JS

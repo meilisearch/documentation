@@ -16,10 +16,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili export --project PROJECT_NAME \
+meili export \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  \
   --url TARGET_INSTANCE_URL --indexes '{"*":{"overrideSettings":true}}'
 ```
 

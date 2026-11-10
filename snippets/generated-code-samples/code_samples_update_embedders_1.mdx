@@ -16,10 +16,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili settings update --project PROJECT_NAME --index INDEX_NAME \
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
   --embedders '{
     "default": {
       "source": "openAi",

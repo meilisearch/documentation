@@ -7,10 +7,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili task list --project PROJECT_NAME \
+meili task list \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  \
   --index-ids movies --types documentAdditionOrUpdate,documentDeletion \
   --statuses processing
 ```

@@ -7,10 +7,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili settings view --project PROJECT_NAME --index movies
+meili settings view \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies
 ```
 
 ```javascript JS

@@ -14,10 +14,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili settings update --project PROJECT_NAME --index movie_ratings \
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movie_ratings \
   --filterable-attributes genres,director,release_date,ratings
 ```
 

@@ -13,10 +13,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili facet-search --project PROJECT_NAME --index books \
+meili facet-search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
   --facet-name genres --facet-query c --exhaustive-facet-count
 ```
 </CodeGroup>

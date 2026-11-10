@@ -7,10 +7,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili batch view --project PROJECT_NAME --id 0
+meili batch view \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --id 0
 ```
 
 ```javascript JS

@@ -28,10 +28,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili settings update --project PROJECT_NAME --index users \
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index users \
   --data '{
     "foreignKeys": [
       { "fieldName": "profile_id", "foreignIndexUid": "profiles" }

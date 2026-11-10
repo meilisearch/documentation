@@ -26,10 +26,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili multi-search --project PROJECT_NAME \
+meili multi-search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  \
   --federation '{}' \
   --queries '[
     { "indexUid": "chats", "q": "rotondo" },

@@ -12,10 +12,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili search --project PROJECT_NAME --index movie_ratings \
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movie_ratings \
   --q Batman \
   --filter 'release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")'
 ```

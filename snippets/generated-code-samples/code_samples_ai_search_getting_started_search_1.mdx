@@ -14,10 +14,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili search --project PROJECT_NAME --index kitchenware \
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index kitchenware \
   --q 'kitchen utensils made of wood' \
   --hybrid '{"embedder":"products-openai"}'
 ```

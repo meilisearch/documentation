@@ -12,10 +12,9 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key TENANT_TOKEN
-
-meili search --project PROJECT_NAME --index documents \
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key TENANT_TOKEN \
+  --index documents \
   --q roadmap \
   --filter '_foreign(access, user = "jeremy@meilisearch.com" OR teams IN ["product", "engineering"])'
 ```

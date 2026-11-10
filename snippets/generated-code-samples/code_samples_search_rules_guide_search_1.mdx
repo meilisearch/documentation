@@ -9,9 +9,8 @@ curl \
 ```
 
 ```bash CLI
-meili config set --project PROJECT_NAME \
-  --project-url MEILISEARCH_URL --project-api-key API_KEY
-
-meili search --project PROJECT_NAME --index support --q 'invoice settings'
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index support --q 'invoice settings'
 ```
 </CodeGroup>
