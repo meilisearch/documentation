@@ -1,0 +1,62 @@
+---
+title: Meili Kitchen (Drupal)
+sidebarTitle: Meili Kitchen (Drupal)
+description: A Drupal 11 recipe site searched by drupal/meilisearch, the Meilisearch backend for Search API
+---
+
+<Info>
+**Live demo**: [meili-kitchen.meilisearch.com](https://meili-kitchen.meilisearch.com)
+</Info>
+
+Meili Kitchen is a Drupal 11 site with 116 recipes. It shows what [`drupal/meilisearch`](https://www.drupal.org/project/meilisearch), the Meilisearch backend for Search API, gives a Drupal site: search tolerates typos, results and facet counts update as you type, and excerpts highlight the matching words. Every search still goes through Views, Search API, and the module.
+
+![Meili Kitchen search results for the typo "chiken": 16 chicken recipes in 26 ms, with highlighted excerpts and cuisine facets](/assets/images/demos/drupal-meili-kitchen-demo.png)
+
+## Key features
+
+- **Typo tolerance**: Searching "chiken" finds the chicken recipes, with *Chicken* highlighted in each result.
+- **Search as you type**: Results, facet counts, and highlights follow every keystroke. A pill next to the result count shows Meilisearch's own processing time.
+- **Prefix, phrase, and exclusion search**: "tirami" finds tiramisu, `"coconut milk"` matches the exact phrase, and `curry -chicken` leaves chicken out. The *Try* chips under the search box run each example.
+- **Searchable facet values**: Cuisine, meal, and diet are searchable too, so "vegan dessert" or "thai" work as queries.
+- **OR facets with live counts**: Cuisine is an OR facet. Picking Indian and Thai builds the filter `(cuisine = "Indian" OR cuisine = "Thai")`, and the other cuisines keep their counts through a second query in the same multi-search request.
+- **Filters and sorting**: Cooking time filters (*Under 30 min*, *30 min - 1 h*, *Over an hour*) and sorting by best match, rating, or cooking time.
+- **Under the hood panel**: A panel next to the results shows the request the module sent to Meilisearch for the current page: the query, the filter built from the facets, the sort, and the highlighting settings.
+- **Indexed on save**: Editing a recipe in the Drupal admin updates the index immediately, so the change shows up in the next search.
+
+## How it's built
+
+The site is a standard Drupal 11 install with a custom theme. Search comes from Search API and the `drupal/meilisearch` module:
+
+- **Indexing**: A Search API index of the recipe content type, on a Meilisearch server. The module keeps the index in sync as recipes are created, edited, or deleted.
+- **Search**: The search page is a regular Views page on the Search API index. Facets come from the Facets module. The module translates the Views query, facets, and sorts into a Meilisearch search request.
+- **Highlighting**: The module's *Meilisearch highlighting* processor returns excerpts cropped around the matching words.
+- **Configuration**: The Meilisearch URL and API key come from environment variables in `settings.php`, so no credentials are stored in the database.
+
+Live search is a small script that fetches the next results page from Drupal and swaps in the results and facets. The *Try* chips and the *Under the hood* panel are a demo-only layer built on the module's `hook_meilisearch_search_params_alter()` hook. They are not part of the module.
+
+## Run it locally
+
+You only need Docker. The first start installs Drupal, creates the recipes, and indexes them, which takes a minute or two.
+
+```bash
+git clone https://github.com/meilisearch/drupal-meilisearch-demo.git
+cd drupal-meilisearch-demo
+cp .env.example .env
+docker compose up --build
+```
+
+Then open `http://localhost:8080`. To log in, use `admin` / `admin`.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://meili-kitchen.meilisearch.com">
+    Search 116 recipes
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/drupal-meilisearch-demo">
+    The theme, the recipes, and the demo layer
+  </Card>
+  <Card title="drupal/meilisearch" icon="drupal" href="https://www.drupal.org/project/meilisearch">
+    Add Meilisearch to your Drupal site
+  </Card>
+</CardGroup>
