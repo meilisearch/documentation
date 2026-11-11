@@ -55,8 +55,7 @@
       "filterableAttributes": [
         "url",
         "section",
-        "hierarchy_lvl0",
-        "hierarchy_lvl1"
+        "is_error"
       ],
       "synonyms": {
           "large language model": [
@@ -82,6 +81,7 @@
   "min_indexed_level": 2,
   "selectors_exclude": [
       "#pagination",
-      ".leading-6 mt-14"
+      ".feedback-toolbar",
+      "[data-component-part='card-title']"
   ]
 }
