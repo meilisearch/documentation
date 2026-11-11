@@ -65,16 +65,6 @@ OPENAI_API_KEY=your-openai-key
 npm run rebuild-search-staging
 ```
 
-### Search index fields
-
-The scraper config is [docs-scraper.config.json](docs-scraper.config.json). After each scrape, [scripts/search/post-scrape-edit.sh](scripts/search/post-scrape-edit.sh) adds fields derived from the URL:
-
-- `section`: one of the five docs sections (`getting_started`, `capabilities`, `reference`, `resources`, `changelog`). `search.js` shows a filter chip for each section that has results. When you add a section, update both the script and `SECTION_LABELS` in [search.js](search.js).
-- `is_page`: 1 for a page, 0 for a heading inside a page. Used by the `is_page:desc` ranking rule.
-- `is_error`: 1 for the error pages. Their results rank lower.
-
-A field used in a search filter must be in `filterableAttributes` in the scraper config. The scraper skips the Mintlify page chrome listed in `selectors_exclude`. This includes card titles, whose anchors are generated IDs (`_R_...`) instead of real headings, and the "Was this page helpful?" feedback widget.
-
 ## Tests
 
 ### Broken links
