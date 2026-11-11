@@ -8,6 +8,9 @@ const isProductionDocsSite = () => {
   return hostname === 'www.meilisearch.com' || hostname === 'meilisearch.com'
 }
 const MEILISEARCH_INDEX = isProductionDocsSite() ? 'mintlify-production' : 'mintlify-staging'
+const HYBRID_OPTIONS = isProductionDocsSite()
+  ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
+  : {}
 
 // Lucide-style icons (24 viewBox, stroke 2), same as the search icon
 const svgIcon = (size, paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`
@@ -22,11 +25,10 @@ const HL_PRE = '\u0001'
 const HL_POST = '\u0002'
 
 // Anchor hits point to a heading. Page hits describe the whole page.
-// Anchors like "_R_..." are React ids generated for card titles, not headings.
-const isGeneratedAnchor = hit => /^_R_/.test(hit.anchor || '')
 const isAnchorHit = hit => Boolean(hit.anchor) || Boolean(hit.hierarchy_lvl2)
 
-// Docs sections, in navigation order. Other path segments still appear as facets.
+// Docs sections, in navigation order. These are the only values of the `section` field:
+// scripts/search/post-scrape-edit.sh sets it from the URL and must list the same sections.
 const SECTION_LABELS = {
   getting_started: 'Getting started',
   capabilities: 'Capabilities',
@@ -36,26 +38,9 @@ const SECTION_LABELS = {
 }
 const SECTION_ORDER = Object.keys(SECTION_LABELS)
 
-const sectionLabel = key => SECTION_LABELS[key] || String(key).replace(/_/g, ' ')
-
-const compareSections = (a, b) => {
-  const ai = SECTION_ORDER.indexOf(a)
-  const bi = SECTION_ORDER.indexOf(b)
-  if (ai === -1 && bi === -1) return a.localeCompare(b)
-  if (ai === -1) return 1
-  if (bi === -1) return -1
-  return ai - bi
-}
-
-// Facet counts come from the unfiltered query. Hits fill any section the facet
-// request missed, so a visible result can always be filtered.
-const mergeSectionCounts = (facetResponse, hits) => {
-  const distribution = { ...(facetResponse?.facetDistribution?.section || {}) }
-  hits.forEach(hit => {
-    if (hit.section && !(distribution[hit.section] > 0)) distribution[hit.section] = 1
-  })
-  return distribution
-}
+// Sections that have hits, from the `section` facet distribution of a response
+const sectionsIn = distribution =>
+  new Set(SECTION_ORDER.filter(key => distribution?.section?.[key] > 0))
 
 // Strip zero-width spaces and decode HTML entities left by the scraper (for example &gt;)
 const decodeEntities = value => {
@@ -388,8 +373,7 @@ function initializeMeilisearchIntegration() {
     filterTagsContainer.setAttribute('role', 'group')
     filterTagsContainer.setAttribute('aria-label', 'Section')
 
-    // Facet chips for sections that match the current query. The `section`
-    // field is set on each record by scripts/search/post-scrape-edit.sh
+    // One chip per docs section that has hits for the current query, in navigation order
     let filterTags = []
 
     const syncFacetSelection = () => {
@@ -429,25 +413,20 @@ function initializeMeilisearchIntegration() {
       filterContainer.hidden = true
     }
 
-    renderSectionFacets = (distribution) => {
-      const keys = Object.entries(distribution || {})
-        .filter(([key, count]) => key && count > 0)
-        .map(([key]) => key)
-        .sort(compareSections)
-
+    renderSectionFacets = (sections) => {
       filterTags = []
       filterTagsContainer.replaceChildren()
 
-      if (keys.length === 0) {
+      if (sections.size === 0) {
         filterContainer.hidden = true
         return
       }
 
-      keys.forEach(section => {
+      SECTION_ORDER.filter(section => sections.has(section)).forEach(section => {
         const tag = document.createElement('button')
         tag.type = 'button'
         tag.className = 'meilisearch-filter-tag'
-        tag.textContent = sectionLabel(section)
+        tag.textContent = SECTION_LABELS[section]
         tag.dataset.section = section
         tag.tabIndex = -1
         tag.addEventListener('click', () => {
@@ -674,24 +653,22 @@ function initializeMeilisearchIntegration() {
           cropLength: 100,
           highlightPreTag: HL_PRE,
           highlightPostTag: HL_POST,
-          ...(isProductionDocsSite()
-            ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
-            : {})
+          ...HYBRID_OPTIONS
         }
 
         const sectionFilter = activeFilters.length > 0
           ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')})`
           : null
+        const withSection = condition => sectionFilter ? `${sectionFilter} AND ${condition}` : condition
 
-        // Create federated multi-search queries
+        // Create federated multi-search queries. `is_error` is set by scripts/search/post-scrape-edit.sh.
+        // Documents without the field are not errors, so they stay in the main results.
         const multiSearchQueries = [
           {
             indexUid: MEILISEARCH_INDEX,
             q: query,
-            // Lower  weight for error code results
-            filter: sectionFilter
-              ? `${sectionFilter} AND (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
-              : `hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes"`,
+            // Lower weight for error code results
+            filter: withSection('is_error = 1'),
             federationOptions: {
               weight: 0.7
             },
@@ -701,9 +678,7 @@ function initializeMeilisearchIntegration() {
             indexUid: MEILISEARCH_INDEX,
             q: query,
             // Higher weight for non-error code results
-            filter: sectionFilter
-              ? `${sectionFilter} AND NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
-              : `NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`,
+            filter: withSection('NOT is_error = 1'),
             federationOptions: {
               weight: 1.0
             },
@@ -711,40 +686,42 @@ function initializeMeilisearchIntegration() {
           }
         ]
 
-        // Perform federated multi-search
+        // Perform federated multi-search. The response also lists the sections of
+        // every matching document, not only of the hits returned.
         const multiSearchRequest = {
           federation: {
-            limit: 25
+            limit: 25,
+            facetsByIndex: { [MEILISEARCH_INDEX]: ['section'] }
           },
           queries: multiSearchQueries
         }
 
-        // Facets ignore the selected section, so every matching section stays available.
-        const facetPromise = index.search(query, {
-          facets: ['section'],
-          limit: 0,
-          ...(isProductionDocsSite()
-            ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
-            : {})
-        }).catch(() => null)
+        // With a section selected, the facets above only list that section.
+        // Count the sections again without the filter so the other chips stay available.
+        // `limit: 1`, not 0, so sections are counted like in the federated response above.
+        // A search with `limit: 0` counts a larger set of candidates.
+        const unfilteredFacetsRequest = sectionFilter
+          ? index.search(query, { facets: ['section'], limit: 1, ...HYBRID_OPTIONS })
+          : null
 
-        Promise.all([client.multiSearch(multiSearchRequest), facetPromise])
-          .then(([response, facetResponse]) => {
+        Promise.all([client.multiSearch(multiSearchRequest), unfilteredFacetsRequest])
+          .then(([response, unfilteredFacets]) => {
             // Ignore responses to outdated queries
             if (requestId !== latestRequestId) return
 
-            // Handle federated multi-search response, hiding generated card anchors
-            const allHits = (response.hits || []).filter(hit => !isGeneratedAnchor(hit))
-            const distribution = mergeSectionCounts(facetResponse, allHits)
+            const allHits = response.hits || []
+            const sections = sectionsIn(unfilteredFacets
+              ? unfilteredFacets.facetDistribution
+              : response.facetsByIndex?.[MEILISEARCH_INDEX]?.distribution)
 
             // The selected section no longer matches this query. Search again without it.
-            if (selectedSection && !(distribution[selectedSection] > 0)) {
+            if (selectedSection && !sections.has(selectedSection)) {
               selectedSection = null
               performSearch(query, [])
               return
             }
 
-            renderSectionFacets(distribution)
+            renderSectionFacets(sections)
             resultsContainer.innerHTML = ''
 
             if (allHits.length === 0) {
