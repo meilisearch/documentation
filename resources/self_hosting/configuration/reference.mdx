@@ -462,9 +462,9 @@ Configures the number of concurrent search requests each CPU core can handle.
 
 Enables search personalization. Must be a valid Cohere API key in string format.
 
-### Search rules fuel <NoticeTag type="experimental" label="experimental" />
+### Search Rules fuel <NoticeTag type="experimental" label="experimental" />
 
-Resolving [search rules](/capabilities/search_rules/overview) during a search costs work, and "fuel" is the budget Meilisearch spends on it. These limits keep rule evaluation from degrading search performance as a rule set grows, which is what allows the feature to scale to tens of thousands of rules.
+Resolving [Search Rules](/capabilities/search_rules/overview) during a search costs work, and "fuel" is the budget Meilisearch spends on it. These limits keep rule evaluation from degrading search performance as a rule set grows, which is what allows the feature to scale to tens of thousands of rules.
 
 The defaults suit most rule sets. Raise a limit only if rules stop applying as expected and you have confirmed the relevant budget is the cause. Each of these is available via environment variable only; no CLI flag is available.
 

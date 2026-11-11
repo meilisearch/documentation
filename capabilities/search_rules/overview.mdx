@@ -1,13 +1,13 @@
 ---
-title: Search rules
+title: Search Rules
 sidebarTitle: Overview
 description: Pin, boost, deboost, or hide specific documents in your search results.
 ---
 
-Search rules give you direct control over your search results. You decide which documents to promote or remove, for which queries, and for how long. Every result a rule does not touch stays organic.
+Search Rules give you direct control over your search results. You decide which documents to promote or remove, for which queries, and for how long. Every result a rule does not touch stays organic.
 
 <Note>
-These search rules are different from the [search rules used in tenant tokens](/capabilities/security/advanced/tenant_token_payload#search-rules), which restrict what a user is allowed to see.
+Search Rules are not related to [tenant token search rules](/capabilities/security/advanced/tenant_token_payload#search-rules) (the `searchRules` field of a tenant token), which restrict which documents a user can access.
 </Note>
 
 <div style={{ position: 'relative', paddingBottom: '51.145833333333336%', height: 0 }}>
@@ -20,7 +20,7 @@ These search rules are different from the [search rules used in tenant tokens](/
   ></iframe>
 </div>
 
-## What a search rule can do
+## What a rule can do
 
 | Action | Effect on results |
 |--------|-------------------|
@@ -48,22 +48,24 @@ A rule runs only when all of its conditions are true at the same time. You can c
 - **Content platforms**: Curate the list users see when they open search with an empty query.
 - **Marketplaces**: Deboost listings from low-rated sellers.
 
-Search rules work with full-text search, [hybrid search](/capabilities/hybrid_search/overview), [federated search](/capabilities/multi_search/overview), and network search.
+Search Rules work with full-text search, [hybrid search](/capabilities/hybrid_search/overview), [federated search](/capabilities/multi_search/overview), and network search.
+
+To manage Search Rules through the API, use the [dynamic search rules endpoints](/reference/api/search-rules/create-or-update-a-search-rule) (`/dynamic-search-rules`).
 
 ## Pricing
 
-Every Meilisearch Cloud project includes 3 search rules for free. To create more, subscribe to the Search Rules add-on, then add extra rule packs if you need them. See [search rules pricing](/capabilities/search_rules/pricing) for the current limits and prices.
+Every Meilisearch Cloud project includes 3 rules for free. To create more, subscribe to the Search Rules add-on, then add extra rule packs if you need them. See [Search Rules pricing](/capabilities/search_rules/pricing) for the current limits and prices.
 
 ## Next steps
 
 <CardGroup cols={2}>
   <Card title="Create your first rule" href="/capabilities/search_rules/create_your_first_rule">
-    Turn on search rules and pin your first document
+    Turn on Search Rules and pin your first document
   </Card>
   <Card title="Boost documents" href="/capabilities/search_rules/how_to/boost_documents">
     Rank a selection of documents higher during a campaign
   </Card>
-  <Card title="How search rules work" href="/capabilities/search_rules/advanced/how_search_rules_work">
+  <Card title="How Search Rules work" href="/capabilities/search_rules/advanced/how_search_rules_work">
     See how Meilisearch builds the final result set
   </Card>
   <Card title="API reference" href="/reference/api/search-rules/create-or-update-a-search-rule">

@@ -345,7 +345,7 @@
           ]
         },
         {
-          "group": "Search rules",
+          "group": "Search Rules",
           "pages": [
             "capabilities/search_rules/overview",
             "capabilities/search_rules/create_your_first_rule",

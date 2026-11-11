@@ -56,7 +56,7 @@ Look for the key with the description "Default Chat API Key".
 Chat queries only search the indexes that the API key can access. The default chat API key is scoped to all indexes. To limit which indexes a chat client can reach, you have two options:
 
 - Create a new API key with both `chatCompletions` and `search` actions, scoped to the exact indexes you want exposed. See [manage API keys](/capabilities/security/how_to/manage_api_keys) for the full workflow.
-- Generate a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) from the default chat API key. Tenant tokens inherit both the `chatCompletions` and `search` actions from their parent key and let you narrow index access or attach search rules per user.
+- Generate a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) from the default chat API key. Tenant tokens inherit both the `chatCompletions` and `search` actions from their parent key, and you can further restrict access via [tenant token search rules](/capabilities/security/advanced/tenant_token_payload#search-rules)
 
 <Note>
 A tenant token cannot grant access to an index its parent API key does not already cover. Make sure the parent key is scoped to every index the token should be allowed to reach.
