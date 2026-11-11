@@ -412,14 +412,14 @@ function initializeMeilisearchIntegration() {
       }
     }
 
-    // Tab and Shift+Tab move between the facets that are currently shown
+    // Tab and Shift+Tab move between "no section" and the facets that are shown.
+    // Position 0 clears the filter so keyboard users can return to every result.
     const cycleSection = (step) => {
       if (filterTags.length === 0) return
-      const current = filterTags.findIndex(tag => tag.dataset.section === selectedSection)
-      const next = current === -1
-        ? (step > 0 ? 0 : filterTags.length - 1)
-        : (current + step + filterTags.length) % filterTags.length
-      applySection(filterTags[next].dataset.section)
+      const total = filterTags.length + 1
+      const current = filterTags.findIndex(tag => tag.dataset.section === selectedSection) + 1
+      const next = (current + step + total) % total
+      applySection(next === 0 ? null : filterTags[next - 1].dataset.section)
     }
 
     clearSectionFacets = () => {
@@ -651,7 +651,11 @@ function initializeMeilisearchIntegration() {
 
       // Function to perform search with filters
       let latestRequestId = 0
-      cancelSearch = () => { latestRequestId++ }
+      let debounceTimer
+      cancelSearch = () => {
+        clearTimeout(debounceTimer)
+        latestRequestId++
+      }
 
       const performSearch = (query, activeFilters = []) => {
         const requestId = ++latestRequestId
@@ -773,7 +777,6 @@ function initializeMeilisearchIntegration() {
       }
 
       // Add search event listener
-      let debounceTimer
       searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer)
 
