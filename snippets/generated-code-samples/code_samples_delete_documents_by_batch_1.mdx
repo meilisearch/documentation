@@ -13,6 +13,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili document delete \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --ids 23488,153738,437035,363869 --yes
+```
+
 ```javascript JS
 client.index('movies').deleteDocuments([23488, 153738, 437035, 363869])
 ```

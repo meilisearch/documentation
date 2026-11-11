@@ -8,6 +8,12 @@ curl \
   --data-binary '{ "primaryKey": "title" }'
 ```
 
+```bash CLI
+meili index update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --id books --primary-key title
+```
+
 ```javascript JS
 client.updateIndex('books', {
   primaryKey: 'title'

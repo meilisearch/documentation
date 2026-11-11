@@ -21,66 +21,78 @@ Click **Enable Search Rules**. Your project can now store rules and apply them a
 
 ![Meilisearch Cloud Search rules tab with an "Enable Search Rules" button in the add-on panel](/assets/images/cloud-search-rules/enable-search-rules.png)
 
-### Create a new rule
+### Open the visual editor
 
-Click **New rule** to open the rule editor.
+Click **New rule**.
 
-![Search rules landing page with a "New rule" button in the top-right corner](/assets/images/cloud-search-rules/new-rule-button.png)
+![Search rules list with a "New rule" button above the table of rules](/assets/images/cloud-search-rules/new-rule-button.png)
 
-### Fill in the general information
+The visual editor opens. You build the rule on your real documents:
 
-| Field | What it does |
-|-------|--------------|
-| **Rule ID** | The unique identifier of the rule. You cannot change it later without recreating the rule |
-| **Description** | A free text note, so your team knows why the rule exists |
-| **Rank** | Decides which rule wins when several rules match the same search. The lowest number wins |
-| **Active** | Turns the rule on and off. Keep it on to apply the rule at search time |
+- On the left, a preview of your search results. Choose the index and type a search, as your users would.
+- On the right, the **Your rule** panel. It shows which searches trigger the rule and what the rule changes.
 
-![General block of the rule editor with the Rule ID, Description, Rank, and Active fields](/assets/images/cloud-search-rules/general-block.png)
+![Visual editor with the index selector, the search bar, the result cards, and the "Your rule" panel](/assets/images/cloud-search-rules/visual-editor.png)
 
-### Choose the action
+<Note>
+The visual editor requires Meilisearch v1.55 or newer. On older versions, **New rule** opens the manual editor. To use the manual editor on a newer version, click **Switch to manual editor**.
+</Note>
 
-The **Actions** block decides what the rule does to your results.
+### Choose which searches trigger the rule
 
-![Add action dialog with the pin, boost, deboost, and hide options](/assets/images/cloud-search-rules/add-action-dialog.png)
+In the **Which searches** section, choose when the rule runs:
 
-Select **Pin a document**, click **Next**, then fill in the three fields:
+- **These words**: the search must contain every word you enter, in any order. Other words are allowed.
+- **Anything**: the rule runs on every search, whatever the user types.
+- **Nothing**: the rule runs only when the search box is empty.
 
-- **Index**: the index that holds the document you want to promote. The rule then applies only to searches on this index.
-- **Document**: the document itself, selected by its primary key. Meilisearch promotes this exact document and no other one, even if similar documents exist.
-- **Position**: the rank the document takes in the results, starting at `1` for the first result. It stays at this rank every time the rule matches, even when it does not match what the user typed.
+For this first rule, select **These words**, then type `foundation` in the search bar. The search words in the panel follow the search bar, so the preview always shows the results your rule changes. To enter different words in the panel, click the link icon in the search words field to unlink it.
 
-![Pin a document dialog with an index dropdown, a document selector, and a position input](/assets/images/cloud-search-rules/pin-document-dialog.png)
+To limit the rule to filtered searches, click **Add filter**. The rule then runs only when users filter the results by all of these values. Leave the filters empty for this first rule.
 
-Click **Add action**.
+### Pin a document
 
-The **Actions** block now lists your action, with the index it targets, the documents you selected, the filter you used, and how many documents it finally affects. A rule can hold several actions: click **Add action** again to add another one.
+Hover a result card to show its icons: pin, boost, deboost, and hide.
 
-![Actions block listing one pin action with its index, document, filter, and affected documents](/assets/images/cloud-search-rules/actions-block.png)
+<img src="/assets/images/cloud-search-rules/card-actions.png" alt="Result card with the pin, boost, deboost, and hide icons in its top-right corner" width="320" />
 
-### Choose the conditions
+You can pin a document in two ways:
 
-The **Conditions** block decides when the rule runs. A search must match every condition for the rule to take effect. With the default values, the rule applies to all searches.
+- Drag its card onto another card. The document takes that position.
+- Click its pin icon. The document keeps its current position.
 
-For this first rule, set **Query** to `Empty query` and leave the other conditions as they are.
+Drag the document you want to promote onto the first card. It moves to position 1 and shows a filled pin. The message **Your rule applies to these results** confirms that your rule changes this search. To compare, switch between **Without rule** and **With rule**.
 
-![Conditions block with the Query list open on the "Empty query" option](/assets/images/cloud-search-rules/conditions-block.png)
+![Visual editor with a pinned document at position 1, the "Your rule applies to these results" message, and the pin listed in the "What changes" section](/assets/images/cloud-search-rules/pinned-document.png)
+
+Meilisearch pins this exact document, using its primary key. It does not pin documents that look similar. The document stays at this position every time the rule matches, even when it does not match what the user typed. The rule applies only to searches on the index you chose.
 
 ### Save the rule
 
-The bar at the bottom of the editor recaps what your rule contains.
+The **Your rule** panel now lists the pin in the **What changes** section. In **When it runs**, keep **Always**. To run the rule during a campaign, select **Between dates** instead.
 
-![Editor footer with the general, condition, and action recap next to the Create rule button](/assets/images/cloud-search-rules/create-rule-footer.png)
+<img src="/assets/images/cloud-search-rules/rule-panel.png" alt='Your rule panel with the search words, the pin in "What changes", the "Always" schedule, and the "Save rule" button' width="320" />
 
-Click **Create rule**.
+Click **Save rule**. The **Review and save** dialog shows what the rule does. Fill in the fields:
 
-Your rule is now live: every time a user opens the search on your index without typing anything, the document you selected appears at the top of the results. All the other results remain organic.
+| Field | What it does |
+|-------|--------------|
+| **Name** | The unique identifier of the rule. You cannot change it after you save the rule |
+| **Note for your team** | Optional free text, so your team knows why the rule exists |
+| **Rank** | Decides which rule wins when several rules match the same search. The lowest number wins |
+| **Status** | **Active** applies the rule as soon as you save it. **Inactive** saves the rule without applying it |
+
+<img src="/assets/images/cloud-search-rules/review-and-save.png" alt="Review and save dialog with the rule summary, and the Name, Note for your team, Rank, and Status fields" width="480" />
+
+Click **Save and activate**.
+
+Your rule is now live: every time a user searches for `foundation` on your index, the document you pinned appears first. All the other results remain organic.
 
 ### Review and manage your rules
 
-The Search rules tab lists every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it.
+The Search rules tab lists every rule with its conditions, actions, rank, and last update. Search the list by rule ID or description, use the row toggle to pause a rule without deleting it, or the icons on the right to edit or remove it. Editing a rule opens it in the visual editor.
 
-![Search rules list with one rule showing its conditions, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/rules-list.png)
+![Search rules list with the new rule, its query condition, pin action, rank, last update, and active toggle](/assets/images/cloud-search-rules/rules-list.png)
 
 Rule changes are applied asynchronously, so a rule you just created, updated, or deleted can take a moment to appear in the list.
 

@@ -5,4 +5,10 @@ curl \
   -X POST 'MEILISEARCH_URL/indexes/patient_medical_records/search' \
   -H 'Authorization: Bearer TENANT_TOKEN'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key TENANT_TOKEN \
+  --index patient_medical_records
+```
 </CodeGroup>

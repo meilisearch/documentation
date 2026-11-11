@@ -10,4 +10,11 @@ curl \
     "hybrid": { "embedder": "EMBEDDER_NAME" }
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
+  --vector VECTORIZED_QUERY --hybrid '{"embedder":"EMBEDDER_NAME"}'
+```
 </CodeGroup>

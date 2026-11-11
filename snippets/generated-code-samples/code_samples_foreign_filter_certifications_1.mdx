@@ -10,4 +10,12 @@ curl \
     "filter": "_foreign(certifications, (standard = \"ISO 9001\" OR standard = \"CE\") AND issued_year >= 2020)"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index products \
+  --q motor \
+  --filter '_foreign(certifications, (standard = "ISO 9001" OR standard = "CE") AND issued_year >= 2020)'
+```
 </CodeGroup>

@@ -303,7 +303,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'http://MEILISEARCH_URL/batches' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili batch list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -404,6 +410,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/batches/stream' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Accept: text/event-stream'"
           }
         ]
@@ -509,7 +516,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'http://MEILISEARCH_URL/batches/BATCH_UID' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili batch view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id 0"
           },
           {
             "lang": "JS",
@@ -592,6 +605,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -676,6 +690,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -751,6 +766,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -883,6 +899,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl -N \\\n  -X POST 'MEILISEARCH_URL/chats/WORKSPACE_NAME/chat/completions' \\\n  -H 'Authorization: Bearer MEILISEARCH_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"model\": \"PROVIDER_MODEL_UID\",\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"USER_PROMPT\"\n      }\n    ],\n    \"tools\": [\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"_meiliSearchProgress\",\n          \"description\": \"Reports real-time search progress to the user\"\n        }\n      },\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"_meiliSearchSources\",\n          \"description\": \"Provides sources and references for the information\"\n        }\n      }\n    ]\n  }'"
           }
         ]
@@ -972,6 +989,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\""
           }
         ]
@@ -1058,6 +1076,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\""
           }
         ]
@@ -1154,6 +1173,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/chats/WORKSPACE_NAME/settings' \\\n  -H \"Authorization: Bearer MEILISEARCH_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  --data-binary '{ \"apiKey\": \"your-valid-api-key\" }'"
           }
         ]
@@ -1214,6 +1234,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/dumps' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -1349,6 +1370,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/dynamic-search-rules' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json'"
           },
           {
@@ -1432,6 +1454,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/dynamic-search-rules' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -1546,6 +1569,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -1641,6 +1665,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -1745,6 +1770,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Black Friday 2025 rules\",\n    \"precedence\": 10,\n    \"active\": true,\n    \"conditions\": {\n      \"query\": {\n        \"isEmpty\": true\n      },\n      \"time\": {\n        \"start\": \"2025-11-28T00:00:00Z\",\n        \"end\": \"2025-11-28T23:59:59Z\"\n      }\n    },\n    \"actions\": {\n      \"pin\": [\n        {\n          \"indexUid\": \"products\",\n          \"id\": \"123\",\n          \"position\": 1\n        }\n      ]\n    }\n  }'"
           },
           {
@@ -1841,6 +1867,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/experimental-features/' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -1937,6 +1964,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/experimental-features/' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json'  \\\n  --data-binary '{\n    \"metrics\": true\n  }'"
           },
           {
@@ -2021,7 +2049,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/export' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"url\": \"TARGET_INSTANCE_URL\",\n    \"indexes\": {\n      \"*\": {\n        \"overrideSettings\": true\n      }\n    }\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili export \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  \\\n  --url TARGET_INSTANCE_URL --indexes '{\"*\":{\"overrideSettings\":true}}'"
           },
           {
             "lang": "Python",
@@ -2065,7 +2099,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/health' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili health \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -2196,7 +2236,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes?limit=3' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili index list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --limit 3"
           },
           {
             "lang": "JS",
@@ -2304,7 +2350,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"uid\": \"movies\",\n    \"primaryKey\": \"id\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili index add \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --primary-key id"
           },
           {
             "lang": "JS",
@@ -2431,7 +2483,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili index view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies"
           },
           {
             "lang": "JS",
@@ -2557,7 +2615,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili index delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --yes"
           },
           {
             "lang": "JS",
@@ -2693,7 +2757,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/movies' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{ \"primaryKey\": \"id\" }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili index update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id movies --primary-key id"
           },
           {
             "lang": "JS",
@@ -2820,6 +2890,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/INDEX_UID/compact' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -3031,7 +3102,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/documents?limit=2&filter=genres=action' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --limit 2 --filter genres=action"
           },
           {
             "lang": "JS",
@@ -3206,7 +3283,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/documents' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\n      \"id\": 287947,\n      \"title\": \"Shazam ⚡️\",\n      \"genres\": \"comedy\"\n    }\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '[{\"id\":287947,\"title\":\"Shazam ⚡️\",\"genres\":\"comedy\"}]'"
           },
           {
             "lang": "JS",
@@ -3381,7 +3464,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/movies/documents' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\n      \"id\": 287947,\n      \"title\": \"Shazam\",\n      \"poster\": \"https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg\",\n      \"overview\": \"A boy is given the ability to become an adult superhero in times of need with a single magic word.\",\n      \"release_date\": \"2019-03-23\"\n    }\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document add \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '[\n    {\n      \"id\": 287947,\n      \"title\": \"Shazam\",\n      \"poster\": \"https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg\",\n      \"overview\": \"A boy is given the ability to become an adult superhero in times of need with a single magic word.\",\n      \"release_date\": \"2019-03-23\"\n    }\n  ]'"
           },
           {
             "lang": "JS",
@@ -3517,7 +3606,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/documents' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --all --yes"
           },
           {
             "lang": "JS",
@@ -3665,7 +3760,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST MEILISEARCH_URL/indexes/movies/documents/delete \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"filter\": \"genres = action OR genres = adventure\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --filter 'genres = action OR genres = adventure' --yes"
           },
           {
             "lang": "JS",
@@ -3810,7 +3911,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/movies/documents/delete-batch' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    23488,\n    153738,\n    437035,\n    363869\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ids 23488,153738,437035,363869 --yes"
           },
           {
             "lang": "JS",
@@ -3953,6 +4060,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/movies/documents/edit' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"function\": \"doc.new_field = `a]new[value`\",\n    \"filter\": \"id > 3000\",\n    \"context\": {\n      \"max_title_length\": 10\n    }\n  }'"
           }
         ]
@@ -4071,7 +4179,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST MEILISEARCH_URL/indexes/books/documents/fetch \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"filter\": \"(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English\",\n    \"fields\": [\"title\", \"genres\", \"rating\", \"language\"],\n    \"limit\": 3\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --filter '(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English' \\\n  --fields title,genres,rating,language --limit 3"
           },
           {
             "lang": "JS",
@@ -4233,7 +4347,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/documents/25684?fields=id,title,poster,release_date' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --id 25684 \\\n  --fields id,title,poster,release_date"
           },
           {
             "lang": "JS",
@@ -4379,7 +4499,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/documents/25684' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili document delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --ids 25684 --yes"
           },
           {
             "lang": "JS",
@@ -4523,7 +4649,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/books/facet-search' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"facetQuery\": \"fiction\",\n    \"facetName\": \"genres\",\n    \"filter\": \"rating > 3\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili facet-search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --facet-query fiction --facet-name genres --filter 'rating > 3'"
           },
           {
             "lang": "JS",
@@ -4715,6 +4847,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/fields' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json'"
           }
         ]
@@ -5130,7 +5263,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/search?q=american%20ninja' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --q 'american ninja'"
           },
           {
             "lang": "JS",
@@ -5249,7 +5388,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/movies/search' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{ \"q\": \"american ninja\" }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --q 'american ninja'"
           },
           {
             "lang": "JS",
@@ -5467,7 +5612,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies"
           },
           {
             "lang": "JS",
@@ -5593,7 +5744,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --yes"
           },
           {
             "lang": "JS",
@@ -5729,7 +5886,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/movies/settings' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"rankingRules\": [\n      \"words\",\n      \"typo\",\n      \"proximity\",\n      \"attributeRank\",\n      \"sort\",\n      \"wordPosition\",\n      \"exactness\",\n      \"release_date:desc\",\n      \"rank:desc\"\n    ],\n    \"distinctAttribute\": \"movie_id\",\n    \"searchableAttributes\": [\n      \"title\",\n      \"overview\",\n      \"genres\"\n    ],\n    \"displayedAttributes\": [\n      \"title\",\n      \"overview\",\n      \"genres\",\n      \"release_date\"\n    ],\n    \"stopWords\": [\n      \"the\",\n      \"a\",\n      \"an\"\n    ],\n    \"sortableAttributes\": [\n      \"title\",\n      \"release_date\"\n    ],\n    \"synonyms\": {\n      \"wolverine\": [\n        \"xmen\",\n        \"logan\"\n    ],\n      \"logan\": [\"wolverine\"]\n    },\n    \"typoTolerance\": {\n      \"minWordSizeForTypos\": {\n        \"oneTypo\": 8,\n        \"twoTypos\": 10\n      },\n      \"disableOnAttributes\": [\"title\"]\n    },\n    \"pagination\": {\n      \"maxTotalHits\": 5000\n    },\n    \"faceting\": {\n      \"maxValuesPerFacet\": 200\n    },\n    \"searchCutoffMs\": 150\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:desc,rank:desc \\\n  --distinct-attribute movie_id --searchable-attributes title,overview,genres \\\n  --displayed-attributes title,overview,genres,release_date \\\n  --stop-words the,a,an --sortable-attributes title,release_date \\\n  --synonyms '{\"wolverine\":[\"xmen\",\"logan\"],\"logan\":[\"wolverine\"]}' \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 8, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }' \\\n  --pagination '{\"maxTotalHits\":5000}' --faceting '{\"maxValuesPerFacet\":200}' \\\n  --search-cutoff-ms 150"
           },
           {
             "lang": "JS",
@@ -5851,6 +6014,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \\\n  -H 'Authorization: Bearer API_KEY'"
           }
         ]
@@ -5937,7 +6101,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME --chat null"
           }
         ]
       },
@@ -6042,7 +6212,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/chat' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"An index of movies.\",\n    \"documentTemplate\": \"A movie titled '{{doc.title}}' released in {{ doc.release_date }}\",\n    \"documentTemplateMaxBytes\": 400\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --chat '{\n    \"description\": \"An index of movies.\",\n    \"documentTemplate\": \"A movie titled '\\''{{doc.title}}'\\'' released in {{ doc.release_date }}\",\n    \"documentTemplateMaxBytes\": 400\n  }'"
           }
         ]
       }
@@ -6128,6 +6304,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/dictionary' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -6273,7 +6450,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/books/settings/dictionary' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"J. R. R.\",\n    \"W. E. B.\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --dictionary 'J. R. R.,W. E. B.'"
           },
           {
             "lang": "JS",
@@ -6395,7 +6578,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/dictionary' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --dictionary null"
           },
           {
             "lang": "JS",
@@ -6516,6 +6705,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -6668,7 +6858,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"title\",\n    \"overview\",\n    \"genres\",\n    \"release_date\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --displayed-attributes title,overview,genres,release_date"
           },
           {
             "lang": "JS",
@@ -6794,7 +6990,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/displayed-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --displayed-attributes null"
           },
           {
             "lang": "JS",
@@ -6916,6 +7118,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -7055,7 +7258,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '\"skuid\"'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index shoes \\\n  --distinct-attribute skuid"
           },
           {
             "lang": "JS",
@@ -7181,7 +7390,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/shoes/settings/distinct-attribute' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index shoes \\\n  --distinct-attribute null"
           },
           {
             "lang": "JS",
@@ -7309,6 +7524,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -7407,7 +7623,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME --embedders null"
           },
           {
             "lang": "Python",
@@ -7538,7 +7760,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/embedders' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"default\": {\n      \"source\":  \"openAi\",\n      \"apiKey\": \"OPEN_AI_API_KEY\",\n      \"model\": \"text-embedding-3-small\",\n      \"documentTemplate\": \"A document titled '{{doc.title}}' whose description starts with {{doc.overview|truncatewords: 20}}\"\n    }\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --embedders '{\n    \"default\": {\n      \"source\": \"openAi\",\n      \"apiKey\": \"OPEN_AI_API_KEY\",\n      \"model\": \"text-embedding-3-small\",\n      \"documentTemplate\": \"A document titled '\\''{{doc.title}}'\\'' whose description starts with {{doc.overview|truncatewords: 20}}\"\n    }\n  }'"
           },
           {
             "lang": "JS",
@@ -7640,6 +7868,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -7767,7 +7996,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary 'false'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --facet-search false"
           },
           {
             "lang": "JS",
@@ -7881,7 +8116,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/facet-search' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --facet-search null"
           },
           {
             "lang": "JS",
@@ -7991,6 +8232,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/faceting' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -8113,7 +8355,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/faceting' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --faceting null"
           },
           {
             "lang": "JS",
@@ -8258,7 +8506,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/faceting' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"maxValuesPerFacet\": 2,\n    \"sortFacetValuesBy\": {\n      \"*\": \"alpha\",\n      \"genres\": \"count\",\n      \"language\": \"sampledCount\"\n    }\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --faceting '{\n    \"maxValuesPerFacet\": 2,\n    \"sortFacetValuesBy\": {\n      \"*\": \"alpha\",\n      \"genres\": \"count\",\n      \"language\": \"sampledCount\"\n    }\n  }'"
           },
           {
             "lang": "JS",
@@ -8379,6 +8633,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -8551,7 +8806,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"genres\",\n    \"director\",\n    {\n      \"attributePatterns\": [\"*_ratings\"],\n      \"features\": {\n        \"facetSearch\": false,\n        \"filter\": {\n          \"equality\": true,\n          \"comparison\": false\n        }\n      }\n    }\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --data '{\n    \"filterableAttributes\": [\n      \"genres\",\n      \"director\",\n      {\n        \"attributePatterns\": [\"*_ratings\"],\n        \"features\": {\n          \"facetSearch\": false,\n          \"filter\": { \"equality\": true, \"comparison\": false }\n        }\n      }\n    ]\n  }'"
           },
           {
             "lang": "JS",
@@ -8677,7 +8938,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/filterable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --filterable-attributes null"
           },
           {
             "lang": "JS",
@@ -8802,6 +9069,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -8926,7 +9194,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"author\"\n    },\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"related_authors\"\n    }\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --foreign-keys '[\n    { \"foreignIndexUid\": \"authors\", \"fieldName\": \"author\" },\n    {\n      \"foreignIndexUid\": \"authors\",\n      \"fieldName\": \"related_authors\"\n    }\n  ]'"
           },
           {
             "lang": "JS",
@@ -9024,7 +9298,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/foreign-keys' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --foreign-keys null"
           },
           {
             "lang": "JS",
@@ -9121,6 +9401,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -9269,7 +9550,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\"locales\": [\"jpn\"], \"attributePatterns\": [\"*_ja\"]}\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --localized-attributes '[{\"locales\":[\"jpn\"],\"attributePatterns\":[\"*_ja\"]}]'"
           },
           {
             "lang": "JS",
@@ -9383,7 +9670,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_NAME/settings/localized-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --localized-attributes null"
           },
           {
             "lang": "JS",
@@ -9497,6 +9790,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -9646,7 +9940,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json'  \\\n  --data-binary '[\"@\", \"#\"]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --non-separator-tokens '@,#'"
           },
           {
             "lang": "JS",
@@ -9772,7 +10072,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/non-separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --non-separator-tokens null"
           },
           {
             "lang": "JS",
@@ -9894,6 +10200,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/pagination' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -10016,7 +10323,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/pagination' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --pagination null"
           },
           {
             "lang": "JS",
@@ -10155,7 +10468,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/pagination' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"maxTotalHits\": 100\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --pagination '{\"maxTotalHits\":100}'"
           },
           {
             "lang": "JS",
@@ -10273,6 +10592,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -10400,7 +10720,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '\"disabled\"'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --prefix-search disabled"
           },
           {
             "lang": "JS",
@@ -10514,7 +10840,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_UID \\\n  --prefix-search null"
           },
           {
             "lang": "JS",
@@ -10624,6 +10956,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -10759,7 +11092,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '\"byAttribute\"'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --proximity-precision byAttribute"
           },
           {
             "lang": "JS",
@@ -10881,7 +11220,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/proximity-precision' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --proximity-precision null"
           },
           {
             "lang": "JS",
@@ -11002,6 +11347,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -11158,7 +11504,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"words\",\n    \"typo\",\n    \"proximity\",\n    \"attributeRank\",\n    \"sort\",\n    \"wordPosition\",\n    \"exactness\",\n    \"release_date:asc\",\n    \"rank:desc\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:asc,rank:desc"
           },
           {
             "lang": "JS",
@@ -11284,7 +11636,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/ranking-rules' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --ranking-rules null"
           },
           {
             "lang": "JS",
@@ -11408,6 +11766,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -11545,7 +11904,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '150'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --search-cutoff-ms 150"
           },
           {
             "lang": "JS",
@@ -11667,7 +12032,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/search-cutoff-ms' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --search-cutoff-ms null"
           },
           {
             "lang": "JS",
@@ -11788,6 +12159,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -11938,7 +12310,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"title\",\n    \"overview\",\n    \"genres\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --searchable-attributes title,overview,genres"
           },
           {
             "lang": "JS",
@@ -12064,7 +12442,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/searchable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --searchable-attributes null"
           },
           {
             "lang": "JS",
@@ -12190,6 +12574,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -12339,7 +12724,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json'  \\\n  --data-binary '[\"|\", \"&hellip;\"]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --separator-tokens '|,&hellip;'"
           },
           {
             "lang": "JS",
@@ -12465,7 +12856,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/articles/settings/separator-tokens' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index articles \\\n  --separator-tokens null"
           },
           {
             "lang": "JS",
@@ -12591,6 +12988,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -12740,7 +13138,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"price\",\n    \"author\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --sortable-attributes price,author"
           },
           {
             "lang": "JS",
@@ -12866,7 +13270,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/sortable-attributes' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --sortable-attributes null"
           },
           {
             "lang": "JS",
@@ -12992,6 +13402,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -13143,7 +13554,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    \"the\",\n    \"of\",\n    \"to\"\n  ]'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --stop-words the,of,to"
           },
           {
             "lang": "JS",
@@ -13269,7 +13686,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/stop-words' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --stop-words null"
           },
           {
             "lang": "JS",
@@ -13400,6 +13823,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -13564,7 +13988,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PUT 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"wolverine\": [\n      \"xmen\",\n      \"logan\"\n    ],\n    \"logan\": [\n      \"wolverine\",\n      \"xmen\"\n    ],\n    \"wow\": [\"world of warcraft\"]\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies \\\n  --synonyms '{\n    \"wolverine\": [\"xmen\", \"logan\"],\n    \"logan\": [\"wolverine\", \"xmen\"],\n    \"wow\": [\"world of warcraft\"]\n  }'"
           },
           {
             "lang": "JS",
@@ -13690,7 +14120,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/movies/settings/synonyms' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies --synonyms null"
           },
           {
             "lang": "JS",
@@ -13812,6 +14248,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -13934,7 +14371,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books --typo-tolerance null"
           },
           {
             "lang": "JS",
@@ -14093,7 +14536,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/books/settings/typo-tolerance' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"minWordSizeForTypos\": {\n      \"oneTypo\": 4,\n      \"twoTypos\": 10\n    },\n    \"disableOnAttributes\": [\"title\"]\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili settings update \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index books \\\n  --typo-tolerance '{\n    \"minWordSizeForTypos\": { \"oneTypo\": 4, \"twoTypos\": 10 },\n    \"disableOnAttributes\": [\"title\"]\n  }'"
           },
           {
             "lang": "JS",
@@ -14339,7 +14788,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_NAME/similar?id=TARGET_DOCUMENT_ID&embedder=EMBEDDER_NAME' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili similar \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
           }
         ]
       },
@@ -14450,7 +14905,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/indexes/INDEX_NAME/similar' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Bearer DEFAULT_SEARCH_API_KEY' \\\n  --data-binary '{\n    \"id\": TARGET_DOCUMENT_ID,\n    \"embedder\": \"EMBEDDER_NAME\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili similar \\\n  --project-url MEILISEARCH_URL --project-api-key DEFAULT_SEARCH_API_KEY \\\n  --index INDEX_NAME \\\n  --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME"
           },
           {
             "lang": "JS",
@@ -14593,7 +15054,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/movies/stats' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili stats \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --index movies"
           },
           {
             "lang": "JS",
@@ -14732,7 +15199,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/keys?limit=3' \\\n  -H 'Authorization: Bearer MASTER_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili key list \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --limit 3"
           },
           {
             "lang": "JS",
@@ -14848,7 +15321,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/keys' \\\n  -H 'Authorization: Bearer MASTER_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"description\": \"Add documents: Products API key\",\n    \"actions\": [\"documents.add\"],\n    \"indexes\": [\"products\"],\n    \"expiresAt\": \"2042-04-02T00:42:42Z\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili key add \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  \\\n  --description 'Add documents: Products API key' --actions documents.add \\\n  --indexes products --expires-at 2042-04-02T00:42:42Z"
           },
           {
             "lang": "JS",
@@ -14985,7 +15464,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili key view \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d"
           },
           {
             "lang": "JS",
@@ -15098,7 +15583,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili key delete \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --yes"
           },
           {
             "lang": "JS",
@@ -15243,7 +15734,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \\\n  -H 'Authorization: Bearer MASTER_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"name\": \"Products/Reviews API key\",\n    \"description\": \"Manage documents: Products/Reviews API key\"\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili key update \\\n  --project-url MEILISEARCH_URL --project-api-key MASTER_KEY \\\n  --id 6062abda-a5aa-4414-ac91-ecd7944c0f8d \\\n  --name 'Products/Reviews API key' \\\n  --description 'Manage documents: Products/Reviews API key'"
           },
           {
             "lang": "JS",
@@ -15339,6 +15836,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST MEILISEARCH_URL/logs/stderr \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n      \"target\": \"milli=trace,index_scheduler=info,actix_web=off\"\n  }'"
           }
         ]
@@ -15419,6 +15917,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST MEILISEARCH_URL/logs/stream \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"mode\": \"human\",\n    \"target\": \"index_scheduler=trace\"\n  }'"
           }
         ]
@@ -15463,6 +15962,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE MEILISEARCH_URL/logs/stream \\\n  -H 'Authorization: Bearer API_KEY'\n}'"
           }
         ]
@@ -15540,6 +16040,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/mcp' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json, text/event-stream' \\\n  --data-binary '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"server/discover\",\n    \"params\": {\n      \"_meta\": {\n        \"io.modelcontextprotocol/protocolVersion\": \"2026-07-28\",\n        \"io.modelcontextprotocol/clientInfo\": {\n          \"name\": \"ExampleClient\",\n          \"version\": \"1.0.0\"\n        }\n      }\n    }\n  }'"
           }
         ]
@@ -15594,6 +16095,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/metrics' \\\n  -H 'Authorization: Bearer API_KEY'"
           }
         ]
@@ -15683,7 +16185,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/multi-search' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"queries\": [\n      {\n        \"indexUid\": \"movies\",\n        \"q\": \"pooh\",\n        \"limit\": 5\n      },\n      {\n        \"indexUid\": \"movies\",\n        \"q\": \"nemo\",\n        \"limit\": 5\n      },\n      {\n        \"indexUid\": \"movie_ratings\",\n        \"q\": \"us\"\n      }\n    ]\n  }'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili multi-search \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  \\\n  --queries '[\n    { \"indexUid\": \"movies\", \"q\": \"pooh\", \"limit\": 5 },\n    { \"indexUid\": \"movies\", \"q\": \"nemo\", \"limit\": 5 },\n    { \"indexUid\": \"movie_ratings\", \"q\": \"us\" }\n  ]'"
           },
           {
             "lang": "JS",
@@ -15791,6 +16299,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/network' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -15891,6 +16400,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/network' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"self\": \"ms-00\",\n    \"remotes\": {\n      \"ms-00\": {\n        \"url\": \"http://INSTANCE_URL\",\n        \"searchApiKey\": \"INSTANCE_API_KEY\"\n      },\n      \"ms-01\": {\n        \"url\": \"http://ANOTHER_INSTANCE_URL\",\n        \"searchApiKey\": \"ANOTHER_INSTANCE_API_KEY\"\n      }\n    }\n  }'"
           },
           {
@@ -15966,6 +16476,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/network/control' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"origin\": {\n      \"remoteName\": \"ms-00\",\n      \"taskUid\": 42,\n      \"networkVersion\": \"0195e7a8-9c0d-7b3a-8f2e-123456789abc\"\n    },\n    \"message\": {\n      \"type\": \"exportNoIndexForRemote\",\n      \"remote\": \"ms-01\"\n    }\n  }'"
           }
         ]
@@ -16065,6 +16576,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/render-template' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"template\": {\n      \"kind\": \"inlineDocumentTemplate\",\n      \"inline\": \"An inline document template rendered on {{doc.id}}\"\n    },\n    \"input\": {\n      \"kind\": \"inlineDocument\",\n      \"inline\": { \"id\": \"this document\" }\n    }\n  }'"
           },
           {
@@ -16141,6 +16653,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/snapshots' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -16272,7 +16785,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/stats' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili stats \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -16384,6 +16903,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/swap-indexes' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '[\n    {\n      \"indexes\": [\n        \"indexA\",\n        \"indexB\"\n      ]\n    },\n    {\n      \"indexes\": [\n        \"indexX\",\n        \"indexY\"\n      ]\n    }\n  ]'"
           },
           {
@@ -16700,7 +17220,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili task list \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -16995,7 +17521,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/tasks?uids=1,2' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili task delete \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --ids 1,2 --yes"
           },
           {
             "lang": "JS",
@@ -17276,7 +17808,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/tasks/cancel?uids=1,2' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili task cancel \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --ids 1,2"
           },
           {
             "lang": "JS",
@@ -17389,6 +17927,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/tasks/compact' \\\n  -H 'Authorization: Bearer API_KEY'"
           }
         ]
@@ -17455,6 +17994,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/stream' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Accept: text/event-stream'"
           }
         ]
@@ -17551,7 +18091,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/1' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili task view \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  --id 1"
           },
           {
             "lang": "JS",
@@ -17672,6 +18218,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/tasks/1/documents' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -17741,7 +18288,13 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/version' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "cURL",
+            "label": "Meili CLI",
+            "source": "meili info \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY"
           },
           {
             "lang": "JS",
@@ -17852,6 +18405,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/webhooks' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -17957,6 +18511,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X POST 'MEILISEARCH_URL/webhooks' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"url\": \"WEBHOOK_TARGET_URL\",\n    \"headers\": {\n      \"authorization\": \"SECURITY_KEY\",\n      \"referer\": \"https://example.com\"\n    }\n  }'"
           },
           {
@@ -18067,6 +18622,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -18159,6 +18715,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \\\n  -H 'Authorization: Bearer API_KEY'"
           },
           {
@@ -18292,6 +18849,7 @@
         "x-codeSamples": [
           {
             "lang": "cURL",
+            "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/webhooks/WEBHOOK_UUID' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"header\": {\n      \"referer\": null\n    }\n  }'"
           },
           {

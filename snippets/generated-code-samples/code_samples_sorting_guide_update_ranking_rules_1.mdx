@@ -16,6 +16,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --ranking-rules words,sort,typo,proximity,attributeRank,wordPosition,exactness
+```
+
 ```javascript JS
 client.index('books').updateRankingRules([
   'words',

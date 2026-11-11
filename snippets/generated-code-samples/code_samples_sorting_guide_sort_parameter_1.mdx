@@ -11,6 +11,13 @@ curl \
   }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --q 'science fiction' --sort price:asc
+```
+
 ```javascript JS
 client.index('books').search('science fiction', {
   sort: ['price:asc'],

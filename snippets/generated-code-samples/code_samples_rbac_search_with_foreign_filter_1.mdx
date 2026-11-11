@@ -10,4 +10,12 @@ curl \
     "filter": "_foreign(access, user = \"jeremy@meilisearch.com\" OR teams IN [\"product\", \"engineering\"])"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key TENANT_TOKEN \
+  --index documents \
+  --q roadmap \
+  --filter '_foreign(access, user = "jeremy@meilisearch.com" OR teams IN ["product", "engineering"])'
+```
 </CodeGroup>

@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili index delete \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --id movies --yes
+```
+
 ```javascript JS
 client.deleteIndex('movies')
 ```

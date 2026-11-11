@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili index list \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --limit 3
+```
+
 ```javascript JS
 client.getIndexes({ limit: 3 })
 ```

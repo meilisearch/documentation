@@ -1,6 +1,6 @@
 # Contributing to the documentation
 
-This guide covers how to set up your environment and run the docs locally, run tests, and work with code samples and the OpenAPI spec.
+This guide covers how to set up your environment and run the docs locally, rebuild the staging search index, run tests, and work with code samples and the OpenAPI spec.
 
 ## Table of contents
 
@@ -8,6 +8,7 @@ This guide covers how to set up your environment and run the docs locally, run t
 - [Install](#install)
 - [Docs writing](#docs-writing)
 - [Run the docs locally](#run-the-docs-locally)
+- [Documentation search](#documentation-search)
 - [Tests](#tests)
 - [Code samples](#code-samples)
 - [OpenAPI Mintlify file](#openapi-mintlify-file)
@@ -42,6 +43,28 @@ npx mintlify dev
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser. The preview updates automatically when you save MDX files.
 
+## Documentation search
+
+Local preview and Mintlify preview URLs search the `mintlify-staging` index. meilisearch.com searches `mintlify-production`, which the [scraper workflow](.github/workflows/scraper.yml) rebuilds on every push to `main`. A merge does not update staging.
+
+Run the rebuild when you change the search config and need that change in local search or in a preview. It rebuilds the shared `mintlify-staging` index, so every local preview and every Mintlify preview picks up the new index.
+
+You need Docker, `jq`, and a `.env` file at the repository root. `.env` is gitignored.
+
+```bash
+MEILISEARCH_API_KEY=your-master-key
+# Optional. Defaults to the docs search instance.
+MEILISEARCH_HOST_URL=https://ms-909f535664f8-173.lon.meilisearch.io
+# Optional. Leave unset unless you are testing embeddings.
+OPENAI_API_KEY=your-openai-key
+```
+
+`MEILISEARCH_API_KEY` is the master key of the docs search instance. The public search-only key is not enough.
+
+```bash
+npm run rebuild-search-staging
+```
+
 ## Tests
 
 ### Broken links
@@ -58,14 +81,14 @@ npx mint broken-links
 |--------|----------------|
 | `npm run check-code-samples-usage` | Ensures every entry in `.code-samples.meilisearch.yaml` is either mapped to an OpenAPI route or used in an MDX snippet. Exits with error if not. |
 | `npm run check-openapi-code-samples` | Checks the Mintlify OpenAPI file for missing cURL code samples per route. Use with `curl-check` or `info` (see script header). |
-| `npm run check-unused-sdk-samples` | Fetches each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in SDKs). |
-| `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to each SDK’s samples and lists, per SDK, which imported keys are missing on the SDK side. |
+| `npm run check-unused-sdk-samples` | Fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in the CLI and SDKs). |
+| `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the SDK side. |
 
 ## Code samples
 
 ### What they are
 
-Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) (and in each SDK repo). They map operation names (e.g. `get_indexes`) to code snippets in multiple languages. The docs use them in the API reference (via the OpenAPI Mintlify file) and in guides (via generated MDX snippets).
+Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) (and in the [CLI repo](https://github.com/meilisearch/cli) and each SDK repo). They map operation names (e.g. `get_indexes`) to code snippets in multiple languages. The docs use them in the API reference (via the OpenAPI Mintlify file) and in guides (via generated MDX snippets).
 
 **When adding a cURL example in `/learn/` or `/reference/api/`:** prefer adding a new entry in `.code-samples.meilisearch.yaml`, then running the snippet generator and importing the generated snippet in the page, rather than writing the example inline in the MDX.
 
@@ -78,7 +101,7 @@ Code samples are stored in [`.code-samples.meilisearch.yaml`](/.code-samples.mei
 npm run generate-code-sample-snippets-file
 ```
 
-This script reads the local [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) and fetches each SDK’s `.code-samples.meilisearch.yaml` from GitHub, then generates one MDX file per operation in `snippets/generated-code-samples/` with a `<CodeGroup>` for all languages.
+This script reads the local [`.code-samples.meilisearch.yaml`](/.code-samples.meilisearch.yaml) and fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` from GitHub, then generates one MDX file per operation in `snippets/generated-code-samples/` with a `<CodeGroup>` for all languages. The CLI tab comes right after cURL.
 
 ## OpenAPI Mintlify file
 
@@ -98,7 +121,7 @@ npm run fetch-meilisearch-release-assets
 
 Optional: set `GITHUB_PAT` or `GH_TOKEN` for higher API rate limits.
 
-2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
+2. **Generate the Mintlify-ready file** (reads `assets/release-assets/meilisearch-openapi.json`, injects code samples from this repo, the CLI repo and SDK repos, cleans null descriptions; writes `assets/release-assets/meilisearch-openapi-mintlify.json`):
 
 ```bash
 npm run generate-mintlify-openapi-file
@@ -126,3 +149,5 @@ It does the following:
 Each step commits separately so the history stays clear. Contributors don’t need to run these steps manually for normal edits; the workflow keeps code samples and OpenAPI files up to date after merges to `main`.
 
 A concurrency group ensures only one run executes at a time, so multiple triggers (many commits merged on `main`) do not run in parallel and cause conflicting commits.
+
+The docs search index is separate from this workflow. See [Documentation search](#documentation-search).

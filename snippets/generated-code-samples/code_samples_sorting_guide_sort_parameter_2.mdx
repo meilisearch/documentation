@@ -11,6 +11,12 @@ curl \
   }'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books --q butler --sort author:desc
+```
+
 ```javascript JS
 client.index('books').search('butler', {
   sort: ['author:desc'],

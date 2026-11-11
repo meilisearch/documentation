@@ -14,4 +14,18 @@ curl \
     }
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index kitchenware \
+  --embedders '{
+    "products-openai": {
+      "source": "openAi",
+      "apiKey": "OPEN_AI_API_KEY",
+      "model": "text-embedding-3-small",
+      "documentTemplate": "An object used in a kitchen named '\''{{doc.name}}'\''"
+    }
+  }'
+```
 </CodeGroup>

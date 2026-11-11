@@ -11,19 +11,21 @@ One rule with a deboost action covers this, and no condition is needed if you wa
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. Give the rule an ID, such as `out-of-stock-last`, and a description.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. The visual editor opens. For a walkthrough of the editor, see [Create your first rule](/capabilities/search_rules/create_your_first_rule).
 
-In the **Actions** block, click **Add action**, select **Deboost documents**, then click **Next**. Pick **Use a filter**, then fill in the dialog:
+Choose the index, here `products`. In the **Your rule** panel, keep **Anything** selected, so the rule applies to every search.
+
+Hover any result card, click its deboost icon, then click **Choose a filter…**. Fill in the dialog:
 
 - **Index**: the index holding the products, here `products`.
-- **Filter**: the condition selecting them, here `stock = 0`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
-- **Strength**: how far the selected products drop. Start with the medium value, then run a few searches of your own and adjust: the right strength depends on your data and on the way your users search.
+- **Strength**: how far the selected products drop. Start with **Medium**, then run a few searches of your own and adjust: the right strength depends on your data and on the way your users search.
+- **Matching a filter**: the condition selecting the products, here `stock = 0`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
 
-Click **Add action**.
+The dialog tells you how many documents the action affects. Click **Add action**.
 
-![Deboost documents dialog with the index, the strength, and the filter](/assets/images/cloud-search-rules/deboost-action-dialog.png)
+<img src="/assets/images/cloud-search-rules/deboost-filter-dialog.png" alt="Deboost documents dialog with the index, the strength, the filter, and the number of documents it deboosts" width="480" />
 
-Leave the **Conditions** block with its default values, so the rule applies to every search, then click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, out-of-stock products remain findable, but they lose ground to the products you can ship.
+Click **Save rule**. In the **Review and save** dialog, name the rule, such as `out-of-stock-last`, then click **Save and activate**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, out-of-stock products remain findable, but they lose ground to the products you can ship.
 
 ## Set up on a self-hosted instance
 

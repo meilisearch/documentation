@@ -8,6 +8,13 @@ curl \
   --data-binary '"disabled"'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_UID \
+  --prefix-search disabled
+```
+
 ```javascript JS
 client.index('INDEX_NAME').updatePrefixSearch('disabled');
 ```

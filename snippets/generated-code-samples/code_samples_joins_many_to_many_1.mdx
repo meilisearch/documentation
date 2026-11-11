@@ -26,4 +26,24 @@ curl \
     ]
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index films \
+  --data '{
+    "foreignKeys": [
+      { "fieldName": "actor_ids", "foreignIndexUid": "actors" }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["actor_ids"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": true, "comparison": false }
+        }
+      }
+    ]
+  }'
+```
 </CodeGroup>

@@ -15,6 +15,20 @@ curl \
   }'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --faceting '{
+    "maxValuesPerFacet": 2,
+    "sortFacetValuesBy": {
+      "*": "alpha",
+      "genres": "count",
+      "language": "sampledCount"
+    }
+  }'
+```
+
 ```javascript JS
 client.index('books').updateFaceting({
   maxValuesPerFacet: 2,

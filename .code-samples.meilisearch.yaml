@@ -1935,7 +1935,7 @@ search_rules_guide_hide_1: |-
         "scale": [
           {
             "indexUid": "products",
-            "filter": "discontinued = true",
+            "filter": "status = Discontinued",
             "weight": 0
           }
         ]

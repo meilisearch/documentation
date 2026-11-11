@@ -13,4 +13,12 @@ curl \
     "expiresAt": null
   }'
 ```
+
+```bash CLI
+meili key add \
+  --project-url MEILISEARCH_URL --project-api-key MEILISEARCH_KEY \
+  \
+  --name 'Chat API Key' --description 'API key for chat completions' \
+  --actions search,chatCompletions --indexes '*' --expires-at null
+```
 </CodeGroup>

@@ -7,4 +7,10 @@ curl \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "invoice settings" }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index support --q 'invoice settings'
+```
 </CodeGroup>

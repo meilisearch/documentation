@@ -6,6 +6,13 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili document list \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --limit 2 --filter genres=action
+```
+
 ```javascript JS
 client.index('movies').getDocuments({
   limit: 2,

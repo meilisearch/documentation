@@ -11,6 +11,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --dictionary 'J. R. R.,W. E. B.'
+```
+
 ```javascript JS
 client.index('books').updateDictionary(['J. R. R.', 'W. E. B.'])
 ```

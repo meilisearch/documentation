@@ -9,4 +9,11 @@ curl \
     "filter": "actors.country = \"France\" OR actors.age > 35"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index films \
+  --filter 'actors.country = "France" OR actors.age > 35'
+```
 </CodeGroup>

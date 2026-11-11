@@ -10,4 +10,22 @@ curl \
     { "id": 1, "_vectors": { "EMBEDDER_NAME": [1, -0.2, 0]}, "text": "baking dish" }
   ]'
 ```
+
+```bash CLI
+meili document add \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index INDEX_NAME \
+  --data '[
+    {
+      "id": 0,
+      "_vectors": { "EMBEDDER_NAME": [0, 0.8, -0.2] },
+      "text": "frying pan"
+    },
+    {
+      "id": 1,
+      "_vectors": { "EMBEDDER_NAME": [1, -0.2, 0] },
+      "text": "baking dish"
+    }
+  ]'
+```
 </CodeGroup>

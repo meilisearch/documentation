@@ -14,6 +14,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili document update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --data '[{"id":287947,"title":"Shazam ⚡️","genres":"comedy"}]'
+```
+
 ```javascript JS
 client.index('movies').updateDocuments([{
     id: 287947,

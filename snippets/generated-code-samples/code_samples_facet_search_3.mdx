@@ -11,6 +11,13 @@ curl \
 }'
 ```
 
+```bash CLI
+meili facet-search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --facet-query c --facet-name genres
+```
+
 ```javascript JS
 client.index('books').searchForFacetValues({
   facetQuery: 'c',

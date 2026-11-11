@@ -10,4 +10,11 @@ curl \
     "filter": "_foreign(company, id = \"company_42\")"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index deals \
+  --q contract --filter '_foreign(company, id = "company_42")'
+```
 </CodeGroup>

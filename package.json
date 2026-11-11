@@ -26,6 +26,7 @@
     "check-openapi-routes-coverage": "node scripts/check-openapi-routes-coverage.mjs",
     "generate-changelog": "npx tsx scripts/generate-changelog.ts",
     "generate-error-codes": "node scripts/generate-error-codes.mjs",
-    "check-broken-links": "node scripts/check-broken-links.mjs"
+    "check-broken-links": "node scripts/check-broken-links.mjs",
+    "rebuild-search-staging": "bash scripts/search/rebuild-staging.sh"
   }
 }

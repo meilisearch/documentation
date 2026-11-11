@@ -26,4 +26,27 @@ curl \
     ]
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index companies \
+  --data '{
+    "foreignKeys": [
+      {
+        "fieldName": "employee_ids",
+        "foreignIndexUid": "employees"
+      }
+    ],
+    "filterableAttributes": [
+      {
+        "attributePatterns": ["employee_ids"],
+        "features": {
+          "facetSearch": false,
+          "filter": { "equality": true, "comparison": false }
+        }
+      }
+    ]
+  }'
+```
 </CodeGroup>

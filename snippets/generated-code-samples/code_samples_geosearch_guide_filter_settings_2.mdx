@@ -7,4 +7,11 @@ curl \
   -H 'Content-type:application/json' \
   --data-binary '["_geojson"]'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index neighborhoods \
+  --filterable-attributes _geojson
+```
 </CodeGroup>

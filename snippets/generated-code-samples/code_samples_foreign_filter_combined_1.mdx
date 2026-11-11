@@ -10,4 +10,12 @@ curl \
     "filter": "value >= 100000 AND _foreign(company, industry = \"Technology\")"
   }'
 ```
+
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index deals \
+  --q contract \
+  --filter 'value >= 100000 AND _foreign(company, industry = "Technology")'
+```
 </CodeGroup>

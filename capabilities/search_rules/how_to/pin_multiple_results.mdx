@@ -9,27 +9,25 @@ When customers search for "coffee", you know what they should see first: the esp
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. Give the rule an ID, such as `coffee-top-picks`, and a description.
-
-### Pin the first document
-
-In the **Actions** block, click **Add action**, select **Pin a document**, then click **Next**. Choose the **Index**, then search the **Document** by its ID or its content. Set its **Position**, which starts at `1` for the first result, and click **Add action**.
-
-![Pin a document dialog with the index, the document, and the position](/assets/images/cloud-search-rules/pin-second-document.png)
-
-### Pin the next ones
-
-Repeat the same steps for every document you want to place, here the coffee mug at position `2`. The **Actions** block numbers your pins and shows which document each one promotes.
-
-Pins do not have to follow each other. Pinning at positions `1` and `5` leaves organic results in between.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. The visual editor opens. For a walkthrough of the editor, see [Create your first rule](/capabilities/search_rules/create_your_first_rule).
 
 ### Choose when the rule applies
 
-In the **Conditions** block, set **Query** to `Contains all words`, then enter `coffee`. The rule now applies to every search containing that word, in any order, so it also covers "coffee machine" or "best coffee grinder".
+Choose the index, here `products`. In the **Your rule** panel, select **These words**, then type `coffee` in the search bar. The rule now applies to every search containing that word, in any order, so it also covers "coffee machine" or "best coffee grinder".
 
-![Actions block with two pins, and the query condition](/assets/images/cloud-search-rules/pin-rule-overview.png)
+### Pin the documents
 
-Click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, a search containing "coffee" starts with your two picks, in the order you chose.
+To pin a document near the top, drag its card onto the position you want. For a document further down the results, hover its card and click the pin icon, then click the pin again and enter its new position in **Move to position**.
+
+Pin the espresso machine at position `1`, then the coffee mug at position `2`. Each pinned card shows a filled pin, and the **What changes** section of the panel lists your pins in order.
+
+![Visual editor with the espresso machine and the coffee mug pinned at positions 1 and 2, and both pins listed in the "What changes" section](/assets/images/cloud-search-rules/pin-two-documents.png)
+
+Pins do not have to follow each other. Pinning at positions `1` and `5` leaves organic results in between.
+
+### Save the rule
+
+Click **Save rule**. In the **Review and save** dialog, name the rule, such as `coffee-top-picks`, then click **Save and activate**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, a search containing "coffee" starts with your two picks, in the order you chose.
 
 ## Set up on a self-hosted instance
 

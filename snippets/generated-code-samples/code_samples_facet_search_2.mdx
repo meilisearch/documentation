@@ -12,6 +12,13 @@ curl \
 }'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --faceting '{"sortFacetValuesBy":{"genres":"count"}}'
+```
+
 ```javascript JS
 client.index('books').updateFaceting({
   sortFacetValuesBy: {

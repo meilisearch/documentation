@@ -11,31 +11,39 @@ One rule covers the whole campaign: a time condition for the period, and a boost
 
 ## Set up from the Meilisearch Cloud dashboard
 
-Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. Give the rule an ID, such as `summer-sale`, and a description.
+Open your project in the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com), select the **Search rules** tab, and click **New rule**. The visual editor opens. For a walkthrough of the editor, see [Create your first rule](/capabilities/search_rules/create_your_first_rule).
+
+Choose the index, here `products`. In the **Your rule** panel, keep **Anything** selected, so the rule applies whatever users type.
 
 ### Boost the products on sale
 
-In the **Actions** block, click **Add action**, select **Boost documents**, then click **Next**. Choose how to select the products: with a filter, or document by document. A filter fits here, because you want every product on sale, whichever they are at that moment.
+Hover any result card, then click its boost icon. The menu asks which documents to boost:
 
-![Dialog asking whether to select documents with a filter or by hand](/assets/images/cloud-search-rules/select-documents-step.png)
+- **This document only**: boosts the document on the card.
+- **All where…**: boosts every document sharing a value with this card, such as its brand or its category. The menu shows how many documents each option selects.
+- **Choose a filter…**: boosts the documents matching a filter you write.
 
-Pick **Use a filter**, then fill in the dialog:
+<img src="/assets/images/cloud-search-rules/boost-menu.png" alt='Boost menu on a result card with "This document only", two filter suggestions, and "Choose a filter…"' width="400" />
+
+A filter fits here, because you want every product on sale, whichever they are at that moment. When you open the menu on a product on sale, it can suggest **All where on_sale is true**, which selects them in one click. Otherwise, click **Choose a filter…**, then fill in the dialog:
 
 - **Index**: the index holding the products, here `products`.
-- **Filter**: the condition selecting them, here `on_sale = true`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
-- **Strength**: how high the selected products climb. Start with the medium value, then run a few searches of your own and adjust: the right strength depends on your data and on the way your users search.
+- **Strength**: how high the selected products climb. Start with **Medium**, then run a few searches of your own and adjust: the right strength depends on your data and on the way your users search.
+- **Matching a filter**: the condition selecting the products, here `on_sale = true`. The attribute you filter on must be in the [`filterableAttributes` setting](/reference/api/settings/get-filterableattributes) of the index, otherwise the action selects no document.
 
 The dialog tells you how many documents the action affects, so you can check your filter before saving. Click **Add action**.
 
-![Boost documents dialog with the index, the strength, and the filter](/assets/images/cloud-search-rules/boost-action-dialog.png)
+<img src="/assets/images/cloud-search-rules/boost-filter-dialog.png" alt="Boost documents dialog with the index, the strength, the filter, and the number of documents it boosts" width="480" />
 
 ### Limit the rule to the campaign
 
-In the **Conditions** block, set **Time** to **Apply within time range**, then enter the start and the end of your campaign. Times are in UTC, so convert your local window before entering it.
+In the **When it runs** section of the panel, select **Between dates**, then enter the start and the end of your campaign. Times are in UTC, so convert your local window before entering it.
 
-![Actions block with the boost action, and the time range condition](/assets/images/cloud-search-rules/boost-rule-overview.png)
+<img src="/assets/images/cloud-search-rules/boost-rule-panel.png" alt='Your rule panel with the boost in "What changes" and the start and end dates in "When it runs"' width="320" />
 
-Click **Create rule**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, searches keep their usual results during the campaign, with the products on sale higher in the list.
+### Save the rule
+
+Click **Save rule**. In the **Review and save** dialog, name the rule, such as `summer-sale`, then click **Save and activate**. Meilisearch indexes the rule, which can take a few seconds to a few minutes. Once it is live, searches keep their usual results during the campaign, with the products on sale higher in the list.
 
 ## Set up on a self-hosted instance
 

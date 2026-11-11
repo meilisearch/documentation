@@ -13,6 +13,13 @@ curl \
   ]'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --displayed-attributes title,overview,genres,release_date
+```
+
 ```javascript JS
 client.index('movies').updateDisplayedAttributes([
   'title',

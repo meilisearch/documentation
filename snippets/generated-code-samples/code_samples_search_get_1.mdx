@@ -6,6 +6,12 @@ curl \
   -H 'Authorization: Bearer API_KEY'
 ```
 
+```bash CLI
+meili search \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies --q 'american ninja'
+```
+
 ```javascript JS
 client.index('movies').searchGet('American ninja')
 ```

@@ -9,4 +9,11 @@ curl \
     "maxValuesPerFacet": 20
   }'
 ```
+
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index books \
+  --faceting '{"maxValuesPerFacet":20}'
+```
 </CodeGroup>

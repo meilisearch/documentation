@@ -8,6 +8,12 @@ curl \
   --data-binary @games.json
 ```
 
+```bash CLI
+meili document add \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index games --file games.json
+```
+
 ```javascript JS
 const games = require('./games.json')
 client.index('games').addDocuments(games).then((res) => console.log(res))

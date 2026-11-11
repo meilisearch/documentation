@@ -12,6 +12,13 @@ curl \
   }'
 ```
 
+```bash CLI
+meili settings update \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies \
+  --typo-tolerance '{"disableOnWords":["shrek"]}'
+```
+
 ```javascript JS
 client.index('movies').updateTypoTolerance({
   disableOnWords: ['shrek']

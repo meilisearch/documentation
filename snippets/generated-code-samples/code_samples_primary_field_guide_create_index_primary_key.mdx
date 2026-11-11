@@ -11,6 +11,12 @@ curl \
   }'
 ```
 
+```bash CLI
+meili index add \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --id books --primary-key reference_number
+```
+
 ```javascript JS
 client.createIndex('books', { primaryKey: 'reference_number' })
 ```

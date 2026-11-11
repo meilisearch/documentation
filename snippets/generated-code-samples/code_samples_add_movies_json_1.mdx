@@ -8,6 +8,12 @@ curl \
   --data-binary @movies.json
 ```
 
+```bash CLI
+meili document add \
+  --project-url MEILISEARCH_URL --project-api-key API_KEY \
+  --index movies --file movies.json
+```
+
 ```javascript JS
 const movies = require('./movies.json')
 client.index('movies').addDocuments(movies).then((res) => console.log(res))
