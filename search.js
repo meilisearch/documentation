@@ -26,6 +26,37 @@ const HL_POST = '\u0002'
 const isGeneratedAnchor = hit => /^_R_/.test(hit.anchor || '')
 const isAnchorHit = hit => Boolean(hit.anchor) || Boolean(hit.hierarchy_lvl2)
 
+// Docs sections, in navigation order. Other path segments still appear as facets.
+const SECTION_LABELS = {
+  getting_started: 'Getting started',
+  capabilities: 'Capabilities',
+  reference: 'Reference',
+  resources: 'Resources',
+  changelog: 'Changelog'
+}
+const SECTION_ORDER = Object.keys(SECTION_LABELS)
+
+const sectionLabel = key => SECTION_LABELS[key] || String(key).replace(/_/g, ' ')
+
+const compareSections = (a, b) => {
+  const ai = SECTION_ORDER.indexOf(a)
+  const bi = SECTION_ORDER.indexOf(b)
+  if (ai === -1 && bi === -1) return a.localeCompare(b)
+  if (ai === -1) return 1
+  if (bi === -1) return -1
+  return ai - bi
+}
+
+// Facet counts come from the unfiltered query. Hits fill any section the facet
+// request missed, so a visible result can always be filtered.
+const mergeSectionCounts = (facetResponse, hits) => {
+  const distribution = { ...(facetResponse?.facetDistribution?.section || {}) }
+  hits.forEach(hit => {
+    if (hit.section && !(distribution[hit.section] > 0)) distribution[hit.section] = 1
+  })
+  return distribution
+}
+
 // Strip zero-width spaces and decode HTML entities left by the scraper (for example &gt;)
 const decodeEntities = value => {
   const textarea = document.createElement('textarea')
@@ -136,6 +167,13 @@ function initializeMeilisearchIntegration() {
   if (document.getElementById('meilisearch-bar-container')) {
     return
   }
+
+  // No section is selected until the user clicks a facet. Facets stay hidden
+  // until a search returns sections that have hits.
+  let selectedSection = null
+  let renderSectionFacets = () => {}
+  let clearSectionFacets = () => {}
+  let cancelSearch = () => {}
 
   // Modify the responsive visibility handler
   const handleResponsiveVisibility = () => {
@@ -333,10 +371,11 @@ function initializeMeilisearchIntegration() {
     resultsContainer.setAttribute('role', 'listbox')
     resultsContainer.setAttribute('aria-label', 'Search results')
 
-    // Create the faceted filter container
+    // Create the faceted filter container. Hidden until a search has sections to offer.
     const filterContainer = document.createElement('div')
     filterContainer.id = 'meilisearch-filter-container'
     filterContainer.className = 'meilisearch-filter-container'
+    filterContainer.hidden = true
 
     // Create filter title
     const filterTitle = document.createElement('div')
@@ -346,54 +385,81 @@ function initializeMeilisearchIntegration() {
     // Create filter tags container
     const filterTagsContainer = document.createElement('div')
     filterTagsContainer.className = 'meilisearch-filter-tags'
-    filterTagsContainer.setAttribute('role', 'tablist')
+    filterTagsContainer.setAttribute('role', 'group')
     filterTagsContainer.setAttribute('aria-label', 'Section')
 
-    // Sections work as tabs: "All" plus one tab per docs section. The `section`
+    // Facet chips for sections that match the current query. The `section`
     // field is set on each record by scripts/search/post-scrape-edit.sh
-    const sections = [
-      { key: null, label: 'All' },
-      { key: 'getting_started', label: 'Getting started' },
-      { key: 'capabilities', label: 'Capabilities' },
-      { key: 'reference', label: 'Reference' },
-      { key: 'resources', label: 'Resources' },
-      { key: 'changelog', label: 'Changelog' }
-    ]
-    const filterTags = []
+    let filterTags = []
 
-    // Select a section and rerun the search if there is a query
-    const selectSection = (index) => {
-      filterTags.forEach((tag, i) => {
-        tag.classList.toggle('active', i === index)
-        tag.setAttribute('aria-selected', String(i === index))
+    const syncFacetSelection = () => {
+      filterTags.forEach(tag => {
+        const on = tag.dataset.section === selectedSection
+        tag.classList.toggle('active', on)
+        tag.setAttribute('aria-pressed', String(on))
       })
+    }
+
+    // Select a section and rerun the search. Clicking the active facet clears it.
+    const applySection = (sectionKey, { toggle = false } = {}) => {
+      const next = toggle && selectedSection === sectionKey ? null : sectionKey
+      if (next === selectedSection) return
+      selectedSection = next
+      syncFacetSelection()
 
       if (searchInput.value.trim().length >= 2) {
         searchInput.dispatchEvent(new Event('input', { bubbles: true }))
       }
     }
 
-    // Tab and Shift+Tab move between sections, wrapping around
+    // Tab and Shift+Tab move between the facets that are currently shown
     const cycleSection = (step) => {
-      const current = filterTags.findIndex(tag => tag.classList.contains('active'))
-      selectSection((current + step + filterTags.length) % filterTags.length)
+      if (filterTags.length === 0) return
+      const current = filterTags.findIndex(tag => tag.dataset.section === selectedSection)
+      const next = current === -1
+        ? (step > 0 ? 0 : filterTags.length - 1)
+        : (current + step + filterTags.length) % filterTags.length
+      applySection(filterTags[next].dataset.section)
     }
 
-    sections.forEach(({ key: section, label }, index) => {
-      const tag = document.createElement('button')
-      tag.className = 'meilisearch-filter-tag'
-      tag.textContent = label
-      tag.setAttribute('role', 'tab')
-      tag.tabIndex = -1
-      if (section) tag.dataset.section = section
-      tag.addEventListener('click', () => {
-        selectSection(index)
-        searchInput.focus()
+    clearSectionFacets = () => {
+      selectedSection = null
+      filterTags = []
+      filterTagsContainer.replaceChildren()
+      filterContainer.hidden = true
+    }
+
+    renderSectionFacets = (distribution) => {
+      const keys = Object.entries(distribution || {})
+        .filter(([key, count]) => key && count > 0)
+        .map(([key]) => key)
+        .sort(compareSections)
+
+      filterTags = []
+      filterTagsContainer.replaceChildren()
+
+      if (keys.length === 0) {
+        filterContainer.hidden = true
+        return
+      }
+
+      keys.forEach(section => {
+        const tag = document.createElement('button')
+        tag.type = 'button'
+        tag.className = 'meilisearch-filter-tag'
+        tag.textContent = sectionLabel(section)
+        tag.dataset.section = section
+        tag.tabIndex = -1
+        tag.addEventListener('click', () => {
+          applySection(section, { toggle: true })
+          searchInput.focus()
+        })
+        filterTagsContainer.appendChild(tag)
+        filterTags.push(tag)
       })
-      filterTagsContainer.appendChild(tag)
-      filterTags.push(tag)
-    })
-    selectSection(0)
+      syncFacetSelection()
+      filterContainer.hidden = false
+    }
 
     // Add filter elements to container
     filterContainer.appendChild(filterTitle)
@@ -451,6 +517,8 @@ function initializeMeilisearchIntegration() {
       modalOverlay.style.display = 'none'
       searchInput.value = ''
       resultsContainer.innerHTML = ''
+      cancelSearch()
+      clearSectionFacets()
     }
 
     // Function to handle clicks on Mintlify search buttons
@@ -578,17 +646,12 @@ function initializeMeilisearchIntegration() {
 
       const index = client.index(MEILISEARCH_INDEX)
 
-      // Function to get active filters
-      const getActiveFilters = () => {
-        const filterContainer = document.getElementById('meilisearch-filter-container')
-        if (!filterContainer) return []
-        const activeTags = filterContainer.querySelectorAll('.meilisearch-filter-tag.active')
-        // The "All" tab has no section
-        return Array.from(activeTags).map(tag => tag.dataset.section).filter(Boolean)
-      }
+      // The active facet, if the user has picked one. Nothing is selected by default.
+      const getActiveFilters = () => selectedSection ? [selectedSection] : []
 
       // Function to perform search with filters
       let latestRequestId = 0
+      cancelSearch = () => { latestRequestId++ }
 
       const performSearch = (query, activeFilters = []) => {
         const requestId = ++latestRequestId
@@ -612,14 +675,18 @@ function initializeMeilisearchIntegration() {
             : {})
         }
 
+        const sectionFilter = activeFilters.length > 0
+          ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')})`
+          : null
+
         // Create federated multi-search queries
         const multiSearchQueries = [
           {
             indexUid: MEILISEARCH_INDEX,
             q: query,
             // Lower  weight for error code results
-            filter: activeFilters.length > 0
-              ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
+            filter: sectionFilter
+              ? `${sectionFilter} AND (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
               : `hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes"`,
             federationOptions: {
               weight: 0.7
@@ -630,8 +697,8 @@ function initializeMeilisearchIntegration() {
             indexUid: MEILISEARCH_INDEX,
             q: query,
             // Higher weight for non-error code results
-            filter: activeFilters.length > 0
-              ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')}) AND NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
+            filter: sectionFilter
+              ? `${sectionFilter} AND NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`
               : `NOT (hierarchy_lvl0 = "Errors" OR hierarchy_lvl1 = "Error codes")`,
             federationOptions: {
               weight: 1.0
@@ -648,15 +715,33 @@ function initializeMeilisearchIntegration() {
           queries: multiSearchQueries
         }
 
-        client.multiSearch(multiSearchRequest)
-          .then(response => {
+        // Facets ignore the selected section, so every matching section stays available.
+        const facetPromise = index.search(query, {
+          facets: ['section'],
+          limit: 0,
+          ...(isProductionDocsSite()
+            ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
+            : {})
+        }).catch(() => null)
+
+        Promise.all([client.multiSearch(multiSearchRequest), facetPromise])
+          .then(([response, facetResponse]) => {
             // Ignore responses to outdated queries
             if (requestId !== latestRequestId) return
 
-            resultsContainer.innerHTML = ''
-
             // Handle federated multi-search response, hiding generated card anchors
             const allHits = (response.hits || []).filter(hit => !isGeneratedAnchor(hit))
+            const distribution = mergeSectionCounts(facetResponse, allHits)
+
+            // The selected section no longer matches this query. Search again without it.
+            if (selectedSection && !(distribution[selectedSection] > 0)) {
+              selectedSection = null
+              performSearch(query, [])
+              return
+            }
+
+            renderSectionFacets(distribution)
+            resultsContainer.innerHTML = ''
 
             if (allHits.length === 0) {
               const noResultsEl = document.createElement('div')
@@ -677,6 +762,7 @@ function initializeMeilisearchIntegration() {
           .catch(error => {
             if (requestId !== latestRequestId) return
             console.error('Meilisearch error:', error)
+            clearSectionFacets()
             resultsContainer.innerHTML = ''
             const errorEl = document.createElement('div')
             errorEl.className = 'meilisearch-modal__error'
@@ -697,6 +783,7 @@ function initializeMeilisearchIntegration() {
         if (query.length < 2) {
           latestRequestId++
           resultsContainer.innerHTML = ''
+          clearSectionFacets()
           return
         }
 
