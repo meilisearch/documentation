@@ -1,6 +1,6 @@
 # Contributing to the documentation
 
-This guide covers how to set up your environment and run the docs locally, run tests, and work with code samples and the OpenAPI spec.
+This guide covers how to set up your environment and run the docs locally, rebuild the staging search index, run tests, and work with code samples and the OpenAPI spec.
 
 ## Table of contents
 
@@ -8,6 +8,7 @@ This guide covers how to set up your environment and run the docs locally, run t
 - [Install](#install)
 - [Docs writing](#docs-writing)
 - [Run the docs locally](#run-the-docs-locally)
+- [Documentation search](#documentation-search)
 - [Tests](#tests)
 - [Code samples](#code-samples)
 - [OpenAPI Mintlify file](#openapi-mintlify-file)
@@ -41,6 +42,28 @@ npx mintlify dev
 ```
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser. The preview updates automatically when you save MDX files.
+
+## Documentation search
+
+Local preview and Mintlify preview URLs search the `mintlify-staging` index. meilisearch.com searches `mintlify-production`, which the [scraper workflow](.github/workflows/scraper.yml) rebuilds on every push to `main`. A merge does not update staging.
+
+Run the rebuild when you change the search config and need that change in local search or in a preview. It rebuilds the shared `mintlify-staging` index, so every local preview and every Mintlify preview picks up the new index.
+
+You need Docker, `jq`, and a `.env` file at the repository root. `.env` is gitignored.
+
+```bash
+MEILISEARCH_API_KEY=your-master-key
+# Optional. Defaults to the docs search instance.
+MEILISEARCH_HOST_URL=https://ms-909f535664f8-173.lon.meilisearch.io
+# Optional. Leave unset unless you are testing embeddings.
+OPENAI_API_KEY=your-openai-key
+```
+
+`MEILISEARCH_API_KEY` is the master key of the docs search instance. The public search-only key is not enough.
+
+```bash
+npm run rebuild-search-staging
+```
 
 ## Tests
 
@@ -126,3 +149,5 @@ It does the following:
 Each step commits separately so the history stays clear. Contributors don’t need to run these steps manually for normal edits; the workflow keeps code samples and OpenAPI files up to date after merges to `main`.
 
 A concurrency group ensures only one run executes at a time, so multiple triggers (many commits merged on `main`) do not run in parallel and cause conflicting commits.
+
+The docs search index is separate from this workflow. See [Documentation search](#documentation-search).
