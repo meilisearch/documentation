@@ -778,13 +778,13 @@ function initializeMeilisearchIntegration() {
 
       // Add search event listener
       searchInput.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer)
+        // Drop any in-flight search before waiting to start the next one.
+        cancelSearch()
 
         const query = e.target.value.trim()
         const activeFilters = getActiveFilters()
 
         if (query.length < 2) {
-          latestRequestId++
           resultsContainer.innerHTML = ''
           clearSectionFacets()
           return
