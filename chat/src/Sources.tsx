@@ -33,6 +33,16 @@ export function expandedPageLabel(part: Part): string | undefined {
 
 const MAX_SOURCES = 8;
 
+function pageHref(url: string): string {
+  return url.split("#")[0];
+}
+
+/** Nav location only. `hit.breadcrumb` includes the chunk heading, so it is not a page label. */
+function pageBreadcrumb(hit: Record<string, unknown>): string | undefined {
+  const parts = [hit.tab, hit.group].filter((part): part is string => typeof part === "string" && part.length > 0);
+  return parts.length > 0 ? parts.join(" > ") : undefined;
+}
+
 /** Unique pages found by all completed searches in a message, in order of appearance. */
 export function collectSources(parts: Part[]): Source[] {
   const seen = new Set<string>();
@@ -43,14 +53,14 @@ export function collectSources(parts: Part[]): Source[] {
     for (const hit of hitsOf((part as { output?: unknown }).output)) {
       if (sources.length >= MAX_SOURCES) return sources;
       if (typeof hit.url !== "string") continue;
-      const page = hit.url.split("#")[0];
-      if (seen.has(page)) continue;
-      seen.add(page);
-      const href = typeof hit.anchor === "string" && hit.anchor ? `${page}#${hit.anchor}` : hit.url;
+      const href = pageHref(hit.url);
+      const key = typeof hit.page === "string" ? hit.page : href;
+      if (seen.has(key)) continue;
+      seen.add(key);
       sources.push({
         href,
         title: typeof hit.title === "string" ? hit.title : href,
-        breadcrumb: typeof hit.breadcrumb === "string" ? hit.breadcrumb : undefined,
+        breadcrumb: pageBreadcrumb(hit),
       });
     }
   }

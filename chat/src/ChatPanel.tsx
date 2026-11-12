@@ -123,7 +123,7 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
         aria-hidden={!open}
         // Keep page shortcuts (search, navigation) from reacting to typing in the chat.
         onKeyDown={(event) => event.stopPropagation()}
-        className={`fixed top-0 right-0 bottom-0 z-[10001] flex w-[min(440px,100vw)] flex-col border-l border-black/10 bg-white text-[#191919] shadow-2xl transition-transform duration-200 dark:border-white/10 dark:bg-ink-dark dark:text-white ${open ? "translate-x-0" : "pointer-events-none translate-x-full"
+        className={`fixed top-0 right-0 bottom-0 z-[10001] flex w-[min(720px,100vw)] flex-col border-l border-black/10 bg-white text-[#191919] shadow-2xl transition-transform duration-200 dark:border-white/10 dark:bg-ink-dark dark:text-white ${open ? "translate-x-0" : "pointer-events-none translate-x-full"
           }`}
         style={{ fontFamily: "inherit" }}
       >
