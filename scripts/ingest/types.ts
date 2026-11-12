@@ -15,7 +15,10 @@ export type EmbedderConfig = {
 export type MeilisearchConfig = {
   host: string;
   apiKey: string;
+  /** Guide and concept chunks, including code samples mounted on those pages. */
   indexUid: string;
+  /** API route contracts. Separate from `indexUid` so route identifiers are not typo-matched. */
+  routesIndexUid: string;
   embedder: EmbedderConfig;
 };
 
@@ -29,8 +32,20 @@ export type IngestConfig = {
   exclude: string[];
   sources: { mdx: boolean; codeSamples: boolean; images: boolean };
   chunking: ChunkingConfig;
-  /** Absolute path of the JSONL file written by dry runs. */
+  /** Absolute path of the JSONL file written by dry runs of guide pages. */
   dryRunOutput: string;
+  /** Absolute path of the JSONL file written by dry runs of API routes. */
+  routesDryRunOutput: string;
+};
+
+/** A code sample mounted on a guide page. `codes` only contains languages the snippet has. */
+export type CodeSample = {
+  /** Component name in the MDX source, for example "JoinsDefineRelationship1". */
+  alias: string;
+  /** Snippet key, for example "joins_define_relationship_1". */
+  key: string;
+  /** Canonical language key ("http", "js", "python") to source text. */
+  codes: Record<string, string>;
 };
 
 export type RawPage = {
@@ -43,6 +58,8 @@ export type RawPage = {
   /** MDX source without frontmatter. */
   body: string;
   pageHash: string;
+  /** Samples mounted in `body`, in source order. Empty when code samples are disabled. */
+  samples?: CodeSample[];
 };
 
 export type Chunk = {
@@ -58,8 +75,17 @@ export type Chunk = {
   hierarchy: string[];
   breadcrumb: string;
   content: string;
-  content_type: "prose";
+  content_type: "prose" | "code_sample" | "api_route";
   chunk_index: number;
+  /** Language key to source. Set on code samples, and on the first chunk of an API route. */
+  codes?: Record<string, string>;
+  /** Keys of `codes`. Filterable on the docs index. */
+  code_language?: string[];
+  /**
+   * Exact lookup strings for an API route: method and path, page path, slug, site path, and canonical URL.
+   * Filterable on the routes index.
+   */
+  lookup_keys?: string[];
 };
 
 export type SyncOperation = { deletePages: string[]; chunks: Chunk[] };

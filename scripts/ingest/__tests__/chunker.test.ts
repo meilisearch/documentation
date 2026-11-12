@@ -501,4 +501,66 @@ describe("chunkPage", () => {
     );
     expect(chunks.length).toBeGreaterThan(3);
   });
+
+  it("keeps a mounted sample between the prose around it and does not merge across it", () => {
+    const page = makePage(
+      ["## Define a relationship", "Store the foreign key.", "<JoinsDefineRelationship1 />", "## Remove it", "Drop the field."].join(
+        "\n\n",
+      ),
+      {
+        samples: [
+          {
+            alias: "JoinsDefineRelationship1",
+            key: "joins_define_relationship_1",
+            codes: { http: "curl -X PATCH settings", python: "client.update()" },
+          },
+        ],
+      },
+    );
+
+    const chunks = chunkPage(page, {
+      chunking: { splitDepth: 3, maxChars: 2000, minChars: 500 },
+      baseUrl: BASE_URL,
+    });
+
+    expect(chunks.map(({ content_type, chunk_index }) => ({ content_type, chunk_index }))).toEqual([
+      { content_type: "prose", chunk_index: 0 },
+      { content_type: "code_sample", chunk_index: 1 },
+      { content_type: "prose", chunk_index: 2 },
+    ]);
+    expect(chunks[0].content).toContain("Store the foreign key.");
+    expect(chunks[0].content).not.toContain("Drop the field.");
+    expect(chunks[1]).toMatchObject({
+      content: "curl -X PATCH settings",
+      anchor: "define-a-relationship",
+      codes: { http: "curl -X PATCH settings", python: "client.update()" },
+      code_language: ["http", "python"],
+    });
+    expect(chunks[2].content).toContain("Drop the field.");
+    expect(chunks[2].anchor).toBe("remove-it");
+  });
+
+  it("lifts a sample mounted inside a list item out of the surrounding prose", () => {
+    const page = makePage(
+      ["## Troubleshooting", "1. Check the settings:", "", "   <CodeSamplesChatGetSettings1 />", "", "2. Update the key."].join("\n"),
+      {
+        samples: [
+          {
+            alias: "CodeSamplesChatGetSettings1",
+            key: "chat_get_settings_1",
+            codes: { http: "curl https://example.test/chats" },
+          },
+        ],
+      },
+    );
+
+    const chunks = chunkPage(page, { chunking: { splitDepth: 3, maxChars: 2000, minChars: 200 }, baseUrl: BASE_URL });
+
+    expect(chunks.map((chunk) => chunk.content_type)).toEqual(["prose", "code_sample", "prose"]);
+    expect(chunks[0].content).toContain("Check the settings:");
+    expect(chunks[1].content).toBe("curl https://example.test/chats");
+    expect(chunks[1].anchor).toBe("troubleshooting");
+    expect(chunks[2].content).toContain("Update the key.");
+    expect(chunks.map((chunk) => chunk.content).join("\n")).not.toContain("INGEST_SAMPLE");
+  });
 });

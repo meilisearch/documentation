@@ -4,7 +4,7 @@ import { resolveMeilisearchConfig } from "./config.ts";
 import userConfig from "./ingest.config.ts";
 import type { Chunk } from "./types.ts";
 
-const USAGE = `Usage: npm run ingest:query -- "<query>" [--ratio 0.5] [--limit 5]`;
+const USAGE = `Usage: npm run ingest:query -- "<query>" [--ratio 0.5] [--limit 5] [--index docs|routes]`;
 
 async function main(): Promise<void> {
   const { values, positionals } = parseArgs({
@@ -12,6 +12,7 @@ async function main(): Promise<void> {
     options: {
       ratio: { type: "string", default: "0.5" },
       limit: { type: "string", default: "5" },
+      index: { type: "string", default: "docs" },
     },
   });
   const query = positionals.join(" ");
@@ -21,11 +22,12 @@ async function main(): Promise<void> {
   }
 
   const meilisearch = resolveMeilisearchConfig(userConfig);
+  const indexUid = values.index === "routes" ? meilisearch.routesIndexUid : meilisearch.indexUid;
   const client = new Meilisearch({ host: meilisearch.host, apiKey: meilisearch.apiKey });
-  const response = await client.index<Chunk>(meilisearch.indexUid).search(query, {
+  const response = await client.index<Chunk>(indexUid).search(query, {
     hybrid: { embedder: meilisearch.embedder.name, semanticRatio: Number(values.ratio) },
     limit: Number(values.limit),
-    attributesToRetrieve: ["breadcrumb", "url", "content"],
+    attributesToRetrieve: ["breadcrumb", "url", "content", "content_type"],
     showRankingScore: true,
   });
 

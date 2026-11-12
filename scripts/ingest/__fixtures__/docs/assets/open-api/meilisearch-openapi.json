@@ -1,0 +1,25 @@
+{
+  "openapi": "3.1.0",
+  "paths": {
+    "/indexes": {
+      "get": {
+        "summary": "List indexes",
+        "description": "List all indexes.",
+        "responses": {
+          "200": {
+            "description": "The indexes are returned.",
+            "content": {
+              "application/json": {
+                "example": { "results": [], "limit": 20, "offset": 0, "total": 0 }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          { "lang": "cURL", "label": "HTTP request", "source": "curl -X GET 'MEILISEARCH_URL/indexes'" }
+        ]
+      }
+    }
+  },
+  "components": { "schemas": {} }
+}

@@ -202,4 +202,55 @@ describe("loadPages", () => {
     expect(afterMove.get("getting_started/overview")).toBe(afterEdit.get("getting_started/overview"));
     expect(afterChunkingChange.get("getting_started/overview")).not.toBe(afterMove.get("getting_started/overview"));
   });
+
+  it("mounts aliased snippets and changes the page hash when a snippet file changes", async () => {
+    const rootDir = await makeDocs({ tabs: [{ tab: "Guides", pages: ["guides/joins"] }] }, ["guides/joins"]);
+    const snippetDir = path.join(rootDir, "snippets/generated-code-samples");
+    await fs.mkdir(snippetDir, { recursive: true });
+    const snippet = path.join(snippetDir, "code_samples_joins_define_relationship_1.mdx");
+    const writeSnippet = (curl: string) =>
+      fs.writeFile(
+        snippet,
+        `<CodeGroup>\n\n\`\`\`bash cURL\n${curl}\n\`\`\`\n\n\`\`\`javascript JS\nclient.update()\n\`\`\`\n\n</CodeGroup>\n`,
+      );
+    await writeSnippet("curl one");
+    await fs.writeFile(
+      path.join(rootDir, "guides/joins.mdx"),
+      [
+        "---",
+        "title: Joins",
+        "---",
+        "",
+        "import JoinsDefineRelationship1 from '/snippets/generated-code-samples/code_samples_joins_define_relationship_1.mdx'",
+        "",
+        "Use <JoinsUnused /> in prose, then mount the sample.",
+        "",
+        "<JoinsDefineRelationship1 />",
+        "",
+      ].join("\n"),
+    );
+
+    const load = () => loadPages({ rootDir, navigation: "navigation.json", chunking: DEFAULT_CHUNKING });
+    const [first] = await load();
+    expect(first.samples).toEqual([
+      {
+        alias: "JoinsDefineRelationship1",
+        key: "joins_define_relationship_1",
+        codes: { http: "curl one", js: "client.update()" },
+      },
+    ]);
+
+    await writeSnippet("curl two");
+    const [second] = await load();
+    expect(second.pageHash).not.toBe(first.pageHash);
+    expect(second.samples?.[0].codes.http).toBe("curl two");
+
+    const [withoutSamples] = await loadPages({
+      rootDir,
+      navigation: "navigation.json",
+      chunking: DEFAULT_CHUNKING,
+      codeSamples: false,
+    });
+    expect(withoutSamples.samples).toEqual([]);
+  });
 });

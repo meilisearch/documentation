@@ -10,7 +10,7 @@ import type { Sink } from "./types.ts";
 
 const USAGE = `Usage: npm run ingest -- [options]
 
-  --dry-run        Write chunks to .ingest/chunks.jsonl instead of Meilisearch
+  --dry-run        Write chunks to .ingest/chunks.jsonl and .ingest/routes.jsonl instead of Meilisearch
   --force          Re-sync every page, even unchanged ones
   --only <glob>    Only sync pages matching the glob (repeatable), e.g. "changelog/**"
   --config <file>  Config file (default: scripts/ingest/ingest.config.ts)
@@ -61,23 +61,40 @@ async function main(): Promise<void> {
   const userConfig: UserConfig = (await import(pathToFileURL(configFile).href)).default;
   const config = resolveConfig(userConfig);
 
-  let sink: Sink;
+  let sink: { docs: Sink; routes: Sink };
   let target: string;
   if (values["dry-run"]) {
-    sink = new JsonlSink(config.dryRunOutput);
-    target = path.relative(process.cwd(), config.dryRunOutput);
+    sink = {
+      docs: new JsonlSink(config.dryRunOutput),
+      routes: new JsonlSink(config.routesDryRunOutput),
+    };
+    target = `${path.relative(process.cwd(), config.dryRunOutput)} and ${path.relative(process.cwd(), config.routesDryRunOutput)}`;
   } else {
     const meilisearch = resolveMeilisearchConfig(userConfig);
     const client = new Meilisearch({ host: meilisearch.host, apiKey: meilisearch.apiKey });
-    const meilisearchSink = new MeilisearchSink({ client, indexUid: meilisearch.indexUid, embedder: meilisearch.embedder });
-    await meilisearchSink.ensureSettings();
-    sink = meilisearchSink;
-    target = `${meilisearch.host} (index ${meilisearch.indexUid})`;
+    const docs = new MeilisearchSink({
+      client,
+      indexUid: meilisearch.indexUid,
+      kind: "docs",
+      embedder: meilisearch.embedder,
+    });
+    const routes = new MeilisearchSink({
+      client,
+      indexUid: meilisearch.routesIndexUid,
+      kind: "routes",
+      embedder: meilisearch.embedder,
+    });
+    await docs.ensureSettings();
+    await routes.ensureSettings();
+    sink = { docs, routes };
+    target = `${meilisearch.host} (indexes ${meilisearch.indexUid}, ${meilisearch.routesIndexUid})`;
   }
 
   const started = performance.now();
-  const summary = await runIngest({ config, sink, only: values.only, force: values.force });
-  report(summary, target, (performance.now() - started) / 1000);
+  const summary = await runIngest({ config, sinks: sink, only: values.only, force: values.force });
+  const seconds = (performance.now() - started) / 1000;
+  report(summary.docs, `${target} docs`, seconds);
+  report(summary.routes, `${target} routes`, seconds);
 }
 
 main().catch((error) => {
