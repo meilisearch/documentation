@@ -148,8 +148,8 @@ const renderHit = hit => {
 }
 
 function initializeMeilisearchIntegration() {
-  // Add a check at the start of the function to prevent multiple initializations
-  if (document.getElementById('meilisearch-bar-container')) {
+  // The modal and the document listeners are created once per visit
+  if (document.getElementById('meilisearch-modal-overlay')) {
     return
   }
 
@@ -159,6 +159,7 @@ function initializeMeilisearchIntegration() {
   let renderSectionFacets = () => {}
   let clearSectionFacets = () => {}
   let cancelSearch = () => {}
+  let openSearchModal = () => {}
 
   // Modify the responsive visibility handler
   const handleResponsiveVisibility = () => {
@@ -197,14 +198,18 @@ function initializeMeilisearchIntegration() {
   }
 
   // ========= Step 1: Create and inject the visible search bar in the header =========
-  const initSearchBar = () => {
+  // Mintlify can replace the whole header during client-side navigation, which removes
+  // the bar. This runs again after each navigation and does nothing while the bar is in place.
+  const mountSearchBar = () => {
+    if (document.getElementById('meilisearch-bar-container')) {
+      handleResponsiveVisibility()
+      return
+    }
 
-    // When finding the original search button, also look for mobile version icon
     const originalSearchButton = document.getElementById('search-bar-entry')
-    const originalMobileSearchButton = document.getElementById('search-bar-entry-mobile')
 
     // Find the header where we'll add our search input
-    const header = document.querySelector('header')
+    const header = document.getElementById('navbar') || document.querySelector('header')
     if (!header) { //header not found, cannot add search bar
       return
     }
@@ -308,6 +313,11 @@ function initializeMeilisearchIntegration() {
       }
     }
 
+    searchBar.addEventListener('click', () => openSearchModal())
+    handleResponsiveVisibility()
+  }
+
+  const setupSearchModal = () => {
     // ========= Step 2: Create the modal search overlay =========
     const modalOverlay = document.createElement('div')
     modalOverlay.id = 'meilisearch-modal-overlay'
@@ -481,7 +491,7 @@ function initializeMeilisearchIntegration() {
     // ========= Step 3: Set up event listeners =========
 
     // Function to open the search modal
-    const openSearchModal = () => {
+    openSearchModal = () => {
       // Always place the modal at the top, regardless of scroll position
       modalOverlay.style.display = 'flex'
 
@@ -500,38 +510,15 @@ function initializeMeilisearchIntegration() {
       clearSectionFacets()
     }
 
-    // Function to handle clicks on Mintlify search buttons
-    const handleMintlifySearchClick = (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      openSearchModal()
-    }
-
-    // Open modal when clicking the search bar
-    searchBar.addEventListener('click', openSearchModal)
-
-    // Add click handlers to Mintlify search buttons
-    if (originalSearchButton) {
-      originalSearchButton.addEventListener('click', handleMintlifySearchClick)
-    }
-    if (originalMobileSearchButton) {
-      originalMobileSearchButton.addEventListener('click', handleMintlifySearchClick)
-    }
-
-    // Add handlers for any search buttons that might be added later
-    const searchButtonObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-          mutation.addedNodes.forEach((node) => {
-            if (node.id === 'search-bar-entry' || node.id === 'search-bar-entry-mobile') {
-              node.addEventListener('click', handleMintlifySearchClick)
-            }
-          })
-        }
-      })
-    })
-
-    searchButtonObserver.observe(document.body, { childList: true, subtree: true })
+    // Open our modal instead of Mintlify's from its search buttons. A capture listener on the
+    // document keeps working when Mintlify renders new buttons, and runs before React's handlers.
+    document.addEventListener('click', (e) => {
+      if (e.target instanceof Element && e.target.closest('#search-bar-entry, #search-bar-entry-mobile')) {
+        e.preventDefault()
+        e.stopPropagation()
+        openSearchModal()
+      }
+    }, true)
 
     // Close modal when clicking outside the search modal
     modalOverlay.addEventListener('click', (e) => {
@@ -601,9 +588,6 @@ function initializeMeilisearchIntegration() {
     } else {
       setupMeilisearchHandlers(searchInput, resultsContainer)
     }
-
-    // Make sure we call handleResponsiveVisibility immediately after creating the search bar
-    handleResponsiveVisibility()
 
     // Add a debounced resize listener to prevent too many calls
     let resizeTimeout
@@ -776,43 +760,34 @@ function initializeMeilisearchIntegration() {
     }
   }
 
-  // Initialize the search bar
-  initSearchBar()
+  setupSearchModal()
+  mountSearchBar()
 
-  // Update the MutationObserver logic
-  const observer = new MutationObserver(mutations => {
-    if (observer.processing) return
-    observer.processing = true
-
-    mutations.forEach(mutation => {
-      if (mutation.type === 'childList') {
-        const header = document.querySelector('header')
-        if (mutation.target === header || header?.contains(mutation.target)) {
-          if (window.innerWidth >= 1024) {
-            // Check for both possible IDs
-            const searchBar = document.getElementById('meilisearch-search-bar') ||
-              document.getElementById('search-bar-entry')
-            const searchBarContainer = document.getElementById('meilisearch-bar-container') ||
-              document.getElementById('search-bar-entry')
-
-            if (!searchBar && !searchBarContainer) { //searchbar missing in desktop view, reinitialize
-              initSearchBar()
-            }
-          }
-        }
-      }
+  let mountScheduled = false
+  const scheduleMount = () => {
+    if (mountScheduled) return
+    mountScheduled = true
+    requestAnimationFrame(() => {
+      mountScheduled = false
+      mountSearchBar()
     })
+  }
 
-    observer.processing = false
+  // `mintlify:navigate` fires a few milliseconds before Mintlify inserts the new header,
+  // so mount on the next frame and check again once the page has settled.
+  window.addEventListener('mintlify:navigate', () => {
+    scheduleMount()
+    setTimeout(mountSearchBar, 250)
   })
 
-  // Update observer configuration to be more specific
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: false,
-    characterData: false
-  })
+  // Backup for headers that render later, and for clients without `mintlify:navigate`
+  // such as the local preview. Each callback does two ID lookups at most.
+  new MutationObserver(() => {
+    if (!document.getElementById('meilisearch-bar-container') &&
+      (document.getElementById('navbar') || document.querySelector('header'))) {
+      scheduleMount()
+    }
+  }).observe(document.body, { childList: true, subtree: true })
 }
 
 // Initialization
