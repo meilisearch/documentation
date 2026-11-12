@@ -111,7 +111,7 @@ export async function POST(request: Request): Promise<Response> {
     searchParams: {
       limit: 8,
       hybrid: { embedder: "voyage", semanticRatio: 0.5 },
-      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content"],
+      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content", "tab", "group"],
     },
   });
 
