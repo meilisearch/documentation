@@ -1,6 +1,7 @@
 import type { UIMessage } from "ai";
 import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
+import { code } from "./highlight";
 import { collectSources, expandedPageLabel, isExpandPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
 
 function ToolStatus({ state, label }: { state: string; label: string }) {
@@ -48,7 +49,11 @@ export const Message = memo(function Message({ message, streaming }: { message: 
                 components={components}
                 isAnimating={streaming && index === message.parts.length - 1}
                 linkSafety={{ enabled: false }}
-                controls={false}
+                lineNumbers={false}
+                codeBlockMaxHeight={Infinity}
+                controls={{ code: { download: false }, table: false, mermaid: false, image: false }}
+                plugins={{ code }}
+                shikiTheme={["github-light-default", "dark-plus"]}
               >
                 {part.text}
               </Streamdown>
