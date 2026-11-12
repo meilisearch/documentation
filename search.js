@@ -14,8 +14,11 @@ const HYBRID_OPTIONS = isProductionDocsSite()
 
 // Random ID per browser, only used for Meilisearch search analytics.
 // Kept in localStorage so the same visitor is one user across tabs and visits.
-let fallbackUserId = null
+// Resolved once per page, so a search and its click share an ID even if another
+// tab writes a different one.
+let analyticsUserId = null
 const getAnalyticsUserId = () => {
+  if (analyticsUserId) return analyticsUserId
   const key = 'meilisearch-docs-search-user-id'
   try {
     let id = localStorage.getItem(key)
@@ -23,10 +26,11 @@ const getAnalyticsUserId = () => {
       id = crypto.randomUUID()
       localStorage.setItem(key, id)
     }
-    return id
+    analyticsUserId = id
   } catch {
-    return (fallbackUserId ||= crypto.randomUUID())
+    analyticsUserId = crypto.randomUUID()
   }
+  return analyticsUserId
 }
 
 // Result rows are plain links, so the page may unload before a normal fetch finishes.
@@ -176,15 +180,23 @@ const renderHit = (hit, { position, queryUid, primaryKey = 'objectID' } = {}) =>
   row.appendChild(icon)
   row.appendChild(body)
 
-  // Close the modal once a result is chosen, and record which result was opened.
-  row.addEventListener('click', () => {
+  const reportClick = () => {
     sendClickEvent({
       queryUid,
       objectId: hit[primaryKey] == null ? undefined : String(hit[primaryKey]),
       objectName: cleanText(hit.hierarchy_lvl1),
       position
     })
+  }
+
+  // Close the modal once a result is chosen, and record which result was opened.
+  row.addEventListener('click', () => {
+    reportClick()
     document.getElementById('meilisearch-modal-overlay').style.display = 'none'
+  })
+  // A middle click opens the result in a new tab and fires auxclick, not click.
+  row.addEventListener('auxclick', (event) => {
+    if (event.button === 1) reportClick()
   })
   row.addEventListener('mousemove', () => {
     if (!row.classList.contains('is-active')) setActiveResult(row.parentElement, row)
