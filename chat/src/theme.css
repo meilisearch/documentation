@@ -119,3 +119,181 @@
   padding: 4px 10px;
   border: 1px solid rgba(127, 127, 127, 0.3);
 }
+
+/*
+ * Match Mintlify's code group: one rounded card, a language tab with an
+ * underline, a copy button in that row, and the code on its own surface.
+ * Streamdown's defaults are a language label, line numbers, and a second border.
+ */
+[data-streamdown="code-block"] {
+  gap: 0;
+  margin: 0.75em 0;
+  padding: 2px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f6f6f7;
+  box-shadow: none;
+}
+
+.dark [data-streamdown="code-block"] {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-streamdown="code-block-header"] {
+  height: auto;
+  min-height: 34px;
+  align-items: flex-end;
+  padding: 4px 36px 0 6px;
+}
+
+[data-streamdown="code-block"][data-language=""] [data-streamdown="code-block-header"] {
+  display: none;
+}
+
+[data-streamdown="code-block-header"] > span {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 8px 4px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-transform: capitalize;
+  color: #ff5cb2;
+}
+
+[data-streamdown="code-block-header"] > span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 999px;
+  background: #ff5cb2;
+}
+
+/* Fence ids capitalize poorly. Show the same tab labels as the docs. */
+[data-streamdown="code-block"]:is(
+  [data-language="javascript"],
+  [data-language="js"],
+  [data-language="typescript"],
+  [data-language="ts"],
+  [data-language="php"],
+  [data-language="csharp"],
+  [data-language="cs"],
+  [data-language="bash"],
+  [data-language="sh"],
+  [data-language="shell"],
+  [data-language="curl"],
+  [data-language="json"],
+  [data-language="yaml"],
+  [data-language="yml"]
+) [data-streamdown="code-block-header"] > span {
+  font-size: 0;
+}
+
+[data-streamdown="code-block"]:is(
+  [data-language="javascript"],
+  [data-language="js"],
+  [data-language="typescript"],
+  [data-language="ts"],
+  [data-language="php"],
+  [data-language="csharp"],
+  [data-language="cs"],
+  [data-language="bash"],
+  [data-language="sh"],
+  [data-language="shell"],
+  [data-language="curl"],
+  [data-language="json"],
+  [data-language="yaml"],
+  [data-language="yml"]
+) [data-streamdown="code-block-header"] > span::before {
+  font-size: 12px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+[data-language="javascript"] [data-streamdown="code-block-header"] > span::before,
+[data-language="js"] [data-streamdown="code-block-header"] > span::before {
+  content: "JS";
+}
+
+[data-language="typescript"] [data-streamdown="code-block-header"] > span::before,
+[data-language="ts"] [data-streamdown="code-block-header"] > span::before {
+  content: "TS";
+}
+
+[data-language="php"] [data-streamdown="code-block-header"] > span::before {
+  content: "PHP";
+}
+
+[data-language="csharp"] [data-streamdown="code-block-header"] > span::before,
+[data-language="cs"] [data-streamdown="code-block-header"] > span::before {
+  content: "C#";
+}
+
+[data-language="bash"] [data-streamdown="code-block-header"] > span::before,
+[data-language="sh"] [data-streamdown="code-block-header"] > span::before,
+[data-language="shell"] [data-streamdown="code-block-header"] > span::before {
+  content: "Shell";
+}
+
+[data-language="curl"] [data-streamdown="code-block-header"] > span::before {
+  content: "cURL";
+}
+
+[data-language="json"] [data-streamdown="code-block-header"] > span::before {
+  content: "JSON";
+}
+
+[data-language="yaml"] [data-streamdown="code-block-header"] > span::before,
+[data-language="yml"] [data-streamdown="code-block-header"] > span::before {
+  content: "YAML";
+}
+
+[data-streamdown="code-block"] > div:has([data-streamdown="code-block-actions"]) {
+  top: 2px;
+  right: 4px;
+}
+
+[data-streamdown="code-block-actions"] {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+[data-streamdown="code-block-copy-button"] {
+  color: rgba(25, 25, 25, 0.55);
+}
+
+.dark [data-streamdown="code-block-copy-button"] {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+[data-streamdown="code-block-copy-button"]:hover {
+  color: #ff5cb2;
+}
+
+[data-streamdown="code-block-body"] {
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px 16px;
+}
+
+.dark [data-streamdown="code-block-body"] {
+  background: #0b0c0e;
+}
+
+[data-streamdown="code-block-body"] pre {
+  margin: 0;
+  background: transparent !important;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
