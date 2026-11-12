@@ -3,6 +3,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch } from "meilisearch";
 import { z } from "zod";
+import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
 const MAX_MESSAGES = 30;
@@ -63,6 +64,19 @@ function json(status: number, body: unknown, headers: Record<string, string>): R
   });
 }
 
+const chatUserSchema = z.object({
+  codeLanguage: z.string().nullable().optional(),
+});
+
+/** Missing or invalid preference becomes `{ codeLanguage: null }`. Never rejects the request. */
+function parseChatUser(value: unknown): ChatUser {
+  const parsed = chatUserSchema.safeParse(value ?? {});
+  if (!parsed.success) return { codeLanguage: null };
+  const codeLanguage = parsed.data.codeLanguage?.trim() ?? "";
+  if (!codeLanguage || codeLanguage.length > 40) return { codeLanguage: null };
+  return { codeLanguage };
+}
+
 function isValidMessages(messages: unknown): messages is UIMessage[] {
   if (!Array.isArray(messages) || messages.length === 0 || messages.length > MAX_MESSAGES) return false;
   return messages.every(
@@ -94,12 +108,17 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   let messages: unknown;
+  let userInput: unknown;
   try {
-    ({ messages } = await request.json());
+    ({ messages, user: userInput } = await request.json());
   } catch {
     return json(400, { error: "Invalid JSON" }, headers);
   }
   if (!isValidMessages(messages)) return json(400, { error: "Invalid messages" }, headers);
+
+  // Wired for later language-specific answers. Not passed to the model yet.
+  const user = parseChatUser(userInput);
+  void user;
 
   const openrouter = createOpenRouter({ apiKey: OPENROUTER_API_KEY });
 

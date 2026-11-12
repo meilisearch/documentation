@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent, type
 import { OPEN_EVENT, TOGGLE_EVENT } from "./events";
 import { Message } from "./Message";
 import { useDarkMode } from "./useDarkMode";
+import { readChatUser } from "./user";
 
 const STORAGE_KEY = "meili-chat:messages";
 
@@ -38,7 +39,15 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const stickToBottom = useRef(true);
 
-  const transport = useMemo(() => new DefaultChatTransport({ api: `${apiBase}/api/chat` }), [apiBase]);
+  const transport = useMemo(
+    () =>
+      new DefaultChatTransport({
+        api: `${apiBase}/api/chat`,
+        // Read on each send: the widget stays mounted while the reader switches code tabs.
+        body: () => ({ user: readChatUser() }),
+      }),
+    [apiBase],
+  );
   const { messages, sendMessage, status, stop, error, regenerate, setMessages } = useChat({
     messages: loadMessages(),
     transport,
