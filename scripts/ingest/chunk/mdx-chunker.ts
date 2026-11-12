@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
-import type { Chunk, ChunkingConfig, RawPage } from "../types.ts";
+import type { Chunk, ChunkingConfig, CodeSample, RawPage } from "../types.ts";
 import { cleanTree } from "./mdast-to-text.ts";
 
 export type ChunkPageOptions = { chunking: ChunkingConfig; baseUrl: string };
@@ -17,10 +17,48 @@ type Section = { hierarchy: string[]; anchor: string | null; heading: Heading | 
 
 type SerializedSection = { hierarchy: string[]; anchor: string | null; heading: Heading | null; content: string };
 
+type SampleItem = { kind: "sample"; hierarchy: string[]; anchor: string | null; sample: CodeSample };
+
+type ProseItem = { kind: "prose" } & SerializedSection;
+
+type Rendered = ProseItem | SampleItem;
+
 const parser = unified().use(remarkParse).use(remarkFrontmatter).use(remarkMdx).use(remarkGfm);
 
 function serialize(blocks: RootContent[]): string {
   return toMarkdown({ type: "root", children: blocks }, { extensions: [gfmToMarkdown({ tablePipeAlign: false })] }).trim();
+}
+
+const SENTINEL = /%%INGEST_SAMPLE:([A-Za-z0-9_]+)%%/;
+
+function sampleContent(codes: Record<string, string>): string {
+  return codes.http ?? Object.values(codes)[0] ?? "";
+}
+
+/** Splits a serialized section wherever a mounted sample was replaced by a placeholder. */
+function expandSentinels(section: SerializedSection, samples: Map<string, CodeSample>): Rendered[] {
+  const parts = section.content.split(SENTINEL);
+  if (parts.length === 1) return [{ kind: "prose", ...section }];
+
+  const rendered: Rendered[] = [];
+  for (let index = 0; index < parts.length; index++) {
+    if (index % 2 === 1) {
+      const sample = samples.get(parts[index] ?? "");
+      if (!sample) continue;
+      rendered.push({ kind: "sample", hierarchy: section.hierarchy, anchor: section.anchor, sample });
+      continue;
+    }
+    const content = parts[index]?.trim() ?? "";
+    if (!content) continue;
+    rendered.push({
+      kind: "prose",
+      hierarchy: section.hierarchy,
+      anchor: section.anchor,
+      heading: index === 0 ? section.heading : null,
+      content,
+    });
+  }
+  return rendered;
 }
 
 function splitSections(tree: Root, title: string, splitDepth: number): Section[] {
@@ -54,12 +92,17 @@ function splitSections(tree: Root, title: string, splitDepth: number): Section[]
  * A section without content of its own (an h2 directly followed by an h3) is carried into the next section,
  * which keeps the anchor and hierarchy of the deepest heading.
  */
-function serializeSections(sections: Section[]): SerializedSection[] {
+function serializeSections(sections: Section[], emitTrailing = false): SerializedSection[] {
   const serialized: SerializedSection[] = [];
   let pending: RootContent[] = [];
+  let pendingMeta: Pick<SerializedSection, "hierarchy" | "anchor"> = {
+    hierarchy: sections[0]?.hierarchy ?? [],
+    anchor: null,
+  };
 
   for (const { blocks, heading, ...section } of sections) {
     const nodes = [...pending, ...(heading ? [heading] : []), ...blocks];
+    pendingMeta = { hierarchy: section.hierarchy, anchor: section.anchor };
     if (serialize(blocks) === "") {
       pending = nodes;
       continue;
@@ -68,22 +111,31 @@ function serializeSections(sections: Section[]): SerializedSection[] {
     serialized.push({ ...section, heading, content: serialize(nodes) });
   }
 
+  if (emitTrailing && pending.length > 0) {
+    serialized.push({ ...pendingMeta, heading: null, content: serialize(pending) });
+  }
+
   return serialized;
 }
 
-function mergeSmallSections(sections: SerializedSection[], chunking: ChunkingConfig): SerializedSection[] {
-  const merged: SerializedSection[] = [];
+function mergeSmallSections(sections: Rendered[], chunking: ChunkingConfig): Rendered[] {
+  const merged: Rendered[] = [];
 
   for (const section of sections) {
     const previous = merged[merged.length - 1];
-    if (previous && section.heading && section.content.length < chunking.minChars) {
+    if (
+      section.kind === "prose" &&
+      previous?.kind === "prose" &&
+      section.heading &&
+      section.content.length < chunking.minChars
+    ) {
       const content = `${previous.content}\n\n${section.content}`;
       if (content.length <= chunking.maxChars) {
         previous.content = content;
         continue;
       }
     }
-    merged.push({ ...section });
+    merged.push(section.kind === "prose" ? { ...section } : section);
   }
 
   return merged;
@@ -167,28 +219,50 @@ function parse(page: RawPage): Root {
 }
 
 export function chunkPage(page: RawPage, options: ChunkPageOptions): Chunk[] {
-  const tree = cleanTree(parse(page));
+  const samples = new Map((page.samples ?? []).map((sample) => [sample.alias, sample]));
+  const tree = cleanTree(parse(page), new Set(samples.keys()));
   const title = page.frontmatter.title;
   const pageUrl = `${options.baseUrl}/${page.page}`;
-  const sections = mergeSmallSections(
-    serializeSections(splitSections(tree, title, options.chunking.splitDepth)),
-    options.chunking,
-  ).flatMap((section) => splitLargeSection(section, options.chunking));
+  const rendered = serializeSections(splitSections(tree, title, options.chunking.splitDepth)).flatMap((section) =>
+    expandSentinels(section, samples),
+  );
+  const sections: Rendered[] = [];
+  for (const section of mergeSmallSections(rendered, options.chunking)) {
+    if (section.kind === "sample") {
+      sections.push(section);
+      continue;
+    }
+    for (const piece of splitLargeSection(section, options.chunking)) {
+      sections.push({ ...section, ...piece });
+    }
+  }
 
-  return sections.map((section, chunkIndex) => ({
-    id: `${page.page.replaceAll("/", "__")}-${chunkIndex}`.replace(/[^a-zA-Z0-9_-]/g, "_"),
-    page: page.page,
-    page_hash: page.pageHash,
-    url: section.anchor ? `${pageUrl}#${section.anchor}` : pageUrl,
-    anchor: section.anchor,
-    title,
-    description: page.frontmatter.description ?? "",
-    tab: page.tab,
-    group: page.group,
-    hierarchy: section.hierarchy,
-    breadcrumb: [page.tab, page.group, ...section.hierarchy].filter(Boolean).join(" > "),
-    content: section.content,
-    content_type: "prose",
-    chunk_index: chunkIndex,
-  }));
+  const chunks: Chunk[] = [];
+  for (const section of sections) {
+    const content = section.kind === "sample" ? sampleContent(section.sample.codes) : section.content;
+    if (!content) continue;
+    const chunkIndex = chunks.length;
+    const chunk: Chunk = {
+      id: `${page.page.replaceAll("/", "__")}-${chunkIndex}`.replace(/[^a-zA-Z0-9_-]/g, "_"),
+      page: page.page,
+      page_hash: page.pageHash,
+      url: section.anchor ? `${pageUrl}#${section.anchor}` : pageUrl,
+      anchor: section.anchor,
+      title,
+      description: page.frontmatter.description ?? "",
+      tab: page.tab,
+      group: page.group,
+      hierarchy: section.hierarchy,
+      breadcrumb: [page.tab, page.group, ...section.hierarchy].filter(Boolean).join(" > "),
+      content,
+      content_type: section.kind === "sample" ? "code_sample" : "prose",
+      chunk_index: chunkIndex,
+    };
+    if (section.kind === "sample") {
+      chunk.codes = section.sample.codes;
+      chunk.code_language = Object.keys(section.sample.codes);
+    }
+    chunks.push(chunk);
+  }
+  return chunks;
 }

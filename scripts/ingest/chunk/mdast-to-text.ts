@@ -33,7 +33,16 @@ function minHeadingDepth(children: RootContent[]): number | undefined {
   return depth;
 }
 
-function unwrapJsx(element: JsxElement): RootContent[] {
+function cleanChildren(children: RootContent[], keep: ReadonlySet<string>): RootContent[] {
+  return children.flatMap((node) => cleanNode(node, keep));
+}
+
+function unwrapJsx(element: JsxElement, keep: ReadonlySet<string>): RootContent[] {
+  if (element.name && keep.has(element.name)) {
+    const text = { type: "text" as const, value: `%%INGEST_SAMPLE:${element.name}%%` };
+    return element.type === "mdxJsxFlowElement" ? [{ type: "paragraph", children: [text] }] : [text];
+  }
+
   if (element.name?.startsWith("CodeSamples")) return [];
 
   if (element.name === "img" || element.name === "Image") {
@@ -43,7 +52,7 @@ function unwrapJsx(element: JsxElement): RootContent[] {
     return element.type === "mdxJsxFlowElement" ? [{ type: "paragraph", children: [text] }] : [text];
   }
 
-  const children = cleanChildren(element.children as RootContent[]);
+  const children = cleanChildren(element.children as RootContent[], keep);
   if (toString({ type: "root", children }).trim() === "") return [];
 
   const headingDepth = minHeadingDepth(children);
@@ -65,15 +74,15 @@ function unwrapJsx(element: JsxElement): RootContent[] {
   return children;
 }
 
-function cleanNode(node: RootContent): RootContent[] {
+function cleanNode(node: RootContent, keep: ReadonlySet<string>): RootContent[] {
   if (REMOVED_TYPES.has(node.type)) return [];
 
   if (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement") {
-    return unwrapJsx(node);
+    return unwrapJsx(node, keep);
   }
 
   if (node.type === "link" || node.type === "linkReference") {
-    return cleanChildren(node.children);
+    return cleanChildren(node.children, keep);
   }
 
   if (node.type === "image") {
@@ -81,7 +90,7 @@ function cleanNode(node: RootContent): RootContent[] {
   }
 
   if ("children" in node) {
-    const children = cleanChildren(node.children);
+    const children = cleanChildren(node.children, keep);
     if (node.type === "paragraph" && children.length === 0) return [];
     return [{ ...node, children } as RootContent];
   }
@@ -89,11 +98,7 @@ function cleanNode(node: RootContent): RootContent[] {
   return [node];
 }
 
-function cleanChildren(children: RootContent[]): RootContent[] {
-  return children.flatMap(cleanNode);
-}
-
 /** Strips everything that is not readable prose from an MDX tree, keeping its structure. */
-export function cleanTree(tree: Root): Root {
-  return { ...tree, children: cleanChildren(tree.children) };
+export function cleanTree(tree: Root, keep: ReadonlySet<string> = new Set()): Root {
+  return { ...tree, children: cleanChildren(tree.children, keep) };
 }

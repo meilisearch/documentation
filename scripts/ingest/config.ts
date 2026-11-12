@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { ChunkingConfig, IngestConfig, MeilisearchConfig } from "./types.ts";
 
 /** Bump when chunking or cleaning logic changes, to force a full re-sync. */
-export const PIPELINE_VERSION = 2;
+export const PIPELINE_VERSION = 3;
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "../..");
@@ -19,15 +19,20 @@ export const DEFAULT_CONFIG: IngestConfig = {
   baseUrl: "https://www.meilisearch.com/docs",
   navigation: "config/navigation.json",
   exclude: [],
-  sources: { mdx: true, codeSamples: false, images: false },
+  sources: { mdx: true, codeSamples: true, images: false },
   chunking: DEFAULT_CHUNKING,
   dryRunOutput: path.join(PROJECT_ROOT, ".ingest/chunks.jsonl"),
+  routesDryRunOutput: path.join(PROJECT_ROOT, ".ingest/routes.jsonl"),
 };
 
 export type UserConfig = Partial<Omit<IngestConfig, "chunking" | "sources">> & {
   chunking?: Partial<ChunkingConfig>;
   sources?: Partial<IngestConfig["sources"]>;
-  meilisearch?: { indexUid?: string; embedder?: { name?: string; model?: string } };
+  meilisearch?: {
+    indexUid?: string;
+    routesIndexUid?: string;
+    embedder?: { name?: string; model?: string };
+  };
 };
 
 export function defineConfig(config: UserConfig): UserConfig {
@@ -56,6 +61,7 @@ export function resolveMeilisearchConfig(
     host: env.MEILISEARCH_URL!,
     apiKey: env.MEILISEARCH_API_KEY!,
     indexUid: user.meilisearch?.indexUid ?? "docs-chunks",
+    routesIndexUid: user.meilisearch?.routesIndexUid ?? "api-routes",
     embedder: {
       name: user.meilisearch?.embedder?.name ?? "voyage",
       model: user.meilisearch?.embedder?.model ?? "voyage-4",

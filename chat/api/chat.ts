@@ -3,6 +3,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch } from "meilisearch";
 import { z } from "zod";
+import { fenceLanguage, lookupCandidates, quoteFilter, selectSample } from "../src/samples.ts";
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
@@ -12,6 +13,9 @@ const MAX_TEXT_LENGTH = 4000;
 const MAX_PAGE_CHARS = 30_000;
 /** Default `pagination.maxTotalHits`. */
 const MAX_PAGE_CHUNKS = 1000;
+
+const DOCS_INDEX = "docs-chunks";
+const ROUTES_INDEX = "api-routes";
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
@@ -116,30 +120,39 @@ export async function POST(request: Request): Promise<Response> {
   }
   if (!isValidMessages(messages)) return json(400, { error: "Invalid messages" }, headers);
 
-  // Wired for later language-specific answers. Not passed to the model yet.
   const user = parseChatUser(userInput);
-  void user;
 
   const openrouter = createOpenRouter({ apiKey: OPENROUTER_API_KEY });
 
   const search = meilisearchSearch({
     host: MEILISEARCH_URL,
     apiKey: MEILISEARCH_KEY,
-    indexUid: "docs-chunks",
-    description: "Search the Meilisearch documentation (guides, API reference, concepts). Pass a focused natural-language query.",
+    indexUid: DOCS_INDEX,
+    description:
+      "Search the Meilisearch documentation. Results are prose chunks from guides and concept pages. Pass a focused natural-language query. Call expand_page to read a page and its code samples. Call get_api_route for a route's parameters, request body, and response.",
     searchParams: {
       limit: 8,
       hybrid: { embedder: "voyage", semanticRatio: 0.5 },
-      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content", "tab", "group"],
+      filter: 'content_type = "prose"',
+      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"],
     },
   });
 
-  // `meilisearchSearch` only accepts a query, so reading a whole page needs its own tool.
-  // Chunks are exact, non-overlapping slices of the page (see scripts/ingest), so joining them rebuilds it.
-  const index = new Meilisearch({ host: MEILISEARCH_URL, apiKey: MEILISEARCH_KEY }).index("docs-chunks");
+  const client = new Meilisearch({ host: MEILISEARCH_URL, apiKey: MEILISEARCH_KEY });
+  const index = client.index(DOCS_INDEX);
+  const routes = client.index(ROUTES_INDEX);
+
+  const renderSample = (codes: Record<string, string> | undefined): string => {
+    const selected = selectSample(codes, user.codeLanguage);
+    if (!selected.code && !selected.note) return "";
+    const block = selected.code ? `\`\`\`${fenceLanguage(selected.language)}\n${selected.code}\n\`\`\`` : "";
+    return [block, selected.note].filter(Boolean).join("\n\n");
+  };
+
+  // Chunks of one page are ordered by chunk_index. Joining them rebuilds the page, samples included.
   const expandPage = tool({
     description:
-      "Read the full content of one documentation page. Use it when a search result is too partial to answer, for example a cut-off step list or table. Pass the `page` field of a search result.",
+      "Read one documentation page in its real order, including code samples already chosen for the reader's language. Use it when a search result is too partial to answer. Pass the `page` field of a search result.",
     inputSchema: z.object({
       page: z
         .string()
@@ -153,11 +166,14 @@ export async function POST(request: Request): Promise<Response> {
         filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
         sort: ["chunk_index:asc"],
         limit: MAX_PAGE_CHUNKS,
-        attributesToRetrieve: ["title", "url", "content"],
+        attributesToRetrieve: ["title", "url", "content", "content_type", "codes"],
       });
       if (hits.length === 0) return { error: `No page found for "${page}". Use the page field of a search result.` };
 
-      const markdown = [`# ${hits[0].title}`, ...hits.map((hit) => hit.content)].join("\n\n");
+      const parts = hits.map((hit) =>
+        hit.content_type === "code_sample" ? renderSample(hit.codes as Record<string, string> | undefined) : String(hit.content ?? ""),
+      );
+      const markdown = [`# ${hits[0].title}`, ...parts.filter(Boolean)].join("\n\n");
       const { text, truncated } = truncate(markdown, MAX_PAGE_CHARS);
       return {
         title: hits[0].title as string,
@@ -168,16 +184,74 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
 
+  const routeAttributes = ["title", "page", "url", "content", "chunk_index", "codes"];
+  const loadRoute = async (filter: string) => {
+    const { hits } = await routes.search("", {
+      filter,
+      sort: ["chunk_index:asc"],
+      limit: MAX_PAGE_CHUNKS,
+      attributesToRetrieve: routeAttributes,
+    });
+    return hits;
+  };
+
+  const presentRoute = (hits: Record<string, unknown>[], matched: "exact" | "similar") => {
+    const codes = hits.find((hit) => hit.codes)?.codes as Record<string, string> | undefined;
+    const selected = selectSample(codes, user.codeLanguage);
+    const markdown = hits.map((hit) => String(hit.content ?? "")).join("\n\n");
+    const { text, truncated } = truncate(markdown, MAX_PAGE_CHARS);
+    return {
+      matched,
+      title: hits[0].title as string,
+      page: hits[0].page as string,
+      url: String(hits[0].url).split("#")[0],
+      markdown: text,
+      truncated,
+      language: selected.language,
+      code: selected.code,
+      ...(selected.note ? { note: selected.note } : {}),
+    };
+  };
+
+  const getApiRoute = tool({
+    description:
+      "Read one API route: its parameters, request body, and response example, plus a code sample already chosen for the reader's language. Pass a method and path (\"POST /indexes/{index_uid}/search\"), a docs URL, or a slug such as \"search-with-post\". If note is set, the reader's language has no sample: show the HTTP request and say so.",
+    inputSchema: z.object({
+      route: z
+        .string()
+        .min(1)
+        .max(500)
+        .describe('Method and path, slug, or URL. For example "POST /indexes/{index_uid}/search" or "search-with-post".'),
+    }),
+    execute: async ({ route }) => {
+      const candidates = lookupCandidates(route);
+      if (candidates.length === 0) return { error: "Provide a method and path, a docs URL, or a route slug." };
+      const exact = await loadRoute(`lookup_keys IN [${candidates.map(quoteFilter).join(", ")}]`);
+      if (exact.length > 0) return presentRoute(exact, "exact");
+
+      const similar = await routes.search(route, {
+        limit: 5,
+        hybrid: { embedder: "voyage", semanticRatio: 0.5 },
+        attributesToRetrieve: ["page"],
+      });
+      const page = similar.hits[0]?.page as string | undefined;
+      if (!page) return { error: `No API route found for "${route}".` };
+      const hits = await loadRoute(`page = ${quoteFilter(page)}`);
+      if (hits.length === 0) return { error: `No API route found for "${route}".` };
+      return presentRoute(hits, "similar");
+    },
+  });
+
   const result = streamText({
     model: openrouter(CHAT_MODEL || DEFAULT_MODEL, { reasoning: { effort: "high" } }),
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
-    tools: { search, expand_page: expandPage },
+    tools: { search, expand_page: expandPage, get_api_route: getApiRoute },
     stopWhen: isStepCount(7),
     onStepFinish: ({ toolCalls }) => {
       for (const call of toolCalls) {
-        const { q, page } = call.input as { q?: string; page?: string };
-        console.log(`[chat] ${call.toolName}: ${q ?? page}`);
+        const { q, page, route } = call.input as { q?: string; page?: string; route?: string };
+        console.log(`[chat] ${call.toolName}: ${q ?? page ?? route}`);
       }
     },
   });

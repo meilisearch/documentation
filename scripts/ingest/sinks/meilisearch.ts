@@ -1,25 +1,38 @@
 import { MeilisearchApiError, type EnqueuedTask, type Meilisearch, type Settings, type Task } from "meilisearch";
 import type { Chunk, EmbedderConfig, Sink, SyncOperation } from "../types.ts";
 
-export function buildSettings(embedder?: EmbedderConfig | null): Settings {
-  const settings: Settings = {
-    filterableAttributes: ["page", "tab", "group", "content_type"],
-    searchableAttributes: ["title", "hierarchy", "content", "description"],
-    sortableAttributes: ["chunk_index"],
+export type IndexKind = "docs" | "routes";
+
+function embedderSettings(embedder: EmbedderConfig): NonNullable<Settings["embedders"]> {
+  return {
+    [embedder.name]: {
+      source: "rest",
+      apiKey: embedder.apiKey,
+      url: "https://api.voyageai.com/v1/embeddings",
+      request: { model: embedder.model, input: ["{{text}}", "{{..}}"] },
+      response: { data: [{ embedding: "{{embedding}}" }, "{{..}}"] },
+      documentTemplate: "{{doc.breadcrumb}}\n{{doc.content}}",
+      documentTemplateMaxBytes: embedder.documentTemplateMaxBytes,
+    },
   };
-  if (embedder) {
-    settings.embedders = {
-      [embedder.name]: {
-        source: "rest",
-        apiKey: embedder.apiKey,
-        url: "https://api.voyageai.com/v1/embeddings",
-        request: { model: embedder.model, input: ["{{text}}", "{{..}}"] },
-        response: { data: [{ embedding: "{{embedding}}" }, "{{..}}"] },
-        documentTemplate: "{{doc.breadcrumb}}\n{{doc.content}}",
-        documentTemplateMaxBytes: embedder.documentTemplateMaxBytes,
-      },
-    };
-  }
+}
+
+export function buildSettings(kind: IndexKind, embedder?: EmbedderConfig | null): Settings {
+  const settings: Settings =
+    kind === "routes"
+      ? {
+          filterableAttributes: ["page", "lookup_keys"],
+          searchableAttributes: ["title", "content", "lookup_keys"],
+          sortableAttributes: ["chunk_index"],
+          typoTolerance: { disableOnAttributes: ["lookup_keys"] },
+        }
+      : {
+          // `codes` is last so a term found in prose outranks the same term found only in a sample.
+          filterableAttributes: ["page", "tab", "group", "content_type", "code_language"],
+          searchableAttributes: ["title", "hierarchy", "description", "content", "codes"],
+          sortableAttributes: ["chunk_index"],
+        };
+  if (embedder) settings.embedders = embedderSettings(embedder);
   return settings;
 }
 
@@ -51,6 +64,7 @@ function isPermissionError(error: unknown): boolean {
 export type MeilisearchSinkOptions = {
   client: Meilisearch;
   indexUid: string;
+  kind?: IndexKind;
   embedder?: EmbedderConfig | null;
   batchSize?: number;
 };
@@ -58,12 +72,14 @@ export type MeilisearchSinkOptions = {
 export class MeilisearchSink implements Sink {
   readonly #client: Meilisearch;
   readonly #indexUid: string;
+  readonly #kind: IndexKind;
   readonly #embedder: EmbedderConfig | null;
   readonly #batchSize: number;
 
   constructor(options: MeilisearchSinkOptions) {
     this.#client = options.client;
     this.#indexUid = options.indexUid;
+    this.#kind = options.kind ?? "docs";
     this.#embedder = options.embedder ?? null;
     this.#batchSize = options.batchSize ?? 500;
   }
@@ -76,7 +92,7 @@ export class MeilisearchSink implements Sink {
       if (creation.error?.code !== "index_already_exists") assertSucceeded(creation);
       const update = await this.#client
         .index(this.#indexUid)
-        .updateSettings(buildSettings(this.#embedder))
+        .updateSettings(buildSettings(this.#kind, this.#embedder))
         .waitTask({ timeout: TASK_TIMEOUT_MS });
       assertSucceeded(update);
     } catch (cause) {

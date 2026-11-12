@@ -24,11 +24,11 @@ function chunk(page: string, pageHash: string, index: number): Chunk {
 
 describe("buildSettings", () => {
   it("configures a Voyage REST embedder when an embedder is given", () => {
-    const settings = buildSettings({ name: "voyage", model: "voyage-3.5", apiKey: "secret", documentTemplateMaxBytes: 4000 });
+    const settings = buildSettings("docs", { name: "voyage", model: "voyage-3.5", apiKey: "secret", documentTemplateMaxBytes: 4000 });
 
     expect(settings).toEqual({
-      filterableAttributes: ["page", "tab", "group", "content_type"],
-      searchableAttributes: ["title", "hierarchy", "content", "description"],
+      filterableAttributes: ["page", "tab", "group", "content_type", "code_language"],
+      searchableAttributes: ["title", "hierarchy", "description", "content", "codes"],
       sortableAttributes: ["chunk_index"],
       embedders: {
         voyage: {
@@ -42,6 +42,15 @@ describe("buildSettings", () => {
         },
       },
     });
+  });
+
+  it("keeps route identifiers exact by disabling typos on lookup keys", () => {
+    const settings = buildSettings("routes");
+
+    expect(settings.filterableAttributes).toEqual(["page", "lookup_keys"]);
+    expect(settings.searchableAttributes).toEqual(["title", "content", "lookup_keys"]);
+    expect(settings.sortableAttributes).toEqual(["chunk_index"]);
+    expect(settings.typoTolerance).toEqual({ disableOnAttributes: ["lookup_keys"] });
   });
 });
 
@@ -75,8 +84,8 @@ describe.skipIf(!process.env.MEILI_TEST_URL)("MeilisearchSink", () => {
     const index = await client.getIndex(indexUid);
     expect(index.primaryKey).toBe("id");
     const settings = await index.getSettings();
-    expect(settings.filterableAttributes).toEqual(["page", "tab", "group", "content_type"]);
-    expect(settings.searchableAttributes).toEqual(["title", "hierarchy", "content", "description"]);
+    expect(settings.filterableAttributes).toEqual(["page", "tab", "group", "content_type", "code_language"]);
+    expect(settings.searchableAttributes).toEqual(["title", "hierarchy", "description", "content", "codes"]);
     expect(settings.sortableAttributes).toEqual(["chunk_index"]);
   });
 
