@@ -66,3 +66,25 @@
 .routeHighlighter__path {
   font-family: var(--font-jetbrains-mono),ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace
 }
+/* Launch banner: blend into the page instead of the default primary-color bar */
+#banner {
+  background-color: #f7f7f7 !important;
+  border-bottom: 1px solid rgb(0 0 0 / 0.08);
+  color: rgb(0 0 0 / 0.6) !important;
+}
+
+#banner * {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+#banner a {
+  color: #ff5cb2 !important;
+  text-decoration-color: rgb(255 92 178 / 0.4) !important;
+}
+
+.dark #banner {
+  background-color: #1a003b !important;
+  border-bottom-color: rgb(255 255 255 / 0.1);
+  color: rgb(255 255 255 / 0.6) !important;
+}
