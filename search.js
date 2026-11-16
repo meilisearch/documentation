@@ -12,6 +12,50 @@ const HYBRID_OPTIONS = isProductionDocsSite()
   ? { hybrid: { semanticRatio: 0.5, embedder: 'default' } }
   : {}
 
+// Random ID per browser, only used for Meilisearch search analytics.
+// Kept in localStorage so the same visitor is one user across tabs and visits.
+// Resolved once per page, so a search and its click share an ID even if another
+// tab writes a different one.
+let analyticsUserId = null
+const getAnalyticsUserId = () => {
+  if (analyticsUserId) return analyticsUserId
+  const key = 'meilisearch-docs-search-user-id'
+  try {
+    let id = localStorage.getItem(key)
+    if (!id) {
+      id = crypto.randomUUID()
+      localStorage.setItem(key, id)
+    }
+    analyticsUserId = id
+  } catch {
+    analyticsUserId = crypto.randomUUID()
+  }
+  return analyticsUserId
+}
+
+// Result rows are plain links, so the page may unload before a normal fetch finishes.
+const sendClickEvent = ({ queryUid, objectId, objectName, position }) => {
+  if (!queryUid) return
+  fetch(`${MEILISEARCH_HOST}/events`, {
+    method: 'POST',
+    keepalive: true,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${MEILISEARCH_KEY}`
+    },
+    body: JSON.stringify({
+      eventType: 'click',
+      eventName: 'Search Result Clicked',
+      indexUid: MEILISEARCH_INDEX,
+      userId: getAnalyticsUserId(),
+      queryUid,
+      objectId,
+      objectName,
+      position
+    })
+  }).catch(() => {})
+}
+
 // Lucide-style icons (24 viewBox, stroke 2), same as the search icon
 const svgIcon = (size, paths) => `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`
 const SVG_PAGE = svgIcon(16, '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path>')
@@ -77,7 +121,7 @@ const setActiveResult = (container, row) => {
 }
 
 // Build one result row. Pages get a file icon, anchors get a "#" and a breadcrumb.
-const renderHit = hit => {
+const renderHit = (hit, { position, queryUid, primaryKey = 'objectID' } = {}) => {
   const formatted = hit._formatted || {}
   const isAnchor = isAnchorHit(hit)
 
@@ -136,9 +180,23 @@ const renderHit = hit => {
   row.appendChild(icon)
   row.appendChild(body)
 
-  // Close the modal once a result is chosen
+  const reportClick = () => {
+    sendClickEvent({
+      queryUid,
+      objectId: hit[primaryKey] == null ? undefined : String(hit[primaryKey]),
+      objectName: cleanText(hit.hierarchy_lvl1),
+      position
+    })
+  }
+
+  // Close the modal once a result is chosen, and record which result was opened.
   row.addEventListener('click', () => {
+    reportClick()
     document.getElementById('meilisearch-modal-overlay').style.display = 'none'
+  })
+  // A middle click opens the result in a new tab and fires auxclick, not click.
+  row.addEventListener('auxclick', (event) => {
+    if (event.button === 1) reportClick()
   })
   row.addEventListener('mousemove', () => {
     if (!row.classList.contains('is-active')) setActiveResult(row.parentElement, row)
@@ -159,6 +217,7 @@ function initializeMeilisearchIntegration() {
   let renderSectionFacets = () => {}
   let clearSectionFacets = () => {}
   let cancelSearch = () => {}
+  let resetSectionsCache = () => {}
 
   // Modify the responsive visibility handler
   const handleResponsiveVisibility = () => {
@@ -408,6 +467,7 @@ function initializeMeilisearchIntegration() {
 
     clearSectionFacets = () => {
       selectedSection = null
+      resetSectionsCache()
       filterTags = []
       filterTagsContainer.replaceChildren()
       filterContainer.hidden = true
@@ -620,10 +680,19 @@ function initializeMeilisearchIntegration() {
     try {
       const client = new window.meilisearch({
         host: MEILISEARCH_HOST,
-        apiKey: MEILISEARCH_KEY
+        apiKey: MEILISEARCH_KEY,
+        // The ID does not change during the page, so one header covers every search.
+        requestInit: { headers: { 'X-MS-USER-ID': getAnalyticsUserId() } }
       })
 
       const index = client.index(MEILISEARCH_INDEX)
+
+      // Sections for the current query, so picking a section does not search again.
+      // Cleared when the modal closes or the query is wiped.
+      let sectionsCache = { query: null, sections: null }
+      resetSectionsCache = () => {
+        sectionsCache = { query: null, sections: null }
+      }
 
       // The active facet, if the user has picked one. Nothing is selected by default.
       const getActiveFilters = () => selectedSection ? [selectedSection] : []
@@ -646,6 +715,11 @@ function initializeMeilisearchIntegration() {
         indicatorEl.innerHTML = 'Searching…'
         resultsContainer.appendChild(indicatorEl)
 
+        const sectionFilter = activeFilters.length > 0
+          ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')})`
+          : null
+        const withSection = condition => sectionFilter ? `${sectionFilter} AND ${condition}` : condition
+
         // Build base search options
         const baseSearchOptions = {
           attributesToHighlight: ['hierarchy_lvl1', 'hierarchy_lvl2', 'hierarchy_lvl3', 'hierarchy_lvl4', 'hierarchy_lvl5', 'content'],
@@ -655,11 +729,6 @@ function initializeMeilisearchIntegration() {
           highlightPostTag: HL_POST,
           ...HYBRID_OPTIONS
         }
-
-        const sectionFilter = activeFilters.length > 0
-          ? `(${activeFilters.map(section => `section = "${section}"`).join(' OR ')})`
-          : null
-        const withSection = condition => sectionFilter ? `${sectionFilter} AND ${condition}` : condition
 
         // Create federated multi-search queries. `is_error` is set by scripts/search/post-scrape-edit.sh.
         // Documents without the field are not errors, so they stay in the main results.
@@ -688,7 +757,13 @@ function initializeMeilisearchIntegration() {
 
         // Perform federated multi-search. The response also lists the sections of
         // every matching document, not only of the hits returned.
+        // Custom fields belong on the request, not on a query: this host rejects
+        // `analyticsCustomFields` inside `.queries`.
         const multiSearchRequest = {
+          analyticsCustomFields: {
+            section: sectionFilter ? activeFilters.join(',') : 'all',
+            fromPath: window.location.pathname
+          },
           federation: {
             limit: 25,
             facetsByIndex: { [MEILISEARCH_INDEX]: ['section'] }
@@ -698,10 +773,16 @@ function initializeMeilisearchIntegration() {
 
         // With a section selected, the facets above only list that section.
         // Count the sections again without the filter so the other chips stay available.
+        // Skip that search when this query was already counted.
         // `limit: 1`, not 0, so sections are counted like in the federated response above.
         // A search with `limit: 0` counts a larger set of candidates.
-        const unfilteredFacetsRequest = sectionFilter
-          ? index.search(query, { facets: ['section'], limit: 1, ...HYBRID_OPTIONS })
+        const unfilteredFacetsRequest = sectionFilter && sectionsCache.query !== query
+          ? index.search(query, {
+            facets: ['section'],
+            limit: 1,
+            ...HYBRID_OPTIONS,
+            analyticsCustomFields: { kind: 'facets' }
+          })
           : null
 
         Promise.all([client.multiSearch(multiSearchRequest), unfilteredFacetsRequest])
@@ -710,9 +791,12 @@ function initializeMeilisearchIntegration() {
             if (requestId !== latestRequestId) return
 
             const allHits = response.hits || []
-            const sections = sectionsIn(unfilteredFacets
-              ? unfilteredFacets.facetDistribution
-              : response.facetsByIndex?.[MEILISEARCH_INDEX]?.distribution)
+            const sections = unfilteredFacets
+              ? sectionsIn(unfilteredFacets.facetDistribution)
+              : sectionFilter && sectionsCache.sections
+                ? sectionsCache.sections
+                : sectionsIn(response.facetsByIndex?.[MEILISEARCH_INDEX]?.distribution)
+            if (!sectionFilter || unfilteredFacets) sectionsCache = { query, sections }
 
             // The selected section no longer matches this query. Search again without it.
             if (selectedSection && !sections.has(selectedSection)) {
@@ -734,8 +818,13 @@ function initializeMeilisearchIntegration() {
 
             // Flat list in relevance order: page and anchor rows look different.
             // No result is selected until the user presses Down or hovers a row
-            allHits.forEach(hit => {
-              resultsContainer.appendChild(renderHit(hit))
+            allHits.forEach((hit, position) => {
+              const meta = response.metadata?.[hit._federation?.queriesPosition]
+              resultsContainer.appendChild(renderHit(hit, {
+                position,
+                queryUid: meta?.queryUid,
+                primaryKey: meta?.primaryKey
+              }))
             })
             resultsContainer.scrollTop = 0
 
