@@ -1,0 +1,110 @@
+---
+title: "Meilisearch v1.57 release notes"
+sidebarTitle: "v1.57"
+description: "Released November 16, 2026"
+---
+
+## New Features
+
+### View the target state of dynamic search rules
+
+You can now see the state of dynamic search rules as if all pending update tasks had been processed. This helps you understand what changes are coming before they're fully applied.
+
+#### New route: `GET /dynamic-search-rules/{ruleUid}/target`
+
+Returns the target state of a specific rule with:
+- `current`: the current dynamic search rule object, or `null` if it doesn't exist yet
+- `target`: the fields that will be modified by pending tasks, or `null` if the rule will be deleted
+- `needsProcessing`: boolean indicating if pending tasks exist for this rule
+- `taskUids`: array of pending task IDs for this rule
+
+#### New parameter: `showTarget` on `POST /dynamic-search-rules`
+
+When you set `showTarget: true` when listing rules, the response includes:
+- Global fields: `needsProcessing`, `taskUids`, `totalRuleCount`, and `targetTotalRuleCount`
+- Each rule gets a `needsProcessing` boolean showing if pending tasks apply to it
+
+#### Example: Creating and checking a new rule
+
+Create a new rule:
+
+```http
+PATCH /dynamic-search-rules/scale-rule
+```
+
+```json
+{
+  "conditions": {
+    "query": {
+      "words": "HERO SUPER"
+    }
+  },
+  "actions": {
+    "scale": [
+      {
+        "ids": [
+          "372631"
+        ],
+        "weight": 2
+      }
+    ]
+  }
+}
+```
+
+Check its target state before processing:
+
+```http
+GET /dynamic-search-rules/scale-rule/target
+```
+
+```json
+{
+  "current": null,
+  "needsProcessing": true,
+  "target": {
+    "actions": {
+      "scale": [
+        {
+          "ids": [
+            "372631"
+          ],
+          "weight": 2
+        }
+      ]
+    },
+    "active": true,
+    "conditions": {
+      "query": {
+        "words": "HERO SUPER"
+      }
+    }
+  },
+  "taskUids": [
+    6
+  ]
+}
+```
+
+List all rules with target information:
+
+```http
+POST /dynamic-search-rules
+```
+
+```json
+{
+  "showTarget": true
+}
+```
+
+Response includes pending task information for the entire rule set and each individual rule.
+
+## Improvements
+
+### Fixed relevancy issue in federated search
+
+Resolved a regression where interleaving relevancy and sort rules in federated search would skip alternating rules. Sort ranking rules placed after relevancy rules are now applied correctly.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.57.0)
+

@@ -1096,6 +1096,7 @@
           "root": "changelog",
           "expanded": false,
           "pages": [
+            "changelog/v1.57",
             "changelog/v1.56",
             "changelog/v1.55",
             "changelog/v1.54",
