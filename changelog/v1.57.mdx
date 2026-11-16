@@ -1,0 +1,23 @@
+---
+title: "Meilisearch v1.57 release notes"
+sidebarTitle: "v1.57"
+description: "Released November 16, 2026"
+---
+
+## Improvements
+
+### Target state of dynamic search rules (Enterprise Edition)
+
+You can now view the target state of a dynamic search rule — how the rule will look once all pending update tasks have been processed.
+
+A new `GET /dynamic-search-rules/{ruleUid}/target` route returns the rule's current state, its target state, whether it needs processing, and the pending task IDs.
+
+The existing `POST /dynamic-search-rules` route also accepts a new optional `showTarget` parameter. When set to `true`, each rule in the response includes a `needsProcessing` flag, and the response adds global fields for processing status, pending task IDs, total rule counts, and projected rule counts.
+
+## Bug Fixes
+
+### Federated search relevancy fix
+
+Fixed a regression introduced in v1.54 where interleaving relevancy and sort rules skipped every other rule. This caused sort rules placed after a relevancy rule to be ignored during federated search.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.57.0)
