@@ -90,6 +90,7 @@
   "invalid_dynamic_search_rule_limit": "The [`limit`](/reference/api/search-rules/list-search-rules#body-limit) parameter is invalid. It should be a positive integer.",
   "invalid_dynamic_search_rule_offset": "The [`offset`](/reference/api/search-rules/list-search-rules#body-offset) parameter is invalid. It should be a positive integer.",
   "invalid_dynamic_search_rule_priority": "The [`precedence`](/reference/api/search-rules/create-or-update-a-search-rule#body-precedence-one-of-0) parameter is invalid. It should be a positive number",
+  "invalid_dynamic_search_rule_show_target": "The [`showTarget`](/reference/api/search-rules/list-search-rules#body-show-target) parameter is invalid. It should be a boolean.",
   "invalid_dynamic_search_rule_uid": "The [`uid`](/reference/api/search-rules/create-or-update-a-search-rule#parameter-uid) path parameter is invalid.",
   "invalid_export_api_key": "The supplied security key does not have the required permissions to access the target instance.",
   "invalid_export_index_filter": "The provided index export filter is not a valid [filter expression](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax).",

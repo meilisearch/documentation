@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.56.2"
+    "version": "1.57.0"
   },
   "servers": [
     {
@@ -1117,7 +1117,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginationView_DynamicSearchRule"
+                  "$ref": "#/components/schemas/DynamicSearchRules"
                 },
                 "example": {
                   "results": [
@@ -1468,6 +1468,110 @@
             "Bearer": [
               "dynamicSearchRules.update",
               "dynamicSearchRules.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
+    "/dynamic-search-rules/{uid}/target": {
+      "get": {
+        "tags": [
+          "Search rules"
+        ],
+        "summary": "View the target state of a dynamic search rule",
+        "description": "Retrieve a single search rule by its unique identifier, as it will be after all pending tasks have been processed.",
+        "operationId": "get_target_rule",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "Unique identifier of the search rule.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "black-friday"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dynamic search rule target returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DynamicSearchRuleTarget"
+                },
+                "example": {
+                  "current": {
+                    "description": "Black Friday 2025 rules",
+                    "precedence": 10,
+                    "active": true,
+                    "conditions": {
+                      "query": {
+                        "isEmpty": true
+                      },
+                      "time": {
+                        "start": "2025-11-28T00:00:00Z",
+                        "end": "2025-11-28T23:59:59Z"
+                      }
+                    },
+                    "actions": {
+                      "pin": [
+                        {
+                          "indexUid": "products",
+                          "id": "123",
+                          "position": 1
+                        }
+                      ]
+                    }
+                  },
+                  "target": {},
+                  "taskUids": [],
+                  "needsProcessing": false
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dynamic search rule does not currently exist, and no task will create it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Dynamic search rule `black-friday` not found.",
+                  "code": "dynamic_search_rule_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#dynamic_search_rule_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "dynamicSearchRules.get",
+              "dynamicSearchRules.*",
+              "*.get",
               "*"
             ]
           }
@@ -15424,6 +15528,7 @@
           "invalid_dynamic_search_rule_offset",
           "invalid_dynamic_search_rule_limit",
           "invalid_dynamic_search_rule_filter",
+          "invalid_dynamic_search_rule_show_target",
           "invalid_dynamic_search_rule_description",
           "invalid_dynamic_search_rule_priority",
           "invalid_dynamic_search_rule_active",
@@ -16461,6 +16566,67 @@
           }
         }
       },
+      "DynamicSearchRuleNeedsProcessing": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DynamicSearchRule"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "needsProcessing": {
+                "type": [
+                  "boolean",
+                  "null"
+                ],
+                "description": "Whether the rule has at least one pending update task.\n\nReturned when `showTarget` is present and set to `true` in the request."
+              }
+            }
+          }
+        ]
+      },
+      "DynamicSearchRuleTarget": {
+        "type": "object",
+        "required": [
+          "taskUids",
+          "needsProcessing"
+        ],
+        "properties": {
+          "current": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DynamicSearchRuleUpdateRequest",
+                "description": "Rule object representing the currently processed state of this rule.\n\n`null` if the rule doesn't currently exist."
+              }
+            ]
+          },
+          "target": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/DynamicSearchRuleUpdateRequest",
+                "description": "Rule object representing the target processing state of this rule, as obtained by processing all tasks related to this rule.\n\nOnly contains the fields that will be modified by the related tasks.\n\n`null` if the rule will no longer exist after processing all related tasks.\nEmpty object if the rule is left unmodified after processing all related tasks."
+              }
+            ]
+          },
+          "taskUids": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/u32"
+            },
+            "description": "List of the uids of the pending tasks that will update this DSR."
+          },
+          "needsProcessing": {
+            "type": "boolean",
+            "description": "Set to `true` if there is at least one task that will update this DSR."
+          }
+        }
+      },
       "DynamicSearchRuleUpdateRequest": {
         "type": "object",
         "properties": {
@@ -16508,6 +16674,72 @@
                 "description": "Actions to apply when the dynamic search rule matches."
               }
             ]
+          }
+        }
+      },
+      "DynamicSearchRules": {
+        "type": "object",
+        "required": [
+          "results",
+          "offset",
+          "limit",
+          "total"
+        ],
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DynamicSearchRuleNeedsProcessing"
+            },
+            "description": "Rules for the current page."
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Number of rules skipped.",
+            "minimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of rules returned in a single request.",
+            "minimum": 0
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of rules that match the filter.",
+            "minimum": 0
+          },
+          "totalRuleCount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Total number of declared rules, including those that don't match the filter.\n\nReturned when `showTarget` is present and set to `true` in the request.",
+            "minimum": 0
+          },
+          "targetTotalRuleCount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Total number of declared rules after processing all pending tasks.\n\nReturned when `showTarget` is present and set to `true` in the request.",
+            "minimum": 0
+          },
+          "needsProcessing": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Whether the dynamic search rules have at least a pending task to process.\n\nReturned when `showTarget` is present and set to `true` in the request."
+          },
+          "taskUids": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/u32"
+            },
+            "description": "The [`uid`](https://www.meilisearch.com/docs/reference/api/async-task-management/list-tasks#response-results-items-uid)s of the pending tasks to process.\n\nReturned when `showTarget` is present and set to `true` in the request."
           }
         }
       },
@@ -18290,6 +18522,10 @@
                 "description": "Optional filter to restrict which rules are returned (e.g. by attribute patterns or by properties like if the rule is active or not)"
               }
             ]
+          },
+          "showTarget": {
+            "type": "boolean",
+            "description": "Show the target state of the dynamic search rules.\n\n- Enabling this boolean adds additional information about the future state of the\ndynamic search rules in the response, such as whether there are pending dynamic search rules tasks or not.\n- Enabling this boolean requires the Enterprise Edition."
           }
         }
       },
@@ -19118,84 +19354,6 @@
             "description": "Maximum number of search results Meilisearch can return. Limit and offset cannot go beyond this value.",
             "default": 1000,
             "example": 1000,
-            "minimum": 0
-          }
-        }
-      },
-      "PaginationView_DynamicSearchRule": {
-        "type": "object",
-        "required": [
-          "results",
-          "offset",
-          "limit",
-          "total"
-        ],
-        "properties": {
-          "results": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "uid"
-              ],
-              "properties": {
-                "uid": {
-                  "$ref": "#/components/schemas/IndexUid",
-                  "description": "Unique identifier of the dynamic search rule."
-                },
-                "description": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "description": "Human-readable description of the dynamic search rule."
-                },
-                "lastUpdatedAt": {
-                  "type": [
-                    "string",
-                    "null"
-                  ],
-                  "format": "date-time",
-                  "description": "Date time of the last update of this rule."
-                },
-                "precedence": {
-                  "type": [
-                    "integer",
-                    "null"
-                  ],
-                  "format": "u-int64",
-                  "description": "Precedence of the dynamic search rule. Lower numeric values take precedence over higher\nones. If omitted, the rule is treated as having the lowest precedence. This precedence is\nused to resolve conflicts between matching rules:\n- If the same document is selected by multiple rules, the smallest `priority` number wins\n- If different documents are pinned to the same position, they are ordered by ascending `priority`",
-                  "minimum": 0
-                },
-                "active": {
-                  "type": "boolean",
-                  "description": "Whether the dynamic search rule is active."
-                },
-                "conditions": {
-                  "$ref": "#/components/schemas/Conditions",
-                  "description": "Conditions that must match before the dynamic search rule applies."
-                },
-                "actions": {
-                  "$ref": "#/components/schemas/RuleActions",
-                  "description": "Actions to apply when the dynamic search rule matches."
-                }
-              }
-            },
-            "description": "Items for the current page."
-          },
-          "offset": {
-            "type": "integer",
-            "description": "Number of items skipped.",
-            "minimum": 0
-          },
-          "limit": {
-            "type": "integer",
-            "description": "Maximum number of items returned.",
-            "minimum": 0
-          },
-          "total": {
-            "type": "integer",
-            "description": "Total number of items matching the query.",
             "minimum": 0
           }
         }
