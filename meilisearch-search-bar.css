@@ -5,6 +5,13 @@
   padding: 0 10px;
 }
 
+/* Hide a re-rendered Mintlify search button on desktop before search.js hides it */
+@media (min-width: 1024px) {
+  body:has(#meilisearch-bar-container) #search-bar-entry {
+    display: none;
+  }
+}
+
 .meilisearch-search-bar {
   background-color: white;
   color: rgba(25, 25, 25, 0.7);
