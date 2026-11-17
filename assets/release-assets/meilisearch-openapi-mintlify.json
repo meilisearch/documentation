@@ -2162,6 +2162,10 @@
             "source": "meili export \\\n  --project-url MEILISEARCH_URL --project-api-key API_KEY \\\n  \\\n  --url TARGET_INSTANCE_URL --indexes '{\"*\":{\"overrideSettings\":true}}'"
           },
           {
+            "lang": "PHP",
+            "source": "$client->export(\n  (new \\Meilisearch\\Contracts\\ExportQuery('TARGET_INSTANCE_URL'))\n    ->setApiKey('TARGET_INSTANCE_API_KEY')\n    ->setIndexes(['*' => (new \\Meilisearch\\Contracts\\ExportIndexOptions())->setOverrideSettings(true)])\n);"
+          },
+          {
             "lang": "Python",
             "source": "client.export(\n  url='https://remote-meilisearch-instance.com',\n  api_key='masterKey',\n  payload_size='50 MiB',\n  indexes={\n    'movies*': {},\n    'books*': {},\n  },\n)"
           },
@@ -18517,6 +18521,10 @@
             "source": "client.getWebhooks()"
           },
           {
+            "lang": "PHP",
+            "source": "$client->getWebhooks();"
+          },
+          {
             "lang": "Python",
             "source": "client.get_webhooks()"
           },
@@ -18621,6 +18629,10 @@
           {
             "lang": "JS",
             "source": "client.createWebhook({\n  url: 'WEBHOOK_TARGET_URL',\n  headers: {\n    authorization: 'SECURITY_KEY',\n    referer: 'https://example.com'\n  }\n})"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->createWebhook(new \\Meilisearch\\Contracts\\CreateWebhookQuery('WEBHOOK_TARGET_URL', ['authorization' => 'SECURITY_KEY', 'referer' => 'https://example.com']));"
           },
           {
             "lang": "Python",
@@ -18734,6 +18746,10 @@
             "source": "client.getWebhook(WEBHOOK_UUID)"
           },
           {
+            "lang": "PHP",
+            "source": "$client->getWebhook('WEBHOOK_UUID');"
+          },
+          {
             "lang": "Python",
             "source": "client.get_webhook('WEBHOOK_UID')"
           },
@@ -18825,6 +18841,10 @@
           {
             "lang": "JS",
             "source": "client.deleteWebhook(WEBHOOK_UUID)"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->deleteWebhook('WEBHOOK_UUID');"
           },
           {
             "lang": "Python",
@@ -18959,6 +18979,10 @@
           {
             "lang": "JS",
             "source": "client.updateWebhook(WEBHOOK_UUID, {\n  headers: {\n    referer: null\n  }\n})"
+          },
+          {
+            "lang": "PHP",
+            "source": "$client->updateWebhook((new \\Meilisearch\\Contracts\\UpdateWebhookQuery('WEBHOOK_UUID'))->setHeaders(['referer' => null]));"
           },
           {
             "lang": "Python",
