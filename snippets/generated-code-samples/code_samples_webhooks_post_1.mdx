@@ -31,6 +31,10 @@ client.create_webhook({
 })
 ```
 
+```php PHP
+$client->createWebhook(new \Meilisearch\Contracts\CreateWebhookQuery('WEBHOOK_TARGET_URL', ['authorization' => 'SECURITY_KEY', 'referer' => 'https://example.com']));
+```
+
 ```java Java
 HashMap<String, Object> headers = new HashMap<>();
 headers.put("authorization", "MASTER_KEY");

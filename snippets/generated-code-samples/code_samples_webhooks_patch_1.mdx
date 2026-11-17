@@ -27,6 +27,10 @@ client.update_webhook('WEBHOOK_UID', {
 })
 ```
 
+```php PHP
+$client->updateWebhook((new \Meilisearch\Contracts\UpdateWebhookQuery('WEBHOOK_UUID'))->setHeaders(['referer' => null]));
+```
+
 ```java Java
 Webhook webhook = this.client.createWebhook(webhookReq1);
 HashMap<String, Object> headers = new HashMap<>();

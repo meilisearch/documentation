@@ -34,6 +34,14 @@ client.export(
 )
 ```
 
+```php PHP
+$client->export(
+  (new \Meilisearch\Contracts\ExportQuery('TARGET_INSTANCE_URL'))
+    ->setApiKey('TARGET_INSTANCE_API_KEY')
+    ->setIndexes(['*' => (new \Meilisearch\Contracts\ExportIndexOptions())->setOverrideSettings(true)])
+);
+```
+
 ```java Java
 Map<String, ExportIndexFilter> indexes = new HashMap<>();
 indexes.put("*", ExportIndexFilter.builder().overrideSettings(true).build());
