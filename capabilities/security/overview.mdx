@@ -8,13 +8,17 @@ Meilisearch uses [API keys](/capabilities/security/how_to/manage_api_keys) and t
 
 ## Multi-tenancy with tenant tokens
 
-Tenant tokens are short-lived, scoped credentials generated from an API key. They embed search rules ([filters](/capabilities/filtering_sorting_faceting/getting_started)) that automatically apply to every search request, ensuring users only see their own data.
+Tenant tokens are short-lived, scoped credentials generated from an API key. They embed tenant token search rules ([filters](/capabilities/filtering_sorting_faceting/getting_started)) that automatically apply to every search request, ensuring users only see their own data.
 
 | Concept | Purpose |
 |---------|---------|
 | API keys | Authenticate API requests, define base permissions |
 | Tenant tokens | Restrict search results per user with embedded filters |
-| Search rules | Filter expressions baked into a token (e.g., `user_id = 123`) |
+| Search rules (`searchRules`) | Filter expressions baked into a token (for example, `user_id = 123`) |
+
+<Note>
+Tenant token search rules (the `searchRules` field) are not related to the [Search Rules](/capabilities/search_rules/overview) feature. Tenant token search rules restrict which documents a user can access. Search Rules pin, boost, deboost, or hide documents in results.
+</Note>
 
 ## When to use tenant tokens
 

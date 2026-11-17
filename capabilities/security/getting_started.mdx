@@ -12,7 +12,7 @@ There are two steps to use tenant tokens with an official SDK: generating the te
 
 ## Generate a tenant token with an official SDK
 
-First, import the SDK. Then create a set of [search rules](/capabilities/security/advanced/tenant_token_payload#search-rules):
+First, import the SDK. Then create a set of [tenant token search rules](/capabilities/security/advanced/tenant_token_payload#search-rules):
 
 <CodeGroup>
 
@@ -26,7 +26,11 @@ First, import the SDK. Then create a set of [search rules](/capabilities/securit
 
 </CodeGroup>
 
-Search rules must be an object where each key corresponds to an index in your instance. You may configure any number of filters for each index.
+In the `searchRules` object, each key must correspond to an index in your instance. You may configure any number of filters for each index.
+
+<Note>
+Tenant token search rules (the `searchRules` field) are not related to the [Search Rules](/capabilities/search_rules/overview) feature. Tenant token search rules restrict which documents a user can access. Search Rules pin, boost, deboost, or hide documents in results.
+</Note>
 
 Next, find your default search API key. Query the [get API keys endpoint](/reference/api/keys/get-api-key) and inspect the `uid` field to obtain your API key's UID:
 

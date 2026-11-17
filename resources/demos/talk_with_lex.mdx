@@ -21,7 +21,7 @@ This demo indexes every Lex Fridman Podcast transcript as one-minute passages: 4
 - **One result per episode**: A toggle adds `distinct: "episodeId"` to the query, so each episode appears once with its best passage. Because facets are then counted per episode, a second query without `distinct` in the same [multi-search](/capabilities/multi_search/overview) request provides the "+18 more moments in this episode" counts. See [distinct attribute](/capabilities/full_text_search/how_to/configure_distinct_attribute).
 - **Conversation around a hit**: Expanding a result filters on the same `episodeId` and a `position` range, sorted by `position`, to show the passages just before and after.
 - **Chat with the archive**: The chat page uses the [chats API](/capabilities/agentic_search/advanced/chats_api). The model searches the transcripts on its own, often several times per question, and cites the second each claim comes from. The interface lists the searches it ran and the passages it read, as described in [display source documents](/capabilities/agentic_search/how_to/display_source_documents).
-- **Chat with one episode**: The same chat, restricted to a single episode by a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) whose search rule filters on `episodeId`. The model cannot retrieve passages from any other episode.
+- **Chat with one episode**: The same chat, restricted to a single episode by a [tenant token](/capabilities/security/how_to/generate_token_from_scratch) whose filter applies to `episodeId`. The model cannot retrieve passages from any other episode.
 
 ## Example search and conversation
 

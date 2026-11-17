@@ -345,7 +345,7 @@
           ]
         },
         {
-          "group": "Search rules",
+          "group": "Search Rules",
           "pages": [
             "capabilities/search_rules/overview",
             "capabilities/search_rules/create_your_first_rule",
@@ -1096,6 +1096,7 @@
           "root": "changelog",
           "expanded": false,
           "pages": [
+            "changelog/v1.57",
             "changelog/v1.56",
             "changelog/v1.55",
             "changelog/v1.54",
