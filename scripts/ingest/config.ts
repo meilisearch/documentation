@@ -60,10 +60,10 @@ export function resolveMeilisearchConfig(
   return {
     host: env.MEILISEARCH_URL!,
     apiKey: env.MEILISEARCH_API_KEY!,
-    indexUid: user.meilisearch?.indexUid ?? "docs-chunks",
-    routesIndexUid: user.meilisearch?.routesIndexUid ?? "api-routes",
+    indexUid: env.MEILISEARCH_DOCS_INDEX || user.meilisearch?.indexUid || "docs-chunks",
+    routesIndexUid: env.MEILISEARCH_ROUTES_INDEX || user.meilisearch?.routesIndexUid || "api-routes",
     embedder: {
-      name: user.meilisearch?.embedder?.name ?? "voyage",
+      name: env.MEILISEARCH_EMBEDDER || user.meilisearch?.embedder?.name || "voyage",
       model: user.meilisearch?.embedder?.model ?? "voyage-4",
       apiKey: env.VOYAGE_API_KEY!,
       documentTemplateMaxBytes: 4000,

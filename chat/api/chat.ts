@@ -7,15 +7,13 @@ import { fenceLanguage, lookupCandidates, quoteFilter, selectSample } from "../s
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
+const DEFAULT_ALLOWED_ORIGINS = "meilisearch.com,*.meilisearch.com,*.mintlify.site";
 const MAX_MESSAGES = 30;
 const MAX_TEXT_LENGTH = 4000;
 /** About 8k tokens. Safety net for the largest pages. */
 const MAX_PAGE_CHARS = 30_000;
 /** Default `pagination.maxTotalHits`. */
 const MAX_PAGE_CHUNKS = 1000;
-
-const DOCS_INDEX = "docs-chunks";
-const ROUTES_INDEX = "api-routes";
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
@@ -39,13 +37,47 @@ function truncate(text: string, max: number): { text: string; truncated: boolean
   return { text: text.slice(0, cut > 0 ? cut : max), truncated: true };
 }
 
-function isAllowedOrigin(origin: string | null): boolean {
-  if (!origin) return process.env.NODE_ENV !== "production";
+type ChatConfig = {
+  openrouterKey: string | undefined;
+  meiliUrl: string | undefined;
+  meiliKey: string | undefined;
+  model: string;
+  allowedOrigins: string[];
+  docsIndex: string;
+  routesIndex: string;
+  embedder: string;
+};
+
+/** Reads every setting once. Empty strings fall back to the defaults. */
+function readConfig(): ChatConfig {
+  const env = process.env;
+  return {
+    openrouterKey: env.OPENROUTER_API_KEY,
+    meiliUrl: env.MEILISEARCH_URL,
+    meiliKey: env.MEILISEARCH_KEY,
+    model: env.CHAT_MODEL || DEFAULT_MODEL,
+    allowedOrigins: (env.CHAT_ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter(Boolean),
+    docsIndex: env.MEILISEARCH_DOCS_INDEX || "docs-chunks",
+    routesIndex: env.MEILISEARCH_ROUTES_INDEX || "api-routes",
+    embedder: env.MEILISEARCH_EMBEDDER || "voyage",
+  };
+}
+
+/** `*.example.com` matches subdomains only, not the apex. */
+function matchesHost(hostname: string, pattern: string): boolean {
+  return pattern.startsWith("*.") ? hostname.endsWith(pattern.slice(1)) : hostname === pattern;
+}
+
+function isAllowedOrigin(origin: string | null, allowed: string[]): boolean {
+  const dev = process.env.NODE_ENV !== "production";
+  if (!origin) return dev;
   try {
     const { protocol, hostname } = new URL(origin);
-    if (hostname === "localhost" || hostname === "127.0.0.1") return true;
-    if (protocol !== "https:") return false;
-    return hostname === "meilisearch.com" || hostname.endsWith(".meilisearch.com") || hostname.endsWith(".vercel.app");
+    if (hostname === "localhost" || hostname === "127.0.0.1") return dev;
+    return protocol === "https:" && allowed.some((pattern) => matchesHost(hostname, pattern));
   } catch {
     return false;
   }
@@ -96,18 +128,22 @@ function isValidMessages(messages: unknown): messages is UIMessage[] {
 }
 
 export function OPTIONS(request: Request): Response {
+  const { allowedOrigins } = readConfig();
   const origin = request.headers.get("origin");
-  if (!isAllowedOrigin(origin)) return new Response(null, { status: 403 });
+  if (!isAllowedOrigin(origin, allowedOrigins)) return new Response(null, { status: 403 });
   return new Response(null, { status: 204, headers: corsHeaders(origin) });
 }
 
 export async function POST(request: Request): Promise<Response> {
+  const config = readConfig();
   const origin = request.headers.get("origin");
-  if (!isAllowedOrigin(origin)) return new Response(null, { status: 403 });
+  if (!isAllowedOrigin(origin, config.allowedOrigins)) return new Response(null, { status: 403 });
   const headers = corsHeaders(origin);
 
-  const { OPENROUTER_API_KEY, CHAT_MODEL, MEILISEARCH_URL, MEILISEARCH_KEY } = process.env;
-  if (!OPENROUTER_API_KEY || !MEILISEARCH_URL || !MEILISEARCH_KEY) {
+  const { openrouterKey, meiliUrl, meiliKey } = config;
+  if (!openrouterKey || !meiliUrl || !meiliKey) {
+    const missing = (["OPENROUTER_API_KEY", "MEILISEARCH_URL", "MEILISEARCH_KEY"] as const).filter((name) => !process.env[name]);
+    console.error(`[chat] missing environment variables: ${missing.join(", ")}`);
     return json(500, { error: "Chat is not configured" }, headers);
   }
 
@@ -122,25 +158,25 @@ export async function POST(request: Request): Promise<Response> {
 
   const user = parseChatUser(userInput);
 
-  const openrouter = createOpenRouter({ apiKey: OPENROUTER_API_KEY });
+  const openrouter = createOpenRouter({ apiKey: openrouterKey });
 
   const search = meilisearchSearch({
-    host: MEILISEARCH_URL,
-    apiKey: MEILISEARCH_KEY,
-    indexUid: DOCS_INDEX,
+    host: meiliUrl,
+    apiKey: meiliKey,
+    indexUid: config.docsIndex,
     description:
       "Search the Meilisearch documentation. Results are prose chunks from guides and concept pages. Pass a focused natural-language query. Call expand_page to read a page and its code samples. Call get_api_route for a route's parameters, request body, and response.",
     searchParams: {
       limit: 8,
-      hybrid: { embedder: "voyage", semanticRatio: 0.5 },
+      hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
       filter: 'content_type = "prose"',
       attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"],
     },
   });
 
-  const client = new Meilisearch({ host: MEILISEARCH_URL, apiKey: MEILISEARCH_KEY });
-  const index = client.index(DOCS_INDEX);
-  const routes = client.index(ROUTES_INDEX);
+  const client = new Meilisearch({ host: meiliUrl, apiKey: meiliKey });
+  const index = client.index(config.docsIndex);
+  const routes = client.index(config.routesIndex);
 
   const renderSample = (codes: Record<string, string> | undefined): string => {
     const selected = selectSample(codes, user.codeLanguage);
@@ -231,7 +267,7 @@ export async function POST(request: Request): Promise<Response> {
 
       const similar = await routes.search(route, {
         limit: 5,
-        hybrid: { embedder: "voyage", semanticRatio: 0.5 },
+        hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
         attributesToRetrieve: ["page"],
       });
       const page = similar.hits[0]?.page as string | undefined;
@@ -243,7 +279,7 @@ export async function POST(request: Request): Promise<Response> {
   });
 
   const result = streamText({
-    model: openrouter(CHAT_MODEL || DEFAULT_MODEL, { reasoning: { effort: "high" } }),
+    model: openrouter(config.model, { reasoning: { effort: "high" } }),
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
     tools: { search, expand_page: expandPage, get_api_route: getApiRoute },
