@@ -89,6 +89,24 @@
   background: rgba(255, 255, 255, 0.4);
 }
 
+/* Same type and color as the docs navbar links (Inter 14/20 medium, gray-600, dark gray-300). */
+.meili-chat-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  font-family: Inter, -apple-system, system-ui, "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgb(87, 82, 85);
+}
+
+.dark .meili-chat-title {
+  color: rgb(213, 208, 211);
+}
+
 .meili-ask-button kbd {
   font: inherit;
   font-size: 12px;
