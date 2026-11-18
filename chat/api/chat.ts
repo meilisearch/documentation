@@ -8,6 +8,8 @@ import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
 const DEFAULT_QUERY_MODEL = "openai/gpt-6-luna";
+/** Reasoning ciphertext only decrypts on the upstream that created it. */
+const OPENAI_PROVIDER = { only: ["openai"], allow_fallbacks: false };
 const DEFAULT_ALLOWED_ORIGINS = "meilisearch.com,*.meilisearch.com,*.mintlify.site";
 const MAX_MESSAGES = 30;
 const MAX_TEXT_LENGTH = 4000;
@@ -509,10 +511,10 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const openrouter = createOpenRouter({ apiKey: openrouterKey });
-  const main = openrouter(config.model, { reasoning: { effort: "low" }, provider: { sort: "latency" } });
+  const main = openrouter(config.model, { reasoning: { effort: "low" }, provider: OPENAI_PROVIDER });
   const fast = openrouter(config.queryModel, {
     reasoning: { effort: "low", exclude: true },
-    provider: { sort: "latency" },
+    provider: OPENAI_PROVIDER,
   });
   const client = new Meilisearch({ host: meiliUrl, apiKey: meiliKey });
   const index = client.index(config.docsIndex);
