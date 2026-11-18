@@ -3,7 +3,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch } from "meilisearch";
 import { z } from "zod";
-import { fenceLanguage, lookupCandidates, quoteFilter, selectSample } from "../src/samples.ts";
+import { fenceLanguage, lookupCandidates, quoteFilter, selectSample } from "../src/samples.js";
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
