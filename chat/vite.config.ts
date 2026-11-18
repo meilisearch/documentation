@@ -130,7 +130,8 @@ export default defineConfig({
     "process.env.NODE_ENV": JSON.stringify("production"),
     __MEILI_CHAT_ORIGIN__: JSON.stringify(chatOrigin()),
   },
-  server: { port: 5173, cors: true },
+  // Bind IPv4 explicitly. Listening on localhost alone can be IPv6-only, which the browser misses.
+  server: { host: "127.0.0.1", port: 5173, cors: true },
   build: {
     outDir: "dist",
     lib: {
