@@ -1,27 +1,18 @@
 // Loads the "Ask AI" chat widget (source in /chat, built with Vite and hosted on Vercel).
 // Mintlify serves this file on every page; the widget itself is not part of the docs build.
 
-// Production URL of the Vercel project hosting chat.js and /api/chat.
-// Leave empty until the project is deployed: the widget is then skipped in production.
-const MEILI_CHAT_PROD_URL = '';
+// Stable production alias. It keeps working after a custom domain is added.
+const MEILI_CHAT_PROD_URL = 'https://documentation-chat.vercel.app'
+// Run `npm run dev` in chat/ to load the widget on local docs.
+const MEILI_CHAT_DEV_URL = 'http://localhost:5173'
 
 (function loadMeilisearchChat() {
   if (window.__meiliChatLoaded) {
     return
   }
 
-  // Local development: localStorage.setItem('meili-chat-dev', 'http://localhost:5173')
-  let devUrl = null
-  try {
-    devUrl = localStorage.getItem('meili-chat-dev')
-  } catch (e) {
-    // localStorage can be blocked; ignore.
-  }
-
-  const base = (devUrl || MEILI_CHAT_PROD_URL).replace(/\/$/, '')
-  if (!base) {
-    return
-  }
+  const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+  const base = (isLocal ? MEILI_CHAT_DEV_URL : MEILI_CHAT_PROD_URL).replace(/\/$/, '')
   window.__meiliChatLoaded = true
 
   const start = () => {
