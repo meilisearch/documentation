@@ -1,18 +1,37 @@
 // Loads the "Ask AI" chat widget (source in /chat, built with Vite and hosted on Vercel).
 // Mintlify serves this file on every page; the widget itself is not part of the docs build.
+//
+// Mintlify cannot read Vercel's env vars. A preview hostname already ends with the branch
+// slug Vercel puts in VERCEL_BRANCH_URL:
+//   meilisearch-6b28dec2-<branch>.mintlify.site
+//   -> documentation-chat-git-<branch>-meili.vercel.app
+// The bundle then calls the API on the origin baked in from that env var.
 
-// Stable production alias. It keeps working after a custom domain is added.
 const MEILI_CHAT_PROD_URL = 'https://documentation-chat.vercel.app'
 // Run `npm run dev` in chat/ to load the widget on local docs.
 const MEILI_CHAT_DEV_URL = 'http://localhost:5173'
+const MINTLIFY_PREVIEW = /^meilisearch-6b28dec2-(.+)\.mintlify\.site$/
+// DNS labels are at most 63 characters. Vercel truncates the branch alias to fit.
+const BRANCH_PREFIX = 'documentation-chat-git-'
+const BRANCH_SUFFIX = '-meili'
+
+function branchChatUrl(hostname) {
+  const match = hostname.match(MINTLIFY_PREVIEW)
+  if (!match || !/^[a-z0-9-]+$/.test(match[1])) return ''
+  const room = 63 - BRANCH_PREFIX.length - BRANCH_SUFFIX.length
+  const branch = match[1].slice(0, room).replace(/-+$/, '')
+  if (!branch) return ''
+  return `https://${BRANCH_PREFIX}${branch}${BRANCH_SUFFIX}.vercel.app`
+}
 
 (function loadMeilisearchChat() {
   if (window.__meiliChatLoaded) {
     return
   }
 
-  const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname)
-  const base = (isLocal ? MEILI_CHAT_DEV_URL : MEILI_CHAT_PROD_URL).replace(/\/$/, '')
+  const { hostname } = window.location
+  const isLocal = hostname === 'localhost' || hostname === '127.0.0.1'
+  const base = (isLocal ? MEILI_CHAT_DEV_URL : branchChatUrl(hostname) || MEILI_CHAT_PROD_URL).replace(/\/$/, '')
   window.__meiliChatLoaded = true
 
   const start = () => {
