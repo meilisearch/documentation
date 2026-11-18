@@ -7,6 +7,7 @@ import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectS
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
+const DEFAULT_QUERY_MODEL = "openai/gpt-6-luna";
 const DEFAULT_ALLOWED_ORIGINS = "meilisearch.com,*.meilisearch.com,*.mintlify.site";
 const MAX_MESSAGES = 30;
 const MAX_TEXT_LENGTH = 4000;
@@ -15,17 +16,25 @@ const MAX_PAGE_CHARS = 30_000;
 /** Default `pagination.maxTotalHits`. */
 const MAX_PAGE_CHUNKS = 1000;
 /** Federated multi-search pool. Meilisearch merges docs and routes by ranking score. */
-const RETRIEVE = 100;
-const KEEP = 20;
+const RETRIEVE = 50;
+/** Voyage rerank keeps this many, then the score trim drops the weak tail. */
+const RERANK_TOP = 15;
+/** Drop a hit below this Voyage score, unless it is one of the first MIN_KEEP. */
+const MIN_SCORE = 0.5;
+/** Drop a hit more than this far below the top Voyage score. */
+const MAX_DROP = 0.2;
+const MIN_KEEP = 3;
+const MAX_SEARCHES = 2;
+const MAX_READS = 2;
 
 const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"] as const;
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
 Rules:
-- Always call the search tool before answering a question about Meilisearch. You may call it several times with different queries.
-- Search results may be prose chunks, code samples already in the reader's language, or API route chunks. If a chunk is too partial to answer fully, call the expand_page tool with the "page" field of that result to read the whole page. Do not expand pages you do not need.
-- If a search hit is an API route (content_type "api_route") and the answer needs parameters or a request body, call get_api_route with that hit's page.
+- Call the search tool before answering a question about Meilisearch. Write 1 short, keyword-rich query, about 12 words at most. If the question has two distinct parts, call search twice in the same turn, one query per part. Do not search more than twice. On a follow-up question, include the topic from the earlier turns in the query.
+- Answer from the search hits. They may be prose chunks, code samples already in the reader's language, or API route chunks.
+- Call expand_page or get_api_route only when the hits are not enough: a chunk is cut off, or the answer needs parameters, a request body, or a complete example. Pass expand_page the "page" field of a hit. Pass get_api_route the page of a hit whose content_type is "api_route", or a method and path. Open at most two pages or routes.
 - Answer only from the search results, expanded pages, and get_api_route results. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
 - If the question is not about Meilisearch or search, politely decline and say what you can help with.
 
@@ -49,6 +58,7 @@ type ChatConfig = {
   meiliKey: string | undefined;
   voyageKey: string | undefined;
   model: string;
+  queryModel: string;
   allowedOrigins: string[];
   docsIndex: string;
   routesIndex: string;
@@ -64,6 +74,7 @@ function readConfig(): ChatConfig {
     meiliKey: env.MEILISEARCH_KEY,
     voyageKey: env.VOYAGE_API_KEY,
     model: env.CHAT_MODEL || DEFAULT_MODEL,
+    queryModel: env.CHAT_QUERY_MODEL || DEFAULT_QUERY_MODEL,
     allowedOrigins: (env.CHAT_ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
       .split(",")
       .map((entry) => entry.trim())
@@ -154,8 +165,8 @@ function formatScore(score: number | null): string {
   return score === null ? "n/a" : score.toFixed(3);
 }
 
-const PRE_RANKS = [1, 10, 20, 50, 100];
-const POST_RANKS = [1, 5, 10, 20];
+const PRE_RANKS = [1, 10, 20, 50];
+const POST_RANKS = [1, 5, 10, 15];
 
 type ScoreCurve = {
   avg: number | null;
@@ -180,14 +191,17 @@ type MeiliSummary = {
 
 type TraceNode = { duration?: string; children: Map<string, TraceNode> };
 
-type KeptHit = { page: string; rank: number };
+type KeptHit = { page: string; rank: number; meiliRank: number };
 
 type SearchDetail = {
   q: string;
   meili: MeiliSummary;
   rerankMs: number;
   candidates: number;
+  reranked: number;
   kept: number;
+  cutoff: number | null;
+  dupes: number;
   docs: number;
   routes: number;
   meiliBytes: number;
@@ -309,7 +323,7 @@ function formatOpened(searches: SearchDetail[], opened: OpenedPage[]): string[] 
     if (read.tool === "expand_page") openedPages.add(read.arg);
   }
 
-  const best = new Map<string, { rank: number; query: string }>();
+  const best = new Map<string, { rank: number; meiliRank: number; query: string }>();
   const distinct = new Set<string>();
   for (const search of searches) {
     for (const hit of search.hits) {
@@ -317,7 +331,9 @@ function formatOpened(searches: SearchDetail[], opened: OpenedPage[]): string[] 
       distinct.add(hit.page);
       const previous = best.get(hit.page);
       if (!openedPages.has(hit.page)) continue;
-      if (!previous || hit.rank < previous.rank) best.set(hit.page, { rank: hit.rank, query: search.q });
+      if (!previous || hit.rank < previous.rank) {
+        best.set(hit.page, { rank: hit.rank, meiliRank: hit.meiliRank, query: search.q });
+      }
     }
   }
 
@@ -332,7 +348,7 @@ function formatOpened(searches: SearchDetail[], opened: OpenedPage[]): string[] 
 
   const lines = [`   kept ${distinct.size} pages, ${used.length} opened from those hits`];
   const rows: Array<{ label: string; query?: string }> = [
-    ...used.map(([page, hit]) => ({ label: `r${hit.rank} ${page}`, query: hit.query })),
+    ...used.map(([page, hit]) => ({ label: `r${hit.rank} m${hit.meiliRank} ${page}`, query: hit.query })),
     ...unmatched.map((read) => ({
       label: `${read.tool} "${read.arg}"${read.page ? ` → ${read.page}` : ""}  not in kept hits`,
     })),
@@ -361,10 +377,12 @@ function toolArg(input: unknown): string | undefined {
   return typeof value === "string" ? value : undefined;
 }
 
+type RankedHit<T> = { hit: T; score: number; originalIndex: number };
+
 async function rerankHits<T extends { breadcrumb: string; content: string }>(
   query: string,
   pool: T[],
-): Promise<{ hits: T[]; scores: number[]; ms: number }> {
+): Promise<{ ranked: RankedHit<T>[]; ms: number }> {
   const started = performance.now();
   const documents = pool.map(rerankDocument);
   try {
@@ -372,11 +390,10 @@ async function rerankHits<T extends { breadcrumb: string; content: string }>(
       model: voyage.reranking("rerank-3"),
       query,
       documents,
-      topN: KEEP,
+      topN: RERANK_TOP,
     });
     return {
-      hits: ranking.map((item) => pool[item.originalIndex]),
-      scores: ranking.map((item) => item.score),
+      ranked: ranking.map((item) => ({ hit: pool[item.originalIndex], score: item.score, originalIndex: item.originalIndex })),
       ms: elapsedMs(started),
     };
   } catch (error) {
@@ -434,6 +451,9 @@ export async function POST(request: Request): Promise<Response> {
     return json(500, { error: "Chat is not configured" }, headers);
   }
 
+  void fetch(new URL("/health", meiliUrl)).catch(() => {});
+  void fetch("https://api.voyageai.com/", { method: "HEAD" }).catch(() => {});
+
   let messages: unknown;
   let userInput: unknown;
   try {
@@ -449,6 +469,9 @@ export async function POST(request: Request): Promise<Response> {
   let answerFirstOutput: number | undefined;
   const searches: SearchDetail[] = [];
   const searchDetails = new Map<string, SearchDetail>();
+  const seenChunks = new Set<string>();
+  let searchCount = 0;
+  let readCount = 0;
   const readDetails = new Map<string, ReadDetail>();
   const opened: OpenedPage[] = [];
 
@@ -486,6 +509,11 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const openrouter = createOpenRouter({ apiKey: openrouterKey });
+  const main = openrouter(config.model, { reasoning: { effort: "low" }, provider: { sort: "latency" } });
+  const fast = openrouter(config.queryModel, {
+    reasoning: { effort: "low", exclude: true },
+    provider: { sort: "latency" },
+  });
   const client = new Meilisearch({ host: meiliUrl, apiKey: meiliKey });
   const index = client.index(config.docsIndex);
   const routes = client.index(config.routesIndex);
@@ -518,11 +546,13 @@ export async function POST(request: Request): Promise<Response> {
 
   const search = tool({
     description:
-      'Search the Meilisearch documentation. Results are prose chunks from guides and concept pages, and may also be a code sample already rendered in the reader\'s language or an API route chunk. Pass a focused natural-language query. Call expand_page to read a page and its code samples. Call get_api_route for a route\'s parameters, request body, and response. When a hit has content_type "api_route", call get_api_route with its page before stating parameters or a request body.',
+      "Search the Meilisearch documentation. Results are prose chunks, code samples already in the reader's language, or API route chunks. Pass one short keyword-rich query, about 12 words. If the question has two distinct parts, call this tool twice in the same turn. On a follow-up, include the topic from earlier turns. Call expand_page or get_api_route only when a hit is missing detail: parameters, a full example, or steps the chunk cuts off.",
     inputSchema: z.object({
       q: z.string().min(1).max(500).describe("The search query"),
     }),
     execute: async ({ q }, { toolCallId }) => {
+      if (searchCount >= MAX_SEARCHES) return { hits: [], note: "Search budget used. Answer from earlier hits." };
+      searchCount += 1;
       const spans: MeiliSpan[] = [];
       const retrieved = await runMeili(spans, () =>
         client.multiSearch({
@@ -554,7 +584,10 @@ export async function POST(request: Request): Promise<Response> {
         meili: summarizeSpans(spans),
         rerankMs: 0,
         candidates: pool.length,
+        reranked: 0,
         kept: 0,
+        cutoff: null,
+        dupes: 0,
         docs,
         routes: routeHits,
         meiliBytes: utf8Bytes(rawHits),
@@ -570,19 +603,38 @@ export async function POST(request: Request): Promise<Response> {
       searchDetails.set(toolCallId, detail);
       if (pool.length === 0) return { hits: [] };
       const reranked = await rerankHits(q, pool);
+      const top = reranked.ranked[0]?.score ?? 0;
+      const cutoff = top - MAX_DROP;
+      let dupes = 0;
+      const kept = reranked.ranked.flatMap((item, index) => {
+        if (index >= MIN_KEEP && (item.score < MIN_SCORE || item.score < cutoff)) return [];
+        const key = `${item.hit.page}#${item.hit.anchor ?? ""}`;
+        if (seenChunks.has(key)) {
+          dupes += 1;
+          return [];
+        }
+        seenChunks.add(key);
+        return [{ ...item, voyageRank: index + 1 }];
+      });
       detail.rerankMs = reranked.ms;
-      detail.kept = reranked.hits.length;
-      detail.post = scoreCurve(reranked.scores, POST_RANKS);
-      detail.hits = reranked.hits.flatMap((hit, index) => (hit.page ? [{ page: hit.page, rank: index + 1 }] : []));
-      detail.resultBytes = utf8Bytes({ hits: reranked.hits });
-      return { hits: reranked.hits };
+      detail.reranked = reranked.ranked.length;
+      detail.kept = kept.length;
+      detail.cutoff = reranked.ranked.length === 0 ? null : Math.max(MIN_SCORE, cutoff);
+      detail.dupes = dupes;
+      detail.post = scoreCurve(
+        reranked.ranked.map((item) => item.score),
+        POST_RANKS,
+      );
+      detail.hits = kept.flatMap((item) => (item.hit.page ? [{ page: item.hit.page, rank: item.voyageRank, meiliRank: item.originalIndex + 1 }] : []));
+      detail.resultBytes = utf8Bytes({ hits: kept.map((item) => item.hit) });
+      return { hits: kept.map((item) => item.hit) };
     },
   });
 
   // Chunks of one page are ordered by chunk_index. Joining them rebuilds the page, samples included.
   const expandPage = tool({
     description:
-      "Read one documentation page in its real order, including code samples already chosen for the reader's language. Use it when a search result is too partial to answer. Pass the `page` field of a search result.",
+      "Read one documentation page in full, including code samples already chosen for the reader's language. Use it only when a search hit cuts off the steps or example the answer needs. Pass the `page` field of a search result.",
     inputSchema: z.object({
       page: z
         .string()
@@ -592,6 +644,12 @@ export async function POST(request: Request): Promise<Response> {
         .describe('The "page" field of a search result, for example "capabilities/personalization/overview"'),
     }),
     execute: async ({ page }, { toolCallId }) => {
+      if (readCount >= MAX_READS) {
+        const denied = { error: "Read budget used. Answer from what you have." };
+        rememberRead(toolCallId, "expand_page", page, denied, []);
+        return denied;
+      }
+      readCount += 1;
       const spans: MeiliSpan[] = [];
       const { hits, estimatedTotalHits } = await runMeili(spans, () =>
         index.search("", {
@@ -686,6 +744,12 @@ export async function POST(request: Request): Promise<Response> {
         ),
     }),
     execute: async ({ route }, { toolCallId }) => {
+      if (readCount >= MAX_READS) {
+        const denied = { error: "Read budget used. Answer from what you have." };
+        rememberRead(toolCallId, "get_api_route", route, denied, []);
+        return denied;
+      }
+      readCount += 1;
       const spans: MeiliSpan[] = [];
       const finish = (body: unknown) => {
         rememberRead(toolCallId, "get_api_route", route, body, spans);
@@ -734,11 +798,16 @@ export async function POST(request: Request): Promise<Response> {
 
   logChat(["trace"]);
   const result = streamText({
-    model: openrouter(config.model, { reasoning: { effort: "high" } }),
+    model: main,
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
     tools: { search, expand_page: expandPage, get_api_route: getApiRoute },
-    stopWhen: isStepCount(7),
+    stopWhen: isStepCount(3),
+    prepareStep: ({ stepNumber }) => {
+      if (stepNumber === 0) return { model: fast, activeTools: ["search"], toolChoice: "required" };
+      if (stepNumber === 1) return { activeTools: ["expand_page", "get_api_route"] };
+      return { toolChoice: "none" };
+    },
     onStepEnd: (step) => {
       const stepMs = Math.round(step.performance.stepTimeMs);
       const now = elapsedMs(started);
@@ -772,8 +841,9 @@ export async function POST(request: Request): Promise<Response> {
             `│  ${pad}meili ${formatDuration(detail.meili.ms)}  processing ${formatDuration(detail.meili.processingMs)}  wait ${formatDuration(detail.meili.waitMs)}  inFlight ${detail.meili.inFlight}  payload ${formatBytes(detail.meiliBytes)}`,
           );
           for (const line of formatTraces(detail.meili.traces)) lines.push(`│  ${pad}${line}`);
+          const cutoff = detail.cutoff === null ? "n/a" : detail.cutoff.toFixed(3);
           lines.push(
-            `│  ${pad}rerank ${formatDuration(detail.rerankMs)}  ${detail.candidates}→${detail.kept}  docs ${detail.docs}  routes ${detail.routes}  result ${formatBytes(detail.resultBytes)}`,
+            `│  ${pad}rerank ${formatDuration(detail.rerankMs)}  ${detail.candidates}→${detail.reranked}  trimmed ${detail.reranked}→${detail.kept}  cutoff ${cutoff}  dupes ${detail.dupes}  docs ${detail.docs}  routes ${detail.routes}  result ${formatBytes(detail.resultBytes)}`,
           );
           lines.push(`│  ${pad}${formatCurve("pre ", detail.pre)}`);
           lines.push(`│  ${pad}${formatCurve("post", detail.post)}`);
