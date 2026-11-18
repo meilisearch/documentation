@@ -55,6 +55,48 @@ function hoistAtProperties() {
 }
 
 /**
+ * The panel lives in a shadow root, so rules that shrink the docs column have to
+ * be on the page. `--meili-chat-width` is set from the panel while it is open.
+ */
+function hoistLayoutStyles() {
+  if (document.getElementById("meili-chat-layout")) return;
+  const style = document.createElement("style");
+  style.id = "meili-chat-layout";
+  style.textContent = `
+html { --meili-chat-width: 0px; }
+html[data-meili-chat-dragging],
+html[data-meili-chat-dragging] body {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+@media (min-width: 1024px) {
+  .max-lg\\:contents.lg\\:flex-1 {
+    transition: margin-right 200ms ease;
+  }
+  html[data-meili-chat="open"] .max-lg\\:contents.lg\\:flex-1 {
+    margin-right: var(--meili-chat-width);
+  }
+  html[data-meili-chat-dragging] .max-lg\\:contents.lg\\:flex-1 {
+    transition: none;
+  }
+  html[data-meili-chat="open"] #content-side-layout {
+    visibility: hidden !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  html[data-meili-chat="open"] :has(> #content-side-layout) {
+    gap: 0 !important;
+  }
+}
+`;
+  document.head.appendChild(style);
+}
+
+/**
  * Sit right after the custom search bar. After a SPA navigation search.js can fall back to
  * Mintlify's own search entry, so use that as the anchor when the custom bar is missing.
  */
@@ -72,6 +114,7 @@ export function mount(options: MountOptions = {}) {
   // On Vercel this is the branch or production host baked in at build time.
   const apiBase = __MEILI_CHAT_ORIGIN__ || options.apiBase || scriptOrigin || "";
   hoistAtProperties();
+  hoistLayoutStyles();
 
   const panel = createShadowHost(PANEL_HOST_ID);
   document.body.appendChild(panel.host);
