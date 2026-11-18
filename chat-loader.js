@@ -8,8 +8,8 @@
 // The bundle then calls the API on the origin baked in from that env var.
 
 const MEILI_CHAT_PROD_URL = 'https://documentation-chat.vercel.app'
-// Run `npm run dev` in chat/ to load the widget on local docs.
-const MEILI_CHAT_DEV_URL = 'http://localhost:5173'
+// Used only when `npm run dev` is running in chat/. 127.0.0.1 avoids an IPv6-only bind.
+const MEILI_CHAT_DEV_URL = 'http://127.0.0.1:5173'
 const MINTLIFY_PREVIEW = /^meilisearch-6b28dec2-(.+)\.mintlify\.site$/
 // DNS labels are at most 63 characters. Vercel truncates the branch alias to fit.
 const BRANCH_PREFIX = 'documentation-chat-git-'
@@ -24,31 +24,30 @@ function branchChatUrl(hostname) {
   return `https://${BRANCH_PREFIX}${branch}${BRANCH_SUFFIX}.vercel.app`
 }
 
-(function loadMeilisearchChat() {
+function loadMeilisearchChat() {
   if (window.__meiliChatLoaded) {
     return
   }
 
   const { hostname } = window.location
   const isLocal = hostname === 'localhost' || hostname === '127.0.0.1'
+  // Local docs always use the chat dev server (`npm run dev` in chat/).
   const base = (isLocal ? MEILI_CHAT_DEV_URL : branchChatUrl(hostname) || MEILI_CHAT_PROD_URL).replace(/\/$/, '')
   window.__meiliChatLoaded = true
 
-  const start = () => {
-    const script = document.createElement('script')
-    script.src = `${base}/chat.js`
-    script.async = true
-    script.onload = () => window.MeiliChat && window.MeiliChat.mount({ apiBase: base })
-    script.onerror = () => {
-      window.__meiliChatLoaded = false
-      console.warn('Meilisearch chat widget failed to load from', script.src)
-    }
-    document.head.appendChild(script)
+  const script = document.createElement('script')
+  script.src = `${base}/chat.js`
+  script.async = true
+  script.onload = () => window.MeiliChat && window.MeiliChat.mount({ apiBase: base })
+  script.onerror = () => {
+    window.__meiliChatLoaded = false
+    console.warn('Meilisearch chat widget failed to load from', script.src)
   }
+  document.head.appendChild(script)
+}
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start)
-  } else {
-    start()
-  }
-})()
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadMeilisearchChat)
+} else {
+  loadMeilisearchChat()
+}

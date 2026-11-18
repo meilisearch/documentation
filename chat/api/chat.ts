@@ -76,7 +76,10 @@ function isAllowedOrigin(origin: string | null, allowed: string[]): boolean {
   if (!origin) return dev;
   try {
     const { protocol, hostname } = new URL(origin);
-    if (hostname === "localhost" || hostname === "127.0.0.1") return dev;
+    // Local docs (mint dev) call the hosted API. A remote site cannot use these hosts.
+    if ((hostname === "localhost" || hostname === "127.0.0.1") && (protocol === "http:" || protocol === "https:")) {
+      return true;
+    }
     return protocol === "https:" && allowed.some((pattern) => matchesHost(hostname, pattern));
   } catch {
     return false;
