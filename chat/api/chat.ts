@@ -14,8 +14,8 @@ const MAX_TEXT_LENGTH = 4000;
 const MAX_PAGE_CHARS = 30_000;
 /** Default `pagination.maxTotalHits`. */
 const MAX_PAGE_CHUNKS = 1000;
-const RETRIEVE_DOCS = 80;
-const RETRIEVE_ROUTES = 20;
+/** Federated multi-search pool. Meilisearch merges docs and routes by ranking score. */
+const RETRIEVE = 100;
 const KEEP = 20;
 
 const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"] as const;
@@ -141,7 +141,231 @@ function rerankDocument(hit: { breadcrumb: string; content: string }): string {
   return hit.breadcrumb ? `${hit.breadcrumb}\n${hit.content}` : hit.content;
 }
 
-async function rerankHits<T extends { breadcrumb: string; content: string }>(query: string, pool: T[]): Promise<T[]> {
+function elapsedMs(started: number): number {
+  return Math.round(performance.now() - started);
+}
+
+function average(scores: number[]): number | null {
+  if (scores.length === 0) return null;
+  return scores.reduce((sum, score) => sum + score, 0) / scores.length;
+}
+
+function formatScore(score: number | null): string {
+  return score === null ? "n/a" : score.toFixed(3);
+}
+
+const PRE_RANKS = [1, 10, 20, 50, 100];
+const POST_RANKS = [1, 5, 10, 20];
+
+type ScoreCurve = {
+  avg: number | null;
+  min: number | null;
+  at: Array<{ rank: number; score: number }>;
+};
+
+type MeiliSpan = {
+  ms: number;
+  processingMs: number;
+  inFlight: number;
+  trace?: Record<string, unknown>;
+};
+
+type MeiliSummary = {
+  ms: number;
+  processingMs: number;
+  waitMs: number;
+  inFlight: number;
+  traces: Array<Record<string, unknown> | undefined>;
+};
+
+type TraceNode = { duration?: string; children: Map<string, TraceNode> };
+
+type KeptHit = { page: string; rank: number };
+
+type SearchDetail = {
+  q: string;
+  meili: MeiliSummary;
+  rerankMs: number;
+  candidates: number;
+  kept: number;
+  docs: number;
+  routes: number;
+  meiliBytes: number;
+  resultBytes: number;
+  pre: ScoreCurve;
+  post: ScoreCurve;
+  hits: KeptHit[];
+};
+
+type ReadDetail = {
+  bytes: number;
+  page?: string;
+  matched?: string;
+  meili: MeiliSummary;
+};
+
+type OpenedPage = { tool: string; arg: string; page?: string };
+
+function scoreCurve(scores: Array<number | undefined>, ranks: number[]): ScoreCurve {
+  const finite = scores.filter((score): score is number => typeof score === "number" && Number.isFinite(score));
+  return {
+    avg: average(finite),
+    min: finite.length === 0 ? null : Math.min(...finite),
+    at: ranks.flatMap((rank) => {
+      const score = scores[rank - 1];
+      return typeof score === "number" && Number.isFinite(score) ? [{ rank, score }] : [];
+    }),
+  };
+}
+
+function formatCurve(label: string, curve: ScoreCurve): string {
+  const points = curve.at.map((point) => `r${point.rank}=${point.score.toFixed(3)}`).join(" ");
+  return `${label} ${points}${points ? " " : ""}min=${formatScore(curve.min)} avg=${formatScore(curve.avg)}`;
+}
+
+function formatDuration(value: number): string {
+  if (value >= 10_000) return `${Math.round(value / 1000)}s`;
+  if (value >= 1000) return `${(value / 1000).toFixed(1)}s`;
+  return `${Math.round(value)}ms`;
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes < 0) return "n/a";
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
+  if (bytes >= 1024) return `${Math.round(bytes / 1024)}kB`;
+  return `${bytes}B`;
+}
+
+function formatCount(value: number | undefined): string {
+  return value === undefined ? "n/a" : String(value);
+}
+
+function utf8Bytes(value: unknown): number {
+  try {
+    return new TextEncoder().encode(JSON.stringify(value)).length;
+  } catch {
+    return -1;
+  }
+}
+
+function summarizeSpans(spans: MeiliSpan[]): MeiliSummary {
+  const ms = spans.reduce((sum, span) => sum + span.ms, 0);
+  const processingMs = spans.reduce((sum, span) => sum + span.processingMs, 0);
+  const inFlight = spans.reduce((max, span) => Math.max(max, span.inFlight), 0);
+  return { ms, processingMs, waitMs: Math.max(0, ms - processingMs), inFlight, traces: spans.map((span) => span.trace) };
+}
+
+function traceChild(parent: TraceNode, name: string): TraceNode {
+  const existing = parent.children.get(name);
+  if (existing) return existing;
+  const created: TraceNode = { children: new Map() };
+  parent.children.set(name, created);
+  return created;
+}
+
+/** `performanceDetails` keys are `parent > child` paths. Values are duration strings. */
+function addTraceValue(node: TraceNode, key: string, value: unknown): void {
+  let current = node;
+  for (const part of key.split(" > ")) current = traceChild(current, part);
+  if (typeof value === "string" || typeof value === "number") {
+    current.duration = String(value);
+    return;
+  }
+  if (!isRecord(value)) return;
+  for (const [nestedKey, nestedValue] of Object.entries(value)) addTraceValue(current, nestedKey, nestedValue);
+}
+
+function renderTrace(node: TraceNode, indent: string): string[] {
+  const lines: string[] = [];
+  const entries = [...node.children.entries()];
+  entries.forEach(([name, child], index) => {
+    const last = index === entries.length - 1;
+    const duration = child.duration === undefined ? "" : `  ${child.duration}`;
+    lines.push(`${indent}${last ? "└─" : "├─"} ${name}${duration}`);
+    lines.push(...renderTrace(child, `${indent}${last ? "   " : "│  "}`));
+  });
+  return lines;
+}
+
+function formatTraces(traces: Array<Record<string, unknown> | undefined>): string[] {
+  const present = traces.filter((trace): trace is Record<string, unknown> => isRecord(trace) && Object.keys(trace).length > 0);
+  if (present.length === 0) return ["trace unavailable"];
+  return present.flatMap((trace, index) => {
+    const root: TraceNode = { children: new Map() };
+    for (const [key, value] of Object.entries(trace)) addTraceValue(root, key, value);
+    const heading = present.length === 1 ? "trace" : `trace ${index + 1}`;
+    return [heading, ...renderTrace(root, "")];
+  });
+}
+
+function logChat(lines: string[]): void {
+  console.log(lines.map((line) => `[chat] ${line}`).join("\n"));
+}
+
+function formatOpened(searches: SearchDetail[], opened: OpenedPage[]): string[] {
+  const openedPages = new Set<string>();
+  for (const read of opened) {
+    if (read.page) openedPages.add(read.page);
+    if (read.tool === "expand_page") openedPages.add(read.arg);
+  }
+
+  const best = new Map<string, { rank: number; query: string }>();
+  const distinct = new Set<string>();
+  for (const search of searches) {
+    for (const hit of search.hits) {
+      if (!hit.page) continue;
+      distinct.add(hit.page);
+      const previous = best.get(hit.page);
+      if (!openedPages.has(hit.page)) continue;
+      if (!previous || hit.rank < previous.rank) best.set(hit.page, { rank: hit.rank, query: search.q });
+    }
+  }
+
+  const used = [...best.entries()].sort((a, b) => a[1].rank - b[1].rank || a[0].localeCompare(b[0]));
+  const seenUnmatched = new Set<string>();
+  const unmatched = opened.filter((read) => {
+    const page = read.tool === "expand_page" ? read.arg : read.page;
+    if (!page || best.has(page) || seenUnmatched.has(`${read.tool}\0${read.arg}\0${page}`)) return false;
+    seenUnmatched.add(`${read.tool}\0${read.arg}\0${page}`);
+    return true;
+  });
+
+  const lines = [`   kept ${distinct.size} pages, ${used.length} opened from those hits`];
+  const rows: Array<{ label: string; query?: string }> = [
+    ...used.map(([page, hit]) => ({ label: `r${hit.rank} ${page}`, query: hit.query })),
+    ...unmatched.map((read) => ({
+      label: `${read.tool} "${read.arg}"${read.page ? ` → ${read.page}` : ""}  not in kept hits`,
+    })),
+  ];
+  rows.forEach((row, index) => {
+    const last = index === rows.length - 1;
+    lines.push(`   ${last ? "└─" : "├─"} ${row.label}`);
+    if (row.query) lines.push(`   ${last ? "   " : "│  "}"${row.query}"`);
+  });
+  return lines;
+}
+
+function rankingScore(hit: unknown): number | undefined {
+  if (!isRecord(hit) || typeof hit._rankingScore !== "number") return undefined;
+  return hit._rankingScore;
+}
+
+function federationIndexUid(hit: unknown): string | undefined {
+  if (!isRecord(hit) || !isRecord(hit._federation) || typeof hit._federation.indexUid !== "string") return undefined;
+  return hit._federation.indexUid;
+}
+
+function toolArg(input: unknown): string | undefined {
+  if (!isRecord(input)) return undefined;
+  const value = input.q ?? input.page ?? input.route;
+  return typeof value === "string" ? value : undefined;
+}
+
+async function rerankHits<T extends { breadcrumb: string; content: string }>(
+  query: string,
+  pool: T[],
+): Promise<{ hits: T[]; scores: number[]; ms: number }> {
+  const started = performance.now();
   const documents = pool.map(rerankDocument);
   try {
     const { ranking } = await rerank({
@@ -150,8 +374,11 @@ async function rerankHits<T extends { breadcrumb: string; content: string }>(que
       documents,
       topN: KEEP,
     });
-    console.log(`[chat] search: ${pool.length} candidates, ${ranking.length} reranked`);
-    return ranking.map((item) => pool[item.originalIndex]);
+    return {
+      hits: ranking.map((item) => pool[item.originalIndex]),
+      scores: ranking.map((item) => item.score),
+      ms: elapsedMs(started),
+    };
   } catch (error) {
     console.error("[chat] rerank failed", error);
     throw error;
@@ -217,6 +444,46 @@ export async function POST(request: Request): Promise<Response> {
   if (!isValidMessages(messages)) return json(400, { error: "Invalid messages" }, headers);
 
   const user = parseChatUser(userInput);
+  const started = performance.now();
+  let inFlightMeili = 0;
+  let answerFirstOutput: number | undefined;
+  const searches: SearchDetail[] = [];
+  const searchDetails = new Map<string, SearchDetail>();
+  const readDetails = new Map<string, ReadDetail>();
+  const opened: OpenedPage[] = [];
+
+  async function runMeili<T extends { processingTimeMs: number; performanceDetails?: unknown }>(
+    spans: MeiliSpan[],
+    task: () => Promise<T>,
+  ): Promise<T> {
+    inFlightMeili += 1;
+    const inFlight = inFlightMeili;
+    const meiliStarted = performance.now();
+    try {
+      const value = await task();
+      spans.push({
+        ms: elapsedMs(meiliStarted),
+        processingMs: value.processingTimeMs,
+        inFlight,
+        trace: isRecord(value.performanceDetails) ? value.performanceDetails : undefined,
+      });
+      return value;
+    } finally {
+      inFlightMeili -= 1;
+    }
+  }
+
+  function rememberRead(toolCallId: string, tool: string, arg: string, body: unknown, spans: MeiliSpan[]): void {
+    const resolved = isRecord(body) && typeof body.page === "string" ? body.page : undefined;
+    const matched = isRecord(body) && typeof body.matched === "string" ? body.matched : undefined;
+    readDetails.set(toolCallId, {
+      bytes: utf8Bytes(body),
+      page: resolved ?? (tool === "expand_page" ? arg : undefined),
+      matched,
+      meili: summarizeSpans(spans),
+    });
+    opened.push({ tool, arg, page: tool === "expand_page" ? arg : resolved });
+  }
 
   const openrouter = createOpenRouter({ apiKey: openrouterKey });
   const client = new Meilisearch({ host: meiliUrl, apiKey: meiliKey });
@@ -255,28 +522,60 @@ export async function POST(request: Request): Promise<Response> {
     inputSchema: z.object({
       q: z.string().min(1).max(500).describe("The search query"),
     }),
-    execute: async ({ q }) => {
-      const retrieved = await client.multiSearch({
-        queries: [
-          {
-            indexUid: config.docsIndex,
-            q,
-            limit: RETRIEVE_DOCS,
-            hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-            attributesToRetrieve: [...HIT_FIELDS, "codes"],
-          },
-          {
-            indexUid: config.routesIndex,
-            q,
-            limit: RETRIEVE_ROUTES,
-            hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-            attributesToRetrieve: [...HIT_FIELDS],
-          },
-        ],
-      });
-      const pool = [...(retrieved.results[0]?.hits ?? []), ...(retrieved.results[1]?.hits ?? [])].map((hit) => toHit(hit));
+    execute: async ({ q }, { toolCallId }) => {
+      const spans: MeiliSpan[] = [];
+      const retrieved = await runMeili(spans, () =>
+        client.multiSearch({
+          federation: { limit: RETRIEVE, showPerformanceDetails: true },
+          queries: [
+            {
+              indexUid: config.docsIndex,
+              q,
+              hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+              showRankingScore: true,
+              attributesToRetrieve: [...HIT_FIELDS, "codes"],
+            },
+            {
+              indexUid: config.routesIndex,
+              q,
+              hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+              showRankingScore: true,
+              attributesToRetrieve: [...HIT_FIELDS],
+            },
+          ],
+        }),
+      );
+      const rawHits = retrieved.hits;
+      const docs = rawHits.filter((hit) => federationIndexUid(hit) === config.docsIndex).length;
+      const routeHits = rawHits.filter((hit) => federationIndexUid(hit) === config.routesIndex).length;
+      const pool = rawHits.map((hit) => toHit(hit));
+      const detail: SearchDetail = {
+        q,
+        meili: summarizeSpans(spans),
+        rerankMs: 0,
+        candidates: pool.length,
+        kept: 0,
+        docs,
+        routes: routeHits,
+        meiliBytes: utf8Bytes(rawHits),
+        resultBytes: utf8Bytes({ hits: [] }),
+        pre: scoreCurve(
+          rawHits.map((hit) => rankingScore(hit)),
+          PRE_RANKS,
+        ),
+        post: scoreCurve([], POST_RANKS),
+        hits: [],
+      };
+      searches.push(detail);
+      searchDetails.set(toolCallId, detail);
       if (pool.length === 0) return { hits: [] };
-      return { hits: await rerankHits(q, pool) };
+      const reranked = await rerankHits(q, pool);
+      detail.rerankMs = reranked.ms;
+      detail.kept = reranked.hits.length;
+      detail.post = scoreCurve(reranked.scores, POST_RANKS);
+      detail.hits = reranked.hits.flatMap((hit, index) => (hit.page ? [{ page: hit.page, rank: index + 1 }] : []));
+      detail.resultBytes = utf8Bytes({ hits: reranked.hits });
+      return { hits: reranked.hits };
     },
   });
 
@@ -292,37 +591,49 @@ export async function POST(request: Request): Promise<Response> {
         .regex(/^[\w\-/.]+$/)
         .describe('The "page" field of a search result, for example "capabilities/personalization/overview"'),
     }),
-    execute: async ({ page }) => {
-      const { hits, estimatedTotalHits } = await index.search("", {
-        filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
-        sort: ["chunk_index:asc"],
-        limit: MAX_PAGE_CHUNKS,
-        attributesToRetrieve: ["title", "url", "content", "content_type", "codes"],
-      });
-      if (hits.length === 0) return { error: `No page found for "${page}". Use the page field of a search result.` };
-
+    execute: async ({ page }, { toolCallId }) => {
+      const spans: MeiliSpan[] = [];
+      const { hits, estimatedTotalHits } = await runMeili(spans, () =>
+        index.search("", {
+          filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
+          sort: ["chunk_index:asc"],
+          limit: MAX_PAGE_CHUNKS,
+          attributesToRetrieve: ["title", "url", "content", "content_type", "codes"],
+          showPerformanceDetails: true,
+        }),
+      );
+      if (hits.length === 0) {
+        const missing = { error: `No page found for "${page}". Use the page field of a search result.` };
+        rememberRead(toolCallId, "expand_page", page, missing, spans);
+        return missing;
+      }
       const parts = hits.map((hit) =>
         hit.content_type === "code_sample" ? renderSample(hit.codes as Record<string, string> | undefined) : String(hit.content ?? ""),
       );
       const markdown = [`# ${hits[0].title}`, ...parts.filter(Boolean)].join("\n\n");
       const { text, truncated } = truncate(markdown, MAX_PAGE_CHARS);
-      return {
+      const body = {
         title: hits[0].title as string,
         url: (hits[0].url as string).split("#")[0],
         markdown: text,
         truncated: truncated || (estimatedTotalHits ?? hits.length) > hits.length,
       };
+      rememberRead(toolCallId, "expand_page", page, body, spans);
+      return body;
     },
   });
 
   const routeAttributes = ["title", "page", "url", "content", "chunk_index", "codes"];
-  const loadRoute = async (filter: string) => {
-    const { hits } = await routes.search("", {
-      filter,
-      sort: ["chunk_index:asc"],
-      limit: MAX_PAGE_CHUNKS,
-      attributesToRetrieve: routeAttributes,
-    });
+  const loadRoute = async (filter: string, spans: MeiliSpan[]) => {
+    const { hits } = await runMeili(spans, () =>
+      routes.search("", {
+        filter,
+        sort: ["chunk_index:asc"],
+        limit: MAX_PAGE_CHUNKS,
+        attributesToRetrieve: routeAttributes,
+        showPerformanceDetails: true,
+      }),
+    );
     return hits;
   };
 
@@ -374,49 +685,125 @@ export async function POST(request: Request): Promise<Response> {
           'Method and path, docs URL, slug, or SDK method name. For example "POST /indexes/{index_uid}/search", "search-with-post", or "updateEmbedders".',
         ),
     }),
-    execute: async ({ route }) => {
+    execute: async ({ route }, { toolCallId }) => {
+      const spans: MeiliSpan[] = [];
+      const finish = (body: unknown) => {
+        rememberRead(toolCallId, "get_api_route", route, body, spans);
+        return body;
+      };
       const candidates = lookupCandidates(route);
-      if (candidates.length === 0) return { error: "Provide a method and path, a docs URL, a slug, or an SDK method name." };
-      const exact = await loadRoute(`lookup_keys IN [${candidates.map(quoteFilter).join(", ")}]`);
-      if (exact.length > 0) return presentRoute(exact, "exact");
+      if (candidates.length === 0) return finish({ error: "Provide a method and path, a docs URL, a slug, or an SDK method name." });
+      const exact = await loadRoute(`lookup_keys IN [${candidates.map(quoteFilter).join(", ")}]`, spans);
+      if (exact.length > 0) return finish(presentRoute(exact, "exact"));
 
       const methods = methodCandidates(route);
       if (methods.length > 0) {
-        const methodHits = await loadRoute(`sdk_methods IN [${methods.map(quoteFilter).join(", ")}]`);
+        const methodHits = await loadRoute(`sdk_methods IN [${methods.map(quoteFilter).join(", ")}]`, spans);
         const pages = pagesOf(methodHits);
-        if (pages.length === 1) return presentRoute(methodHits, "sdk_method");
+        if (pages.length === 1) return finish(presentRoute(methodHits, "sdk_method"));
         if (pages.length > 1) {
-          return {
+          return finish({
             matches: pages.slice(0, 8),
             hint: "Several routes match this SDK method. Call get_api_route again with the method and path (the title or page).",
-          };
+          });
         }
       }
 
-      const similar = await routes.search(route, {
-        limit: 5,
-        hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-        attributesToRetrieve: ["page"],
-      });
+      const similar = await runMeili(spans, () =>
+        routes.search(route, {
+          limit: 5,
+          hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+          attributesToRetrieve: ["page"],
+          showPerformanceDetails: true,
+        }),
+      );
       const page = similar.hits[0]?.page as string | undefined;
-      if (!page) return { error: `No API route found for "${route}".` };
-      const hits = await loadRoute(`page = ${quoteFilter(page)}`);
-      if (hits.length === 0) return { error: `No API route found for "${route}".` };
-      return presentRoute(hits, "similar");
+      if (!page) return finish({ error: `No API route found for "${route}".` });
+      const hits = await loadRoute(`page = ${quoteFilter(page)}`, spans);
+      if (hits.length === 0) return finish({ error: `No API route found for "${route}".` });
+      return finish(presentRoute(hits, "similar"));
     },
   });
 
+  const logFooter = (status: string) => {
+    const lines = [`└─ ${status}`];
+    if (answerFirstOutput !== undefined) lines.push(`   answer firstOutput +${formatDuration(answerFirstOutput)}`);
+    lines.push(...formatOpened(searches, opened));
+    logChat(lines);
+  };
+
+  logChat(["trace"]);
   const result = streamText({
     model: openrouter(config.model, { reasoning: { effort: "high" } }),
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
     tools: { search, expand_page: expandPage, get_api_route: getApiRoute },
     stopWhen: isStepCount(7),
-    onStepFinish: ({ toolCalls }) => {
-      for (const call of toolCalls) {
-        const { q, page, route } = call.input as { q?: string; page?: string; route?: string };
-        console.log(`[chat] ${call.toolName}: ${q ?? page ?? route}`);
-      }
+    onStepEnd: (step) => {
+      const stepMs = Math.round(step.performance.stepTimeMs);
+      const now = elapsedMs(started);
+      const ttft = step.performance.timeToFirstOutputMs;
+      const firstOutputAt = ttft === undefined ? undefined : now - stepMs + Math.round(ttft);
+      if (step.finishReason === "stop" && firstOutputAt !== undefined) answerFirstOutput = firstOutputAt;
+
+      const durations = step.toolCalls.map((call) => step.performance.toolExecutionMs[call.toolCallId] ?? 0);
+      const slowest = durations.length > 1 ? Math.max(...durations) : undefined;
+      const lines = [
+        `├─ step ${step.stepNumber}  ${formatDuration(stepMs)}  at +${formatDuration(now)}  model ${formatDuration(Math.round(step.performance.responseTimeMs))}  firstOutput ${firstOutputAt === undefined ? "n/a" : `+${formatDuration(firstOutputAt)}`}  in ${formatCount(step.usage.inputTokens)} cache ${formatCount(step.usage.inputTokenDetails?.cacheReadTokens)} out ${formatCount(step.usage.outputTokens)} reason ${formatCount(step.usage.outputTokenDetails?.reasoningTokens)}  ${step.finishReason}`,
+      ];
+
+      step.toolCalls.forEach((call, index) => {
+        const last = index === step.toolCalls.length - 1;
+        const branch = last ? "└─" : "├─";
+        const pad = last ? "   " : "│  ";
+        const duration = step.performance.toolExecutionMs[call.toolCallId];
+        const slow = slowest !== undefined && duration === slowest && slowest > 0 ? "  slowest" : "";
+        const arg = toolArg(call.input) ?? "";
+        const durationLabel = duration === undefined ? "n/a" : formatDuration(Math.round(duration));
+
+        if (call.toolName === "search") {
+          const detail = searchDetails.get(call.toolCallId);
+          lines.push(`│  ${branch} search  ${durationLabel}${slow}  "${arg}"`);
+          if (!detail) {
+            lines.push(`│  ${pad}no detail`);
+            return;
+          }
+          lines.push(
+            `│  ${pad}meili ${formatDuration(detail.meili.ms)}  processing ${formatDuration(detail.meili.processingMs)}  wait ${formatDuration(detail.meili.waitMs)}  inFlight ${detail.meili.inFlight}  payload ${formatBytes(detail.meiliBytes)}`,
+          );
+          for (const line of formatTraces(detail.meili.traces)) lines.push(`│  ${pad}${line}`);
+          lines.push(
+            `│  ${pad}rerank ${formatDuration(detail.rerankMs)}  ${detail.candidates}→${detail.kept}  docs ${detail.docs}  routes ${detail.routes}  result ${formatBytes(detail.resultBytes)}`,
+          );
+          lines.push(`│  ${pad}${formatCurve("pre ", detail.pre)}`);
+          lines.push(`│  ${pad}${formatCurve("post", detail.post)}`);
+          return;
+        }
+
+        const read = readDetails.get(call.toolCallId);
+        const page = read?.page && read.page !== arg ? `  page ${read.page}` : "";
+        const matched = read?.matched ? `  ${read.matched}` : "";
+        const bytes = read ? `  ${formatBytes(read.bytes)}` : "";
+        const meili = read
+          ? `  meili ${formatDuration(read.meili.ms)}  processing ${formatDuration(read.meili.processingMs)}  wait ${formatDuration(read.meili.waitMs)}  inFlight ${read.meili.inFlight}`
+          : "";
+        lines.push(`│  ${branch} ${call.toolName}  ${durationLabel}${slow}  "${arg}"${bytes}${meili}${page}${matched}`);
+        if (read) for (const line of formatTraces(read.meili.traces)) lines.push(`│  ${pad}${line}`);
+      });
+
+      logChat(lines);
+    },
+    onStepError: (event) => {
+      logChat([`├─ step ${event.stepNumber}  failed  at +${formatDuration(elapsedMs(started))}`]);
+      console.error("[chat] step error", event.error);
+    },
+    onEnd: (event) => {
+      logFooter(
+        `roundtrip ${formatDuration(elapsedMs(started))}  steps ${event.steps.length}  ${event.finishReason}  in ${formatCount(event.usage.inputTokens)} cache ${formatCount(event.usage.inputTokenDetails?.cacheReadTokens)} out ${formatCount(event.usage.outputTokens)} reason ${formatCount(event.usage.outputTokenDetails?.reasoningTokens)}`,
+      );
+    },
+    onAbort: (event) => {
+      logFooter(`aborted  at +${formatDuration(elapsedMs(started))}  steps ${event.steps.length}`);
     },
   });
 
