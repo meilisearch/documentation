@@ -8,6 +8,22 @@ import { build, defineConfig, loadEnv, type Plugin } from "vite";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Origin the widget calls. Vercel sets these during the build:
+ * preview deployments use the stable branch URL (`VERCEL_BRANCH_URL`),
+ * production uses `VERCEL_PROJECT_PRODUCTION_URL`. Empty outside Vercel,
+ * where the loader passes the origin instead.
+ */
+function chatOrigin(): string {
+  const host =
+    process.env.VERCEL_ENV === "preview"
+      ? process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL
+      : process.env.VERCEL_ENV === "production"
+        ? process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL
+        : "";
+  return host ? `https://${host}` : "";
+}
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -109,8 +125,11 @@ function devServer(): Plugin {
 export default defineConfig({
   root,
   plugins: [react(), tailwindcss(), devServer()],
-  // Lib builds do not replace this; React needs it in the browser.
-  define: { "process.env.NODE_ENV": JSON.stringify("production") },
+  // Lib builds do not replace NODE_ENV; React needs it in the browser.
+  define: {
+    "process.env.NODE_ENV": JSON.stringify("production"),
+    __MEILI_CHAT_ORIGIN__: JSON.stringify(chatOrigin()),
+  },
   server: { port: 5173, cors: true },
   build: {
     outDir: "dist",

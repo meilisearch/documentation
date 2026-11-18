@@ -4,8 +4,10 @@ import { ChatPanel } from "./ChatPanel";
 import { TOGGLE_EVENT } from "./events";
 import css from "./theme.css?inline";
 
+declare const __MEILI_CHAT_ORIGIN__: string;
+
 export type MountOptions = {
-  /** Base URL of the chat service. Defaults to the origin the script was loaded from. */
+  /** Base URL of the chat service. Used when the bundle was not built on Vercel. */
   apiBase?: string;
 };
 
@@ -67,7 +69,8 @@ export function mount(options: MountOptions = {}) {
   // Idempotent: Mintlify re-runs scripts on some navigations.
   if (document.getElementById(PANEL_HOST_ID)) return;
 
-  const apiBase = options.apiBase ?? scriptOrigin ?? "";
+  // On Vercel this is the branch or production host baked in at build time.
+  const apiBase = __MEILI_CHAT_ORIGIN__ || options.apiBase || scriptOrigin || "";
   hoistAtProperties();
 
   const panel = createShadowHost(PANEL_HOST_ID);
