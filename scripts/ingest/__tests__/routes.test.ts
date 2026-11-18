@@ -1,7 +1,12 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { normalizeLanguage as chatNormalize, lookupCandidates, selectSample as chatSelect } from "../../../chat/src/samples.ts";
+import {
+  lookupCandidates,
+  methodCandidates,
+  normalizeLanguage as chatNormalize,
+  selectSample as chatSelect,
+} from "../../../chat/src/samples.ts";
 import { chunkRoute } from "../chunk/route-chunker.ts";
 import { PROJECT_ROOT, DEFAULT_CHUNKING } from "../config.ts";
 import { normalizeLanguage, selectSample } from "../languages.ts";
@@ -51,6 +56,21 @@ describe("language selection", () => {
     expect(lookupCandidates("POST /indexes/{index_uid}/search")).toEqual(["POST /indexes/{index_uid}/search"]);
     expect(lookupCandidates("search-with-post")).toEqual(["search-with-post"]);
   });
+
+  it("extracts the last SDK method name and ignores paths, slugs, and URLs", () => {
+    expect(methodCandidates("updateEmbedders")).toEqual(["updateEmbedders"]);
+    expect(methodCandidates("update_embedders")).toEqual(["update_embedders"]);
+    expect(methodCandidates("updateEmbedders()")).toEqual(["updateEmbedders"]);
+    expect(methodCandidates("SearchAsync<Movie>()")).toEqual(["SearchAsync"]);
+    expect(methodCandidates("client.index('m').updateEmbedders()")).toEqual(["updateEmbedders"]);
+    expect(methodCandidates("$client->index('movies')->search('q')")).toEqual(["search"]);
+    expect(methodCandidates('client.index("movies").SearchAsync<Movie>("American ninja")')).toEqual(["SearchAsync"]);
+    expect(methodCandidates("POST /indexes/{index_uid}/search")).toEqual([]);
+    expect(methodCandidates("search-with-post")).toEqual([]);
+    expect(methodCandidates("https://www.meilisearch.com/docs/reference/api/search/search-with-post")).toEqual([]);
+    expect(methodCandidates("")).toEqual([]);
+    expect(methodCandidates("   ")).toEqual([]);
+  });
 });
 
 describe("API route chunks", () => {
@@ -73,6 +93,7 @@ describe("API route chunks", () => {
     expect(route.parts.join("\n\n")).toContain('"results"');
     expect(route.parts.join("\n\n")).not.toContain("ResponseError");
     expect(route.codes).toEqual({ http: "curl -X GET 'MEILISEARCH_URL/indexes'" });
+    expect(route.sdkMethods).toEqual([]);
 
     const chunks = chunkRoute(route, BASE_URL);
     expect(chunks).toHaveLength(1);
@@ -81,6 +102,7 @@ describe("API route chunks", () => {
       url: "https://www.meilisearch.com/docs/reference/api/indexes/list-indexes",
       codes: route.codes,
       code_language: ["http"],
+      sdk_methods: [],
     });
   });
 
@@ -107,10 +129,40 @@ describe("API route chunks", () => {
     expect(joined).toContain("`filter`");
     expect(joined).toContain('"hits"');
     expect(joined).not.toContain("missing_authorization_header");
+    expect(get!.codes.js).toContain("searchGet");
+    expect(get!.sdkMethods).toContain("searchGet");
+    expect(post!.sdkMethods).toEqual(expect.arrayContaining(["search", "SearchAsync", "with_query", "execute"]));
 
     const chunks = chunkRoute(get!, BASE_URL);
     expect(chunks[0].codes).toEqual(get!.codes);
     expect(chunks[1].codes).toBeUndefined();
     expect(chunks.every((chunk) => chunk.lookup_keys?.includes("search-with-get"))).toBe(true);
+    expect(chunks.length).toBeGreaterThan(1);
+    for (const chunk of chunks) expect(chunk.sdk_methods).toEqual(get!.sdkMethods);
+  });
+
+  it("drops SDK method names shared by more than 10 routes", async () => {
+    const routes = await loadApiRoutes({
+      rootDir: PROJECT_ROOT,
+      navigation: "config/navigation.json",
+      baseUrl: BASE_URL,
+      chunking: DEFAULT_CHUNKING,
+    });
+    const embedders = routes.find(
+      (route) => route.method === "PATCH" && route.path === "/indexes/{index_uid}/settings/embedders",
+    );
+    const post = routes.find((route) => route.method === "POST" && route.path === "/indexes/{index_uid}/search");
+
+    expect(embedders).toBeDefined();
+    expect(embedders!.page).toContain("update-embedders");
+    expect(embedders!.sdkMethods).toEqual(expect.arrayContaining(["updateEmbedders", "update_embedders"]));
+    expect(embedders!.sdkMethods).not.toContain("unwrap");
+    expect(embedders!.sdkMethods).not.toContain("index");
+
+    expect(post).toBeDefined();
+    expect(post!.sdkMethods).toContain("execute");
+    expect(post!.sdkMethods).not.toContain("success");
+    expect(post!.sdkMethods).not.toContain("failure");
+    expect(post!.sdkMethods).not.toContain("unwrap");
   });
 });

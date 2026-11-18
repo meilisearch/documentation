@@ -114,3 +114,73 @@ export function lookupCandidates(input: string): string[] {
 export function quoteFilter(value: string): string {
   return `"${value.replace(/[\\"]/g, "\\$&")}"`;
 }
+
+const METHOD_NAME = /^[A-Za-z_]\w*$/;
+
+/** Drops one trailing `()` / `(...)` call so dots inside the arguments are not the callee separator. */
+function stripTrailingCall(input: string): string {
+  if (!input.endsWith(")")) return input;
+  let depth = 0;
+  let quote: '"' | "'" | null = null;
+  let open = -1;
+  for (let index = 0; index < input.length; index++) {
+    const char = input[index];
+    if (quote) {
+      if (char === "\\") {
+        index += 1;
+        continue;
+      }
+      if (char === quote) quote = null;
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      quote = char;
+      continue;
+    }
+    if (char === "(") {
+      if (depth === 0) open = index;
+      depth += 1;
+      continue;
+    }
+    if (char === ")" && depth > 0) {
+      depth -= 1;
+      if (depth === 0 && index === input.length - 1 && open >= 0) return input.slice(0, open).trimEnd();
+    }
+  }
+  return input;
+}
+
+/** Last call-site identifier in a snippet, or [] when the input is not a method.
+ *  `client.index('movies').updateEmbedders()` -> ["updateEmbedders"]
+ *  A method path, slug, or URL returns [].
+ */
+export function methodCandidates(input: string): string[] {
+  const trimmed = input.trim();
+  if (!trimmed) return [];
+
+  const body = stripTrailingCall(trimmed);
+  const separators = [
+    { at: body.lastIndexOf("."), length: 1 },
+    { at: body.lastIndexOf("::"), length: 2 },
+    { at: body.lastIndexOf("->"), length: 2 },
+  ].filter((separator) => separator.at >= 0);
+
+  if (separators.length === 0) {
+    const bare = body.split("<")[0] ?? "";
+    return METHOD_NAME.test(bare) ? [bare] : [];
+  }
+
+  const last = separators.reduce((best, separator) =>
+    separator.at + separator.length > best.at + best.length ? separator : best,
+  );
+  let candidate = body.slice(last.at + last.length);
+  const cut = candidate.search(/[(\[{<\s]/);
+  if (cut >= 0) candidate = candidate.slice(0, cut);
+  if (
+    candidate.length >= 2 &&
+    ((candidate.startsWith('"') && candidate.endsWith('"')) || (candidate.startsWith("'") && candidate.endsWith("'")))
+  ) {
+    candidate = candidate.slice(1, -1);
+  }
+  return METHOD_NAME.test(candidate) ? [candidate] : [];
+}

@@ -34,6 +34,7 @@ export type RouteDocument = {
   summary: string;
   description: string;
   lookupKeys: string[];
+  sdkMethods: string[];
   codes: Record<string, string>;
   parts: string[];
 };
@@ -261,6 +262,7 @@ export function chunkRoute(route: RouteDocument, baseUrl: string): Chunk[] {
       content_type: "api_route",
       chunk_index: chunkIndex,
       lookup_keys: route.lookupKeys,
+      sdk_methods: route.sdkMethods,
     };
     if (chunkIndex === 0 && Object.keys(route.codes).length > 0) {
       chunk.codes = route.codes;

@@ -23,6 +23,8 @@ type Spec = {
 };
 
 const ROUTE = /^(GET|POST|PUT|PATCH|DELETE) (\/\S+)$/;
+const MAX_ROUTES_PER_SDK_METHOD = 10;
+const CALL = /(?:\.|::|->)\s*([A-Za-z_]\w*)\s*[(<{]/g;
 
 export function slugify(value: string): string {
   return value
@@ -46,6 +48,44 @@ function codesFromSamples(samples: CodeSample[] | undefined): Record<string, str
 function lookupKeys(method: string, routePath: string, page: string, summary: string, baseUrl: string): string[] {
   const url = `${baseUrl}/${page}`;
   return [`${method} ${routePath}`, page, slugify(summary), `/${page}`, url];
+}
+
+function sdkMethodNames(codes: Record<string, string>): string[] {
+  const names = new Set<string>();
+  for (const [language, source] of Object.entries(codes)) {
+    if (language === "http" || language === "cli") continue;
+    for (const match of source.matchAll(CALL)) {
+      const name = match[1];
+      if (name) names.add(name);
+    }
+  }
+  return [...names].sort();
+}
+
+function countRoutesPerMethod(routes: { sdkMethods: string[] }[]): Map<string, number> {
+  const usage = new Map<string, number>();
+  for (const route of routes) {
+    for (const name of route.sdkMethods) usage.set(name, (usage.get(name) ?? 0) + 1);
+  }
+  return usage;
+}
+
+function hashRoute(route: RouteDocument, chunking: ChunkingConfig): string {
+  return createHash("sha1")
+    .update(
+      JSON.stringify([
+        PIPELINE_VERSION,
+        route.page,
+        route.tab,
+        route.groupPath,
+        chunking,
+        route.parts,
+        route.codes,
+        route.lookupKeys,
+        route.sdkMethods,
+      ]),
+    )
+    .digest("hex");
 }
 
 function renderLocation(
@@ -80,13 +120,10 @@ function renderLocation(
     chunking.maxChars,
   );
   const keys = lookupKeys(method, routePath, page, summary, baseUrl);
-  const pageHash = createHash("sha1")
-    .update(JSON.stringify([PIPELINE_VERSION, page, location.tab, location.groupPath, chunking, parts, codes, keys]))
-    .digest("hex");
 
   return {
     page,
-    pageHash,
+    pageHash: "",
     tab: location.tab,
     groupPath: location.groupPath,
     method,
@@ -94,6 +131,7 @@ function renderLocation(
     summary,
     description,
     lookupKeys: keys,
+    sdkMethods: sdkMethodNames(codes),
     codes,
     parts,
   };
@@ -130,6 +168,12 @@ export async function loadApiRoutes(options: {
     if (!route) continue;
     if (only.length > 0 && !only.some((glob) => path.matchesGlob(route.page, glob))) continue;
     routes.push(route);
+  }
+
+  const usage = countRoutesPerMethod(routes);
+  for (const route of routes) {
+    route.sdkMethods = route.sdkMethods.filter((name) => (usage.get(name) ?? 0) <= MAX_ROUTES_PER_SDK_METHOD);
+    route.pageHash = hashRoute(route, options.chunking);
   }
   return routes;
 }

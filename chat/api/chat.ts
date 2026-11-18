@@ -1,9 +1,9 @@
-import { meilisearchSearch } from "@meilisearch/ai-sdk";
+import { voyage } from "@ai-sdk/voyage";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { convertToModelMessages, isStepCount, streamText, tool, type UIMessage } from "ai";
+import { convertToModelMessages, isStepCount, rerank, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch } from "meilisearch";
 import { z } from "zod";
-import { fenceLanguage, lookupCandidates, quoteFilter, selectSample } from "../src/samples.js";
+import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
@@ -14,19 +14,25 @@ const MAX_TEXT_LENGTH = 4000;
 const MAX_PAGE_CHARS = 30_000;
 /** Default `pagination.maxTotalHits`. */
 const MAX_PAGE_CHUNKS = 1000;
+const RETRIEVE_DOCS = 80;
+const RETRIEVE_ROUTES = 20;
+const KEEP = 20;
+
+const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"] as const;
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
 Rules:
 - Always call the search tool before answering a question about Meilisearch. You may call it several times with different queries.
-- Search results are page chunks. If a chunk is too partial to answer fully, call the expand_page tool with the "page" field of that result to read the whole page. Do not expand pages you do not need.
-- Answer only from the search results and expanded pages. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
+- Search results may be prose chunks, code samples already in the reader's language, or API route chunks. If a chunk is too partial to answer fully, call the expand_page tool with the "page" field of that result to read the whole page. Do not expand pages you do not need.
+- If a search hit is an API route (content_type "api_route") and the answer needs parameters or a request body, call get_api_route with that hit's page.
+- Answer only from the search results, expanded pages, and get_api_route results. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
 - If the question is not about Meilisearch or search, politely decline and say what you can help with.
 
 Output
 - Be concise and direct. Synthesize the information from tool calls into a tailored answer, don't just repeat.
 - Link to sources when they allow the reader to learn nore about a mentioned API or concept. Use it to avoid digressing and enable progressive disclosure of information to users.
-- Links should be inserted inline as Markdown links on the relevant keywords using the "url" field of the result (append "#anchor" when "anchor" is not null). For an expanded page, use the "url" it returns, or the URL of a search result from that page. Never link to a URL that was not in the search results or returned by expand_page, and never guess an anchor.
+- Links should be inserted inline as Markdown links on the relevant keywords using the "url" field of the result (append "#anchor" when "anchor" is not null). For an expanded page, use the "url" it returns, or the URL of a search result from that page. Never link to a URL that was not returned by a tool, and never guess an anchor.
 - Write for readers who may not be native English speakers.
 `;
 
@@ -41,6 +47,7 @@ type ChatConfig = {
   openrouterKey: string | undefined;
   meiliUrl: string | undefined;
   meiliKey: string | undefined;
+  voyageKey: string | undefined;
   model: string;
   allowedOrigins: string[];
   docsIndex: string;
@@ -55,6 +62,7 @@ function readConfig(): ChatConfig {
     openrouterKey: env.OPENROUTER_API_KEY,
     meiliUrl: env.MEILISEARCH_URL,
     meiliKey: env.MEILISEARCH_KEY,
+    voyageKey: env.VOYAGE_API_KEY,
     model: env.CHAT_MODEL || DEFAULT_MODEL,
     allowedOrigins: (env.CHAT_ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGINS)
       .split(",")
@@ -103,6 +111,53 @@ function json(status: number, body: unknown, headers: Record<string, string>): R
   });
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function stringRecord(value: unknown): Record<string, string> | undefined {
+  if (!isRecord(value)) return undefined;
+  const codes: Record<string, string> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (typeof entry !== "string") return undefined;
+    codes[key] = entry;
+  }
+  return codes;
+}
+
+type SearchHit = {
+  title: string;
+  page: string;
+  url: string;
+  anchor: string | null;
+  breadcrumb: string;
+  content: string;
+  content_type: string;
+  tab: string | null;
+  group: string | null;
+};
+
+function rerankDocument(hit: { breadcrumb: string; content: string }): string {
+  return hit.breadcrumb ? `${hit.breadcrumb}\n${hit.content}` : hit.content;
+}
+
+async function rerankHits<T extends { breadcrumb: string; content: string }>(query: string, pool: T[]): Promise<T[]> {
+  const documents = pool.map(rerankDocument);
+  try {
+    const { ranking } = await rerank({
+      model: voyage.reranking("rerank-3"),
+      query,
+      documents,
+      topN: KEEP,
+    });
+    console.log(`[chat] search: ${pool.length} candidates, ${ranking.length} reranked`);
+    return ranking.map((item) => pool[item.originalIndex]);
+  } catch (error) {
+    console.error("[chat] rerank failed", error);
+    throw error;
+  }
+}
+
 const chatUserSchema = z.object({
   codeLanguage: z.string().nullable().optional(),
 });
@@ -143,9 +198,11 @@ export async function POST(request: Request): Promise<Response> {
   if (!isAllowedOrigin(origin, config.allowedOrigins)) return new Response(null, { status: 403 });
   const headers = corsHeaders(origin);
 
-  const { openrouterKey, meiliUrl, meiliKey } = config;
-  if (!openrouterKey || !meiliUrl || !meiliKey) {
-    const missing = (["OPENROUTER_API_KEY", "MEILISEARCH_URL", "MEILISEARCH_KEY"] as const).filter((name) => !process.env[name]);
+  const { openrouterKey, meiliUrl, meiliKey, voyageKey } = config;
+  if (!openrouterKey || !meiliUrl || !meiliKey || !voyageKey) {
+    const missing = (["OPENROUTER_API_KEY", "MEILISEARCH_URL", "MEILISEARCH_KEY", "VOYAGE_API_KEY"] as const).filter(
+      (name) => !process.env[name],
+    );
     console.error(`[chat] missing environment variables: ${missing.join(", ")}`);
     return json(500, { error: "Chat is not configured" }, headers);
   }
@@ -162,21 +219,6 @@ export async function POST(request: Request): Promise<Response> {
   const user = parseChatUser(userInput);
 
   const openrouter = createOpenRouter({ apiKey: openrouterKey });
-
-  const search = meilisearchSearch({
-    host: meiliUrl,
-    apiKey: meiliKey,
-    indexUid: config.docsIndex,
-    description:
-      "Search the Meilisearch documentation. Results are prose chunks from guides and concept pages. Pass a focused natural-language query. Call expand_page to read a page and its code samples. Call get_api_route for a route's parameters, request body, and response.",
-    searchParams: {
-      limit: 8,
-      hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-      filter: 'content_type = "prose"',
-      attributesToRetrieve: ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"],
-    },
-  });
-
   const client = new Meilisearch({ host: meiliUrl, apiKey: meiliKey });
   const index = client.index(config.docsIndex);
   const routes = client.index(config.routesIndex);
@@ -187,6 +229,56 @@ export async function POST(request: Request): Promise<Response> {
     const block = selected.code ? `\`\`\`${fenceLanguage(selected.language)}\n${selected.code}\n\`\`\`` : "";
     return [block, selected.note].filter(Boolean).join("\n\n");
   };
+
+  const text = (value: unknown): string => (typeof value === "string" ? value : "");
+  const textOrNull = (value: unknown): string | null => (typeof value === "string" ? value : null);
+  const toHit = (value: unknown): SearchHit => {
+    const hit = isRecord(value) ? value : {};
+    const contentType = text(hit.content_type);
+    const content = contentType === "code_sample" ? renderSample(stringRecord(hit.codes)) : text(hit.content);
+    return {
+      title: text(hit.title),
+      page: text(hit.page),
+      url: text(hit.url),
+      anchor: textOrNull(hit.anchor),
+      breadcrumb: text(hit.breadcrumb),
+      content,
+      content_type: contentType,
+      tab: textOrNull(hit.tab),
+      group: textOrNull(hit.group),
+    };
+  };
+
+  const search = tool({
+    description:
+      'Search the Meilisearch documentation. Results are prose chunks from guides and concept pages, and may also be a code sample already rendered in the reader\'s language or an API route chunk. Pass a focused natural-language query. Call expand_page to read a page and its code samples. Call get_api_route for a route\'s parameters, request body, and response. When a hit has content_type "api_route", call get_api_route with its page before stating parameters or a request body.',
+    inputSchema: z.object({
+      q: z.string().min(1).max(500).describe("The search query"),
+    }),
+    execute: async ({ q }) => {
+      const retrieved = await client.multiSearch({
+        queries: [
+          {
+            indexUid: config.docsIndex,
+            q,
+            limit: RETRIEVE_DOCS,
+            hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+            attributesToRetrieve: [...HIT_FIELDS, "codes"],
+          },
+          {
+            indexUid: config.routesIndex,
+            q,
+            limit: RETRIEVE_ROUTES,
+            hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+            attributesToRetrieve: [...HIT_FIELDS],
+          },
+        ],
+      });
+      const pool = [...(retrieved.results[0]?.hits ?? []), ...(retrieved.results[1]?.hits ?? [])].map((hit) => toHit(hit));
+      if (pool.length === 0) return { hits: [] };
+      return { hits: await rerankHits(q, pool) };
+    },
+  });
 
   // Chunks of one page are ordered by chunk_index. Joining them rebuilds the page, samples included.
   const expandPage = tool({
@@ -234,7 +326,7 @@ export async function POST(request: Request): Promise<Response> {
     return hits;
   };
 
-  const presentRoute = (hits: Record<string, unknown>[], matched: "exact" | "similar") => {
+  const presentRoute = (hits: Record<string, unknown>[], matched: "exact" | "similar" | "sdk_method") => {
     const codes = hits.find((hit) => hit.codes)?.codes as Record<string, string> | undefined;
     const selected = selectSample(codes, user.codeLanguage);
     const markdown = hits.map((hit) => String(hit.content ?? "")).join("\n\n");
@@ -252,21 +344,54 @@ export async function POST(request: Request): Promise<Response> {
     };
   };
 
+  const pagesOf = (hits: readonly object[]) => {
+    const seen = new Set<string>();
+    const pages: { title: string; page: string; url: string }[] = [];
+    for (const hit of hits) {
+      if (!isRecord(hit)) continue;
+      const page = hit.page;
+      if (typeof page !== "string" || seen.has(page)) continue;
+      seen.add(page);
+      const url = hit.url;
+      pages.push({
+        title: typeof hit.title === "string" ? hit.title : "",
+        page,
+        url: typeof url === "string" ? url.split("#")[0] : "",
+      });
+    }
+    return pages;
+  };
+
   const getApiRoute = tool({
     description:
-      "Read one API route: its parameters, request body, and response example, plus a code sample already chosen for the reader's language. Pass a method and path (\"POST /indexes/{index_uid}/search\"), a docs URL, or a slug such as \"search-with-post\". If note is set, the reader's language has no sample: show the HTTP request and say so.",
+      'Read one API route: its parameters, request body, and response example, plus a code sample already chosen for the reader\'s language. Pass a method and path ("POST /indexes/{index_uid}/search"), a docs URL, a slug such as "search-with-post", or an SDK method name such as updateEmbedders or update_embedders. If note is set, the reader\'s language has no sample: show the HTTP request and say so.',
     inputSchema: z.object({
       route: z
         .string()
         .min(1)
         .max(500)
-        .describe('Method and path, slug, or URL. For example "POST /indexes/{index_uid}/search" or "search-with-post".'),
+        .describe(
+          'Method and path, docs URL, slug, or SDK method name. For example "POST /indexes/{index_uid}/search", "search-with-post", or "updateEmbedders".',
+        ),
     }),
     execute: async ({ route }) => {
       const candidates = lookupCandidates(route);
-      if (candidates.length === 0) return { error: "Provide a method and path, a docs URL, or a route slug." };
+      if (candidates.length === 0) return { error: "Provide a method and path, a docs URL, a slug, or an SDK method name." };
       const exact = await loadRoute(`lookup_keys IN [${candidates.map(quoteFilter).join(", ")}]`);
       if (exact.length > 0) return presentRoute(exact, "exact");
+
+      const methods = methodCandidates(route);
+      if (methods.length > 0) {
+        const methodHits = await loadRoute(`sdk_methods IN [${methods.map(quoteFilter).join(", ")}]`);
+        const pages = pagesOf(methodHits);
+        if (pages.length === 1) return presentRoute(methodHits, "sdk_method");
+        if (pages.length > 1) {
+          return {
+            matches: pages.slice(0, 8),
+            hint: "Several routes match this SDK method. Call get_api_route again with the method and path (the title or page).",
+          };
+        }
+      }
 
       const similar = await routes.search(route, {
         limit: 5,
