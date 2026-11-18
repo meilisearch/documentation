@@ -48,6 +48,47 @@
   color: var(--color-brand);
 }
 
+/* Left edge of the panel. The line is 1px; the pseudo-element is the grab target. */
+.meili-chat-resize {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 1px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  appearance: none;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.meili-chat-resize::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -8px;
+}
+
+.meili-chat-resize:hover,
+.meili-chat-resize:focus-visible {
+  background: rgba(0, 0, 0, 0.28);
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.dark .meili-chat-resize {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.dark .meili-chat-resize:hover,
+.dark .meili-chat-resize:focus-visible {
+  background: rgba(255, 255, 255, 0.4);
+}
+
 .meili-ask-button kbd {
   font: inherit;
   font-size: 12px;
