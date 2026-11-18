@@ -44,13 +44,13 @@ describe("buildSettings", () => {
     });
   });
 
-  it("keeps route identifiers exact by disabling typos on lookup keys", () => {
+  it("keeps route identifiers and SDK method names exact by disabling typos on them", () => {
     const settings = buildSettings("routes");
 
-    expect(settings.filterableAttributes).toEqual(["page", "lookup_keys"]);
-    expect(settings.searchableAttributes).toEqual(["title", "content", "lookup_keys"]);
+    expect(settings.filterableAttributes).toEqual(["page", "lookup_keys", "sdk_methods"]);
+    expect(settings.searchableAttributes).toEqual(["title", "content", "sdk_methods", "lookup_keys"]);
     expect(settings.sortableAttributes).toEqual(["chunk_index"]);
-    expect(settings.typoTolerance).toEqual({ disableOnAttributes: ["lookup_keys"] });
+    expect(settings.typoTolerance).toEqual({ disableOnAttributes: ["lookup_keys", "sdk_methods"] });
   });
 });
 

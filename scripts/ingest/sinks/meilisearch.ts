@@ -21,10 +21,10 @@ export function buildSettings(kind: IndexKind, embedder?: EmbedderConfig | null)
   const settings: Settings =
     kind === "routes"
       ? {
-          filterableAttributes: ["page", "lookup_keys"],
-          searchableAttributes: ["title", "content", "lookup_keys"],
+          filterableAttributes: ["page", "lookup_keys", "sdk_methods"],
+          searchableAttributes: ["title", "content", "sdk_methods", "lookup_keys"],
           sortableAttributes: ["chunk_index"],
-          typoTolerance: { disableOnAttributes: ["lookup_keys"] },
+          typoTolerance: { disableOnAttributes: ["lookup_keys", "sdk_methods"] },
         }
       : {
           // `codes` is last so a term found in prose outranks the same term found only in a sample.

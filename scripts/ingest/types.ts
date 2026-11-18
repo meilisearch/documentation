@@ -86,6 +86,8 @@ export type Chunk = {
    * Filterable on the routes index.
    */
   lookup_keys?: string[];
+  /** SDK call names from the route samples. Filterable on the routes index. */
+  sdk_methods?: string[];
 };
 
 export type SyncOperation = { deletePages: string[]; chunks: Chunk[] };
