@@ -75,6 +75,48 @@
           "relevance": [
               "relevancy",
               "relevant"
+          ],
+          "dsr": [
+            "dynamic search rules",
+            "search rules",
+            "searchandizing"
+          ],
+          "dynamic search rules": [
+            "dsr",
+            "search rules",
+            "searchandizing",
+            "searchandising",
+            "searchandization",
+            "searchandisation"
+          ],
+          "search rules": [
+            "dsr",
+            "dynamic search rules",
+            "searchandizing"
+          ],
+          "searchandizing": [
+            "dsr",
+            "dynamic search rules",
+            "search rules"
+          ],
+          "searchandising": [
+            "dsr",
+            "dynamic search rules",
+            "search rules"
+          ],
+          "searchandization": [
+            "dsr",
+            "dynamic search rules",
+            "search rules"
+          ],
+          "searchandisation": [
+            "dsr",
+            "dynamic search rules",
+            "search rules"
+          ],
+          "merchandising": [
+            "dynamic search rules",
+            "search rules"
           ]
       }
   },
