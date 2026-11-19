@@ -5,6 +5,10 @@ description: Authenticate your Management API requests with a personal access to
 
 The Management API lets you manage your Meilisearch Cloud resources programmatically. It is served at `https://api.meilisearch.com`. Request and response fields are in camelCase.
 
+<Note>
+  You cannot create a personal access token or get OAuth2 credentials yourself yet. In both cases, contact [support@meilisearch.com](mailto:support@meilisearch.com).
+</Note>
+
 Every request must send a token in the `Authorization` header:
 
 ```
@@ -15,7 +19,7 @@ The token is a personal access token or an OAuth2 access token. A missing token 
 
 ## Personal access token
 
-A personal access token (PAT) authenticates as the user who owns it. You can generate one in the account settings of the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com).
+A personal access token (PAT) authenticates as the user who owns it.
 
 <Warning>
   A personal access token grants access to your Meilisearch Cloud account. Keep it secret and never expose it in client-side code.
