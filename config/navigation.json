@@ -936,6 +936,7 @@
           "pages": [
             "reference/management-api/authentication",
             "reference/management-api/pagination",
+            "reference/management-api/rate-limit",
             "reference/management-api-errors"
           ]
         },
