@@ -1,7 +1,7 @@
 ---
 title: Errors
 sidebarTitle: Errors
-description: How the Management API reports errors, with its status codes, error types, response format, rate limit, and the exhaustive list of its error codes.
+description: How the Management API reports errors, with its status codes, error types, response format, and the exhaustive list of its error codes.
 ---
 
 The Management API reports a failed request with a standard HTTP status code and a JSON body describing what went wrong. The body always contains a `code` field identifying the error. Branch on that `code` rather than on the human-readable `message`, which may change between releases.
@@ -24,7 +24,7 @@ The Management API uses the following standard HTTP codes for a successful or fa
 | 404         | ❌ **Not Found** The requested resource doesn't exist, or the token cannot access it                                |
 | 422         | ❌ **Unprocessable Content** The request is well-formed but was rejected, usually after validation                  |
 | 423         | ❌ **Locked** The resource is temporarily unavailable, such as a project that is not running                        |
-| 429         | ❌ **Too Many Requests** The token sent too many requests. See [Rate limit](#rate-limit)                            |
+| 429         | ❌ **Too Many Requests** The client sent too many requests. See [Rate limit](/reference/management-api/rate-limit)                          |
 | 500         | ❌ **Internal Server Error** Something went wrong on the Meilisearch Cloud side                                     |
 
 Every route can return `400`, `401`, `429`, and `500`, in addition to the status codes listed on its reference page.
@@ -83,10 +83,6 @@ When an error is about one or more request fields, the body carries an additiona
 | **`details[].field`**   | Name of the field, in camelCase as in the request                                            |
 | **`details[].code`**    | Reason the field was rejected, such as `missing`, `unknown`, `invalid`, `blank`, or `not_found` |
 | **`details[].message`** | Human-readable description of the problem with the field                                     |
-
-## Rate limit
-
-The Management API accepts up to 30 requests per minute per token. Over this limit, it answers `429` with the [`rate_limited`](#rate_limited) error code. The `Retry-After` response header gives the number of seconds to wait before retrying.
 
 ## Error codes
 
