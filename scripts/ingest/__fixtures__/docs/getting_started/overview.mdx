@@ -1,0 +1,33 @@
+---
+title: Overview
+description: Discover what Meilisearch is and how it fits in your application.
+---
+
+import CodeSamplesSearch1 from '/snippets/generated-code-samples/code_samples_search_1.mdx'
+
+Meilisearch is a fast search engine that fits into your application with minimal setup. It returns relevant results in milliseconds and tolerates typos. This page gives you a short tour of its main features.
+
+## What is Meilisearch?
+
+Meilisearch stores your documents in indexes. Each index has its own settings, such as searchable attributes and ranking rules. You send documents as JSON and Meilisearch makes them searchable right away.
+
+<Note>
+Meilisearch is open source. You can self-host it or use Meilisearch Cloud.
+</Note>
+
+## Making your first search
+
+Once your documents are indexed, send a search request to the `/search` route of your index. The response contains the matching documents, sorted by relevancy.
+
+<CodeSamplesSearch1 />
+
+### Search parameters
+
+You can refine a search with parameters such as `limit`, `filter`, and `sort`. Each parameter is optional.
+
+```json
+{
+  "q": "shifu",
+  "limit": 5
+}
+```

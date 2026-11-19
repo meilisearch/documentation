@@ -1,0 +1,43 @@
+# Keeps the docs chat indexes in sync. Sync state lives in Meilisearch, so unchanged pages are skipped.
+name: Ingest chat indexes
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Re-sync every page, even unchanged ones
+        type: boolean
+        default: false
+  push:
+    branches:
+      - main
+
+jobs:
+  ingest:
+    name: Ingest docs into Meilisearch
+    if: github.repository == 'meilisearch/documentation'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ingest
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v6
+
+      # `--env-file-if-exists` in the ingest script needs Node.js 20.12 or newer.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ingest
+        run: npm run ingest -- ${{ github.event_name == 'workflow_dispatch' && inputs.force && '--force' || '' }}
+        env:
+          MEILISEARCH_URL: ${{ vars.CHAT_MEILISEARCH_URL }}
+          MEILISEARCH_API_KEY: ${{ secrets.CHAT_MEILISEARCH_API_KEY }}
+          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+          MEILISEARCH_DOCS_INDEX: ${{ vars.MEILISEARCH_DOCS_INDEX }}
+          MEILISEARCH_ROUTES_INDEX: ${{ vars.MEILISEARCH_ROUTES_INDEX }}
+          MEILISEARCH_EMBEDDER: ${{ vars.MEILISEARCH_EMBEDDER }}
