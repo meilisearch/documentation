@@ -1,12 +1,41 @@
 ---
 title: Authentication
-description: Authenticate your Management API requests with a personal access token.
+description: Authenticate your Management API requests with a personal access token or an OAuth2 access token.
 ---
 
-The Management API lets you manage your Meilisearch Cloud resources programmatically. It is served at `https://api.meilisearch.com`.
+The Management API lets you manage your Meilisearch Cloud resources programmatically. It is served at `https://api.meilisearch.com`. Request and response fields are in camelCase.
 
-All requests must be authenticated with a personal access token (PAT). You can generate one in the account settings of the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com).
+Every request must send a token in the `Authorization` header:
+
+```
+Authorization: Bearer <token>
+```
+
+The token is a personal access token or an OAuth2 access token. A missing token returns a `401` error with the [`missing_authorization_header`](/reference/management-api-errors#missing_authorization_header) code. An invalid, expired, or revoked token returns a `401` error with the [`invalid_token`](/reference/management-api-errors#invalid_token) code.
+
+## Personal access token
+
+A personal access token (PAT) authenticates as the user who owns it. You can generate one in the account settings of the [Meilisearch Cloud dashboard](https://cloud.meilisearch.com).
 
 <Warning>
   A personal access token grants access to your Meilisearch Cloud account. Keep it secret and never expose it in client-side code.
 </Warning>
+
+## OAuth2
+
+Partner applications acting on behalf of a Meilisearch Cloud user use the OAuth2 authorization code flow with PKCE:
+
+| Endpoint          | URL                                            |
+| :---------------- | :--------------------------------------------- |
+| Authorization URL | `https://cloud.meilisearch.com/oauth/authorize` |
+| Token URL         | `https://api.meilisearch.com/oauth/token`       |
+| Refresh URL       | `https://api.meilisearch.com/oauth/token`       |
+
+Send the user to the authorization URL in their browser. The access token is limited by its scopes:
+
+| Scope       | Access                                  |
+| :---------- | :-------------------------------------- |
+| **`read`**  | GET requests                            |
+| **`write`** | Requests with every other HTTP method   |
+
+A request with a method the token's scopes do not allow returns a `403` error with the [`forbidden`](/reference/management-api-errors#forbidden) code.
