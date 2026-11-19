@@ -2,14 +2,57 @@ openapi: 3.0.1
 info:
   title: Meilisearch Cloud API V2
   version: v2
+  description: |-
+    Manages Meilisearch Cloud organizations, teams and projects. Request and response fields are camelCase.
+
+    ## Authentication
+
+    Send `Authorization: Bearer <token>` with a Personal Access Token or an OAuth2 access token. OAuth2 tokens need the `read` scope for GET requests and `write` for every other method.
+
+    ## Pagination
+
+    List endpoints take `offset` and `limit` and return `{ results, offset, limit, total }`.
+
+    ## Errors
+
+    Every non-2xx response has the `Error` body. Read its `code` field to know the exact error. Each operation documents the statuses it can answer. Every endpoint can also answer:
+
+    - `400` `invalid_id`: an id in the path or the query is not an integer.
+    - `400` `invalid_body`: the body is not valid JSON.
+    - `400` `unknown_field`: the body has a field the endpoint does not accept.
+    - `400` `invalid_offset`, `invalid_limit`: invalid pagination parameter on a list endpoint.
+    - `401` `missing_authorization_header`, `invalid_token`: no token, or an invalid, expired or revoked one.
+    - `403` `forbidden`: the OAuth2 token does not have the scope the method needs.
+    - `429` `rate_limited`: over 30 requests per minute per token. Retry after the number of seconds in the `Retry-After` header.
+    - `500` `internal`: unexpected error.
+tags:
+  - name: Me
+    description: Identity of the token owner.
+  - name: Organizations
+    description: Organizations hold teams and billing.
+  - name: Teams
+    description: Teams hold projects and members.
+  - name: Team Members
+    description: Members and pending invitations of a team.
+  - name: Projects
+    description: Meilisearch instances.
+  - name: Regions
+    description: Regions where a project can be created.
+  - name: Resources
+    description: Machine sizes and their plans, to create a project or change its plan.
+  - name: Meilisearch Versions
+    description: Meilisearch versions a project can run.
 paths:
   /api/v2/me:
     get:
       summary: Retrieves the authenticated user identity
       tags:
         - Me
+      operationId: getMe
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: current user identity
@@ -18,24 +61,45 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: string
                   name:
                     type: string
                   email:
                     type: string
                 required:
+                  - id
                   - name
                   - email
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds to wait before retrying.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/meilisearch-versions:
     get:
       summary: Lists the active Meilisearch versions
       tags:
         - Meilisearch Versions
+      operationId: listMeilisearchVersions
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -54,16 +118,23 @@ paths:
                     required:
                       - results
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/organizations:
     get:
       summary: Lists organizations the authenticated user can access
       tags:
         - Organizations
+      operationId: listOrganizations
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -82,20 +153,28 @@ paths:
                     required:
                       - results
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/organizations/{id}:
     parameters:
       - name: id
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     get:
       summary: Retrieves an organization
       tags:
         - Organizations
+      operationId: getOrganization
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: organization found
@@ -103,14 +182,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-        '403':
-          description: organization not accessible
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     patch:
       summary: Updates an organization
       tags:
         - Organizations
+      operationId: updateOrganization
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '200':
@@ -119,10 +211,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not the organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: Validation failed
+          description: Unprocessable Content
           content:
             application/json:
               schema:
@@ -139,15 +247,34 @@ paths:
       summary: Deletes an organization
       tags:
         - Organizations
+      operationId: deleteOrganization
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       responses:
         '204':
           description: organization deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not the organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: Organization deletion has project
+          description: Unprocessable Content
           content:
             application/json:
               schema:
@@ -156,9 +283,10 @@ paths:
     parameters:
       - name: projectId
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
       - name: from
         in: query
         schema:
@@ -177,9 +305,12 @@ paths:
       summary: Returns the estimated cost of a project usage
       tags:
         - Projects
+      operationId: getProjectCost
       description: 'Gross estimation of the cost of the project usage over the window: quantity × unit price of the project plan, before free tiers shared across the organization, discounts and taxes. The window is the same as the usage one.'
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: project estimated cost
@@ -188,25 +319,41 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectCost'
         '401':
-          description: unauthorized
-        '403':
-          description: project not accessible
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: 'invalid window: from after to, larger than 93 days or not an ISO 8601 date'
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/projects/{projectId}/master-key:
     parameters:
       - name: projectId
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     get:
       summary: Retrieves a project with its master key
       tags:
         - Projects
+      operationId: getProjectMasterKey
       description: Returns the project including its current master key. Restricted to team and organization owners.
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: project with master key
@@ -215,16 +362,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not a team or organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     patch:
       summary: Rotates the master key of a project
       tags:
         - Projects
+      operationId: rotateProjectMasterKey
       description: Generates a new master key and restarts the instance to apply it. The previous master key and every API key derived from it stop working.
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       responses:
         '202':
           description: master key rotated, instance restarting
@@ -233,24 +397,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not a team or organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '423':
-          description: project not running
+          description: Locked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/projects/{projectId}/plan:
     parameters:
       - name: projectId
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     patch:
       summary: Changes the plan (resource) of a project
       tags:
         - Projects
+      operationId: changeProjectPlan
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '202':
@@ -260,11 +446,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: organization not self-serve
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: project in failed state
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       requestBody:
         content:
           application/json:
@@ -276,13 +480,15 @@ paths:
                 resourceId:
                   type: integer
                   example: 12
+        required: true
   /api/v2/projects/{projectId}/usage:
     parameters:
       - name: projectId
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
       - name: from
         in: query
         schema:
@@ -301,9 +507,12 @@ paths:
       summary: Returns the daily usage of a project
       tags:
         - Projects
+      operationId: getProjectUsage
       description: Usage per UTC day. The window is clamped to the project lifetime, terminated projects included.
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: project usage
@@ -312,24 +521,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectUsage'
         '401':
-          description: unauthorized
-        '403':
-          description: project not accessible
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: 'invalid window: from after to, larger than 93 days or not an ISO 8601 date'
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/projects/{projectId}/version:
     parameters:
       - name: projectId
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     patch:
       summary: Upgrades the Meilisearch version of a project
       tags:
         - Projects
+      operationId: upgradeProjectVersion
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '202':
@@ -339,13 +564,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
         '401':
-          description: unauthorized
-        '403':
-          description: project not accessible
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: already running this version
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '423':
-          description: manual update disabled
+          description: Locked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       requestBody:
         content:
           application/json:
@@ -357,21 +598,34 @@ paths:
                 version:
                   type: string
                   example: v1.54.0
+        required: true
   /api/v2/projects:
     get:
       summary: Lists the projects of the accessible teams
       tags:
         - Projects
+      operationId: listProjects
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
         - name: teamId
           in: query
-          required: false
           schema:
             type: integer
+            minimum: 0
+          required: false
+          description: Only returns the projects of this team.
+        - name: includeTerminated
+          in: query
+          schema:
+            type: boolean
+            default: false
+          required: false
+          description: Also returns terminated projects, e.g. to read their usage until termination.
       responses:
         '200':
           description: projects list
@@ -388,14 +642,27 @@ paths:
                           $ref: '#/components/schemas/Project'
                     required:
                       - results
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       summary: Creates a project in a team
       tags:
         - Projects
+      operationId: createProject
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '201':
@@ -404,10 +671,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: project limit reached
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: invalid project attributes
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       requestBody:
         content:
           application/json:
@@ -426,19 +713,27 @@ paths:
                   type: integer
                 msVersion:
                   type: string
+                  example: v1.54.0
+                  description: Name of an active Meilisearch version. Defaults to the latest version, also used when the name matches no active version.
+        required: true
   /api/v2/projects/{id}:
     parameters:
       - name: id
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     get:
       summary: Retrieves a project
       tags:
         - Projects
+      operationId: getProject
+      description: Also returns a terminated project, e.g. to read its usage until termination.
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: project found
@@ -446,14 +741,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
-        '403':
-          description: project not accessible
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     patch:
       summary: Updates a project
       tags:
         - Projects
+      operationId: updateProject
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '200':
@@ -462,10 +770,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Project'
-        '403':
-          description: project not accessible
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: invalid project attributes
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       requestBody:
         content:
           application/json:
@@ -476,26 +804,55 @@ paths:
               properties:
                 name:
                   type: string
+        required: true
     delete:
       summary: Deletes a project
       tags:
         - Projects
+      operationId: deleteProject
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       responses:
         '204':
           description: project deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: project not accessible
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/regions:
     get:
       summary: Lists the active regions
       tags:
         - Regions
+      operationId: listRegions
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -514,28 +871,51 @@ paths:
                     required:
                       - results
         '400':
-          description: Invalid limit
+          description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         '401':
-          description: unauthorized
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/resources:
     get:
-      summary: Lists the active resources and their plan pricing
+      summary: Lists the active resources of active regions, with the pricing of public plans
       tags:
         - Resources
+      operationId: listResources
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
         - name: regionId
           in: query
-          required: false
           schema:
             type: integer
+            minimum: 0
+          required: false
+        - name: plan
+          in: query
+          schema:
+            type: string
+            enum:
+              - legacy
+              - build_plan
+              - pro_plan
+              - custom_plan
+              - grow_plan
+              - free_trial
+              - enterprise_plan
+              - resource_based_plan
+          required: false
+          description: Only returns the resources of this plan.
       responses:
         '200':
           description: resources list
@@ -553,21 +933,31 @@ paths:
                     required:
                       - results
         '401':
-          description: unauthorized
-  /api/v2/team-members:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v2/teams/{teamId}/members:
+    parameters:
+      - name: teamId
+        in: path
+        schema:
+          type: integer
+          minimum: 0
+        required: true
     get:
       summary: Lists the members and pending invitees of a team
       tags:
         - Team Members
+      operationId: listTeamMembers
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
-        - name: teamId
-          in: query
-          schema:
-            type: integer
       responses:
         '200':
           description: team members list
@@ -584,14 +974,27 @@ paths:
                           $ref: '#/components/schemas/TeamMember'
                     required:
                       - results
-        '403':
-          description: team not accessible
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
       summary: Invites a member to a team
       tags:
         - Team Members
+      operationId: inviteTeamMember
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '201':
@@ -600,54 +1003,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TeamMember'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not the team or organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: email is already a member
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       requestBody:
         content:
           application/json:
             schema:
               type: object
+              required:
+                - email
               properties:
-                teamId:
-                  type: integer
                 email:
                   type: string
+        required: true
+  /api/v2/teams/{teamId}/members/{memberId}:
+    parameters:
+      - name: teamId
+        in: path
+        schema:
+          type: integer
+          minimum: 0
+        required: true
+      - name: memberId
+        in: path
+        schema:
+          type: string
+          format: uuid
+        description: The `id` of the member, as returned by the members list.
+        required: true
     delete:
       summary: Removes a member from a team
       tags:
         - Team Members
+      operationId: removeTeamMember
       security:
         - personal_access_token: []
-      parameters: []
+        - oauth2:
+            - write
       responses:
         '204':
           description: member removed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
-          description: not the team or organization owner
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '422':
-          description: owner cannot be removed
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                teamId:
-                  type: integer
-                email:
-                  type: string
+          description: Unprocessable Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /api/v2/teams:
     get:
       summary: Lists teams the authenticated user can access
       tags:
         - Teams
+      operationId: listTeams
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       parameters:
-        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Offset'
         - $ref: '#/components/parameters/Limit'
+        - name: organizationId
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+          required: false
       responses:
         '200':
           description: teams list
@@ -664,8 +1130,14 @@ paths:
                           $ref: '#/components/schemas/Team'
                     required:
                       - results
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '401':
-          description: Missing authorization header
+          description: Unauthorized
           content:
             application/json:
               schema:
@@ -674,8 +1146,11 @@ paths:
       summary: Creates a team
       tags:
         - Teams
+      operationId: createTeam
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '201':
@@ -684,8 +1159,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Team'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Unprocessable Content
           content:
             application/json:
               schema:
@@ -695,31 +1194,32 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                team:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    organizationId:
-                      type: integer
-                  required:
-                    - organizationId
               required:
-                - team
+                - name
+                - organizationId
+              properties:
+                name:
+                  type: string
+                organizationId:
+                  type: integer
+        required: true
   /api/v2/teams/{id}:
     parameters:
       - name: id
         in: path
-        required: true
         schema:
           type: integer
+          minimum: 0
+        required: true
     get:
       summary: Retrieves a team
       tags:
         - Teams
+      operationId: getTeam
       security:
         - personal_access_token: []
+        - oauth2:
+            - read
       responses:
         '200':
           description: team found
@@ -727,8 +1227,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Team'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
-          description: Team not found
+          description: Not Found
           content:
             application/json:
               schema:
@@ -737,8 +1249,11 @@ paths:
       summary: Updates a team
       tags:
         - Teams
+      operationId: updateTeam
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       parameters: []
       responses:
         '200':
@@ -747,14 +1262,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Team'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
-          description: Team not found
+          description: Not Found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         '422':
-          description: Team user is not member
+          description: Unprocessable Content
           content:
             application/json:
               schema:
@@ -769,44 +1302,60 @@ paths:
                   type: string
                 ownerId:
                   type: string
+                  format: uuid
                   description: New owner's uuid, must already be a team member
     delete:
       summary: Deletes a team
       tags:
         - Teams
+      operationId: deleteTeam
       security:
         - personal_access_token: []
+        - oauth2:
+            - write
       responses:
         '204':
           description: team deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '404':
-          description: Team not found
+          description: Not Found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
         '422':
-          description: Team deletion has project
+          description: Unprocessable Content
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
   parameters:
-    Page:
-      name: page
+    Offset:
+      name: offset
       in: query
       required: false
-      description: Page to return, starting at 1.
+      description: Number of items to skip.
       schema:
         type: integer
-        minimum: 1
-        default: 1
+        minimum: 0
+        default: 0
     Limit:
       name: limit
       in: query
       required: false
-      description: Number of items per page. Values above the maximum are capped to it.
+      description: Maximum number of items to return. Values above the maximum are capped to it.
       schema:
         type: integer
         minimum: 1
@@ -848,9 +1397,9 @@ components:
           type: string
           format: uri
           description: Documentation of this error code.
-        errors:
+        details:
           type: array
-          description: Per-field details, only present on `validation_failed`.
+          description: Request fields the error is about. Present whenever the error involves request fields.
           items:
             type: object
             properties:
@@ -873,20 +1422,17 @@ components:
       type: object
       description: Envelope of every list response, the items being in `results`.
       properties:
-        page:
+        offset:
           type: integer
         limit:
           type: integer
         total:
           type: integer
-          description: Number of items matching the request, all pages included.
-        totalPages:
-          type: integer
+          description: Number of items matching the request.
       required:
-        - page
+        - offset
         - limit
         - total
-        - totalPages
     Organization:
       type: object
       properties:
@@ -900,20 +1446,12 @@ components:
           type: string
         isAdmin:
           type: boolean
-        defaultTeamId:
-          type: integer
-          nullable: true
-        customerTier:
-          type: string
-          nullable: true
       required:
         - id
         - name
         - identifier
         - ownerId
         - isAdmin
-        - defaultTeamId
-        - customerTier
     Team:
       type: object
       properties:
@@ -938,15 +1476,17 @@ components:
       properties:
         id:
           type: string
-          nullable: true
+          format: uuid
+          description: Identifies the member or the pending invitation, e.g. to remove it
         email:
           type: string
         name:
           type: string
           nullable: true
+          description: '`null` for a pending invitation.'
         isOwner:
           type: boolean
-          nullable: true
+          description: Whether the member owns the team.
         status:
           type: string
           enum:
@@ -956,19 +1496,32 @@ components:
           type: string
           format: date-time
           nullable: true
+          description: '`null` for an accepted member.'
       required:
+        - id
         - email
+        - name
+        - isOwner
         - status
+        - invitedAt
     PlanFeature:
       type: object
       properties:
         id:
-          type: string
-          nullable: true
+          description: Stripe price id (string) when the feature has a Stripe price, else the feature id (integer).
         name:
           type: string
         kind:
           type: string
+          enum:
+            - base
+            - search
+            - document
+            - storage
+            - instance_runtime
+            - chat_token
+            - bandwidth
+            - backup
         enabled:
           type: boolean
         nickname:
@@ -1032,6 +1585,15 @@ components:
           nullable: true
         plan:
           type: string
+          enum:
+            - legacy
+            - build_plan
+            - pro_plan
+            - custom_plan
+            - grow_plan
+            - free_trial
+            - enterprise_plan
+            - resource_based_plan
         regionId:
           type: integer
         storage:
@@ -1045,6 +1607,7 @@ components:
           nullable: true
         fullPlan:
           nullable: true
+          description: Plan and pricing of the resource. `null` when the resource has no public plan.
           allOf:
             - $ref: '#/components/schemas/Plan'
       required:
@@ -1065,11 +1628,15 @@ components:
           type: string
         greenLabel:
           type: boolean
+        regionUrl:
+          type: string
       required:
         - id
         - name
         - awsRegion
         - countryCode
+        - greenLabel
+        - regionUrl
     MeilisearchVersion:
       type: object
       properties:
@@ -1104,15 +1671,21 @@ components:
           type: integer
         msVersion:
           type: string
-        workloadType:
-          type: string
-          enum:
-            - production
-            - dev
         readOnly:
           type: boolean
         status:
           type: string
+          enum:
+            - creating
+            - waiting_for_end_of_dns_ttl
+            - health_checking
+            - running
+            - changing_plan
+            - updating
+            - restoring
+            - failed
+            - update_failed
+            - paused
         paused:
           type: boolean
         createdAt:
@@ -1135,7 +1708,6 @@ components:
         - teamId
         - resourceId
         - msVersion
-        - workloadType
         - readOnly
         - status
         - paused
@@ -1230,7 +1802,7 @@ components:
           enum:
             - hour
             - GB-month
-            - MiB
+            - MB
             - document-month
             - search
             - token
