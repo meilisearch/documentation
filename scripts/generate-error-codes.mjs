@@ -22,15 +22,15 @@ const TARGET_MANAGEMENT_ERRORS = path.join(
 const GENERATED_START = "{/* generated:error-codes:start */}";
 const GENERATED_END = "{/* generated:error-codes:end */}";
 
-// The Cloud locale file documents every error the Meilisearch Cloud backend can
+// The Cloud locale file has two error sections. `api_v2_errors` is the
+// Management API catalog, so all its codes are documented. The legacy
+// `messages` section documents every error the Meilisearch Cloud backend can
 // return, including the ones raised by dashboard-only flows: sign-up, sign-in,
-// SSO, MFA, password reset, and account deletion. None of those are reachable
-// through the Management API routes documented in the Reference tab, so they
-// are left out of the public reference.
-//
-// Codes are kept when they start with one of these prefixes, or when they are
-// listed in CLOUD_GENERIC_CODES below. Any new code matching neither list is
-// reported at the end of the run so it can be triaged.
+// SSO, MFA, password reset, and account deletion. The Management API only
+// falls back to it for business-rule errors not migrated yet, so legacy codes
+// are kept only when they start with one of these prefixes, or when they are
+// listed in CLOUD_LEGACY_EXTRA_CODES below. Any new legacy code matching
+// neither list is reported at the end of the run so it can be triaged.
 const CLOUD_CODE_PREFIXES = [
   "change_plan_",
   "organization_",
@@ -39,33 +39,15 @@ const CLOUD_CODE_PREFIXES = [
   "usage_",
 ];
 
-// Errors the API can return on any route, plus the billing error shared by the
-// plan and project routes.
-const CLOUD_GENERIC_CODES = [
-  "bad_request",
-  "billing_internal_error",
-  "forbidden",
-  "internal_server_error",
-  "missing_parameter",
-  "not_found",
-  "transition_error",
-  "unauthorized",
-  "unprocessable_content",
-  "validation_error",
-];
-
-// Raised when creating a project, so it belongs to the Management API surface
-// despite its `user_` prefix. Promo code and search rule limit errors are
+// Raised when creating a project, so they belong to the Management API surface
+// despite their `user_` prefix. Promo code and search rule limit errors are
 // deliberately absent: no documented route returns them.
-const CLOUD_EXTRA_CODES = ["user_not_entitled_to_free_trial"];
+const CLOUD_LEGACY_EXTRA_CODES = ["user_not_entitled_to_free_trial", "user_not_verified"];
 
-// Success responses share the locale file with the errors.
-const CLOUD_SUCCESS_CODES = ["ok", "created"];
-
-function isManagementApiCode(code) {
-  if (CLOUD_SUCCESS_CODES.includes(code)) return false;
-  if (CLOUD_GENERIC_CODES.includes(code)) return true;
-  if (CLOUD_EXTRA_CODES.includes(code)) return true;
+function isManagementApiCode(code, entry) {
+  if (entry.apiV2) return true;
+  if (entry.status !== "error") return false;
+  if (CLOUD_LEGACY_EXTRA_CODES.includes(code)) return true;
   return CLOUD_CODE_PREFIXES.some((prefix) => code.startsWith(prefix));
 }
 
@@ -92,8 +74,8 @@ function formatManagementCodes(errorCodes) {
   const sections = [];
 
   for (const [name, entry] of Object.entries(errorCodes)) {
-    if (!isManagementApiCode(name)) {
-      if (!CLOUD_SUCCESS_CODES.includes(name)) skipped.push(name);
+    if (!isManagementApiCode(name, entry)) {
+      if (entry.status === "error") skipped.push(name);
       continue;
     }
 

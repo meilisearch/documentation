@@ -60,9 +60,8 @@
   },
   "forbidden": {
     "statusCode": 403,
-    "status": "error",
-    "title": "Forbidden request",
-    "description": "Token has no right to perform this request"
+    "title": "You are not allowed to perform this action.",
+    "apiV2": true
   },
   "has_promo_code": {
     "statusCode": 422,
@@ -70,11 +69,46 @@
     "title": "Promo code already applied",
     "description": "A promo code has already been applied before"
   },
+  "internal": {
+    "statusCode": 500,
+    "title": "An internal error occurred.",
+    "apiV2": true
+  },
   "internal_server_error": {
     "statusCode": 500,
     "status": "error",
     "title": "Internal server error",
     "description": "There is an error in the server, please contact support"
+  },
+  "invalid_body": {
+    "statusCode": 400,
+    "title": "The request body is not valid JSON.",
+    "apiV2": true
+  },
+  "invalid_boolean": {
+    "statusCode": 400,
+    "title": "Boolean parameters must be `true` or `false`.",
+    "apiV2": true
+  },
+  "invalid_id": {
+    "statusCode": 400,
+    "title": "Ids must be integers.",
+    "apiV2": true
+  },
+  "invalid_limit": {
+    "statusCode": 400,
+    "title": "`limit` must be a positive integer.",
+    "apiV2": true
+  },
+  "invalid_offset": {
+    "statusCode": 400,
+    "title": "`offset` must be a non-negative integer.",
+    "apiV2": true
+  },
+  "invalid_token": {
+    "statusCode": 401,
+    "title": "The provided token is invalid.",
+    "apiV2": true
   },
   "mfa_cannot_disable_required": {
     "statusCode": 403,
@@ -124,17 +158,20 @@
     "title": "MFA setup required",
     "description": "Multi-factor authentication must be configured for your account. Please complete MFA setup to continue."
   },
+  "missing_authorization_header": {
+    "statusCode": 401,
+    "title": "The Authorization header is missing.",
+    "apiV2": true
+  },
   "missing_parameter": {
-    "statusCode": 422,
-    "status": "error",
-    "title": "Missing request parameter",
-    "description": "%{details}"
+    "statusCode": 400,
+    "title": "A required parameter is missing.",
+    "apiV2": true
   },
   "not_found": {
     "statusCode": 404,
-    "status": "error",
-    "title": "Not found",
-    "description": "Resource could not be found"
+    "title": "The requested resource was not found.",
+    "apiV2": true
   },
   "oauth_user_mfa_not_allowed": {
     "statusCode": 400,
@@ -147,6 +184,11 @@
     "status": "success",
     "title": "Request processed successfully"
   },
+  "operation_failed": {
+    "statusCode": 422,
+    "title": "The operation could not be completed.",
+    "apiV2": true
+  },
   "organization_delete_error": {
     "statusCode": 500,
     "status": "error",
@@ -154,40 +196,40 @@
     "description": "There was a problem deleting this organization. Please contact support."
   },
   "organization_deletion_has_addons": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete organization because it still has active add-ons",
-    "description": "Disable every add-on of this organization before deleting it"
+    "statusCode": 422,
+    "title": "The organization still has active add-ons.",
+    "apiV2": true
   },
   "organization_deletion_has_item_subscription": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete organization because its subscription still has items",
-    "description": "Please contact support to delete this organization"
+    "statusCode": 422,
+    "title": "The organization subscription still has items.",
+    "apiV2": true
   },
   "organization_deletion_has_project": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete organization because at least one active project has been found",
-    "description": "Delete every project in this organization before deleting the organization"
+    "statusCode": 422,
+    "title": "The organization still has active projects.",
+    "apiV2": true
   },
   "organization_deletion_last_organization": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete your last organization",
-    "description": "You must keep access to at least one organization"
+    "statusCode": 422,
+    "title": "Your last organization cannot be deleted.",
+    "apiV2": true
   },
   "organization_deletion_not_self_serve": {
     "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete an organization that is not self-serve",
-    "description": "Please contact support to delete this organization"
+    "title": "Only self-serve organizations can be deleted.",
+    "apiV2": true
   },
   "organization_limit_reached": {
     "statusCode": 403,
     "status": "error",
     "title": "Organization limit reached",
     "description": "You have reached the maximum number of organizations allowed. Please contact support to increase it."
+  },
+  "organization_not_found": {
+    "statusCode": 404,
+    "title": "Organization not found.",
+    "apiV2": true
   },
   "organization_not_self_serve": {
     "statusCode": 403,
@@ -249,9 +291,8 @@
   },
   "project_limit_reached": {
     "statusCode": 403,
-    "status": "error",
-    "title": "Project limit reached",
-    "description": "You have reached the maximum number of projects allowed. Please contact support to increase it."
+    "title": "The project limit for this user has been reached.",
+    "apiV2": true
   },
   "project_manual_update_disabled": {
     "statusCode": 423,
@@ -279,9 +320,8 @@
   },
   "project_not_found": {
     "statusCode": 404,
-    "status": "error",
-    "title": "Project not found",
-    "description": "Project does not exist"
+    "title": "Project not found.",
+    "apiV2": true
   },
   "project_payment_method_missing": {
     "statusCode": 422,
@@ -313,29 +353,25 @@
     "title": "Missing team ID for project",
     "description": "The team ID is missing"
   },
-  "project_update_invalid_version": {
+  "project_update_downgrade_not_allowed": {
     "statusCode": 422,
-    "status": "error",
-    "title": "Selected version cannot be lower than current version",
-    "description": "Downgrading an instance to an older Meilisearch version is not supported"
+    "title": "Downgrading to an older Meilisearch version is not supported.",
+    "apiV2": true
   },
   "project_update_same_version": {
     "statusCode": 422,
-    "status": "error",
-    "title": "Invalid version",
-    "description": "The project is already running this version"
+    "title": "The project is already running this version.",
+    "apiV2": true
   },
   "project_update_version_invalid": {
     "statusCode": 422,
-    "status": "error",
-    "title": "Version is invalid",
-    "description": "The version specified for this update is invalid or doesn't exist"
+    "title": "The version doesn't exist or isn't available.",
+    "apiV2": true
   },
   "project_version_invalid": {
     "statusCode": 422,
-    "status": "error",
-    "title": "Invalid version for project",
-    "description": "The version specified for this project is invalid or doesn't exist"
+    "title": "The version doesn't exist or isn't available.",
+    "apiV2": true
   },
   "project_version_missing": {
     "statusCode": 422,
@@ -348,6 +384,11 @@
     "status": "error",
     "title": "Promo code is invalid",
     "description": "The promo code is invalid or doesn't exist"
+  },
+  "rate_limited": {
+    "statusCode": 429,
+    "title": "Too many requests. Retry after the number of seconds in the `Retry-After` header.",
+    "apiV2": true
   },
   "request_failed": {
     "statusCode": 503,
@@ -408,39 +449,33 @@
   },
   "team_create_error": {
     "statusCode": 500,
-    "status": "error",
-    "title": "Unable to create team",
-    "description": "There was a problem creating this team, details: %{details}"
+    "title": "Unable to create the team.",
+    "apiV2": true
   },
   "team_delete_error": {
     "statusCode": 500,
-    "status": "error",
-    "title": "Unable to delete team",
-    "description": "There was a problem deleting this team. Please contact support."
+    "title": "Unable to delete the team.",
+    "apiV2": true
   },
   "team_deletion_has_addons": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete team because it still has active add-ons",
-    "description": "Disable every add-on assigned to this team before deleting it"
+    "statusCode": 422,
+    "title": "The team still has active add-ons.",
+    "apiV2": true
   },
   "team_deletion_has_project": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete team because at least one active project has been found",
-    "description": "Delete every project in this team before deleting the team"
+    "statusCode": 422,
+    "title": "The team still has active projects.",
+    "apiV2": true
   },
   "team_deletion_is_default_team": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete the default team",
-    "description": "This is the default team of the organization. Please set another default team first."
+    "statusCode": 422,
+    "title": "The default team cannot be deleted.",
+    "apiV2": true
   },
   "team_deletion_last_team": {
-    "statusCode": 403,
-    "status": "error",
-    "title": "Unable to delete the last team",
-    "description": "An organization must keep at least one team"
+    "statusCode": 422,
+    "title": "The last team of an organization cannot be deleted.",
+    "apiV2": true
   },
   "team_invitation_token_invalid": {
     "statusCode": 422,
@@ -448,35 +483,41 @@
     "title": "Invitation token is invalid",
     "description": "The invitation token is invalid or doesn't exist"
   },
+  "team_member_not_found": {
+    "statusCode": 404,
+    "title": "Team member not found.",
+    "apiV2": true
+  },
   "team_name_invalid": {
     "statusCode": 422,
     "status": "error",
     "title": "Invalid team name",
     "description": "The team's name should be between 3 and 40 characters"
   },
+  "team_not_found": {
+    "statusCode": 404,
+    "title": "Team not found.",
+    "apiV2": true
+  },
   "team_owner_cant_be_removed": {
-    "statusCode": 400,
-    "status": "error",
-    "title": "Team Owner can not be removed",
-    "description": "The specified User is the Owner of the Team, and can't be removed from the Team"
+    "statusCode": 422,
+    "title": "The team owner cannot be removed from the team.",
+    "apiV2": true
   },
   "team_user_already_invited": {
-    "statusCode": 400,
-    "status": "error",
-    "title": "User has already been invited",
-    "description": "The specified User has a pending invitation to the team"
+    "statusCode": 422,
+    "title": "The user has already been invited to the team.",
+    "apiV2": true
   },
   "team_user_is_member_already": {
-    "statusCode": 400,
-    "status": "error",
-    "title": "User is already a member of the Team",
-    "description": "The specified User is already a member of the team"
+    "statusCode": 422,
+    "title": "The user is already a member of the team.",
+    "apiV2": true
   },
   "team_user_is_not_member": {
-    "statusCode": 400,
-    "status": "error",
-    "title": "User is not a member of the Team",
-    "description": "The specified User is not a member of the team"
+    "statusCode": 422,
+    "title": "The user must already be a member of the team.",
+    "apiV2": true
   },
   "transition_error": {
     "statusCode": 422,
@@ -489,6 +530,11 @@
     "status": "error",
     "title": "Unauthorized request",
     "description": "Token is invalid or missing"
+  },
+  "unknown_field": {
+    "statusCode": 400,
+    "title": "The request body contains a field this route does not accept.",
+    "apiV2": true
   },
   "unprocessable_content": {
     "statusCode": 422,
@@ -619,5 +665,10 @@
     "status": "error",
     "title": "Validation error",
     "description": "%{details}"
+  },
+  "validation_failed": {
+    "statusCode": 422,
+    "title": "The request contains invalid values.",
+    "apiV2": true
   }
 }

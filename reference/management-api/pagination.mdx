@@ -1,0 +1,40 @@
+---
+title: Pagination
+sidebarTitle: Pagination
+description: How the Management API paginates list routes and the structure of paginated responses.
+---
+
+The Management API paginates all GET routes that return multiple resources, for example, GET `/api/v2/organizations` or GET `/api/v2/projects`. These routes return 20 results by default.
+
+Use these query parameters to move through the results:
+
+| Name         | Type    | Default | Description                                                         |
+| :----------- | :------ | :------ | :------------------------------------------------------------------ |
+| **`offset`** | Integer | `0`     | Number of resources to skip. Must be `0` or more                     |
+| **`limit`**  | Integer | `20`    | Maximum number of resources to return. Must be between `1` and `100` |
+
+A `limit` above `100` is capped to `100`. A negative `offset`, a `limit` below `1`, or a value that is not an integer returns a `400` error with the [`invalid_offset`](/reference/management-api-errors#invalid_offset) or [`invalid_limit`](/reference/management-api-errors#invalid_limit) code.
+
+All paginated responses contain the following fields:
+
+| Name          | Type    | Description                                       |
+| :------------ | :------ | :------------------------------------------------ |
+| **`results`** | Array   | Resources of the current page                     |
+| **`offset`**  | Integer | Number of resources skipped                       |
+| **`limit`**   | Integer | Maximum number of resources returned              |
+| **`total`**   | Integer | Total number of resources matching the request    |
+
+For example, GET `/api/v2/projects?offset=10&limit=10` returns the second page of 10 projects:
+
+```json
+{
+  "results": [
+    …
+  ],
+  "offset": 10,
+  "limit": 10,
+  "total": 24
+}
+```
+
+To fetch all resources, increase `offset` by `limit` until `offset` is equal to or greater than `total`.
