@@ -926,6 +926,7 @@
           "group": "Management API",
           "pages": [
             "reference/management-api/authentication",
+            "reference/management-api/pagination",
             "reference/management-api-errors"
           ]
         },

@@ -1,7 +1,7 @@
 ---
 title: Errors
 sidebarTitle: Errors
-description: How the Management API reports errors, with its status codes, error types, response format, and the exhaustive list of its error codes.
+description: How the Management API reports errors, with its status codes, error types, response format, rate limit, and the exhaustive list of its error codes.
 ---
 
 The Management API reports a failed request with a standard HTTP status code and a JSON body describing what went wrong. The body always contains a `code` field identifying the error. Branch on that `code` rather than on the human-readable `message`, which may change between releases.
@@ -12,28 +12,30 @@ The Management API is only available on Meilisearch Cloud. The [Meilisearch API]
 
 The Management API uses the following standard HTTP codes for a successful or failed API request:
 
-| Status code | Description                                                                                                     |
-| :---------- | :--------------------------------------------------------------------------------------------------------------- |
-| 200         | ✅ **Ok** Everything worked as expected.                                                                        |
-| 201         | ✅ **Created** The resource has been created                                                                    |
-| 202         | ✅ **Accepted** The operation has been accepted and is running in the background                                |
-| 204         | ✅ **No Content** The resource has been deleted or no content has been returned                                 |
-| 400         | ❌ **Bad Request** The request was unacceptable, often due to a missing or malformed parameter                  |
-| 401         | ❌ **Unauthorized** No valid personal access token provided                                                     |
-| 403         | ❌ **Forbidden** The token doesn't have the permissions to perform the request, or a plan limit has been reached |
-| 404         | ❌ **Not Found** The requested resource doesn't exist                                                           |
-| 409         | ❌ **Conflict** The resource conflicts with an existing one, such as a duplicate project name                   |
-| 422         | ❌ **Unprocessable Content** The request is well-formed but was rejected, usually after validation              |
-| 423         | ❌ **Locked** The resource is temporarily unavailable, such as a project that is not running                    |
-| 500         | ❌ **Internal Server Error** Something went wrong on the Meilisearch Cloud side                                 |
+| Status code | Description                                                                                                         |
+| :---------- | :------------------------------------------------------------------------------------------------------------------ |
+| 200         | ✅ **Ok** Everything worked as expected.                                                                            |
+| 201         | ✅ **Created** The resource has been created                                                                        |
+| 202         | ✅ **Accepted** The operation has been accepted and is running in the background                                    |
+| 204         | ✅ **No Content** The resource has been deleted or no content has been returned                                     |
+| 400         | ❌ **Bad Request** The request is malformed: invalid id, invalid JSON body, unknown field, or invalid pagination parameter |
+| 401         | ❌ **Unauthorized** The token is missing, invalid, expired, or revoked                                              |
+| 403         | ❌ **Forbidden** The token doesn't have the permissions to perform the request, or a plan limit has been reached    |
+| 404         | ❌ **Not Found** The requested resource doesn't exist, or the token cannot access it                                |
+| 422         | ❌ **Unprocessable Content** The request is well-formed but was rejected, usually after validation                  |
+| 423         | ❌ **Locked** The resource is temporarily unavailable, such as a project that is not running                        |
+| 429         | ❌ **Too Many Requests** The token sent too many requests. See [Rate limit](#rate-limit)                            |
+| 500         | ❌ **Internal Server Error** Something went wrong on the Meilisearch Cloud side                                     |
+
+Every route can return `400`, `401`, `429`, and `500`, in addition to the status codes listed on its reference page.
 
 ## Error types
 
 Every error response carries a `type` field describing the broad category of the failure. It is derived from the HTTP status code:
 
-| Type                  | Description                                                                              |
-| :-------------------- | :---------------------------------------------------------------------------------------- |
-| **`auth`**            | The personal access token is missing or invalid. It is accompanied by the HTTP code `401` |
+| Type                  | Description                                                                                  |
+| :-------------------- | :------------------------------------------------------------------------------------------- |
+| **`auth`**            | The token is missing or invalid. It is accompanied by the HTTP code `401`                    |
 | **`invalid_request`** | The request was rejected, usually because of its input. It is accompanied by any other HTTP code `4xx` |
 | **`internal`**        | Something went wrong on the Meilisearch Cloud side. It is accompanied by the HTTP code `5xx` |
 
@@ -41,63 +43,56 @@ Every error response carries a `type` field describing the broad category of the
 
 ```json
 {
-  "message": "Project not found",
+  "message": "Project not found.",
   "code": "project_not_found",
   "type": "invalid_request",
   "link": "https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found"
 }
 ```
 
-| Field         | Description                                       |
-| :------------ | :------------------------------------------------ |
-| **`message`** | Human-readable description of the error           |
-| **`code`**    | [Error code](#error-codes)                        |
-| **`type`**    | [Type](#error-types) of error returned            |
-| **`link`**    | Link to the relevant section of the documentation |
+| Field         | Description                                                                 |
+| :------------ | :-------------------------------------------------------------------------- |
+| **`message`** | Human-readable description of the error                                     |
+| **`code`**    | [Error code](#error-codes)                                                  |
+| **`type`**    | [Type](#error-types) of error returned                                      |
+| **`link`**    | Link to the relevant section of the documentation                           |
+| **`details`** | Request fields the error is about. Only present when the error involves request fields. See [Field details](#field-details) |
 
-### Validation errors
+### Field details
 
-When a request fails validation, the body carries an additional `errors` array with one entry per rejected field:
+When an error is about one or more request fields, the body carries an additional `details` array with one entry per field:
 
 ```json
 {
-  "message": "Validation error",
-  "code": "validation_error",
+  "message": "Name can't be blank",
+  "code": "validation_failed",
   "type": "invalid_request",
-  "link": "https://www.meilisearch.com/docs/reference/management-api-errors#validation_error",
-  "errors": [
+  "link": "https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed",
+  "details": [
     {
-      "field": "teamId",
+      "field": "name",
       "code": "blank",
-      "message": "Team can't be blank"
+      "message": "Name can't be blank"
     }
   ]
 }
 ```
 
-| Field                | Description                                                 |
-| :------------------- | :----------------------------------------------------------- |
-| **`errors[].field`** | Name of the rejected field, in camelCase as in the request   |
-| **`errors[].code`**  | Stable identifier of the validation failure                  |
-| **`errors[].message`** | Human-readable description of the validation failure       |
+| Field                   | Description                                                                                  |
+| :---------------------- | :------------------------------------------------------------------------------------------- |
+| **`details[].field`**   | Name of the field, in camelCase as in the request                                            |
+| **`details[].code`**    | Reason the field was rejected, such as `missing`, `unknown`, `invalid`, `blank`, or `not_found` |
+| **`details[].message`** | Human-readable description of the problem with the field                                     |
+
+## Rate limit
+
+The Management API accepts up to 30 requests per minute per token. Over this limit, it answers `429` with the [`rate_limited`](#rate_limited) error code. The `Retry-After` response header gives the number of seconds to wait before retrying.
 
 ## Error codes
 
 These codes are returned by the Management API. Each one is listed with the HTTP status code and the `message` accompanying it.
 
 {/* generated:error-codes:start */}
-
-### `bad_request`
-
-`400` **Bad request**
-
-There is an error in your request
-
-### `billing_internal_error`
-
-`500` **Billing internal error**
-
-We have a problem regarding your billing. Please contact support
 
 ### `change_plan_action_in_progress`
 
@@ -129,25 +124,51 @@ Project region can not be modified
 
 ### `forbidden`
 
-`403` **Forbidden request**
+`403` **You are not allowed to perform this action.**
 
-Token has no right to perform this request
+### `internal`
 
-### `internal_server_error`
+`500` **An internal error occurred.**
 
-`500` **Internal server error**
+### `invalid_body`
 
-There is an error in the server, please contact support
+`400` **The request body is not valid JSON.**
+
+### `invalid_boolean`
+
+`400` **Boolean parameters must be `true` or `false`.**
+
+### `invalid_id`
+
+`400` **Ids must be integers.**
+
+### `invalid_limit`
+
+`400` **`limit` must be a positive integer.**
+
+### `invalid_offset`
+
+`400` **`offset` must be a non-negative integer.**
+
+### `invalid_token`
+
+`401` **The provided token is invalid.**
+
+### `missing_authorization_header`
+
+`401` **The Authorization header is missing.**
 
 ### `missing_parameter`
 
-`422` **Missing request parameter**
+`400` **A required parameter is missing.**
 
 ### `not_found`
 
-`404` **Not found**
+`404` **The requested resource was not found.**
 
-Resource could not be found
+### `operation_failed`
+
+`422` **The operation could not be completed.**
 
 ### `organization_delete_error`
 
@@ -157,39 +178,33 @@ There was a problem deleting this organization. Please contact support.
 
 ### `organization_deletion_has_addons`
 
-`403` **Unable to delete organization because it still has active add-ons**
-
-Disable every add-on of this organization before deleting it
+`422` **The organization still has active add-ons.**
 
 ### `organization_deletion_has_item_subscription`
 
-`403` **Unable to delete organization because its subscription still has items**
-
-Please contact support to delete this organization
+`422` **The organization subscription still has items.**
 
 ### `organization_deletion_has_project`
 
-`403` **Unable to delete organization because at least one active project has been found**
-
-Delete every project in this organization before deleting the organization
+`422` **The organization still has active projects.**
 
 ### `organization_deletion_last_organization`
 
-`403` **Unable to delete your last organization**
-
-You must keep access to at least one organization
+`422` **Your last organization cannot be deleted.**
 
 ### `organization_deletion_not_self_serve`
 
-`403` **Unable to delete an organization that is not self-serve**
-
-Please contact support to delete this organization
+`403` **Only self-serve organizations can be deleted.**
 
 ### `organization_limit_reached`
 
 `403` **Organization limit reached**
 
 You have reached the maximum number of organizations allowed. Please contact support to increase it.
+
+### `organization_not_found`
+
+`404` **Organization not found.**
 
 ### `organization_not_self_serve`
 
@@ -241,9 +256,7 @@ There was a problem exporting this project
 
 ### `project_limit_reached`
 
-`403` **Project limit reached**
-
-You have reached the maximum number of projects allowed. Please contact support to increase it.
+`403` **The project limit for this user has been reached.**
 
 ### `project_manual_update_disabled`
 
@@ -271,9 +284,7 @@ The project's name should be between 3 and 40 characters
 
 ### `project_not_found`
 
-`404` **Project not found**
-
-Project does not exist
+`404` **Project not found.**
 
 ### `project_payment_method_missing`
 
@@ -305,29 +316,21 @@ The team ID is incorrect
 
 The team ID is missing
 
-### `project_update_invalid_version`
+### `project_update_downgrade_not_allowed`
 
-`422` **Selected version cannot be lower than current version**
-
-Downgrading an instance to an older Meilisearch version is not supported
+`422` **Downgrading to an older Meilisearch version is not supported.**
 
 ### `project_update_same_version`
 
-`422` **Invalid version**
-
-The project is already running this version
+`422` **The project is already running this version.**
 
 ### `project_update_version_invalid`
 
-`422` **Version is invalid**
-
-The version specified for this update is invalid or doesn't exist
+`422` **The version doesn't exist or isn't available.**
 
 ### `project_version_invalid`
 
-`422` **Invalid version for project**
-
-The version specified for this project is invalid or doesn't exist
+`422` **The version doesn't exist or isn't available.**
 
 ### `project_version_missing`
 
@@ -335,41 +338,33 @@ The version specified for this project is invalid or doesn't exist
 
 The version is missing
 
+### `rate_limited`
+
+`429` **Too many requests. Retry after the number of seconds in the `Retry-After` header.**
+
 ### `team_create_error`
 
-`500` **Unable to create team**
-
-There was a problem creating this team
+`500` **Unable to create the team.**
 
 ### `team_delete_error`
 
-`500` **Unable to delete team**
-
-There was a problem deleting this team. Please contact support.
+`500` **Unable to delete the team.**
 
 ### `team_deletion_has_addons`
 
-`403` **Unable to delete team because it still has active add-ons**
-
-Disable every add-on assigned to this team before deleting it
+`422` **The team still has active add-ons.**
 
 ### `team_deletion_has_project`
 
-`403` **Unable to delete team because at least one active project has been found**
-
-Delete every project in this team before deleting the team
+`422` **The team still has active projects.**
 
 ### `team_deletion_is_default_team`
 
-`403` **Unable to delete the default team**
-
-This is the default team of the organization. Please set another default team first.
+`422` **The default team cannot be deleted.**
 
 ### `team_deletion_last_team`
 
-`403` **Unable to delete the last team**
-
-An organization must keep at least one team
+`422` **The last team of an organization cannot be deleted.**
 
 ### `team_invitation_token_invalid`
 
@@ -377,49 +372,39 @@ An organization must keep at least one team
 
 The invitation token is invalid or doesn't exist
 
+### `team_member_not_found`
+
+`404` **Team member not found.**
+
 ### `team_name_invalid`
 
 `422` **Invalid team name**
 
 The team's name should be between 3 and 40 characters
 
+### `team_not_found`
+
+`404` **Team not found.**
+
 ### `team_owner_cant_be_removed`
 
-`400` **Team Owner can not be removed**
-
-The specified User is the Owner of the Team, and can't be removed from the Team
+`422` **The team owner cannot be removed from the team.**
 
 ### `team_user_already_invited`
 
-`400` **User has already been invited**
-
-The specified User has a pending invitation to the team
+`422` **The user has already been invited to the team.**
 
 ### `team_user_is_member_already`
 
-`400` **User is already a member of the Team**
-
-The specified User is already a member of the team
+`422` **The user is already a member of the team.**
 
 ### `team_user_is_not_member`
 
-`400` **User is not a member of the Team**
+`422` **The user must already be a member of the team.**
 
-The specified User is not a member of the team
+### `unknown_field`
 
-### `transition_error`
-
-`422` **Transition error**
-
-### `unauthorized`
-
-`401` **Unauthorized request**
-
-Token is invalid or missing
-
-### `unprocessable_content`
-
-`422` **Unprocessable content**
+`400` **The request body contains a field this route does not accept.**
 
 ### `usage_invalid_range`
 
@@ -439,8 +424,12 @@ The usage date range can not exceed 93 days
 
 The user is not entitled to a free trial at the moment
 
-### `validation_error`
+### `user_not_verified`
 
-`422` **Validation error**
+`422` **User email not verified**
+
+### `validation_failed`
+
+`422` **The request contains invalid values.**
 
 {/* generated:error-codes:end */}

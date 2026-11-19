@@ -35,8 +35,9 @@ const CLOUD_OPENAPI_URL =
   "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/swagger/v2/swagger.yaml?ref=main";
 
 // Meilisearch Cloud error messages. The Management API builds every error
-// response from the `messages` section of the API's i18n locale file, so that
-// section is the source of truth for its error codes.
+// response from the `api_v2_errors` section of the API's i18n locale file, and
+// falls back to the legacy `messages` section for codes not migrated yet, so
+// both sections are the source of truth for its error codes.
 const CLOUD_ERROR_CODES_FILENAME = "meilisearch-cloud-error-codes.json";
 const CLOUD_ERROR_CODES_URL =
   "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/config/locales/en.yml?ref=main";
@@ -151,12 +152,16 @@ async function fetchCloudErrorCodes() {
   if (messages == null || typeof messages !== "object") {
     throw new Error("Cloud locale file has no 'en.messages' section.");
   }
+  const apiV2Errors = locale?.en?.api_v2_errors;
+  if (apiV2Errors == null || typeof apiV2Errors !== "object") {
+    throw new Error("Cloud locale file has no 'en.api_v2_errors' section.");
+  }
 
   // Only keep the fields describing the response: the locale file is a Rails
-  // i18n file and may grow other keys over time.
+  // i18n file and may grow other keys over time. An `api_v2_errors` entry wins
+  // over the legacy one with the same code, as the API does.
   const errorCodes = {};
-  for (const code of Object.keys(messages).sort()) {
-    const entry = messages[code];
+  for (const [code, entry] of Object.entries(messages)) {
     if (entry == null || typeof entry !== "object") continue;
     errorCodes[code] = {
       statusCode: entry.status_http,
@@ -165,11 +170,21 @@ async function fetchCloudErrorCodes() {
       description: entry.message_description,
     };
   }
+  for (const [code, entry] of Object.entries(apiV2Errors)) {
+    if (entry == null || typeof entry !== "object") continue;
+    errorCodes[code] = { statusCode: entry.status, title: entry.message, apiV2: true };
+  }
+
+  const sorted = Object.fromEntries(
+    Object.keys(errorCodes)
+      .sort()
+      .map((code) => [code, errorCodes[code]])
+  );
 
   writeFile(
     CLOUD_TARGET_DIR,
     CLOUD_ERROR_CODES_FILENAME,
-    `${JSON.stringify(errorCodes, null, 2)}\n`
+    `${JSON.stringify(sorted, null, 2)}\n`
   );
 }
 

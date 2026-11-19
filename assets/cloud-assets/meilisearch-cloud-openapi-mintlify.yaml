@@ -714,7 +714,7 @@ paths:
                 msVersion:
                   type: string
                   example: v1.54.0
-                  description: Name of an active Meilisearch version. Defaults to the latest version, also used when the name matches no active version.
+                  description: Name of an active Meilisearch version, as listed by `GET /meilisearch-versions`. Defaults to the latest version.
         required: true
   /api/v2/projects/{id}:
     parameters:
@@ -1508,7 +1508,7 @@ components:
       type: object
       properties:
         id:
-          description: Stripe price id (string) when the feature has a Stripe price, else the feature id (integer).
+          type: integer
         name:
           type: string
         kind:
@@ -1522,6 +1522,9 @@ components:
             - chat_token
             - bandwidth
             - backup
+        stripePriceId:
+          type: string
+          nullable: true
         enabled:
           type: boolean
         nickname:
@@ -1552,27 +1555,11 @@ components:
                 - up
                 - down
       required:
+        - id
         - name
         - kind
         - enabled
-    Plan:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        code:
-          type: string
-        features:
-          type: array
-          items:
-            $ref: '#/components/schemas/PlanFeature'
-      required:
-        - id
-        - name
-        - code
-        - features
+        - stripePriceId
     Resource:
       type: object
       properties:
@@ -1606,10 +1593,25 @@ components:
           type: number
           nullable: true
         fullPlan:
+          type: object
           nullable: true
           description: Plan and pricing of the resource. `null` when the resource has no public plan.
-          allOf:
-            - $ref: '#/components/schemas/Plan'
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            code:
+              type: string
+            features:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlanFeature'
+          required:
+            - id
+            - name
+            - code
+            - features
       required:
         - id
         - name
