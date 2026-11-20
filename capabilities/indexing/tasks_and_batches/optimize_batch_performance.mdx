@@ -55,7 +55,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Stores the position of each word in each searchable attribute. Used by the `wordPosition`, `attribute`, and `exactness` ranking rules. | If the position of words in attributes matters little for your relevancy, [disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#6-word-position) (`wordPosition.enabled: false`). |
+| Stores the position of each word in each searchable attribute. Used by the `wordPosition`, `attribute`, and `exactness` ranking rules. | If the position of words in attributes matters little for your relevancy, [disable word positions](/reference/api/settings/update-wordposition) (`wordPosition.enabled: false`). |
 
 ### `extracting word proximity` and `merging word proximity`
 
@@ -98,7 +98,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches. | - Disable [**prefix search**](/reference/api/settings/get-prefixsearch) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ <br /> - If `word prefix position docids` is slow, [disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#6-word-position) (`wordPosition.enabled: false`). |
+| Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches. | - Disable [**prefix search**](/reference/api/settings/get-prefixsearch) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ <br /> - If `word prefix position docids` is slow, [disable word positions](/reference/api/settings/update-wordposition) (`wordPosition.enabled: false`). |
 
 ### `post processing words > word fst`
 

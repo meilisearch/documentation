@@ -102,7 +102,7 @@ The trade-off is that multi-word queries like "dark knight" will rank documents 
 
 **Impact: high**
 
-The `wordPosition` ranking rule needs the position of every word in every searchable attribute. Computing these positions slows down indexing and increases the database size. If the position of words in attributes matters little for your relevancy, [disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#6-word-position). This also changes how the `attribute` and `exactness` ranking rules sort results.
+The `wordPosition` ranking rule needs the position of every word in every searchable attribute. Computing these positions slows down indexing and increases the database size. If the position of words in attributes matters little for your relevancy, [disable word positions](/reference/api/settings/update-wordposition). This also changes how the `attribute` and `exactness` ranking rules sort results.
 
 ## Lower max values per facet
 
