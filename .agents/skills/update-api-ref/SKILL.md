@@ -7,12 +7,12 @@ Update the API reference documentation from the OpenAPI spec.
 
 ## Steps
 
-1. **Fetch the latest release assets** (OpenAPI spec and error codes) from the Meilisearch repository:
+1. **Fetch the latest assets** (see [CONTRIBUTING.md](../../../CONTRIBUTING.md) for the token the Cloud assets need):
    ```
-   npm run fetch-meilisearch-release-assets
+   npm run fetch-assets
    ```
 
-2. **Generate the error codes page** (regenerates `reference/errors/error_codes.mdx` from the newly fetched `meilisearch-error-codes.json`):
+2. **Generate the error code lists** (injects the codes from the newly fetched `meilisearch-error-codes.json` and `meilisearch-cloud-error-codes.json` into `reference/errors.mdx` and `reference/management-api-errors.mdx`; it reports any Cloud error code that is not yet scoped to the Management API surface):
    ```
    npm run generate-error-codes
    ```

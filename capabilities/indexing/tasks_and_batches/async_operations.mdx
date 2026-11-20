@@ -186,7 +186,7 @@ Only `enqueued` and `processing` tasks can be canceled. Calling cancel on finish
 Task cancelation is itself an asynchronous operation that creates a `taskCancelation` task. Because cancelation is an **atomic transaction**, either all matched tasks are successfully canceled, or none are.
 
 <Warning>
-**`POST /tasks/cancel` requires at least one filter.** To prevent users from accidentally canceling every enqueued and processing task, Meilisearch rejects unfiltered cancel requests with the [`missing_task_filters`](/reference/errors/error_codes#missing_task_filters) error.
+**`POST /tasks/cancel` requires at least one filter.** To prevent users from accidentally canceling every enqueued and processing task, Meilisearch rejects unfiltered cancel requests with the [`missing_task_filters`](/reference/errors#missing_task_filters) error.
 </Warning>
 
 You can also cancel `taskCancelation` tasks themselves as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` tasks are processed in **reverse order**: the last one you enqueue is processed first.
@@ -316,4 +316,4 @@ Had the task failed, the response would have included a detailed `error` object:
 
 If the task had been [canceled](/reference/api/tasks/cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field.
 
-After a task has been [deleted](/reference/api/tasks/delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors/error_codes#task_not_found) error.
+After a task has been [deleted](/reference/api/tasks/delete-tasks), trying to access it returns a [`task_not_found`](/reference/errors#task_not_found) error.

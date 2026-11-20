@@ -1,0 +1,35 @@
+---
+title: Rate limit
+sidebarTitle: Rate limit
+description: How many requests the Management API accepts, and how to handle a rate-limited response.
+---
+
+The Management API limits the number of requests a client can send:
+
+| Limit                      | Applies to                                                       |
+| :------------------------- | :--------------------------------------------------------------- |
+| 30 requests per minute     | Each token                                                       |
+| 100 requests per minute    | Each IP address, for all Meilisearch Cloud API requests          |
+
+Requests count toward both limits. Several tokens used from the same IP address share the IP limit.
+
+## Rate-limited response
+
+Over a limit, the Management API answers `429 Too Many Requests` with the [`rate_limited`](/reference/management-api-errors#rate_limited) error code:
+
+```json
+{
+  "message": "Too many requests. Retry after the number of seconds in the `Retry-After` header.",
+  "code": "rate_limited",
+  "type": "invalid_request",
+  "link": "https://www.meilisearch.com/docs/reference/management-api-errors#rate_limited"
+}
+```
+
+The `Retry-After` response header gives the number of seconds to wait before retrying.
+
+## Stay under the limit
+
+- Use the [pagination](/reference/management-api/pagination) parameters to fetch up to 100 resources per request.
+- Cache data that rarely changes, such as regions, resources, and Meilisearch versions.
+- Do not retry a `429` response in a loop.
