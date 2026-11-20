@@ -943,7 +943,7 @@
         {
           "group": "Management API Routes",
           "openapi": {
-            "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.yaml",
+            "source": "assets/cloud-assets/meilisearch-cloud-openapi.yaml",
             "directory": "reference/management-api"
           }
         }

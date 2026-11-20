@@ -31,6 +31,8 @@ const GENERATED_END = "{/* generated:error-codes:end */}";
 // are kept only when they start with one of these prefixes, or when they are
 // listed in CLOUD_LEGACY_EXTRA_CODES below. Any new legacy code matching
 // neither list is reported at the end of the run so it can be triaged.
+// This filter is temporary: once every code the Management API returns is
+// migrated to `api_v2_errors` in meilisearch-cloud, document only that section.
 const CLOUD_CODE_PREFIXES = [
   "change_plan_",
   "organization_",
@@ -46,7 +48,6 @@ const CLOUD_LEGACY_EXTRA_CODES = ["user_not_entitled_to_free_trial", "user_not_v
 
 function isManagementApiCode(code, entry) {
   if (entry.apiV2) return true;
-  if (entry.status !== "error") return false;
   if (CLOUD_LEGACY_EXTRA_CODES.includes(code)) return true;
   return CLOUD_CODE_PREFIXES.some((prefix) => code.startsWith(prefix));
 }
@@ -75,7 +76,7 @@ function formatManagementCodes(errorCodes) {
 
   for (const [name, entry] of Object.entries(errorCodes)) {
     if (!isManagementApiCode(name, entry)) {
-      if (entry.status === "error") skipped.push(name);
+      skipped.push(name);
       continue;
     }
 
@@ -92,10 +93,6 @@ function formatManagementCodes(errorCodes) {
 
 // Replaces the generated block of a hand-written page, leaving its prose alone.
 function injectGeneratedCodes(targetPath, codesText) {
-  if (!fs.existsSync(targetPath)) {
-    throw new Error(`Target page not found: ${targetPath}`);
-  }
-
   const page = fs.readFileSync(targetPath, "utf8");
   const start = page.indexOf(GENERATED_START);
   const end = page.indexOf(GENERATED_END);
