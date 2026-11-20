@@ -16,7 +16,7 @@ This guide covers how to set up your environment and run the docs locally, rebui
 
 ## Technical requirements
 
-- **Node.js** 18+ (LTS recommended)
+- **Node.js** 20.17 or newer, but older than 25 (required by Mintlify)
 - **npm** (comes with Node.js)
 
 ## Install
@@ -38,7 +38,7 @@ To preview the documentation site and see your changes as you edit:
 1. Start the dev server:
 
 ```bash
-npx mintlify dev
+npx mint dev
 ```
 
 2. Open [http://localhost:3000](http://localhost:3000) in your browser. The preview updates automatically when you save MDX files.
@@ -83,6 +83,8 @@ npx mint broken-links
 | `npm run check-openapi-code-samples` | Checks the Mintlify OpenAPI file for missing cURL code samples per route. Use with `curl-check` or `info` (see script header). |
 | `npm run check-unused-sdk-samples` | Fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in the CLI and SDKs). |
 | `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the SDK side. |
+| `npm run check-broken-links` | Checks internal links in MDX files against local pages, OpenAPI-generated reference pages, and redirect sources. Runs from local files only. |
+| `npm run check-openapi-routes-coverage` | Checks that every route of the OpenAPI spec is listed in the API reference pages of `config/navigation.json`. Exits with error if not. |
 
 ## Code samples
 
