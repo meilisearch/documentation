@@ -12,6 +12,7 @@ This guide covers how to set up your environment and run the docs locally, rebui
 - [Tests](#tests)
 - [Code samples](#code-samples)
 - [OpenAPI Mintlify file](#openapi-mintlify-file)
+- [Management API reference](#management-api-reference)
 - [Deployment](#deployment)
 
 ## Technical requirements
@@ -105,7 +106,7 @@ This script reads the local [`.code-samples.meilisearch.yaml`](/.code-samples.me
 
 ## OpenAPI Mintlify file
 
-The API reference is built from a Mintlify-ready OpenAPI file that includes injected code samples and cleaned metadata.
+The Meilisearch API reference is built from a Mintlify-ready OpenAPI file that includes injected code samples and cleaned metadata.
 
 ### Where the base OpenAPI file comes from
 
