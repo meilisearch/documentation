@@ -7,7 +7,7 @@ Update the API reference documentation from the OpenAPI spec.
 
 ## Steps
 
-1. **Fetch the latest assets** (OpenAPI spec and error codes from the Meilisearch repository, and the OpenAPI spec and error messages from the private meilisearch-cloud repository; the latter two require `GITHUB_PAT` or `GH_TOKEN`):
+1. **Fetch the latest assets** (see [CONTRIBUTING.md](../../../CONTRIBUTING.md) for the token the Cloud assets need):
    ```
    npm run fetch-assets
    ```
@@ -17,10 +17,9 @@ Update the API reference documentation from the OpenAPI spec.
    npm run generate-error-codes
    ```
 
-3. **Generate the Mintlify-compatible OpenAPI files** (engine with code samples, Cloud without):
+3. **Generate the Mintlify-compatible OpenAPI file**:
    ```
-   npm run generate-mintlify-openapi-file -- --with-code-samples assets/engine-release-assets/meilisearch-openapi.json
-   npm run generate-mintlify-openapi-file -- assets/cloud-assets/meilisearch-cloud-openapi.yaml
+   npm run generate-mintlify-openapi-file
    ```
 
 4. **Check for new routes** that need coverage:

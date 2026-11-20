@@ -8,7 +8,7 @@
  * 2. The Meilisearch Cloud OpenAPI spec and error messages from the private
  *    meilisearch/meilisearch-cloud repository, written to assets/cloud-assets/.
  *
- * Token: set GITHUB_PAT or GH_TOKEN.
+ * Token: set GITHUB_PAT, GH_TOKEN or GITHUB_TOKEN.
  * - Optional for the release assets (higher API rate limits).
  * - Required for the Cloud assets (private repository). Without a token,
  *   the Cloud fetches are skipped with a warning.
@@ -43,7 +43,7 @@ const CLOUD_ERROR_CODES_URL =
   "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/config/locales/en.yml?ref=main";
 
 function getToken() {
-  return process.env.GITHUB_PAT || process.env.GH_TOKEN;
+  return process.env.GITHUB_PAT || process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
 }
 
 function getHeaders(extra = {}) {
@@ -66,9 +66,7 @@ async function request(url, { asJson = false, accept, errorContext = "Request" }
 }
 
 function writeFile(dir, filename, content) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+  fs.mkdirSync(dir, { recursive: true });
   const targetPath = path.join(dir, filename);
   fs.writeFileSync(targetPath, content, "utf8");
   console.log(`Written to ${targetPath}`);
@@ -85,44 +83,47 @@ async function fetchReleaseAssets() {
   console.log(`Latest release: ${tag}`);
 
   const assetNames = release.assets?.map((a) => a.name) ?? [];
-  for (const filename of RELEASE_ASSET_NAMES) {
+  const assets = RELEASE_ASSET_NAMES.map((filename) => {
     const asset = release.assets?.find((a) => a.name === filename);
     if (!asset) {
       throw new Error(
         `Asset "${filename}" not found in release ${tag}. Available: ${assetNames.join(", ") || "none"}`
       );
     }
+    return asset;
+  });
 
-    console.log(`Downloading ${filename}...`);
-    const content = await request(asset.browser_download_url, {
-      errorContext: "Download asset",
-    });
-    writeFile(RELEASE_TARGET_DIR, filename, content);
+  // Download everything before writing, so a failed download leaves no
+  // half-updated set of release assets.
+  const contents = await Promise.all(
+    assets.map((asset) => request(asset.browser_download_url, { errorContext: "Download asset" }))
+  );
+  assets.forEach((asset, i) => writeFile(RELEASE_TARGET_DIR, asset.name, contents[i]));
+}
+
+// Returns the raw content and the parsed document of a YAML file of the
+// private meilisearch-cloud repository.
+async function fetchCloudYaml(url, label) {
+  console.log(`Fetching ${label}...`);
+  const content = await request(url, {
+    accept: "application/vnd.github.raw+json",
+    errorContext: `Download ${label}`,
+  });
+  try {
+    return { content, document: yaml.load(content) };
+  } catch (err) {
+    throw new Error(`${label} is not valid YAML: ${err.message}`);
   }
 }
 
 async function fetchCloudOpenapi() {
-  if (!getToken()) {
-    console.warn(
-      "Warning: no GITHUB_PAT or GH_TOKEN set. Skipping the Meilisearch Cloud OpenAPI spec (private repository)."
-    );
-    return;
-  }
+  const { content, document: spec } = await fetchCloudYaml(
+    CLOUD_OPENAPI_URL,
+    "Meilisearch Cloud OpenAPI spec"
+  );
 
-  console.log("Fetching Meilisearch Cloud OpenAPI spec...");
-  const content = await request(CLOUD_OPENAPI_URL, {
-    accept: "application/vnd.github.raw+json",
-    errorContext: "Download Cloud OpenAPI spec",
-  });
-
-  // Sanity check: make sure the fetched content is a valid OpenAPI YAML document
-  // before replacing the local copy.
-  let spec;
-  try {
-    spec = yaml.load(content);
-  } catch (err) {
-    throw new Error(`Cloud OpenAPI spec is not valid YAML: ${err.message}`);
-  }
+  // Make sure the fetched content is an OpenAPI document before replacing the
+  // local copy.
   if (spec == null || typeof spec !== "object" || !spec.openapi || !spec.paths) {
     throw new Error(
       "Cloud OpenAPI spec does not look like an OpenAPI document (missing 'openapi' or 'paths')."
@@ -133,20 +134,10 @@ async function fetchCloudOpenapi() {
 }
 
 async function fetchCloudErrorCodes() {
-  if (!getToken()) return;
-
-  console.log("Fetching Meilisearch Cloud error messages...");
-  const content = await request(CLOUD_ERROR_CODES_URL, {
-    accept: "application/vnd.github.raw+json",
-    errorContext: "Download Cloud error messages",
-  });
-
-  let locale;
-  try {
-    locale = yaml.load(content);
-  } catch (err) {
-    throw new Error(`Cloud locale file is not valid YAML: ${err.message}`);
-  }
+  const { document: locale } = await fetchCloudYaml(
+    CLOUD_ERROR_CODES_URL,
+    "Meilisearch Cloud locale file"
+  );
 
   const messages = locale?.en?.messages;
   if (messages == null || typeof messages !== "object") {
@@ -157,15 +148,15 @@ async function fetchCloudErrorCodes() {
     throw new Error("Cloud locale file has no 'en.api_v2_errors' section.");
   }
 
-  // Only keep the fields describing the response: the locale file is a Rails
-  // i18n file and may grow other keys over time. An `api_v2_errors` entry wins
-  // over the legacy one with the same code, as the API does.
+  // Only keep the errors and the fields describing the response: the locale
+  // file is a Rails i18n file and may grow other keys over time. An
+  // `api_v2_errors` entry wins over the legacy one with the same code, as the
+  // API does.
   const errorCodes = {};
   for (const [code, entry] of Object.entries(messages)) {
-    if (entry == null || typeof entry !== "object") continue;
+    if (entry?.status !== "error") continue;
     errorCodes[code] = {
       statusCode: entry.status_http,
-      status: entry.status,
       title: entry.message_title,
       description: entry.message_description,
     };
@@ -189,9 +180,15 @@ async function fetchCloudErrorCodes() {
 }
 
 async function main() {
-  await fetchReleaseAssets();
-  await fetchCloudOpenapi();
-  await fetchCloudErrorCodes();
+  const tasks = [fetchReleaseAssets()];
+  if (getToken()) {
+    tasks.push(fetchCloudOpenapi(), fetchCloudErrorCodes());
+  } else {
+    console.warn(
+      "Warning: no GITHUB_PAT, GH_TOKEN or GITHUB_TOKEN set. Skipping the Meilisearch Cloud assets (private repository)."
+    );
+  }
+  await Promise.all(tasks);
 }
 
 main().catch((err) => {
