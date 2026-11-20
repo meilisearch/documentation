@@ -118,7 +118,7 @@ If upgrading does not resolve the issue, the Meilisearch team can help. Enterpri
 |---------|-------------|-----|
 | High TTS across all percentiles | Large document batches or many indexed attributes | Reduce batch size, or reduce the number of `filterableAttributes` and `sortableAttributes` |
 | `merging words` step slow | Large inverted index update | Reduce the number of `searchableAttributes` or batch size |
-| `word position docids` or `word prefix position docids` steps slow | Computing the position of every word in searchable attributes | [Disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#disable-word-positions) if they matter little for your relevancy |
+| `word position docids` or `word prefix position docids` steps slow | Computing the position of every word in searchable attributes | [Disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#6-word-position) if they matter little for your relevancy |
 | `writing embeddings to database` slow | High vector dimensions or large batch | Reduce batch size; consider a lower-dimension model |
 | `embedderRequests.failed` non-zero | Embedder API errors or rate limits | Check your embedder configuration and API key validity |
 | High `writeChannelCongestion.blocking_attempts` | Concurrent write contention | Avoid concurrent indexing operations on the same index |

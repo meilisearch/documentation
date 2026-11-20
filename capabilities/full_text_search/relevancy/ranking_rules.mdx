@@ -62,8 +62,6 @@ You cannot use `attribute` together with `attributeRank` or `wordPosition`. If y
 
 For most use-cases, we recommend using `attributeRank` and `wordPosition` separately. This gives you more control over result ordering by allowing you to place other ranking rules (like `sort` or custom ranking rules) between them.
 
-`attribute` behaves differently when you [disable word positions](#disable-word-positions).
-
 ## 4. Attribute rank
 
 Results are sorted according to the **[attribute ranking order](/capabilities/full_text_search/relevancy/attribute_ranking_order)**. Returns documents that contain query terms in more important attributes first.
@@ -84,23 +82,11 @@ Results are sorted by the **position of query terms within the attributes**. Ret
 
 This rule evaluates only the position of matched words within attributes and does not consider the attribute ranking order.
 
-### Disable word positions
-
-To use word positions at search time, Meilisearch stores the position of every word in every searchable attribute. Computing these positions can take a large part of indexing time. If the position of words in attributes matters little for your relevancy, set the `wordPosition.enabled` index setting to `false` with the [update settings endpoint](/reference/api/settings/update-all-settings). Indexing is faster and the database is smaller.
-
-When word positions are disabled:
-
-- Meilisearch skips the `wordPosition` ranking rule. Remove it from your ranking rules
-- The `attribute` ranking rule only sorts results by attribute ranking order, like `attributeRank`
-- The `exactness` ranking rule cannot check if the content of an attribute exactly matches the query words
-
-Changing `wordPosition.enabled` triggers a full reindex of the searchable attributes.
+[It is possible to disable word positions.](/reference/api/settings/update-all-settings) This may significantly improve indexing performance. Meilisearch then skips this ranking rule, and the `attribute` and `exactness` ranking rules become less precise.
 
 ## 7. Exactness
 
 Results are sorted by **the similarity of the matched words with the query words**. Returns documents that contain exactly the same terms as the ones queried first.
-
-This rule behaves differently when you [disable word positions](#disable-word-positions).
 
 ## Ordering ranking rules
 
