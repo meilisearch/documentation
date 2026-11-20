@@ -51,6 +51,12 @@ Focus on the **longest-running steps** and investigate which index settings or d
 |--------------|--------------|
 | Tokenizes text and builds the inverted index. | Ensure the [searchable attributes](/reference/api/settings/get-searchableattributes) list only includes the fields you want to be checked for query word matches. |
 
+### `merging word caches > word position docids`
+
+| Description | Optimization |
+|--------------|--------------|
+| Stores the position of each word in each searchable attribute. Used by the `wordPosition`, `attribute`, and `exactness` ranking rules. | If the position of words in attributes matters little for your relevancy, [disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#disable-word-positions) (`wordPosition.enabled: false`). |
+
 ### `extracting word proximity` and `merging word proximity`
 
 | Description | Optimization |
@@ -92,7 +98,7 @@ Focus on the **longest-running steps** and investigate which index settings or d
 
 | Description | Optimization |
 |--------------|--------------|
-| | Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches.| Disable [**prefix search**](/reference/api/settings/get-prefixsearch) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ |
+| Builds prefix data for autocomplete. Allows matching documents that begin with a specific query term, instead of only exact matches. | - Disable [**prefix search**](/reference/api/settings/get-prefixsearch) (`prefixSearch: disabled`). _This can severely impact search result relevancy._ <br /> - If `word prefix position docids` is slow, [disable word positions](/capabilities/full_text_search/relevancy/ranking_rules#disable-word-positions) (`wordPosition.enabled: false`). |
 
 ### `post processing words > word fst`
 
