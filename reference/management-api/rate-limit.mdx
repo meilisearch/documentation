@@ -26,10 +26,10 @@ Over a limit, the Management API answers `429 Too Many Requests` with the [`rate
 }
 ```
 
-The `Retry-After` response header gives the number of seconds to wait before retrying. Wait at least this long before you send the request again.
+The `Retry-After` response header gives the number of seconds to wait before retrying.
 
 ## Stay under the limit
 
 - Use the [pagination](/reference/management-api/pagination) parameters to fetch up to 100 resources per request.
 - Cache data that rarely changes, such as regions, resources, and Meilisearch versions.
-- Retry `429` responses only after the `Retry-After` delay. Do not retry in a loop.
+- Do not retry a `429` response in a loop.
