@@ -5,10 +5,18 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
 
-const RELEASE_ASSETS_DIR = path.join(REPO_ROOT, "assets", "engine-release-assets");
-const CLOUD_ASSETS_DIR = path.join(REPO_ROOT, "assets", "cloud-assets");
-const SOURCE_ERROR_CODES = path.join(RELEASE_ASSETS_DIR, "meilisearch-error-codes.json");
-const SOURCE_CLOUD_ERROR_CODES = path.join(CLOUD_ASSETS_DIR, "meilisearch-cloud-error-codes.json");
+const SOURCE_ERROR_CODES = path.join(
+  REPO_ROOT,
+  "assets",
+  "engine-release-assets",
+  "meilisearch-error-codes.json"
+);
+const SOURCE_CLOUD_ERROR_CODES = path.join(
+  REPO_ROOT,
+  "assets",
+  "cloud-assets",
+  "meilisearch-cloud-error-codes.json"
+);
 // The two error pages are hand-written: the generated code lists are injected
 // between the markers below, so the prose around them stays editable and the
 // `#<code>` anchors the APIs link to live in the page itself.
@@ -109,9 +117,6 @@ function injectGeneratedCodes(targetPath, codesText) {
 }
 
 async function main() {
-  if (!fs.existsSync(SOURCE_ERROR_CODES)) {
-    throw new Error(`Source error codes file not found: ${SOURCE_ERROR_CODES}`);
-  }
   if (!fs.existsSync(SOURCE_CLOUD_ERROR_CODES)) {
     throw new Error(
       `Source Cloud error codes file not found: ${SOURCE_CLOUD_ERROR_CODES}. Run "npm run fetch-assets" with a GitHub token first.`

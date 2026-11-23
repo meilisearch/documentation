@@ -8,7 +8,7 @@
  * 2. The Meilisearch Cloud OpenAPI spec and error messages from the private
  *    meilisearch/meilisearch-cloud repository, written to assets/cloud-assets/.
  *
- * Token: set GITHUB_PAT, GH_TOKEN or GITHUB_TOKEN.
+ * Token: set GITHUB_TOKEN, GITHUB_PAT or GH_TOKEN.
  * - Optional for the release assets (higher API rate limits).
  * - Required for the Cloud assets (private repository). Without a token,
  *   the Cloud fetches are skipped with a warning.
@@ -43,18 +43,14 @@ const CLOUD_ERROR_CODES_URL =
   "https://api.github.com/repos/meilisearch/meilisearch-cloud/contents/api/config/locales/en.yml?ref=main";
 
 function getToken() {
-  return process.env.GITHUB_PAT || process.env.GH_TOKEN || process.env.GITHUB_TOKEN;
+  return process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || process.env.GH_TOKEN;
 }
 
-function getHeaders(extra = {}) {
+async function request(url, { accept, errorContext = "Request" } = {}) {
   const token = getToken();
-  const headers = { ...extra };
+  const headers = {};
+  if (accept) headers.Accept = accept;
   if (token) headers.Authorization = `Bearer ${token}`;
-  return headers;
-}
-
-async function request(url, { asJson = false, accept, errorContext = "Request" } = {}) {
-  const headers = getHeaders(accept ? { Accept: accept } : {});
   const res = await fetch(url, { headers });
   if (!res.ok) {
     const body = await res.text();
@@ -62,7 +58,7 @@ async function request(url, { asJson = false, accept, errorContext = "Request" }
       `${errorContext} failed: ${res.status} ${res.statusText}${body ? `\n${body}` : ""}`
     );
   }
-  return asJson ? res.json() : res.text();
+  return res.text();
 }
 
 function writeFile(dir, filename, content) {
@@ -74,20 +70,20 @@ function writeFile(dir, filename, content) {
 
 async function fetchReleaseAssets() {
   console.log("Fetching latest Meilisearch release...");
-  const release = await request(GITHUB_API_LATEST, {
-    asJson: true,
-    accept: "application/vnd.github+json",
-    errorContext: "GitHub API",
-  });
+  const release = JSON.parse(
+    await request(GITHUB_API_LATEST, {
+      accept: "application/vnd.github+json",
+      errorContext: "GitHub API",
+    })
+  );
   const tag = release.tag_name;
   console.log(`Latest release: ${tag}`);
 
-  const assetNames = release.assets?.map((a) => a.name) ?? [];
   const assets = RELEASE_ASSET_NAMES.map((filename) => {
     const asset = release.assets?.find((a) => a.name === filename);
     if (!asset) {
       throw new Error(
-        `Asset "${filename}" not found in release ${tag}. Available: ${assetNames.join(", ") || "none"}`
+        `Asset "${filename}" not found in release ${tag}. Available: ${release.assets?.map((a) => a.name).join(", ") || "none"}`
       );
     }
     return asset;
@@ -139,14 +135,12 @@ async function fetchCloudErrorCodes() {
     "Meilisearch Cloud locale file"
   );
 
-  const messages = locale?.en?.messages;
-  if (messages == null || typeof messages !== "object") {
-    throw new Error("Cloud locale file has no 'en.messages' section.");
+  for (const section of ["messages", "api_v2_errors"]) {
+    if (locale?.en?.[section] == null || typeof locale.en[section] !== "object") {
+      throw new Error(`Cloud locale file has no 'en.${section}' section.`);
+    }
   }
-  const apiV2Errors = locale?.en?.api_v2_errors;
-  if (apiV2Errors == null || typeof apiV2Errors !== "object") {
-    throw new Error("Cloud locale file has no 'en.api_v2_errors' section.");
-  }
+  const { messages, api_v2_errors: apiV2Errors } = locale.en;
 
   // Only keep the errors and the fields describing the response: the locale
   // file is a Rails i18n file and may grow other keys over time. An
@@ -185,7 +179,7 @@ async function main() {
     tasks.push(fetchCloudOpenapi(), fetchCloudErrorCodes());
   } else {
     console.warn(
-      "Warning: no GITHUB_PAT, GH_TOKEN or GITHUB_TOKEN set. Skipping the Meilisearch Cloud assets (private repository)."
+      "Warning: no GITHUB_TOKEN, GITHUB_PAT or GH_TOKEN set. Skipping the Meilisearch Cloud assets (private repository)."
     );
   }
   await Promise.all(tasks);

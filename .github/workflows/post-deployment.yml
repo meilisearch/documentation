@@ -37,27 +37,8 @@ jobs:
       - name: Generate code sample snippets
         run: npm run generate-code-sample-snippets-file
 
-      - name: Check for changes
-        id: changes
-        run: |
-          if git diff --quiet snippets/; then
-            echo "has_changes=false" >> "$GITHUB_ENV"
-          else
-            echo "has_changes=true" >> "$GITHUB_ENV"
-          fi
-
       - name: Commit changes
-        run: |
-          if [[ $has_changes == "true" ]]; then
-            echo "There are changes in the Git working directory."
-            git config user.name "meili-bot"
-            git config user.email "robot@meilisearch.com"
-            git add snippets/
-            git commit -m "[AUTOMATION POST DEPLOYMENT] Update code samples"
-            git push origin main
-          else
-            echo "No changes in the Git working directory."
-          fi
+        run: scripts/commit-changed-files.sh snippets/
 
   # Fetches the assets the documentation is generated from:
   # - the Meilisearch release assets (OpenAPI spec and error codes files)

@@ -357,10 +357,6 @@ async function main() {
   const codeSamples = await fetchAllCodeSamples({ debug });
 
   for (const { source, target, keepSample } of OPENAPI_FILES) {
-    if (!fs.existsSync(source)) {
-      throw new Error(`Source OpenAPI file not found: ${source}`);
-    }
-
     console.log(`Reading ${source}...`);
     const content = fs.readFileSync(source, "utf8");
     const openapi = source.endsWith(".json") ? JSON.parse(content) : yaml.load(content);
