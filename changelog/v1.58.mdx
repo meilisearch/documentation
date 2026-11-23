@@ -1,0 +1,25 @@
+---
+title: "Meilisearch v1.58 release notes"
+sidebarTitle: "v1.58"
+description: "Released November 23, 2026"
+---
+
+## New Features
+
+### Word Position Control
+
+Introduce a new `wordPosition.enabled` parameter to control whether word positions are computed when indexing documents. Computing word positions can be time-consuming, so disabling this feature can significantly speed up indexing.
+
+**Important considerations when disabling word positions:**
+- The `wordPosition` ranking rule will be skipped. We recommend removing this ranking rule from your ranking rules list.
+- The `Attribute` ranking rule, which is a compound of `AttributeRank` and `wordPosition`, will have `wordPosition` skipped.
+- The `Exactness` ranking rule will be unable to perfectly match field content with query words.
+
+## Improvements
+
+### Typo Tolerance Concatenation
+
+Improved support for concatenation in typo tolerance. Query matches are now scored more fairly when words can be concatenated. For example, with the query `spider man`, the matches `sider man` and `spiderman` are now considered equivalent, whereas previously `sider man` was incorrectly ranked higher.
+
+[Find more information on GitHub](https://github.com/meilisearch/meilisearch/releases/tag/v1.58.0)
+
