@@ -11,7 +11,7 @@
       "name": "MIT",
       "identifier": "MIT"
     },
-    "version": "1.57.0"
+    "version": "1.58.0"
   },
   "servers": [
     {
@@ -4296,6 +4296,9 @@
                       "title"
                     ],
                     "disableOnNumbers": false
+                  },
+                  "wordPosition": {
+                    "enabled": true
                   },
                   "faceting": {
                     "maxValuesPerFacet": 100,
@@ -10336,6 +10339,259 @@
         ]
       }
     },
+    "/indexes/{index_uid}/settings/word-position": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Get wordPosition",
+        "description": "Returns the current value of the `wordPosition` setting for the index.",
+        "operationId": "getwordPosition",
+        "parameters": [
+          {
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the current value of the `wordPosition` setting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WordPositionSettings"
+                },
+                "example": {}
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.get",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Reset wordPosition",
+        "description": "Resets the `wordPosition` setting to its default value.",
+        "operationId": "deletewordPosition",
+        "parameters": [
+          {
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Task successfully enqueued.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": "movies",
+                  "status": "enqueued",
+                  "type": "settingsUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.update",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Update wordPosition",
+        "description": "Updates the `wordPosition` setting for the index.",
+        "operationId": "patchwordPosition",
+        "parameters": [
+          {
+            "name": "index_uid",
+            "in": "path",
+            "description": "Unique identifier of the index.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "movies"
+          }
+        ],
+        "requestBody": {
+          "description": "The new value for the `wordPosition` setting. Send `null` to reset it to its default value.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WordPositionSettings",
+                "example": {
+                  "enabled": true
+                }
+              },
+              "example": {
+                "enabled": true
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Task successfully enqueued.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummarizedTaskView"
+                },
+                "example": {
+                  "taskUid": 147,
+                  "indexUid": "movies",
+                  "status": "enqueued",
+                  "type": "settingsUpdate",
+                  "enqueuedAt": "2024-08-08T17:05:55.791772Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The authorization header is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "The Authorization header is missing. It must use the bearer authorization method.",
+                  "code": "missing_authorization_header",
+                  "type": "auth",
+                  "link": "https://docs.meilisearch.com/errors#missing_authorization_header"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Index not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseError"
+                },
+                "example": {
+                  "message": "Index `movies` not found.",
+                  "code": "index_not_found",
+                  "type": "invalid_request",
+                  "link": "https://docs.meilisearch.com/errors#index_not_found"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [
+              "settings.update",
+              "settings.*",
+              "*"
+            ]
+          }
+        ]
+      }
+    },
     "/indexes/{index_uid}/similar": {
       "get": {
         "tags": [
@@ -15298,6 +15554,7 @@
           "invalid_document_use_network",
           "invalid_document_retrieve",
           "invalid_document_geo_field",
+          "unsupported_setting_for_legacy_indexer",
           "invalid_document_geojson_field",
           "invalid_header_value",
           "invalid_vector_dimensions",
@@ -15405,6 +15662,7 @@
           "invalid_settings_dictionary",
           "invalid_settings_synonyms",
           "invalid_settings_typo_tolerance",
+          "invalid_settings_word_position",
           "invalid_settings_localized_attributes",
           "invalid_state",
           "invalid_stats_show_internal_database_sizes",
@@ -21648,6 +21906,20 @@
               "disableOnNumbers": false
             }
           },
+          "wordPosition": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/WordPositionSettings",
+                "description": "[Word position](https://www.meilisearch.com/docs/learn/relevancy/word_pisition_settings): enabled/disabled."
+              }
+            ],
+            "default": {
+              "enabled": true
+            }
+          },
           "faceting": {
             "oneOf": [
               {
@@ -22007,6 +22279,20 @@
               "disableOnWords": [],
               "disableOnAttributes": [],
               "disableOnNumbers": false
+            }
+          },
+          "wordPosition": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/WordPositionSettings",
+                "description": "[Word position](https://www.meilisearch.com/docs/learn/relevancy/word_pisition_settings): enabled/disabled."
+              }
+            ],
+            "default": {
+              "enabled": true
             }
           },
           "faceting": {
@@ -22970,6 +23256,21 @@
           }
         ],
         "description": "Webhook object with metadata and redacted authorization headers."
+      },
+      "WordPositionSettings": {
+        "type": "object",
+        "description": "Word position: how position of words in fields are handled.",
+        "properties": {
+          "enabled": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "When true, the position of words in documents fields is taken into account.",
+            "default": true,
+            "example": true
+          }
+        }
       },
       "u32": {
         "type": "integer",
