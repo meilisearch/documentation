@@ -4,9 +4,9 @@
  *
  * Collects code sample keys from doc imports that start with "CodeSamples"
  * (e.g. "import CodeSamplesTenantTokenGuideSearchSdk1 from '...'"), then
- * compares with each SDK's .code-samples.meilisearch.yaml (fetched from GitHub).
+ * compares with each integration's (CLI and SDKs) .code-samples.meilisearch.yaml (fetched from GitHub).
  *
- * Lists, per SDK, which imported sample keys are missing on the SDK side.
+ * Lists, per integration, which imported sample keys are missing on the integration side.
  */
 
 import fs from 'fs';
@@ -14,7 +14,7 @@ import path from 'path';
 import * as yaml from 'js-yaml';
 import fetch from 'node-fetch';
 
-const SDK = [
+const INTEGRATIONS = [
   { label: 'CLI', project: 'cli' },
   { label: 'JS', project: 'meilisearch-js' },
   { label: 'Python', project: 'meilisearch-python' },
@@ -28,8 +28,8 @@ const SDK = [
   { label: 'Dart', project: 'meilisearch-dart' },
 ];
 
-/** Keys that are not expected in SDKs (e.g. no-SDK / curl-only samples). Never reported as missing. */
-const NOT_MISSING_IN_SDK = new Set(['tenant_token_guide_search_no_sdk_1']);
+/** Keys that are not expected in integrations (e.g. no-SDK / curl-only samples). Never reported as missing. */
+const NOT_MISSING_IN_INTEGRATIONS = new Set(['tenant_token_guide_search_no_sdk_1']);
 
 /**
  * Convert a CodeSamples* component name to the YAML key (snake_case).
@@ -112,49 +112,49 @@ console.log(
   `Doc imports (CodeSamples*) reference ${expectedKeys.length} code sample key(s).\n`
 );
 
-// Per-sample tracking: which SDKs are missing each sample
+// Per-sample tracking: which integrations are missing each sample
 const missingByKey = new Map();
 
-for (const sdk of SDK) {
-  const url = `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/.code-samples.meilisearch.yaml`;
+for (const integration of INTEGRATIONS) {
+  const url = `https://raw.githubusercontent.com/meilisearch/${integration.project}/main/.code-samples.meilisearch.yaml`;
 
   let remoteSamples;
   try {
     remoteSamples = await fetchYaml(url);
   } catch (err) {
     console.warn(
-      `⚠ Could not fetch samples for ${sdk.label} (${sdk.project}): ${err.message}`
+      `⚠ Could not fetch samples for ${integration.label} (${integration.project}): ${err.message}`
     );
     continue;
   }
 
   const remoteKeys = new Set(Object.keys(remoteSamples));
   const missing = expectedKeys.filter(
-    (key) => !NOT_MISSING_IN_SDK.has(key) && !remoteKeys.has(key)
+    (key) => !NOT_MISSING_IN_INTEGRATIONS.has(key) && !remoteKeys.has(key)
   );
 
   if (missing.length > 0) {
     console.log(
-      `${sdk.label} (${sdk.project}): ${missing.length} missing sample(s)`
+      `${integration.label} (${integration.project}): ${missing.length} missing sample(s)`
     );
     for (const key of missing) {
       console.log(`  - ${key}`);
       if (!missingByKey.has(key)) missingByKey.set(key, []);
-      missingByKey.get(key).push(sdk.label);
+      missingByKey.get(key).push(integration.label);
     }
     console.log('');
   } else {
     console.log(
-      `${sdk.label} (${sdk.project}): all samples present`
+      `${integration.label} (${integration.project}): all samples present`
     );
   }
 }
 
-// Summary: samples missing per SDK count
+// Summary: samples missing per integration count
 if (missingByKey.size > 0) {
-  console.log('\n--- Summary: samples missing and which SDKs lack them ---\n');
-  for (const [key, sdks] of [...missingByKey.entries()].sort()) {
-    console.log(`${key}: missing in ${sdks.join(', ')}`);
+  console.log('\n--- Summary: samples missing and which integrations lack them ---\n');
+  for (const [key, integrations] of [...missingByKey.entries()].sort()) {
+    console.log(`${key}: missing in ${integrations.join(', ')}`);
   }
 }
 

@@ -28,7 +28,7 @@ Done when each new key is in that home.
 
 ## Generate
 
-Run `npm run generate-code-sample-snippets-file` when a key was added or its curl changed. The script rewrites every `code_samples_*.mdx` under `snippets/generated-code-samples/` and fetches SDK samples from GitHub. Leave those files as the script wrote them. When a key was added, run `npm run check-missing-sdk-samples` (informational, never fails) and name the SDKs it lists as follow-up.
+Run `npm run generate-code-sample-snippets-file` when a key was added or its curl changed. The script rewrites every `code_samples_*.mdx` under `snippets/generated-code-samples/` and fetches SDK samples from GitHub. Leave those files as the script wrote them. When a key was added, run `npm run check-missing-integration-samples` (informational, never fails) and name the integrations (CLI and SDKs) it lists as follow-up.
 
 Done when `code_samples_<key>.mdx` exists for each key this change mounts, and the SDKs missing each new key are named as follow-up.
 

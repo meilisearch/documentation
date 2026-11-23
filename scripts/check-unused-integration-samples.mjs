@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * For each SDK, fetches its .code-samples.meilisearch.yaml from GitHub and
+ * For each integration (CLI and SDKs), fetches its .code-samples.meilisearch.yaml from GitHub and
  * checks if it contains sample keys that are neither in the local
  * .code-samples.meilisearch.yaml nor used in the docs as a snippet.
  *
@@ -8,9 +8,9 @@
  * - present in the local .code-samples.meilisearch.yaml, OR
  * - referenced in the documentation (import or path to code_samples_<key>.mdx).
  *
- * Samples that are unused can be removed from the SDKs.
+ * Samples that are unused can be removed from the integrations.
  *
- * Exits with code 1 if any unused SDK samples are found.
+ * Exits with code 1 if any unused integration samples are found.
  */
 
 import fs from 'fs';
@@ -18,7 +18,7 @@ import path from 'path';
 import * as yaml from 'js-yaml';
 import fetch from 'node-fetch';
 
-const SDK = [
+const INTEGRATIONS = [
   { label: 'CLI', project: 'cli' },
   { label: 'JS', project: 'meilisearch-js' },
   { label: 'Python', project: 'meilisearch-python' },
@@ -83,14 +83,14 @@ async function fetchYaml(url) {
 
 let hasUnused = false;
 
-for (const sdk of SDK) {
-  const url = `https://raw.githubusercontent.com/meilisearch/${sdk.project}/main/.code-samples.meilisearch.yaml`;
+for (const integration of INTEGRATIONS) {
+  const url = `https://raw.githubusercontent.com/meilisearch/${integration.project}/main/.code-samples.meilisearch.yaml`;
 
   let remoteSamples;
   try {
     remoteSamples = await fetchYaml(url);
   } catch (err) {
-    console.warn(`⚠ Could not fetch samples for ${sdk.label} (${sdk.project}): ${err.message}`);
+    console.warn(`⚠ Could not fetch samples for ${integration.label} (${integration.project}): ${err.message}`);
     continue;
   }
 
@@ -100,7 +100,7 @@ for (const sdk of SDK) {
   if (unused.length > 0) {
     hasUnused = true;
     console.error(
-      `\n${sdk.label} (${sdk.project}): ${unused.length} unused sample(s) (not in local .code-samples.meilisearch.yaml nor referenced as snippet in docs):`
+      `\n${integration.label} (${integration.project}): ${unused.length} unused sample(s) (not in local .code-samples.meilisearch.yaml nor referenced as snippet in docs):`
     );
     for (const key of unused.sort()) {
       console.error(`  - ${key}`);
@@ -110,13 +110,13 @@ for (const sdk of SDK) {
 
 if (!hasUnused) {
   console.log(
-    'OK: All SDK code samples are used (in local .code-samples.meilisearch.yaml or referenced as snippet in docs).'
+    'OK: All integration code samples are used (in local .code-samples.meilisearch.yaml or referenced as snippet in docs).'
   );
   process.exit(0);
 }
 
 console.error(
-  '\nThe samples listed above exist in SDK repos but are neither in the local ' +
-    '.code-samples.meilisearch.yaml nor referenced as snippets in the docs. They can be removed from the SDKs.'
+  '\nThe samples listed above exist in integration repos but are neither in the local ' +
+    '.code-samples.meilisearch.yaml nor referenced as snippets in the docs. They can be removed from the integrations.'
 );
 process.exit(1);

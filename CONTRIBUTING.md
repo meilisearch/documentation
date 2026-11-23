@@ -81,8 +81,8 @@ npx mint broken-links
 |--------|----------------|
 | `npm run check-code-samples-usage` | Ensures every entry in `.code-samples.meilisearch.yaml` is either mapped to an OpenAPI route or used in an MDX snippet. Exits with error if not. |
 | `npm run check-openapi-code-samples` | Checks the Mintlify OpenAPI file for missing cURL code samples per route. Use with `curl-check` or `info` (see script header). |
-| `npm run check-unused-sdk-samples` | Fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in the CLI and SDKs). |
-| `npm run check-missing-sdk-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the SDK side. |
+| `npm run check-unused-integration-samples` | Fetches the CLI’s and each SDK’s `.code-samples.meilisearch.yaml` and reports samples that are not used in this repo (candidates for removal in the CLI and SDKs). |
+| `npm run check-missing-integration-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the integration side. |
 | `npm run check-broken-links` | Checks internal links in MDX files against local pages, OpenAPI-generated reference pages, and redirect sources. Runs from local files only. |
 | `npm run check-openapi-routes-coverage` | Checks that every route of the OpenAPI spec is listed in the API reference pages of `config/navigation.json`. Exits with error if not. |
 
