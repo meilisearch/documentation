@@ -15,12 +15,6 @@ meili search \
   --data '{"sort":["_geoPoint(48.8561446,2.2978204):asc"]}'
 ```
 
-```javascript JS
-client.index('restaurants').search('', {
-  sort: ['_geoPoint(48.8561446, 2.2978204):asc'],
-})
-```
-
 ```python Python
 client.index('restaurants').search('', {
   'sort': ['_geoPoint(48.8561446,2.2978204):asc']

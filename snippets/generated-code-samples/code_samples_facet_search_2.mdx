@@ -19,14 +19,6 @@ meili settings update \
   --faceting '{"sortFacetValuesBy":{"genres":"count"}}'
 ```
 
-```javascript JS
-client.index('books').updateFaceting({
-  sortFacetValuesBy: {
-    genres: 'count'
-  }
-})
-```
-
 ```python Python
 client.index('books').update_faceting_settings({ 'sortFacetValuesBy': { 'genres': 'count' } })
 ```

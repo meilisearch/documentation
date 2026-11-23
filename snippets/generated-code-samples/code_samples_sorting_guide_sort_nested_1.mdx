@@ -18,12 +18,6 @@ meili search \
   --q 'science fiction' --sort rating.users:asc
 ```
 
-```javascript JS
-client.index('books').search('science fiction', {
-  'sort': ['rating.users:asc'],
-})
-```
-
 ```python Python
 client.index('books').search('science fiction', {
   'sort': ['rating.users:asc']

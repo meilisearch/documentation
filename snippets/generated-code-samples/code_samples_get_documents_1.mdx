@@ -13,14 +13,6 @@ meili document list \
   --limit 2 --filter genres=action
 ```
 
-```javascript JS
-client.index('movies').getDocuments({
-  limit: 2,
-  filter: 'genres = action',
-  sort: ['release_date:desc']
-})
-```
-
 ```python Python
 client.index('movies').get_documents({
   'limit':2, 'filter': 'genres=action',

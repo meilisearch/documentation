@@ -17,12 +17,6 @@ meili document delete \
   --filter 'genres = action OR genres = adventure' --yes
 ```
 
-```javascript JS
-client.index('movies').deleteDocuments({
-  filter: 'genres = action OR genres = adventure'
-})
-```
-
 ```python Python
 client.index('movies').delete_documents(filter='genres=action OR genres=adventure')
 ```

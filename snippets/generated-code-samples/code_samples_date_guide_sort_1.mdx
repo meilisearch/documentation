@@ -18,12 +18,6 @@ meili search \
   --q '' --sort release_timestamp:desc
 ```
 
-```javascript JS
-client.index('games').search('', {
-  sort: ['release_timestamp:desc'],
-})
-```
-
 ```python Python
 client.index('games').search('', {
   'sort': ['release_timestamp:desc']

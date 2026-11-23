@@ -17,12 +17,6 @@ meili search \
   --index books --q butler --sort author:desc
 ```
 
-```javascript JS
-client.index('books').search('butler', {
-  sort: ['author:desc'],
-})
-```
-
 ```python Python
 client.index('books').search('butler', {
   'sort': ['author:desc']

@@ -22,12 +22,6 @@ meili search \
   }'
 ```
 
-```javascript JS
-client.index('restaurants').search('', {
-  sort: ['_geoPoint(48.8561446, 2.2978204):asc', 'rating:desc'],
-})
-```
-
 ```python Python
 client.index('restaurants').search('', {
   'sort': ['_geoPoint(48.8561446,2.2978204):asc', 'rating:desc']

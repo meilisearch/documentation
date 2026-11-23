@@ -30,19 +30,6 @@ meili settings update \
   ]'
 ```
 
-```javascript JS
-client.index('books').updateForeignKeys([
-  {
-    foreignIndexUid: 'authors',
-    fieldName: 'author'
-  },
-  {
-    foreignIndexUid: 'authors',
-    fieldName: 'related_authors'
-  }
-])
-```
-
 ```python Python
 client.index('books').update_foreign_keys([
   {

@@ -21,15 +21,6 @@ meili key add \
   --indexes products --expires-at 2042-04-02T00:42:42Z
 ```
 
-```javascript JS
-client.createKey({
-  description: 'Add documents: Products API key',
-  actions: ['documents.add'],
-  indexes: ['products'],
-  expiresAt: '2021-11-13T00:00:00Z'
-})
-```
-
 ```python Python
 client.create_key(options={
   'description': 'Add documents: Products API key',

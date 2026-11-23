@@ -17,10 +17,6 @@ meili settings update \
   --pagination '{"maxTotalHits":100}'
 ```
 
-```javascript JS
-client.index('books').updateSettings({ pagination: { maxTotalHits: 100 }})
-```
-
 ```python Python
 client.index('books').update_pagination_settings({'maxTotalHits': 100})
 ```

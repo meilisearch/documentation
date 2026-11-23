@@ -20,15 +20,6 @@ meili settings update \
   --typo-tolerance '{"minWordSizeForTypos":{"oneTypo":4,"twoTypos":10}}'
 ```
 
-```javascript JS
-client.index('movies').updateTypoTolerance({
-  minWordSizeForTypos: {
-    oneTypo: 4,
-    twoTypos: 10
-  }
-})
-```
-
 ```python Python
 client.index('movies').update_typo_tolerance({
   'minWordSizeForTypos': {

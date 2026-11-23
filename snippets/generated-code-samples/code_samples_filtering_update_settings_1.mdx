@@ -20,14 +20,6 @@ meili settings update \
   --filterable-attributes genres,director,release_date,ratings
 ```
 
-```javascript JS
-client.index('movies')
-  .updateFilterableAttributes([
-    'director',
-    'genres'
-  ])
-```
-
 ```python Python
 client.index('movies').update_filterable_attributes([
     'director',

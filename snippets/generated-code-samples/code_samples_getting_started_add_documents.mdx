@@ -15,29 +15,6 @@ meili document add \
   --primary-key id --file movies.json
 ```
 
-```javascript JS
-// With npm:
-// npm install meilisearch
-
-// Or with pnpm:
-// pnpm add meilisearch
-
-// In your .js file:
-// With the `require` syntax:
-const { MeiliSearch } = require('meilisearch')
-const movies = require('./movies.json')
-// With the `import` syntax:
-import { MeiliSearch } from 'meilisearch'
-import movies from './movies.json'
-
-const client = new MeiliSearch({
-  host: 'MEILISEARCH_URL',
-  apiKey: 'aSampleMasterKey'
-})
-client.index('movies').addDocuments(movies)
-  .then((res) => console.log(res))
-```
-
 ```python Python
 # In the command line:
 # pip3 install meilisearch

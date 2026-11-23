@@ -15,12 +15,6 @@ meili search \
   --filter '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'
 ```
 
-```javascript JS
-client.index('restaurants').search('', {
-  filter: ['_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'],
-})
-```
-
 ```python Python
 client.index('restaurants').search('Batman', {
   'filter': '_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])'

@@ -29,17 +29,6 @@ meili settings update \
   }'
 ```
 
-```javascript JS
-client.index('books').updateFaceting({
-  maxValuesPerFacet: 2,
-  sortFacetValuesBy: {
-    '*': 'alpha',
-    genres: 'count',
-    language: 'sampledCount'
-  }
-})
-```
-
 ```python Python
 params = {
   'maxValuesPerFacet': 2,
