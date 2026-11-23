@@ -35,8 +35,13 @@ Updating any of the following settings causes Meilisearch to reindex all documen
 - [Proximity precision](/reference/api/settings/get-proximity-precision-settings)
 - [Separator tokens](/reference/api/settings/get-separator-tokens)
 - [Non-separator tokens](/reference/api/settings/get-non-separator-tokens)
+- [Word position](/capabilities/full_text_search/relevancy/ranking_rules#6-word-position)
 
 Changes to [displayed attributes](/reference/api/settings/get-displayedattributes) or [ranking rules](/reference/api/settings/get-ranking-rules) do not trigger a full reindex.
+
+## Disable word positions if you do not need them
+
+Computing the position of every word in every searchable attribute can take a large part of indexing time. If the position of words in attributes matters little for your relevancy, [disable word positions](/reference/api/settings/update-wordposition). This makes indexing faster and the database smaller, but changes how some ranking rules sort results.
 
 ## Optimize document size
 

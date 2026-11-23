@@ -82,6 +82,8 @@ Results are sorted by the **position of query terms within the attributes**. Ret
 
 This rule evaluates only the position of matched words within attributes and does not consider the attribute ranking order.
 
+[It is possible to disable word positions.](/reference/api/settings/update-wordposition) This may significantly improve indexing performance. Meilisearch then skips this ranking rule, and the `attribute` and `exactness` ranking rules become less precise.
+
 ## 7. Exactness
 
 Results are sorted by **the similarity of the matched words with the query words**. Returns documents that contain exactly the same terms as the ones queried first.
