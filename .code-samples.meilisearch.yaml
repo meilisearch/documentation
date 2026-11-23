@@ -1025,6 +1025,178 @@ get_version_1: |-
     -X GET 'MEILISEARCH_URL/version' \
     -H 'Authorization: Bearer API_KEY'
 ## END /reference/api
+## BEGIN /reference/management-api
+# get_api_v2_me
+management_get_current_user_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/me' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_meilisearch_versions
+management_list_meilisearch_versions_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/meilisearch-versions' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_organizations
+management_list_organizations_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/organizations' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_organizations_id
+management_get_organization_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/organizations/1' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# patch_api_v2_organizations_id
+management_update_organization_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/organizations/1' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "Acme"
+    }'
+# delete_api_v2_organizations_id
+management_delete_organization_1: |-
+  curl \
+    -X DELETE 'https://api.meilisearch.com/api/v2/organizations/1' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_teams
+management_list_teams_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/teams?organizationId=1' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# post_api_v2_teams
+management_create_team_1: |-
+  curl \
+    -X POST 'https://api.meilisearch.com/api/v2/teams' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "Search team",
+      "organizationId": 1
+    }'
+# get_api_v2_teams_id
+management_get_team_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/teams/12' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# patch_api_v2_teams_id
+management_update_team_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/teams/12' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "Search team"
+    }'
+# delete_api_v2_teams_id
+management_delete_team_1: |-
+  curl \
+    -X DELETE 'https://api.meilisearch.com/api/v2/teams/12' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_teams_teamId_members
+management_list_team_members_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/teams/12/members' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# post_api_v2_teams_teamId_members
+management_add_team_member_1: |-
+  curl \
+    -X POST 'https://api.meilisearch.com/api/v2/teams/12/members' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "email": "jane@example.com"
+    }'
+# delete_api_v2_teams_teamId_members_memberId
+management_remove_team_member_1: |-
+  curl \
+    -X DELETE 'https://api.meilisearch.com/api/v2/teams/12/members/7d2e4f6a-1b3c-4d5e-8f9a-0b1c2d3e4f5a' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_projects
+management_list_projects_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/projects?teamId=12' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# post_api_v2_projects
+management_create_project_1: |-
+  curl \
+    -X POST 'https://api.meilisearch.com/api/v2/projects' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "my-project",
+      "teamId": 12,
+      "resourceId": 3
+    }'
+# get_api_v2_projects_id
+management_get_project_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/projects/343' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# patch_api_v2_projects_id
+management_update_project_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/projects/343' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "name": "my-project"
+    }'
+# delete_api_v2_projects_id
+management_delete_project_1: |-
+  curl \
+    -X DELETE 'https://api.meilisearch.com/api/v2/projects/343' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# patch_api_v2_projects_projectId_plan
+management_update_project_plan_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/projects/343/plan' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "resourceId": 4
+    }'
+# patch_api_v2_projects_projectId_version
+management_update_project_version_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/projects/343/version' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "version": "v1.54.0"
+    }'
+# get_api_v2_projects_projectId_master_key
+management_get_project_master_key_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/projects/343/master-key' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# patch_api_v2_projects_projectId_master_key
+management_rotate_project_master_key_1: |-
+  curl \
+    -X PATCH 'https://api.meilisearch.com/api/v2/projects/343/master-key' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_projects_projectId_usage
+management_get_project_usage_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/projects/343/usage?from=2026-10-01&to=2026-10-31' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_projects_projectId_cost
+management_get_project_cost_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/projects/343/cost?from=2026-10-01&to=2026-10-31' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_regions
+management_list_regions_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/regions' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+# get_api_v2_resources
+management_list_resources_1: |-
+  curl \
+    -X GET 'https://api.meilisearch.com/api/v2/resources?regionId=1' \
+    -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+## END /reference/management-api
 distinct_attribute_guide_1: |-
   curl \
     -X PUT 'MEILISEARCH_URL/indexes/jackets/settings/distinct-attribute' \

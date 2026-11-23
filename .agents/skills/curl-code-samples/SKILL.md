@@ -22,7 +22,8 @@ Done when each curl this change needs is an existing key (improved if needed), o
 Add each new key as `key: |-` with the curl indented under it. Write one plain request, a single call with a literal body, so every SDK can express it. Match the curl shape already in that file, including `MEILISEARCH_URL` and `API_KEY`. The key is unique snake_case.
 
 - **Route sample.** Inside `## BEGIN /reference/api` … `## END /reference/api`. The line above the key is `# <route id>`. The route id is the value `routeId` in `scripts/check-code-samples-usage.mjs` returns for that method and path. `GET /indexes/{indexUid}/settings/stop-words` → `get_indexes_indexUid_settings_stop_words`. That comment binds the key on the next line, and the API reference shows that key. A second example of the same route is a page sample.
-- **Page sample.** After `## END /reference/api`. The line above the key is the previous sample's body or a blank line.
+- **Management API route sample.** Inside `## BEGIN /reference/management-api` … `## END /reference/management-api`, with the same route comment. The key starts with `management_`. The curl calls `https://api.meilisearch.com/api/v2/...` with `MANAGEMENT_API_TOKEN`. The reference shows only this curl and the CLI sample of the same key: no SDK covers the Management API.
+- **Page sample.** After `## END /reference/management-api`. The line above the key is the previous sample's body or a blank line.
 
 Done when each new key is in that home.
 
