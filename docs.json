@@ -19,10 +19,6 @@
       "dark": "#1A003B"
     }
   },
-  "banner": {
-    "content": "Searchandising is live on Product Hunt. [Join the discussion →](https://www.producthunt.com/products/meilisearch-cloud?launch=meilisearch-searchandising)",
-    "dismissible": true
-  },
   "seo": {
     "metatags": {
       "canonical": "https://www.meilisearch.com/docs"
