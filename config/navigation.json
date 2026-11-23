@@ -596,6 +596,7 @@
                 "POST /dynamic-search-rules",
                 "DELETE /dynamic-search-rules",
                 "GET /dynamic-search-rules/{uid}",
+                "GET /dynamic-search-rules/{uid}/target",
                 "PATCH /dynamic-search-rules/{uid}",
                 "DELETE /dynamic-search-rules/{uid}"
               ]
@@ -814,6 +815,14 @@
                     "GET /indexes/{index_uid}/settings/typo-tolerance",
                     "PATCH /indexes/{index_uid}/settings/typo-tolerance",
                     "DELETE /indexes/{index_uid}/settings/typo-tolerance"
+                  ]
+                },
+                {
+                  "group": "Word position",
+                  "pages": [
+                    "GET /indexes/{index_uid}/settings/word-position",
+                    "PATCH /indexes/{index_uid}/settings/word-position",
+                    "DELETE /indexes/{index_uid}/settings/word-position"
                   ]
                 }
               ]
