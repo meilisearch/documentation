@@ -1,8 +1,8 @@
 # Runs daily and on workflow_dispatch.
 # - Job 1: Fails if local code samples are not properly used (route comment → OpenAPI, no comment → snippet in docs).
-# - Job 2: Fails if any SDK has code samples not present in the local .code-samples.meilisearch.yaml.
-# - Job 3: Informational only (never fails) – lists CodeSamples* import keys missing from each SDK.
-name: Check Docs & SDK code sample files
+# - Job 2: Fails if any integration (CLI or SDK) has code samples not present in the local .code-samples.meilisearch.yaml.
+# - Job 3: Informational only (never fails) – lists CodeSamples* import keys missing from each integration.
+name: Check Docs & integration code sample files
 
 on:
   workflow_dispatch:
@@ -22,10 +22,10 @@ jobs:
       - name: Check local code samples are used
         run: npm run check-code-samples-usage
 
-  # Fails if an SDK's .code-samples.meilisearch.yaml contains keys absent from
-  # the local .code-samples.meilisearch.yaml (those SDK samples are useless).
-  unused-sdk-samples:
-    name: Unused code samples in SDKs
+  # Fails if an integration's .code-samples.meilisearch.yaml contains keys absent from
+  # the local .code-samples.meilisearch.yaml (those integration samples are useless).
+  unused-integration-samples:
+    name: Unused code samples in integrations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -38,13 +38,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check for unused SDK code samples
-        run: npm run check-unused-sdk-samples
+      - name: Check for unused integration code samples
+        run: npm run check-unused-integration-samples
 
   # Informational only – this job never fails.
-  # Lists code sample keys referenced by CodeSamples* imports in the docs that are missing from each SDK.
-  missing-sdk-samples:
-    name: "[Info only - never fails] Missing SDK code samples"
+  # Lists code sample keys referenced by CodeSamples* imports in the docs that are missing from each integration.
+  missing-integration-samples:
+    name: "[Info only - never fails] Missing integration code samples"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -57,5 +57,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: List missing SDK code samples (informational, never fails)
-        run: npm run check-missing-sdk-samples
+      - name: List missing integration code samples (informational, never fails)
+        run: npm run check-missing-integration-samples

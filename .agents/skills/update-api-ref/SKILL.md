@@ -36,8 +36,8 @@ Update the API reference documentation from the OpenAPI spec.
    ```
    npm run check-openapi-code-samples
    npm run check-code-samples-usage
-   npm run check-missing-sdk-samples
-   npm run check-unused-sdk-samples
+   npm run check-missing-integration-samples
+   npm run check-unused-integration-samples
    ```
 
 7. **Report**: Summarize what changed:
