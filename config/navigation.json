@@ -504,22 +504,6 @@
             "source": "assets/engine-release-assets/meilisearch-openapi-mintlify.json",
             "directory": "reference/api"
           },
-          "examples": {
-            "languages": [
-              "curl",
-              "javascript",
-              "php",
-              "python",
-              "java",
-              "ruby",
-              "go",
-              "csharp",
-              "rust",
-              "dart",
-              "swift"
-            ],
-            "autogenerate": false
-          },
           "pages": [
             {
               "group": "Indexes",
@@ -945,12 +929,6 @@
           "openapi": {
             "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.json",
             "directory": "reference/management-api"
-          },
-          "examples": {
-            "languages": [
-              "curl"
-            ],
-            "autogenerate": false
           }
         }
       ]
