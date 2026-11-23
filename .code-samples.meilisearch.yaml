@@ -622,6 +622,25 @@ reset_prefix_search_settings_1: |-
   curl \
     -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/prefix-search' \
     -H 'Authorization: Bearer API_KEY'
+# get_indexes_indexUid_settings_word_position
+get_word_position_settings_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \
+    -H 'Authorization: Bearer API_KEY'
+# patch_indexes_indexUid_settings_word_position
+update_word_position_settings_1: |-
+  curl \
+    -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \
+    -H 'Authorization: Bearer API_KEY' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "enabled": false
+    }'
+# delete_indexes_indexUid_settings_word_position
+reset_word_position_settings_1: |-
+  curl \
+    -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \
+    -H 'Authorization: Bearer API_KEY'
 # get_indexes_indexUid_settings_search_cutoff_ms
 get_search_cutoff_1: |-
   curl \
@@ -1799,6 +1818,11 @@ list_dynamic_search_rules_1: |-
 get_dynamic_search_rule_1: |-
   curl \
     -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday' \
+    -H 'Authorization: Bearer API_KEY'
+# get_dynamic_search_rules_uid_target
+get_dynamic_search_rule_target_1: |-
+  curl \
+    -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday/target' \
     -H 'Authorization: Bearer API_KEY'
 # patch_dynamic_search_rules_uid
 patch_dynamic_search_rule_1: |-
