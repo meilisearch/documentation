@@ -1901,6 +1901,13 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "HTTP request",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/dynamic-search-rules/black-friday/target' \\\n  -H 'Authorization: Bearer API_KEY'"
+          }
         ]
       }
     },
@@ -14767,6 +14774,13 @@
               "*"
             ]
           }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "HTTP request",
+            "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY'"
+          }
         ]
       },
       "delete": {
@@ -14846,6 +14860,13 @@
               "settings.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "HTTP request",
+            "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY'"
           }
         ]
       },
@@ -14943,6 +14964,13 @@
               "settings.*",
               "*"
             ]
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "cURL",
+            "label": "HTTP request",
+            "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"enabled\": false\n  }'"
           }
         ]
       }
