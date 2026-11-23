@@ -19,6 +19,14 @@ meili settings update \
   --searchable-attributes title,overview,genres
 ```
 
+```javascript JS
+client.index('movies').updateSearchableAttributes([
+  'title',
+  'overview',
+  'genres'
+])
+```
+
 ```python Python
 client.index('movies').update_searchable_attributes([
     'title',

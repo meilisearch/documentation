@@ -17,6 +17,10 @@ meili index add \
   --id movies --primary-key id
 ```
 
+```javascript JS
+client.createIndex('movies', { primaryKey: 'id' })
+```
+
 ```python Python
 client.create_index('movies', {'primaryKey': 'id'})
 ```

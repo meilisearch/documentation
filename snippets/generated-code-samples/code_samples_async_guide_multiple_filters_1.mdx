@@ -14,6 +14,14 @@ meili task list \
   --statuses processing
 ```
 
+```javascript JS
+client.tasks.getTasks({
+  indexUids: ['movies'],
+  types: ['documentAdditionOrUpdate','documentDeletion'],
+  statuses: ['processing']
+})
+```
+
 ```python Python
 client.get_tasks(
   {

@@ -13,6 +13,12 @@ meili document view \
   --fields id,title,poster,release_date
 ```
 
+```javascript JS
+client
+    .index('movies')
+    .getDocument(25684, { fields: ['id', 'title', 'poster', 'release_date'] })
+```
+
 ```python Python
 client.index('movies').get_document(25684, {
   'fields': ['id', 'title', 'poster', 'release_date']

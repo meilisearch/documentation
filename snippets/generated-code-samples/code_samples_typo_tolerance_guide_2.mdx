@@ -15,6 +15,12 @@ meili settings update \
   --typo-tolerance '{"disableOnAttributes":["title"]}'
 ```
 
+```javascript JS
+client.index('movies').updateTypoTolerance({
+  disableOnAttributes: ['title']
+})
+```
+
 ```python Python
 client.index('movies').update_typo_tolerance({
   'disableOnAttributes': ['title']

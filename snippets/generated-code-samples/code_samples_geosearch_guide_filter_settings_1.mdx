@@ -15,6 +15,13 @@ meili settings update \
   --filterable-attributes _geo
 ```
 
+```javascript JS
+client.index('restaurants')
+.updateFilterableAttributes([
+  '_geo'
+])
+```
+
 ```python Python
 client.index('restaurants').update_filterable_attributes([
   '_geo'

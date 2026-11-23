@@ -40,6 +40,20 @@ meili settings update \
   }'
 ```
 
+```javascript JS
+client.index('movies')
+  .updateFilterableAttributes([
+    "genres",
+    {
+      attributePatterns: ["genre"],
+      features: {
+        facetSearch: true,
+        filter: { equality: true, comparison: false },
+      },
+    }
+  ])
+```
+
 ```python Python
 client.index('movies').update_filterable_attributes([
   'genres',

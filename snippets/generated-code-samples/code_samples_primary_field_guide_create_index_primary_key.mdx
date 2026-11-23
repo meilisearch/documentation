@@ -17,6 +17,10 @@ meili index add \
   --id books --primary-key reference_number
 ```
 
+```javascript JS
+client.createIndex('books', { primaryKey: 'reference_number' })
+```
+
 ```python Python
 client.create_index('books', {'primaryKey': 'reference_number'})
 ```

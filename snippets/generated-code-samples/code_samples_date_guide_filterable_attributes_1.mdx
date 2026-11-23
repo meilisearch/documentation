@@ -17,6 +17,10 @@ meili settings update \
   --filterable-attributes release_timestamp
 ```
 
+```javascript JS
+client.index('games').updateFilterableAttributes(['release_timestamp'])
+```
+
 ```python Python
 client.index('games').update_filterable_attributes(['release_timestamp'])
 ```

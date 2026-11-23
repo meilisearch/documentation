@@ -18,6 +18,10 @@ meili similar \
   --id TARGET_DOCUMENT_ID --embedder EMBEDDER_NAME
 ```
 
+```javascript JS
+client.index('INDEX_NAME').searchSimilarDocuments({ id: 'TARGET_DOCUMENT_ID', embedder: 'default' })
+```
+
 ```python Python
 client.index("INDEX_NAME").get_similar_documents({"id": "TARGET_DOCUMENT_ID", "embedder": "default"})
 ```

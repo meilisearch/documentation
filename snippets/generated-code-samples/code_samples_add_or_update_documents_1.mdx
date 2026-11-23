@@ -21,6 +21,14 @@ meili document update \
   --data '[{"id":287947,"title":"Shazam ⚡️","genres":"comedy"}]'
 ```
 
+```javascript JS
+client.index('movies').updateDocuments([{
+    id: 287947,
+    title: 'Shazam ⚡️',
+    genres: 'comedy'
+}], { skipCreation: true })
+```
+
 ```python Python
 client.index('movies').update_documents([{
     'id': 287947,

@@ -17,6 +17,13 @@ meili settings update \
   --synonyms '{"great":["fantastic"],"fantastic":["great"]}'
 ```
 
+```javascript JS
+client.index('movies').updateSynonyms({
+  'great': ['fantastic'],
+  'fantastic': ['great']
+})
+```
+
 ```python Python
 client.index('movies').update_synonyms({
   'great': ['fantastic'],

@@ -24,6 +24,18 @@ meili settings update \
   }'
 ```
 
+```javascript JS
+client.index('books').updateTypoTolerance({
+  minWordSizeForTypos: {
+      oneTypo: 4,
+      twoTypos: 10
+    },
+    disableOnAttributes: [
+      'title'
+  ]
+})
+```
+
 ```python Python
 client.index('books').update_typo_tolerance({
   'minWordSizeForTypos': {

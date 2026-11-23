@@ -19,6 +19,14 @@ meili facet-search \
   --facet-query fiction --facet-name genres --filter 'rating > 3'
 ```
 
+```javascript JS
+client.index('books').searchForFacetValues({
+  facetQuery: 'fiction',
+  facetName: 'genres'
+  filter: 'rating > 3'
+})
+```
+
 ```python Python
 client.index('books').facet_search('genres', 'fiction', {
   'filter': 'rating > 3'

@@ -20,6 +20,19 @@ curl \
   }'
 ```
 
+```javascript JS
+client.initializeNetwork({
+  self: 'https://instance1.meilisearch.com',
+  remotes: {
+    instance2: {
+      url: 'https://instance2.meilisearch.com',
+      searchApiKey: 'SEARCH_API_KEY',
+      writeApiKey: 'WRITE_API_KEY'
+    }
+  }
+})
+```
+
 ```python Python
 client.add_or_update_networks({
     "remotes": {

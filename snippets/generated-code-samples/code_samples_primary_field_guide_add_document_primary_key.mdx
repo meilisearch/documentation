@@ -35,6 +35,18 @@ meili document add \
   ]'
 ```
 
+```javascript JS
+client.index('books').addDocuments([
+  {
+    reference_number: 287947,
+    title: 'Diary of a Wimpy Kid',
+    author: 'Jeff Kinney',
+    genres: ['comedy','humor'],
+    price: 5.00
+  }
+], { primaryKey: 'reference_number' })
+```
+
 ```python Python
 client.index('books').add_documents([{
   'reference_number': 287947,

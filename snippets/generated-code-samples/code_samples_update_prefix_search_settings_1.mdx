@@ -15,6 +15,10 @@ meili settings update \
   --prefix-search disabled
 ```
 
+```javascript JS
+client.index('INDEX_NAME').updatePrefixSearch('disabled');
+```
+
 ```python Python
 client.index('books').update_prefix_search(PrefixSearch.DISABLED)
 ```

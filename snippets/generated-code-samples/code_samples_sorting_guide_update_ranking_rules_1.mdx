@@ -23,6 +23,17 @@ meili settings update \
   --ranking-rules words,sort,typo,proximity,attributeRank,wordPosition,exactness
 ```
 
+```javascript JS
+client.index('books').updateRankingRules([
+  'words',
+  'sort',
+  'typo',
+  'proximity',
+  'attribute',
+  'exactness'
+])
+```
+
 ```python Python
 client.index('books').update_ranking_rules([
     'words',

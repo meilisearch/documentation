@@ -19,6 +19,12 @@ meili settings update \
   --typo-tolerance '{"disableOnWords":["shrek"]}'
 ```
 
+```javascript JS
+client.index('movies').updateTypoTolerance({
+  disableOnWords: ['shrek']
+})
+```
+
 ```python Python
 client.index('movies').update_typo_tolerance({
   'disableOnWords': ['shrek']

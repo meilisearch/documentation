@@ -17,6 +17,12 @@ meili settings update \
   --localized-attributes '[{"locales":["jpn"],"attributePatterns":["*_ja"]}]'
 ```
 
+```javascript JS
+client.index('INDEX_NAME').updateLocalizedAttributes([
+  { attributePatterns: ['*_ja'], locales: ['jpn'] },
+])
+```
+
 ```python Python
 client.index('INDEX_NAME').update_localized_attributes([
   {'attribute_patterns': ['*_ja'], 'locales': ['jpn']}

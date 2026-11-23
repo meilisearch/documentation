@@ -12,6 +12,10 @@ meili task list \
   --statuses failed
 ```
 
+```javascript JS
+client.tasks.getTasks({ statuses: ['failed', 'canceled'] })
+```
+
 ```python Python
 client.get_tasks({'statuses': ['failed', 'canceled']})
 ```

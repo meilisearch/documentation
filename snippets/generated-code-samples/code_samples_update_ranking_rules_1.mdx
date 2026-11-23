@@ -25,6 +25,19 @@ meili settings update \
   --ranking-rules words,typo,proximity,attributeRank,sort,wordPosition,exactness,release_date:asc,rank:desc
 ```
 
+```javascript JS
+client.index('movies').updateRankingRules([
+    'words',
+    'typo',
+    'proximity',
+    'attribute',
+    'sort',
+    'exactness',
+    'release_date:asc',
+    'rank:desc'
+])
+```
+
 ```python Python
 client.index('movies').update_ranking_rules([
     'words',

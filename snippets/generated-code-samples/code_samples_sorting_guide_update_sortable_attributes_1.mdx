@@ -18,6 +18,13 @@ meili settings update \
   --sortable-attributes author,price
 ```
 
+```javascript JS
+client.index('books').updateSortableAttributes([
+    'author',
+    'price'
+  ])
+```
+
 ```python Python
 client.index('books').update_sortable_attributes([
   'author',
