@@ -887,6 +887,13 @@ This error occurs if:
 - The value of either [`oneTypo`](/reference/api/settings/get-typotolerance) or [`twoTypos`](/reference/api/settings/get-typotolerance) is invalid. It should either be an integer or set to `null`
 
 
+## `invalid_settings_word_position`
+
+This error occurs if:
+
+- The [`enabled`](/reference/api/settings/get-wordposition) field is invalid. It should either be a boolean or set to `null`
+
+
 ## `invalid_similar_attributes_to_retrieve`
 
 [`attributesToRetrieve`](/reference/api/search/search-with-post#body-attributes-to-retrieve) is invalid. It should be an array of strings, a string, or set to null.
@@ -1277,6 +1284,10 @@ This error code is no longer emitted and can be found in tasks imported from a d
 ## `unsupported_media_type`
 
 The media type of the request is not supported.
+
+## `unsupported_setting_for_legacy_indexer`
+
+The legacy indexer does not support the provided setting.
 
 ## `vector_embedding_error`
 
