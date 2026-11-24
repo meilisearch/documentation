@@ -6,7 +6,7 @@ import { z } from "zod";
 import { groupReleases, resolvePage, type Release } from "./releases.js";
 import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
 import { pageHref, pageKey, type Source } from "../src/source.js";
-import type { ChatUser } from "../src/user.ts";
+import type { ChatUser } from "../src/user.js";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
 const DEFAULT_QUERY_MODEL = "openai/gpt-6-luna";

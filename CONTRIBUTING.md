@@ -87,6 +87,14 @@ npx mint broken-links
 | `npm run check-broken-links` | Checks internal links in MDX files against local pages, OpenAPI-generated reference pages, and redirect sources. Runs from local files only. |
 | `npm run check-openapi-routes-coverage` | Checks that every route of the OpenAPI spec is listed in the API reference pages of `config/navigation.json`. Exits with error if not. |
 
+## Linting
+
+Lint the AI assistant app with:
+
+```bash
+npm run lint:chat
+```
+
 ## Code samples
 
 ### What they are

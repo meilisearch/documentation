@@ -27,6 +27,7 @@
     "@types/node": "^20.0.0",
     "mdast-util-mdx": "^3.0.0",
     "mint": "^4.3.14",
+    "oxlint": "^1.95.0",
     "tsx": "^4.23.15",
     "typescript": "^5.0.0",
     "vitest": "^3.2.7"
@@ -47,6 +48,8 @@
     "ingest": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/index.ts",
     "ingest:query": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/query.ts",
     "test:ingest": "vitest run scripts/ingest",
-    "test": "vitest run scripts/ingest chat"
+    "test": "vitest run scripts/ingest chat",
+    "lint": "oxlint",
+    "lint:chat": "oxlint chat"
   }
 }
