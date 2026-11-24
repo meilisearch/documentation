@@ -1,5 +1,11 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'https://api.meilisearch.com/api/v2/projects/343' \
+  -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+```
+
 ```bash CLI
 meili project delete --id 343 --yes
 ```

@@ -1,5 +1,11 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X DELETE 'https://api.meilisearch.com/api/v2/teams/12' \
+  -H 'Authorization: Bearer MANAGEMENT_API_TOKEN'
+```
+
 ```bash CLI
 meili team delete --id 12 --yes
 ```

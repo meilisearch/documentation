@@ -1,5 +1,17 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X POST 'https://api.meilisearch.com/api/v2/projects' \
+  -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "my-project",
+    "teamId": 12,
+    "resourceId": 3
+  }'
+```
+
 ```bash CLI
 meili project add --name my-project --team-id 12 --resource-id 3
 ```

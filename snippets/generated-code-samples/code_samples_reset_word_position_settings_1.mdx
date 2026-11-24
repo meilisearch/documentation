@@ -5,4 +5,8 @@ curl \
   -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \
   -H 'Authorization: Bearer API_KEY'
 ```
+
+```javascript JS
+client.index('INDEX_NAME').resetWordPosition();
+```
 </CodeGroup>

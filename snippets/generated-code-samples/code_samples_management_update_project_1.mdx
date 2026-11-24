@@ -1,5 +1,15 @@
 <CodeGroup>
 
+```bash cURL
+curl \
+  -X PATCH 'https://api.meilisearch.com/api/v2/projects/343' \
+  -H 'Authorization: Bearer MANAGEMENT_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "name": "my-project"
+  }'
+```
+
 ```bash CLI
 meili project update --id 343 --name my-project
 ```
