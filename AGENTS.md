@@ -11,7 +11,7 @@ Canonical setup and commands stay in [CONTRIBUTING.md](CONTRIBUTING.md). These d
 
 ## Tests
 
-`npm test` runs the unit tests. `npm run test:scripts` is ingestion and `chat/shared/`. `npm run test:chat` is the assistant and the widget. `npm run test:integration` needs a local Meilisearch and fails when `MEILI_TEST_URL` is unset. The commands are in [CONTRIBUTING.md](CONTRIBUTING.md).
+`npm test` runs the unit tests. `npm run chat:test` is the assistant and the widget. `npm run ingest:test` is ingestion and `chat/shared/`. `npm run ingest:integration` runs the Meilisearch sink tests and fails when `MEILI_TEST_URL` is unset. The commands are in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Write the failing test first. Name it after the behavior. Node tests cover `scripts/ingest/`, `chat/agent/`, and `chat/shared/`. jsdom tests cover `chat/app/`.
 

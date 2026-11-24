@@ -22,6 +22,14 @@ export default defineConfig({
           exclude: [...configDefaults.exclude, ...unit],
         },
       },
+      {
+        test: {
+          name: "integration",
+          environment: "node",
+          include: ["scripts/**/*.integration.test.ts"],
+          globalSetup: ["scripts/ingest/__tests__/integration-setup.ts"],
+        },
+      },
     ],
   },
 });

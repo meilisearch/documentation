@@ -76,10 +76,10 @@ npm run rebuild-search-staging
 | Script | What it runs |
 |--------|----------------|
 | `npm test` | Every unit test |
-| `npm run test:scripts` | Ingestion, plus `chat/shared/` (ingestion imports those helpers) |
-| `npm run test:chat` | The assistant, the widget, and `chat/shared/` |
+| `npm run chat:test` | The assistant, the widget, and `chat/shared/` |
+| `npm run ingest:test` | Ingestion, plus `chat/shared/` (ingestion imports those helpers) |
+| `npm run ingest:integration` | The Meilisearch sink. Fails if `MEILI_TEST_URL` is unset. |
 | `npm run test:watch` | The unit tests in watch mode |
-| `npm run test:integration` | The Meilisearch sink. Fails if `MEILI_TEST_URL` is unset. It does not skip. |
 | `npm run typecheck` | `scripts/ingest` and `chat/` |
 
 Write a unit test before changing behavior. Name the test after the behavior, and put it in `__tests__/` next to the module.
@@ -88,7 +88,7 @@ To run the integration tests locally:
 
 ```bash
 docker run --rm -p 7700:7700 -e MEILI_ENV=development -e MEILI_MASTER_KEY=masterKey getmeili/meilisearch:v1.58
-MEILI_TEST_URL=http://localhost:7700 MEILI_TEST_KEY=masterKey npm run test:integration
+MEILI_TEST_URL=http://localhost:7700 MEILI_TEST_KEY=masterKey npm run ingest:integration
 ```
 
 ### Broken links

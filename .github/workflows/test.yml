@@ -28,7 +28,6 @@ jobs:
               - 'package.json'
               - 'package-lock.json'
               - 'vitest.config.ts'
-              - 'vitest.integration.config.ts'
               - 'scripts/ingest/tsconfig.json'
             chat:
               - 'chat/**'
@@ -36,7 +35,6 @@ jobs:
               - 'package.json'
               - 'package-lock.json'
               - 'vitest.config.ts'
-              - 'vitest.integration.config.ts'
               - 'chat/tsconfig.json'
 
   lint:
@@ -99,10 +97,10 @@ jobs:
           exit 1
 
       - name: Unit tests
-        run: npm run test:scripts
+        run: npm run ingest:test
 
       - name: Integration tests
-        run: npm run test:integration
+        run: npm run ingest:integration
         env:
           MEILI_TEST_URL: http://localhost:7700
           MEILI_TEST_KEY: masterKey
@@ -126,7 +124,7 @@ jobs:
           npm ci --prefix chat
 
       - name: Unit tests
-        run: npm run test:chat
+        run: npm run chat:test
 
   tests:
     name: Tests

@@ -17,10 +17,10 @@ From the repository root:
 
 ```bash
 npm test
-npm run test:chat
+npm run chat:test
 ```
 
-`npm test` runs the assistant, the widget, and ingestion. `npm run test:chat` runs the assistant and the widget. Widget tests use jsdom. Assistant tests stay in Node and mock Meilisearch.
+`npm test` runs the assistant, the widget, and ingestion. `npm run chat:test` runs the assistant and the widget. Widget tests use jsdom. Assistant tests stay in Node and mock Meilisearch.
 
 Put a test in `__tests__/` next to the module. Write the failing test first, and name it after the behavior. Import the module with a `.ts` specifier. Production code keeps the `.js` specifier, because Vercel does not rewrite it.
 
