@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { docsBasePath, linkTarget, localizeHref } from "../../src/links.ts";
-import { pageHref, pageKey } from "../../src/source.ts";
+import { linkTarget, localizeHref } from "../links.ts";
+import { pageHref, pageKey } from "../../../shared/source.ts";
 
 const PROD = "https://www.meilisearch.com/docs/getting_started/overview";
 const PREVIEW = "https://meilisearch-6b28dec2-chat.mintlify.site/getting_started/overview";
@@ -31,15 +31,6 @@ describe("pageKey", () => {
     ["https://preview.mintlify.site/capabilities/hybrid_search/overview", "capabilities/hybrid_search/overview"],
   ])("%s -> %s", (value, key) => {
     expect(pageKey(value)).toBe(key);
-  });
-});
-
-describe("docsBasePath", () => {
-  it("keeps /docs only when the current page is mounted there", () => {
-    expect(docsBasePath("/docs")).toBe("/docs");
-    expect(docsBasePath("/docs/getting_started/overview")).toBe("/docs");
-    expect(docsBasePath("/getting_started/overview")).toBe("");
-    expect(docsBasePath("/")).toBe("");
   });
 });
 

@@ -19,12 +19,6 @@
       "node"
     ]
   },
-  "include": [
-    "src",
-    "api",
-    "vite.config.ts"
-  ],
-  "exclude": [
-    "api/**/__tests__"
-  ]
+  "include": ["app", "agent", "shared", "api", "vite.config.ts"],
+  "exclude": ["**/__tests__"]
 }

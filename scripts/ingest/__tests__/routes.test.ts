@@ -1,15 +1,9 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import {
-  lookupCandidates,
-  methodCandidates,
-  normalizeLanguage as chatNormalize,
-  selectSample as chatSelect,
-} from "../../../chat/src/samples.ts";
+import { lookupCandidates, methodCandidates, normalizeLanguage, selectSample } from "../../../chat/shared/samples.ts";
 import { chunkRoute } from "../chunk/route-chunker.ts";
 import { PROJECT_ROOT, DEFAULT_CHUNKING } from "../config.ts";
-import { normalizeLanguage, selectSample } from "../languages.ts";
 import { loadApiRoutes } from "../sources/openapi.ts";
 
 const FIXTURE_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../__fixtures__/docs");
@@ -26,10 +20,9 @@ describe("language selection", () => {
       ["Python", "python"],
     ] as const) {
       expect(normalizeLanguage(label)).toBe(key);
-      expect(chatNormalize(label)).toBe(key);
     }
     expect(normalizeLanguage(null)).toBe("http");
-    expect(chatNormalize(undefined)).toBe("http");
+    expect(normalizeLanguage(undefined)).toBe("http");
   });
 
   it("falls back to the HTTP sample and says which language was missing", () => {
@@ -39,7 +32,7 @@ describe("language selection", () => {
       code: "curl search",
       note: "No Python sample for this route. Showing the HTTP request.",
     });
-    expect(chatSelect(codes, "JS")).toEqual({ language: "js", code: "client.search()", note: null });
+    expect(selectSample(codes, "JS")).toEqual({ language: "js", code: "client.search()", note: null });
     expect(selectSample(codes, null)).toEqual({ language: "http", code: "curl search", note: null });
   });
 

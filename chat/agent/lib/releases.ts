@@ -1,4 +1,5 @@
-import { pageHref } from "../src/source.js";
+import { pageHref } from "../../shared/source.js";
+import { textField } from "./records.js";
 
 export type ReleaseChunk = {
   page?: string;
@@ -13,12 +14,6 @@ export type Release = {
 };
 
 const VERSION_PAGE = /^v?(\d+)\.(\d+)$/;
-
-function textField(value: unknown, key: string): string | undefined {
-  if (typeof value !== "object" || value === null) return undefined;
-  const field = (value as Record<string, unknown>)[key];
-  return typeof field === "string" ? field : undefined;
-}
 
 /** One entry per page, newest first. Chunks of the same release collapse. */
 export function groupReleases(hits: readonly unknown[]): Release[] {

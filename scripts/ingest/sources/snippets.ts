@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { normalizeLanguage } from "../languages.ts";
+import { normalizeLanguage } from "../../../chat/shared/samples.ts";
 import type { CodeSample } from "../types.ts";
 
 export type Snippet = {

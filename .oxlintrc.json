@@ -9,22 +9,31 @@
   ],
   "overrides": [
     {
-      // Only chat/ is bundled by Vercel. scripts/ingest runs under tsx, which
-      // resolves .ts specifiers, so the rule does not apply there.
-      "files": ["chat/**/*.ts", "chat/**/*.tsx"],
-      "excludeFiles": ["chat/api/__tests__/**"],
+      // Only chat/ is bundled by Vite
+      "files": [
+        "chat/**/*.ts",
+        "chat/**/*.tsx"
+      ],
+      "excludeFiles": [
+        "chat/**/__tests__/**"
+      ],
       "rules": {
         "no-restricted-imports": [
           "error",
           {
             "patterns": [
               {
-                // Vercel compiles api/*.ts to *.js but copies relative specifiers
+                // Vite compiles api/*.ts to *.js but copies relative specifiers
                 // verbatim, so a .ts import ships a function that crashes at startup
                 // with ERR_MODULE_NOT_FOUND. chat/tsconfig.json sets
                 // allowImportingTsExtensions and Vite resolves .ts in dev, so this
                 // only shows up in production.
-                "group": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+                "group": [
+                  "**/*.ts",
+                  "**/*.tsx",
+                  "**/*.mts",
+                  "**/*.cts"
+                ],
                 "message": "Import the .js specifier instead. Vercel compiles chat/ to JavaScript and keeps the specifier verbatim, so a .ts import crashes the deployed function with ERR_MODULE_NOT_FOUND."
               }
             ]

@@ -1,9 +1,10 @@
 import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
-import { code } from "./highlight";
-import { linkTarget, localizeHref } from "./links";
-import type { ChatMessage } from "./source";
-import { expandedPageLabel, isExpandPart, isReleasesPart, isSearchPart, searchQuery, Sources } from "./Sources";
+import type { ChatMessage } from "../../shared/source";
+import { code } from "../lib/highlight";
+import { linkTarget, localizeHref } from "../lib/links";
+import { expandedPageLabel, isExpandPart, isReleasesPart, isSearchPart, searchQuery } from "../lib/parts";
+import { Sources } from "./Sources";
 
 function ToolStatus({ state, label }: { state: string; label: string }) {
   const done = state === "output-available";

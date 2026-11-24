@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { PIPELINE_VERSION } from "../config.ts";
-import { normalizeLanguage } from "../languages.ts";
+import { normalizeLanguage } from "../../../chat/shared/samples.ts";
 import type { ChunkingConfig } from "../types.ts";
 import { renderRoute, type RouteDocument } from "../chunk/route-chunker.ts";
 import { loadRouteLocations, type RouteLocation } from "./mdx.ts";

@@ -1,6 +1,8 @@
 /**
- * Language selection for code samples returned to the docs chat.
- * Keep `scripts/ingest/languages.ts` in sync: a test compares the two.
+ * Language selection for code samples.
+ * The docs chat and ingestion both use this table. Mintlify tab labels
+ * ("HTTP request", "Meili CLI", "JS", "C#") and snippet fence labels
+ * ("cURL", "CLI", "JS") normalize through it.
  */
 
 const LABELS: Record<string, string> = {

@@ -11,6 +11,8 @@
     "@ai-sdk/react": "^4.0.166",
     "@ai-sdk/voyage": "^2.0.0",
     "@openrouter/ai-sdk-provider": "^3.1.0",
+    "@shikijs/langs": "^4.6.0",
+    "@shikijs/themes": "^4.6.0",
     "ai": "^7.0.162",
     "meilisearch": "^0.60.0",
     "react": "^19.0.0",

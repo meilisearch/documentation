@@ -135,7 +135,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     lib: {
-      entry: path.join(root, "src/main.tsx"),
+      entry: path.join(root, "app/main.tsx"),
       formats: ["iife"],
       name: "MeiliChat",
       fileName: () => "chat.js",

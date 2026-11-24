@@ -1,6 +1,6 @@
 import { parseArgs } from "node:util";
 import { Meilisearch } from "meilisearch";
-import { pageHref } from "../../chat/src/source.ts";
+import { pageHref } from "../../chat/shared/source.ts";
 import { resolveMeilisearchConfig } from "./config.ts";
 import userConfig from "./ingest.config.ts";
 import type { Chunk } from "./types.ts";

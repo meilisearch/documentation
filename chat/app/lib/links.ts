@@ -5,7 +5,7 @@ const DOCS_SECTION = /^(?:getting_started|capabilities|reference|resources|chang
 const DOCS_HOST = /^(?:www\.)?meilisearch\.com$|(?:^|\.)mintlify\.site$/;
 
 /** `"/docs/x"` -> `"/docs"`; preview, localhost, and custom domains -> `""`. */
-export function docsBasePath(pathname: string): string {
+function docsBasePath(pathname: string): string {
   return pathname === "/docs" || pathname.startsWith("/docs/") ? "/docs" : "";
 }
 

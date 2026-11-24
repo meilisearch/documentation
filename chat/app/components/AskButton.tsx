@@ -1,5 +1,5 @@
-import { TOGGLE_EVENT } from "./events";
-import { useDarkMode } from "./useDarkMode";
+import { TOGGLE_EVENT } from "../lib/events";
+import { useDarkMode } from "../hooks/useDarkMode";
 
 const isMac = /Mac|iPhone|iPad/.test(navigator.platform);
 
