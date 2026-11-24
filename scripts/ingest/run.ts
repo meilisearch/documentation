@@ -1,6 +1,7 @@
 import path from "node:path";
 import { chunkPage } from "./chunk/mdx-chunker.ts";
 import { chunkRoute } from "./chunk/route-chunker.ts";
+import { chunkRelease, loadReleases } from "./sources/changelog.ts";
 import { loadApiRoutes } from "./sources/openapi.ts";
 import { loadPages } from "./sources/mdx.ts";
 import { planSync } from "./sync/plan.ts";
@@ -8,7 +9,7 @@ import type { Chunk, IngestConfig, Sink } from "./types.ts";
 
 export type RunIngestOptions = {
   config: IngestConfig;
-  sinks: { docs: Sink; routes: Sink };
+  sinks: { docs: Sink; routes: Sink; changelog: Sink };
   /** Page globs: only matching pages are synced, other stored pages are left untouched. */
   only?: string[];
   /** Re-sync every page even when its hash is unchanged. */
@@ -46,7 +47,7 @@ export async function runIngest({
   sinks,
   only = [],
   force = false,
-}: RunIngestOptions): Promise<{ docs: IngestSummary; routes: IngestSummary }> {
+}: RunIngestOptions): Promise<{ docs: IngestSummary; routes: IngestSummary; changelog: IngestSummary }> {
   const pages = config.sources.mdx
     ? await loadPages({
         rootDir: config.rootDir,
@@ -64,7 +65,16 @@ export async function runIngest({
     chunking: config.chunking,
     only,
   });
+  const releases = config.sources.mdx
+    ? await loadReleases({
+        rootDir: config.rootDir,
+        navigation: config.navigation,
+        chunking: config.chunking,
+        only,
+      })
+    : [];
 
+  const empty = { added: [], updated: [], removed: [], unchanged: 0, chunks: [] };
   const docs = config.sources.mdx
     ? await syncIndex(
         pages,
@@ -73,7 +83,7 @@ export async function runIngest({
         only,
         force,
       )
-    : { added: [], updated: [], removed: [], unchanged: 0, chunks: [] };
+    : empty;
   const routeSummary = await syncIndex(
     routes,
     sinks.routes,
@@ -81,5 +91,14 @@ export async function runIngest({
     only,
     force,
   );
-  return { docs, routes: routeSummary };
+  const changelog = config.sources.mdx
+    ? await syncIndex(
+        releases,
+        sinks.changelog,
+        (page) => chunkRelease(page, { chunking: config.chunking, baseUrl: config.baseUrl }),
+        only,
+        force,
+      )
+    : empty;
+  return { docs, routes: routeSummary, changelog };
 }

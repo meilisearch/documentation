@@ -9,7 +9,6 @@ const REMOVED_TYPES = new Set([
   "mdxjsEsm",
   "mdxFlowExpression",
   "mdxTextExpression",
-  "code",
   "html",
   "yaml",
   "toml",

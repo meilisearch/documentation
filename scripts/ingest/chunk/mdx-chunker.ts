@@ -35,6 +35,16 @@ function sampleContent(codes: Record<string, string>): string {
   return codes.http ?? Object.values(codes)[0] ?? "";
 }
 
+/** Samples other than the one already stored in `content`. Indexing that one again would double its weight. */
+export function codeText(codes: Record<string, string>): string {
+  const shown = codes.http !== undefined ? "http" : Object.keys(codes)[0];
+  return Object.entries(codes)
+    .filter(([language]) => language !== shown)
+    .map(([, code]) => code.trim())
+    .filter(Boolean)
+    .join("\n");
+}
+
 /** Splits a serialized section wherever a mounted sample was replaced by a placeholder. */
 function expandSentinels(section: SerializedSection, samples: Map<string, CodeSample>): Rendered[] {
   const parts = section.content.split(SENTINEL);
@@ -201,11 +211,48 @@ function splitBlock(block: string, maxChars: number): string[] {
   return packBlocks(lines, maxChars, "\n");
 }
 
+const FENCE = /```[^\n]*\n[\s\S]*?\n```/g;
+
+function isFence(block: string): boolean {
+  return block.startsWith("```");
+}
+
+/** A fence stays one block, and stays with the paragraph that introduces it. */
+function blocksOf(content: string, maxChars: number): string[] {
+  const blocks: string[] = [];
+  let last = 0;
+  for (const match of content.matchAll(FENCE)) {
+    const start = match.index ?? 0;
+    blocks.push(...splitProse(content.slice(last, start), maxChars));
+    blocks.push(match[0]);
+    last = start + match[0].length;
+  }
+  blocks.push(...splitProse(content.slice(last), maxChars));
+
+  const glued: string[] = [];
+  for (const block of blocks) {
+    const previous = glued.at(-1);
+    if (isFence(block) && previous !== undefined && !isFence(previous)) {
+      glued[glued.length - 1] = `${previous}\n\n${block}`;
+      continue;
+    }
+    glued.push(block);
+  }
+  return glued;
+}
+
+function splitProse(text: string, maxChars: number): string[] {
+  return text
+    .split("\n\n")
+    .filter((block) => block.trim() !== "")
+    .flatMap((block) => splitBlock(block, maxChars));
+}
+
 /** Splits at block boundaries. Only the first part starts with the section heading. */
 function splitLargeSection(section: SerializedSection, chunking: ChunkingConfig): SerializedSection[] {
   if (section.content.length <= chunking.maxChars) return [section];
 
-  const blocks = section.content.split("\n\n").flatMap((block) => splitBlock(block, chunking.maxChars));
+  const blocks = blocksOf(section.content, chunking.maxChars);
   return packBlocks(blocks, chunking.maxChars, "\n\n").map((content) => ({ ...section, content }));
 }
 
@@ -261,6 +308,8 @@ export function chunkPage(page: RawPage, options: ChunkPageOptions): Chunk[] {
     if (section.kind === "sample") {
       chunk.codes = section.sample.codes;
       chunk.code_language = Object.keys(section.sample.codes);
+      const text = codeText(section.sample.codes);
+      if (text) chunk.code_text = text;
     }
     chunks.push(chunk);
   }

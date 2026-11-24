@@ -1,9 +1,15 @@
 import { MeilisearchApiError, type EnqueuedTask, type Meilisearch, type Settings, type Task } from "meilisearch";
 import type { Chunk, EmbedderConfig, Sink, SyncOperation } from "../types.ts";
 
-export type IndexKind = "docs" | "routes";
+export type IndexKind = "docs" | "routes" | "changelog";
 
-function embedderSettings(embedder: EmbedderConfig): NonNullable<Settings["embedders"]> {
+function embedderSettings(kind: IndexKind, embedder: EmbedderConfig): NonNullable<Settings["embedders"]> {
+  const documentTemplate =
+    kind === "changelog"
+      ? "{{doc.version_label}} — released {{doc.released_on}}. {{doc.breadcrumb}}\n{{doc.content}}"
+      : kind === "docs"
+        ? "{{doc.breadcrumb}}\n{{doc.content}}{% if doc.code_text %}\n{{doc.code_text}}{% endif %}"
+        : "{{doc.breadcrumb}}\n{{doc.content}}";
   return {
     [embedder.name]: {
       source: "rest",
@@ -11,8 +17,9 @@ function embedderSettings(embedder: EmbedderConfig): NonNullable<Settings["embed
       url: "https://api.voyageai.com/v1/embeddings",
       request: { model: embedder.model, input: ["{{text}}", "{{..}}"] },
       response: { data: [{ embedding: "{{embedding}}" }, "{{..}}"] },
-      documentTemplate: "{{doc.breadcrumb}}\n{{doc.content}}",
-      documentTemplateMaxBytes: embedder.documentTemplateMaxBytes,
+      documentTemplate,
+      // A cap. Routes have no code samples; docs and changelog do, and a sample can exceed 4000 bytes.
+      documentTemplateMaxBytes: kind === "routes" ? embedder.documentTemplateMaxBytes : 8000,
     },
   };
 }
@@ -26,13 +33,30 @@ export function buildSettings(kind: IndexKind, embedder?: EmbedderConfig | null)
           sortableAttributes: ["chunk_index"],
           typoTolerance: { disableOnAttributes: ["lookup_keys", "sdk_methods"] },
         }
-      : {
-          // `codes` is last so a term found in prose outranks the same term found only in a sample.
-          filterableAttributes: ["page", "tab", "group", "content_type", "code_language"],
-          searchableAttributes: ["title", "hierarchy", "description", "content", "codes"],
-          sortableAttributes: ["chunk_index"],
-        };
-  if (embedder) settings.embedders = embedderSettings(embedder);
+      : kind === "changelog"
+        ? {
+            searchableAttributes: ["version_label", "title", "hierarchy", "description", "content"],
+            filterableAttributes: ["page", "release_section", "content_type"],
+            sortableAttributes: ["released_on", "chunk_index"],
+            rankingRules: [
+              "words",
+              "typo",
+              "proximity",
+              "attributeRank",
+              "sort",
+              "wordPosition",
+              "exactness",
+              "released_on:desc",
+            ],
+            typoTolerance: { disableOnNumbers: true },
+          }
+        : {
+            // `code_text` is last so a term found in prose outranks the same term found only in a sample.
+            filterableAttributes: ["page", "tab", "group", "content_type", "code_language"],
+            searchableAttributes: ["title", "hierarchy", "description", "content", "code_text"],
+            sortableAttributes: ["chunk_index"],
+          };
+  if (embedder) settings.embedders = embedderSettings(kind, embedder);
   return settings;
 }
 

@@ -10,7 +10,7 @@ import type { Sink } from "./types.ts";
 
 const USAGE = `Usage: npm run ingest -- [options]
 
-  --dry-run        Write chunks to .ingest/chunks.jsonl and .ingest/routes.jsonl instead of Meilisearch
+  --dry-run        Write chunks to .ingest/chunks.jsonl, .ingest/routes.jsonl and .ingest/changelog.jsonl instead of Meilisearch
   --force          Re-sync every page, even unchanged ones
   --only <glob>    Only sync pages matching the glob (repeatable), e.g. "changelog/**"
   --config <file>  Config file (default: scripts/ingest/ingest.config.ts)
@@ -61,14 +61,17 @@ async function main(): Promise<void> {
   const userConfig: UserConfig = (await import(pathToFileURL(configFile).href)).default;
   const config = resolveConfig(userConfig);
 
-  let sink: { docs: Sink; routes: Sink };
+  let sink: { docs: Sink; routes: Sink; changelog: Sink };
   let target: string;
   if (values["dry-run"]) {
     sink = {
       docs: new JsonlSink(config.dryRunOutput),
       routes: new JsonlSink(config.routesDryRunOutput),
+      changelog: new JsonlSink(config.changelogDryRunOutput),
     };
-    target = `${path.relative(process.cwd(), config.dryRunOutput)} and ${path.relative(process.cwd(), config.routesDryRunOutput)}`;
+    target = [config.dryRunOutput, config.routesDryRunOutput, config.changelogDryRunOutput]
+      .map((file) => path.relative(process.cwd(), file))
+      .join(", ");
   } else {
     const meilisearch = resolveMeilisearchConfig(userConfig);
     const client = new Meilisearch({ host: meilisearch.host, apiKey: meilisearch.apiKey });
@@ -84,10 +87,17 @@ async function main(): Promise<void> {
       kind: "routes",
       embedder: meilisearch.embedder,
     });
+    const changelog = new MeilisearchSink({
+      client,
+      indexUid: meilisearch.changelogIndexUid,
+      kind: "changelog",
+      embedder: meilisearch.embedder,
+    });
     await docs.ensureSettings();
     await routes.ensureSettings();
-    sink = { docs, routes };
-    target = `${meilisearch.host} (indexes ${meilisearch.indexUid}, ${meilisearch.routesIndexUid})`;
+    await changelog.ensureSettings();
+    sink = { docs, routes, changelog };
+    target = `${meilisearch.host} (indexes ${meilisearch.indexUid}, ${meilisearch.routesIndexUid}, ${meilisearch.changelogIndexUid})`;
   }
 
   const started = performance.now();
@@ -95,6 +105,7 @@ async function main(): Promise<void> {
   const seconds = (performance.now() - started) / 1000;
   report(summary.docs, `${target} docs`, seconds);
   report(summary.routes, `${target} routes`, seconds);
+  report(summary.changelog, `${target} changelog`, seconds);
 }
 
 main().catch((error) => {

@@ -28,7 +28,7 @@ describe("buildSettings", () => {
 
     expect(settings).toEqual({
       filterableAttributes: ["page", "tab", "group", "content_type", "code_language"],
-      searchableAttributes: ["title", "hierarchy", "description", "content", "codes"],
+      searchableAttributes: ["title", "hierarchy", "description", "content", "code_text"],
       sortableAttributes: ["chunk_index"],
       embedders: {
         voyage: {
@@ -37,8 +37,8 @@ describe("buildSettings", () => {
           url: "https://api.voyageai.com/v1/embeddings",
           request: { model: "voyage-3.5", input: ["{{text}}", "{{..}}"] },
           response: { data: [{ embedding: "{{embedding}}" }, "{{..}}"] },
-          documentTemplate: "{{doc.breadcrumb}}\n{{doc.content}}",
-          documentTemplateMaxBytes: 4000,
+          documentTemplate: "{{doc.breadcrumb}}\n{{doc.content}}{% if doc.code_text %}\n{{doc.code_text}}{% endif %}",
+          documentTemplateMaxBytes: 8000,
         },
       },
     });
@@ -51,6 +51,34 @@ describe("buildSettings", () => {
     expect(settings.searchableAttributes).toEqual(["title", "content", "sdk_methods", "lookup_keys"]);
     expect(settings.sortableAttributes).toEqual(["chunk_index"]);
     expect(settings.typoTolerance).toEqual({ disableOnAttributes: ["lookup_keys", "sdk_methods"] });
+  });
+
+  it("ranks changelog releases by date and keeps version numbers exact", () => {
+    const settings = buildSettings("changelog", {
+      name: "voyage",
+      model: "voyage-4",
+      apiKey: "secret",
+      documentTemplateMaxBytes: 4000,
+    });
+
+    expect(settings.searchableAttributes).toEqual(["version_label", "title", "hierarchy", "description", "content"]);
+    expect(settings.filterableAttributes).toEqual(["page", "release_section", "content_type"]);
+    expect(settings.sortableAttributes).toEqual(["released_on", "chunk_index"]);
+    expect(settings.rankingRules).toEqual([
+      "words",
+      "typo",
+      "proximity",
+      "attributeRank",
+      "sort",
+      "wordPosition",
+      "exactness",
+      "released_on:desc",
+    ]);
+    expect(settings.typoTolerance).toEqual({ disableOnNumbers: true });
+    expect(settings.embedders?.voyage).toMatchObject({
+      documentTemplate: "{{doc.version_label}} — released {{doc.released_on}}. {{doc.breadcrumb}}\n{{doc.content}}",
+      documentTemplateMaxBytes: 8000,
+    });
   });
 });
 
@@ -85,7 +113,7 @@ describe.skipIf(!process.env.MEILI_TEST_URL)("MeilisearchSink", () => {
     expect(index.primaryKey).toBe("id");
     const settings = await index.getSettings();
     expect(settings.filterableAttributes).toEqual(["page", "tab", "group", "content_type", "code_language"]);
-    expect(settings.searchableAttributes).toEqual(["title", "hierarchy", "description", "content", "codes"]);
+    expect(settings.searchableAttributes).toEqual(["title", "hierarchy", "description", "content", "code_text"]);
     expect(settings.sortableAttributes).toEqual(["chunk_index"]);
   });
 

@@ -157,7 +157,7 @@ describe("chunkPage", () => {
     ]);
   });
 
-  it("removes imports, exports, expressions, code blocks, definitions, and generated code samples but keeps inline code", () => {
+  it("removes imports, exports, expressions, definitions, and generated code samples but keeps fenced code and inline code", () => {
     const page = makePage(
       [
         "import CodeSamplesSearch1 from '/snippets/generated-code-samples/code_samples_search_1.mdx'",
@@ -173,7 +173,9 @@ describe("chunkPage", () => {
 
     const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
 
-    expect(chunks.map(({ content }) => content)).toEqual(["Call the `search` route.\n\nResults are ranked."]);
+    expect(chunks.map(({ content }) => content)).toEqual([
+      "Call the `search` route.\n\n```bash\ncurl -X POST 'MEILISEARCH_URL/indexes/movies/search'\n```\n\nResults are ranked.",
+    ]);
   });
 
   it("unwraps components into their text and shows block component titles in bold", () => {
@@ -192,7 +194,7 @@ describe("chunkPage", () => {
     ]);
   });
 
-  it("drops components that only contain code, including their title", () => {
+  it("keeps fenced code inside components, including the component title", () => {
     const page = makePage(
       [
         "Send this request:",
@@ -203,8 +205,13 @@ describe("chunkPage", () => {
     );
 
     const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const content = chunks.map(({ content }) => content).join("\n\n");
 
-    expect(chunks.map(({ content }) => content)).toEqual(["Send this request:\n\nThe response lists hits."]);
+    expect(content).toContain("Send this request:");
+    expect(content).toContain("**Full example**");
+    expect(content).toContain('```json\n{ "q": "batman" }\n```');
+    expect(content).toContain("```js\nclient.search('batman')\n```");
+    expect(content).toContain("The response lists hits.");
   });
 
   it("keeps link text without URLs and replaces images with their alt text", () => {
@@ -502,6 +509,23 @@ describe("chunkPage", () => {
     expect(chunks.length).toBeGreaterThan(3);
   });
 
+  it("keeps a fenced example with the paragraph that introduces it when the section is split", () => {
+    const filler = "word ".repeat(40).trim();
+    const fence = "```bash\ncurl -X POST 'MEILISEARCH_URL/indexes/movies/search'\n```";
+    const body = ["## Feature", filler, "Example usage:", fence, "Then restart."].join("\n\n");
+    const chunks = chunkPage(makePage(body), {
+      chunking: { splitDepth: 3, maxChars: filler.length + 30, minChars: 0 },
+      baseUrl: BASE_URL,
+    });
+
+    const holdingFence = chunks.find((chunk) => chunk.content.includes("```bash"));
+    expect(holdingFence?.content.startsWith("Example usage:")).toBe(true);
+    expect(chunks.some((chunk) => chunk.content.trim() === "Example usage:")).toBe(false);
+    expect(["# Personalization", ...chunks.map(({ content }) => content)].join("\n\n")).toBe(
+      ["# Personalization", body].join("\n\n"),
+    );
+  });
+
   it("keeps a mounted sample between the prose around it and does not merge across it", () => {
     const page = makePage(
       ["## Define a relationship", "Store the foreign key.", "<JoinsDefineRelationship1 />", "## Remove it", "Drop the field."].join(
@@ -535,6 +559,7 @@ describe("chunkPage", () => {
       anchor: "define-a-relationship",
       codes: { http: "curl -X PATCH settings", python: "client.update()" },
       code_language: ["http", "python"],
+      code_text: "client.update()",
     });
     expect(chunks[2].content).toContain("Drop the field.");
     expect(chunks[2].anchor).toBe("remove-it");
@@ -559,6 +584,7 @@ describe("chunkPage", () => {
     expect(chunks.map((chunk) => chunk.content_type)).toEqual(["prose", "code_sample", "prose"]);
     expect(chunks[0].content).toContain("Check the settings:");
     expect(chunks[1].content).toBe("curl https://example.test/chats");
+    expect(chunks[1].code_text).toBeUndefined();
     expect(chunks[1].anchor).toBe("troubleshooting");
     expect(chunks[2].content).toContain("Update the key.");
     expect(chunks.map((chunk) => chunk.content).join("\n")).not.toContain("INGEST_SAMPLE");

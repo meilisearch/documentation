@@ -11,6 +11,7 @@ const fromFile: UserConfig = {
   meilisearch: {
     indexUid: "from-file",
     routesIndexUid: "routes-file",
+    changelogIndexUid: "changelog-file",
     embedder: { name: "embed-file", model: "voyage-4" },
   },
 };
@@ -21,10 +22,12 @@ describe("resolveMeilisearchConfig", () => {
       ...required,
       MEILISEARCH_DOCS_INDEX: "docs-env",
       MEILISEARCH_ROUTES_INDEX: "routes-env",
+      MEILISEARCH_CHANGELOG_INDEX: "changelog-env",
       MEILISEARCH_EMBEDDER: "embed-env",
     });
     expect(config.indexUid).toBe("docs-env");
     expect(config.routesIndexUid).toBe("routes-env");
+    expect(config.changelogIndexUid).toBe("changelog-env");
     expect(config.embedder.name).toBe("embed-env");
     expect(config.embedder.model).toBe("voyage-4");
   });
@@ -34,10 +37,12 @@ describe("resolveMeilisearchConfig", () => {
       ...required,
       MEILISEARCH_DOCS_INDEX: "",
       MEILISEARCH_ROUTES_INDEX: "",
+      MEILISEARCH_CHANGELOG_INDEX: "",
       MEILISEARCH_EMBEDDER: "",
     });
     expect(config.indexUid).toBe("from-file");
     expect(config.routesIndexUid).toBe("routes-file");
+    expect(config.changelogIndexUid).toBe("changelog-file");
     expect(config.embedder.name).toBe("embed-file");
   });
 
@@ -45,6 +50,7 @@ describe("resolveMeilisearchConfig", () => {
     const config = resolveMeilisearchConfig({}, required);
     expect(config.indexUid).toBe("docs-chunks");
     expect(config.routesIndexUid).toBe("api-routes");
+    expect(config.changelogIndexUid).toBe("changelog-chunks");
     expect(config.embedder.name).toBe("voyage");
     expect(config.embedder.model).toBe("voyage-4");
   });

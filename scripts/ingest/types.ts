@@ -19,6 +19,8 @@ export type MeilisearchConfig = {
   indexUid: string;
   /** API route contracts. Separate from `indexUid` so route identifiers are not typo-matched. */
   routesIndexUid: string;
+  /** Release notes. Separate so release dates can be a ranking rule without touching the docs. */
+  changelogIndexUid: string;
   embedder: EmbedderConfig;
 };
 
@@ -36,6 +38,8 @@ export type IngestConfig = {
   dryRunOutput: string;
   /** Absolute path of the JSONL file written by dry runs of API routes. */
   routesDryRunOutput: string;
+  /** Absolute path of the JSONL file written by dry runs of changelog releases. */
+  changelogDryRunOutput: string;
 };
 
 /** A code sample mounted on a guide page. `codes` only contains languages the snippet has. */
@@ -79,6 +83,17 @@ export type Chunk = {
   chunk_index: number;
   /** Language key to source. Set on code samples, and on the first chunk of an API route. */
   codes?: Record<string, string>;
+  /**
+   * Non-HTTP samples joined for search. `content` already holds the HTTP sample, and `codes` is an object,
+   * which Meilisearch does not index.
+   */
+  code_text?: string;
+  /** Changelog release, for example "v1.56". Searchable on the changelog index. */
+  version_label?: string;
+  /** ISO release date, for example "2025-08-04". Sortable on the changelog index. */
+  released_on?: string;
+  /** Top section of a release note, for example "New Features". */
+  release_section?: string;
   /** Keys of `codes`. Filterable on the docs index. */
   code_language?: string[];
   /**

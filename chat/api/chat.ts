@@ -1,7 +1,7 @@
 import { voyage } from "@ai-sdk/voyage";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, rerank, streamText, tool, type UIMessage } from "ai";
-import { Meilisearch } from "meilisearch";
+import { Meilisearch, MeilisearchApiError } from "meilisearch";
 import { z } from "zod";
 import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
 import type { ChatUser } from "../src/user.ts";
@@ -29,13 +29,14 @@ const MIN_KEEP = 3;
 const MAX_SEARCHES = 2;
 const MAX_READS = 2;
 
-const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group"] as const;
+const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group", "version_label", "released_on"] as const;
 
 const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
 
 Rules:
 - Call the search tool before answering a question about Meilisearch. Write 1 short, keyword-rich query, about 12 words at most. If the question has two distinct parts, call search twice in the same turn, one query per part. Do not search more than twice. On a follow-up question, include the topic from the earlier turns in the query.
-- Answer from the search hits. They may be prose chunks, code samples already in the reader's language, or API route chunks.
+- Answer from the search hits. They may be prose chunks, code samples already in the reader's language, API route chunks, or changelog release notes.
+- A changelog hit has version_label and released_on. Quote released_on as the release date, and do not invent a date when it is absent. To read a whole release, call expand_page with that hit's page.
 - Call expand_page or get_api_route only when the hits are not enough: a chunk is cut off, or the answer needs parameters, a request body, or a complete example. Pass expand_page the "page" field of a hit. Pass get_api_route the page of a hit whose content_type is "api_route", or a method and path. Open at most two pages or routes.
 - Answer only from the search results, expanded pages, and get_api_route results. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
 - If the question is not about Meilisearch or search, politely decline and say what you can help with.
@@ -64,6 +65,7 @@ type ChatConfig = {
   allowedOrigins: string[];
   docsIndex: string;
   routesIndex: string;
+  changelogIndex: string;
   embedder: string;
 };
 
@@ -83,6 +85,7 @@ function readConfig(): ChatConfig {
       .filter(Boolean),
     docsIndex: env.MEILISEARCH_DOCS_INDEX || "docs-chunks",
     routesIndex: env.MEILISEARCH_ROUTES_INDEX || "api-routes",
+    changelogIndex: env.MEILISEARCH_CHANGELOG_INDEX || "changelog-chunks",
     embedder: env.MEILISEARCH_EMBEDDER || "voyage",
   };
 }
@@ -148,10 +151,21 @@ type SearchHit = {
   content_type: string;
   tab: string | null;
   group: string | null;
+  version_label?: string;
+  released_on?: string;
+  release_section?: string;
+  /** English release date. Present on changelog hits so ranking and the answer can use it. */
+  description?: string;
 };
 
-function rerankDocument(hit: { breadcrumb: string; content: string }): string {
-  return hit.breadcrumb ? `${hit.breadcrumb}\n${hit.content}` : hit.content;
+function rerankDocument(hit: {
+  breadcrumb: string;
+  content: string;
+  description?: string;
+  version_label?: string;
+}): string {
+  const heading = [hit.version_label, hit.description, hit.breadcrumb].filter(Boolean).join("\n");
+  return heading ? `${heading}\n${hit.content}` : hit.content;
 }
 
 function elapsedMs(started: number): number {
@@ -206,6 +220,7 @@ type SearchDetail = {
   dupes: number;
   docs: number;
   routes: number;
+  changelog: number;
   meiliBytes: number;
   resultBytes: number;
   pre: ScoreCurve;
@@ -533,6 +548,8 @@ export async function POST(request: Request): Promise<Response> {
     const hit = isRecord(value) ? value : {};
     const contentType = text(hit.content_type);
     const content = contentType === "code_sample" ? renderSample(stringRecord(hit.codes)) : text(hit.content);
+    const releasedOn = textOrNull(hit.released_on);
+    const versionLabel = textOrNull(hit.version_label);
     return {
       title: text(hit.title),
       page: text(hit.page),
@@ -543,12 +560,16 @@ export async function POST(request: Request): Promise<Response> {
       content_type: contentType,
       tab: textOrNull(hit.tab),
       group: textOrNull(hit.group),
+      ...(versionLabel ? { version_label: versionLabel } : {}),
+      ...(releasedOn ? { released_on: releasedOn } : {}),
+      ...(textOrNull(hit.release_section) ? { release_section: text(hit.release_section) } : {}),
+      ...(releasedOn && text(hit.description) ? { description: text(hit.description) } : {}),
     };
   };
 
   const search = tool({
     description:
-      "Search the Meilisearch documentation. Results are prose chunks, code samples already in the reader's language, or API route chunks. Pass one short keyword-rich query, about 12 words. If the question has two distinct parts, call this tool twice in the same turn. On a follow-up, include the topic from earlier turns. Call expand_page or get_api_route only when a hit is missing detail: parameters, a full example, or steps the chunk cuts off.",
+      "Search the Meilisearch documentation and changelog. Results are prose chunks, code samples already in the reader's language, API route chunks, or release notes. A release note has version_label and released_on. Pass one short keyword-rich query, about 12 words. If the question has two distinct parts, call this tool twice in the same turn. On a follow-up, include the topic from earlier turns. Call expand_page or get_api_route only when a hit is missing detail: parameters, a full example, a whole release, or steps the chunk cuts off.",
     inputSchema: z.object({
       q: z.string().min(1).max(500).describe("The search query"),
     }),
@@ -556,30 +577,47 @@ export async function POST(request: Request): Promise<Response> {
       if (searchCount >= MAX_SEARCHES) return { hits: [], note: "Search budget used. Answer from earlier hits." };
       searchCount += 1;
       const spans: MeiliSpan[] = [];
-      const retrieved = await runMeili(spans, () =>
-        client.multiSearch({
-          federation: { limit: RETRIEVE, showPerformanceDetails: true },
-          queries: [
-            {
-              indexUid: config.docsIndex,
-              q,
-              hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-              showRankingScore: true,
-              attributesToRetrieve: [...HIT_FIELDS, "codes"],
-            },
-            {
-              indexUid: config.routesIndex,
-              q,
-              hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
-              showRankingScore: true,
-              attributesToRetrieve: [...HIT_FIELDS],
-            },
-          ],
-        }),
-      );
+      const docsQuery = {
+        indexUid: config.docsIndex,
+        q,
+        hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+        showRankingScore: true,
+        attributesToRetrieve: [...HIT_FIELDS, "codes"],
+      };
+      const routesQuery = {
+        indexUid: config.routesIndex,
+        q,
+        hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+        showRankingScore: true,
+        attributesToRetrieve: [...HIT_FIELDS],
+      };
+      const changelogQuery = {
+        indexUid: config.changelogIndex,
+        q,
+        hybrid: { embedder: config.embedder, semanticRatio: 0.5 },
+        showRankingScore: true,
+        attributesToRetrieve: [...HIT_FIELDS, "release_section", "description"],
+        federationOptions: { weight: 0.8 },
+      };
+      const searchIndexes = (queries: Array<typeof docsQuery | typeof routesQuery | typeof changelogQuery>) =>
+        runMeili(spans, () =>
+          client.multiSearch({
+            federation: { limit: RETRIEVE, showPerformanceDetails: true },
+            queries,
+          }),
+        );
+      let retrieved;
+      try {
+        retrieved = await searchIndexes([docsQuery, routesQuery, changelogQuery]);
+      } catch (error) {
+        if (!(error instanceof MeilisearchApiError) || error.cause?.code !== "index_not_found") throw error;
+        console.error("[chat] changelog index missing; searching docs and routes only");
+        retrieved = await searchIndexes([docsQuery, routesQuery]);
+      }
       const rawHits = retrieved.hits;
       const docs = rawHits.filter((hit) => federationIndexUid(hit) === config.docsIndex).length;
       const routeHits = rawHits.filter((hit) => federationIndexUid(hit) === config.routesIndex).length;
+      const changelogHits = rawHits.filter((hit) => federationIndexUid(hit) === config.changelogIndex).length;
       const pool = rawHits.map((hit) => toHit(hit));
       const detail: SearchDetail = {
         q,
@@ -592,6 +630,7 @@ export async function POST(request: Request): Promise<Response> {
         dupes: 0,
         docs,
         routes: routeHits,
+        changelog: changelogHits,
         meiliBytes: utf8Bytes(rawHits),
         resultBytes: utf8Bytes({ hits: [] }),
         pre: scoreCurve(
@@ -653,8 +692,9 @@ export async function POST(request: Request): Promise<Response> {
       }
       readCount += 1;
       const spans: MeiliSpan[] = [];
+      const pageIndex = page.startsWith("changelog/v") ? client.index(config.changelogIndex) : index;
       const { hits, estimatedTotalHits } = await runMeili(spans, () =>
-        index.search("", {
+        pageIndex.search("", {
           filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
           sort: ["chunk_index:asc"],
           limit: MAX_PAGE_CHUNKS,
@@ -845,7 +885,7 @@ export async function POST(request: Request): Promise<Response> {
           for (const line of formatTraces(detail.meili.traces)) lines.push(`│  ${pad}${line}`);
           const cutoff = detail.cutoff === null ? "n/a" : detail.cutoff.toFixed(3);
           lines.push(
-            `│  ${pad}rerank ${formatDuration(detail.rerankMs)}  ${detail.candidates}→${detail.reranked}  trimmed ${detail.reranked}→${detail.kept}  cutoff ${cutoff}  dupes ${detail.dupes}  docs ${detail.docs}  routes ${detail.routes}  result ${formatBytes(detail.resultBytes)}`,
+            `│  ${pad}rerank ${formatDuration(detail.rerankMs)}  ${detail.candidates}→${detail.reranked}  trimmed ${detail.reranked}→${detail.kept}  cutoff ${cutoff}  dupes ${detail.dupes}  docs ${detail.docs}  routes ${detail.routes}  changelog ${detail.changelog}  result ${formatBytes(detail.resultBytes)}`,
           );
           lines.push(`│  ${pad}${formatCurve("pre ", detail.pre)}`);
           lines.push(`│  ${pad}${formatCurve("post", detail.post)}`);
