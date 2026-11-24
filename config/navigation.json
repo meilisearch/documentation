@@ -485,38 +485,24 @@
     },
     {
       "tab": "Reference",
-      "groups": [
+      "pages": [
+        "reference/overview",
         {
-          "group": "Overview",
+          "group": "Meilisearch API",
           "pages": [
             "reference/api/authorization",
             "reference/api/headers",
             "reference/api/requests",
             "reference/api/pagination",
-            "reference/api/openapi"
+            "reference/api/openapi",
+            "reference/errors"
           ]
         },
         {
-          "group": "API Routes",
+          "group": "Meilisearch API Routes",
           "openapi": {
-            "source": "assets/release-assets/meilisearch-openapi-mintlify.json",
+            "source": "assets/engine-release-assets/meilisearch-openapi-mintlify.json",
             "directory": "reference/api"
-          },
-          "examples": {
-            "languages": [
-              "curl",
-              "javascript",
-              "php",
-              "python",
-              "java",
-              "ruby",
-              "go",
-              "csharp",
-              "rust",
-              "dart",
-              "swift"
-            ],
-            "autogenerate": false
           },
           "pages": [
             {
@@ -930,11 +916,20 @@
           ]
         },
         {
-          "group": "Errors",
+          "group": "Management API",
           "pages": [
-            "reference/errors/overview",
-            "reference/errors/error_codes"
+            "reference/management-api/authentication",
+            "reference/management-api/pagination",
+            "reference/management-api/rate-limit",
+            "reference/management-api-errors"
           ]
+        },
+        {
+          "group": "Management API Routes",
+          "openapi": {
+            "source": "assets/cloud-assets/meilisearch-cloud-openapi-mintlify.json",
+            "directory": "reference/management-api"
+          }
         }
       ]
     },

@@ -3,7 +3,8 @@
  * Checks that every code sample in .code-samples.meilisearch.yaml is properly used.
  *
  * 1. Samples preceded by a "# <word>" comment (single word on its own line):
- *    → verify the word maps to an existing {method}/{path} route in the OpenAPI spec.
+ *    → verify the word maps to an existing {method}/{path} route in the OpenAPI spec of the
+ *      Meilisearch API or of the Management API.
  *      Underscores in the word correspond to "/" and "-" in the OpenAPI path.
  *      e.g. "get_indexes_indexUid_settings_stop_words"
  *         → GET /indexes/{indexUid}/settings/stop-words
@@ -20,12 +21,10 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const YAML_PATH = path.join(ROOT, '.code-samples.meilisearch.yaml');
-const OPENAPI_PATH = path.join(
-  ROOT,
-  'assets',
-  'release-assets',
-  'meilisearch-openapi-mintlify.json'
-);
+const OPENAPI_PATHS = [
+  path.join(ROOT, 'assets', 'engine-release-assets', 'meilisearch-openapi-mintlify.json'),
+  path.join(ROOT, 'assets', 'cloud-assets', 'meilisearch-cloud-openapi-mintlify.json'),
+];
 
 const HTTP_METHODS = new Set([
   'get',
@@ -75,9 +74,8 @@ console.log(
 );
 
 // ──────────────────────────────────────────────────────────────
-// 2. Build the set of route identifiers from the OpenAPI spec
+// 2. Build the set of route identifiers from the OpenAPI specs
 // ──────────────────────────────────────────────────────────────
-const openapi = JSON.parse(fs.readFileSync(OPENAPI_PATH, 'utf-8'));
 
 /**
  * Normalizes an OpenAPI path + HTTP method into the identifier format used
@@ -107,10 +105,13 @@ function routeId(method, pathStr) {
 
 const routeIds = new Set();
 
-for (const [pathStr, methods] of Object.entries(openapi.paths)) {
-  for (const method of Object.keys(methods)) {
-    if (HTTP_METHODS.has(method)) {
-      routeIds.add(routeId(method, pathStr));
+for (const openapiPath of OPENAPI_PATHS) {
+  const openapi = JSON.parse(fs.readFileSync(openapiPath, 'utf-8'));
+  for (const [pathStr, methods] of Object.entries(openapi.paths)) {
+    for (const method of Object.keys(methods)) {
+      if (HTTP_METHODS.has(method)) {
+        routeIds.add(routeId(method, pathStr));
+      }
     }
   }
 }

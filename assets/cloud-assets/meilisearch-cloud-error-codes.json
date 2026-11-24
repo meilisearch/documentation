@@ -1,0 +1,582 @@
+{
+  "account_locked": {
+    "statusCode": 423,
+    "title": "Account temporarily locked",
+    "description": "Too many failed login attempts. Please try again in 30 minutes."
+  },
+  "bad_request": {
+    "statusCode": 400,
+    "title": "Bad request",
+    "description": "There is an error in your request"
+  },
+  "billing_internal_error": {
+    "statusCode": 500,
+    "title": "Billing internal error",
+    "description": "We have a problem regarding your billing. Please contact support"
+  },
+  "change_plan_action_in_progress": {
+    "statusCode": 422,
+    "title": "Unable to change plan as an action is already in progress",
+    "description": "Unable to change plan because an action is already in progress"
+  },
+  "change_plan_downgrade_not_allowed": {
+    "statusCode": 422,
+    "title": "Unable to downgrade the project resource",
+    "description": "A resource-based project can not be moved to a smaller resource"
+  },
+  "change_plan_failed_state": {
+    "statusCode": 422,
+    "title": "Impossible to change plan",
+    "description": "Unable to change plan for this project, it is either in failed or update_failed state"
+  },
+  "change_plan_region_invalid": {
+    "statusCode": 422,
+    "title": "Unable to change project region",
+    "description": "Project region can not be modified"
+  },
+  "change_plan_resource_invalid": {
+    "statusCode": 422,
+    "title": "Unable to change plan to the specified resource",
+    "description": "Unable to change plan to the specified resource"
+  },
+  "configuration_missing": {
+    "statusCode": 422,
+    "title": "Scalekit configuration missing",
+    "description": "We couldn't find the required SSO configuration for this organization."
+  },
+  "forbidden": {
+    "statusCode": 403,
+    "title": "You are not allowed to perform this action.",
+    "apiV2": true
+  },
+  "has_promo_code": {
+    "statusCode": 422,
+    "title": "Promo code already applied",
+    "description": "A promo code has already been applied before"
+  },
+  "internal": {
+    "statusCode": 500,
+    "title": "An internal error occurred.",
+    "apiV2": true
+  },
+  "internal_server_error": {
+    "statusCode": 500,
+    "title": "Internal server error",
+    "description": "There is an error in the server, please contact support"
+  },
+  "invalid_body": {
+    "statusCode": 400,
+    "title": "The request body is not valid JSON.",
+    "apiV2": true
+  },
+  "invalid_boolean": {
+    "statusCode": 400,
+    "title": "Boolean parameters must be `true` or `false`.",
+    "apiV2": true
+  },
+  "invalid_id": {
+    "statusCode": 400,
+    "title": "Ids must be integers.",
+    "apiV2": true
+  },
+  "invalid_limit": {
+    "statusCode": 400,
+    "title": "`limit` must be a positive integer.",
+    "apiV2": true
+  },
+  "invalid_offset": {
+    "statusCode": 400,
+    "title": "`offset` must be a non-negative integer.",
+    "apiV2": true
+  },
+  "invalid_token": {
+    "statusCode": 401,
+    "title": "The provided token is invalid.",
+    "apiV2": true
+  },
+  "mfa_cannot_disable_required": {
+    "statusCode": 403,
+    "title": "Cannot disable required MFA",
+    "description": "MFA is required for your account type and cannot be disabled."
+  },
+  "mfa_email_not_verified": {
+    "statusCode": 403,
+    "title": "Email address not verified",
+    "description": "Verify your email address before you turn on two-factor authentication. Check your inbox for the verification link."
+  },
+  "mfa_invalid_code": {
+    "statusCode": 422,
+    "title": "Invalid verification code",
+    "description": "The provided verification code is invalid or has expired. Please try again."
+  },
+  "mfa_invalid_recovery_code": {
+    "statusCode": 422,
+    "title": "Invalid recovery code",
+    "description": "The provided recovery code is invalid or has already been used."
+  },
+  "mfa_locked": {
+    "statusCode": 423,
+    "title": "Verification temporarily locked",
+    "description": "Too many incorrect verification codes. Please try again in 30 minutes."
+  },
+  "mfa_not_enabled": {
+    "statusCode": 400,
+    "title": "MFA not enabled",
+    "description": "Multi-factor authentication is not enabled for this account."
+  },
+  "mfa_not_setup": {
+    "statusCode": 400,
+    "title": "MFA not configured",
+    "description": "Multi-factor authentication has not been set up for this account."
+  },
+  "mfa_setup_required": {
+    "statusCode": 403,
+    "title": "MFA setup required",
+    "description": "Multi-factor authentication must be configured for your account. Please complete MFA setup to continue."
+  },
+  "missing_authorization_header": {
+    "statusCode": 401,
+    "title": "The Authorization header is missing.",
+    "apiV2": true
+  },
+  "missing_parameter": {
+    "statusCode": 400,
+    "title": "A required parameter is missing.",
+    "apiV2": true
+  },
+  "not_found": {
+    "statusCode": 404,
+    "title": "The requested resource was not found.",
+    "apiV2": true
+  },
+  "oauth_user_mfa_not_allowed": {
+    "statusCode": 400,
+    "title": "MFA not available for OAuth users",
+    "description": "Multi-factor authentication is handled by your OAuth provider (Google/GitHub)."
+  },
+  "operation_failed": {
+    "statusCode": 422,
+    "title": "The operation could not be completed.",
+    "apiV2": true
+  },
+  "organization_delete_error": {
+    "statusCode": 500,
+    "title": "Unable to delete organization",
+    "description": "There was a problem deleting this organization. Please contact support."
+  },
+  "organization_deletion_has_addons": {
+    "statusCode": 422,
+    "title": "The organization still has active add-ons.",
+    "apiV2": true
+  },
+  "organization_deletion_has_item_subscription": {
+    "statusCode": 422,
+    "title": "The organization subscription still has items.",
+    "apiV2": true
+  },
+  "organization_deletion_has_project": {
+    "statusCode": 422,
+    "title": "The organization still has active projects.",
+    "apiV2": true
+  },
+  "organization_deletion_last_organization": {
+    "statusCode": 422,
+    "title": "Your last organization cannot be deleted.",
+    "apiV2": true
+  },
+  "organization_deletion_not_self_serve": {
+    "statusCode": 403,
+    "title": "Only self-serve organizations can be deleted.",
+    "apiV2": true
+  },
+  "organization_limit_reached": {
+    "statusCode": 403,
+    "title": "Organization limit reached",
+    "description": "You have reached the maximum number of organizations allowed. Please contact support to increase it."
+  },
+  "organization_not_found": {
+    "statusCode": 404,
+    "title": "Organization not found.",
+    "apiV2": true
+  },
+  "organization_not_self_serve": {
+    "statusCode": 403,
+    "title": "Operation not allowed",
+    "description": "This operation is not available for your organization. Please contact support."
+  },
+  "password_login_sso_enforced": {
+    "statusCode": 422,
+    "title": "We could not sign you in with your credentials"
+  },
+  "password_token_expired": {
+    "statusCode": 422,
+    "title": "Password token doesn't exist or has expired"
+  },
+  "project_billing_address_missing": {
+    "statusCode": 422,
+    "title": "Missing billing address",
+    "description": "The customer billing address is missing"
+  },
+  "project_billing_information_missing": {
+    "statusCode": 422,
+    "title": "Missing billing information",
+    "description": "The billing information are missing"
+  },
+  "project_cannot_be_updated": {
+    "statusCode": 423,
+    "title": "Cannot update now",
+    "description": "The project cannot be updated in its current state: maybe it's already updating, or it's not running at the moment?"
+  },
+  "project_create_error": {
+    "statusCode": 500,
+    "title": "Unable to create project",
+    "description": "There was a problem creating this project, details: %{details}"
+  },
+  "project_create_name_exists": {
+    "statusCode": 409,
+    "title": "Project name already exists",
+    "description": "This project name is already used in a different project. Please try with a different project name."
+  },
+  "project_delete_error": {
+    "statusCode": 500,
+    "title": "Unable to delete project",
+    "description": "There was a problem deleting this project"
+  },
+  "project_export_error": {
+    "statusCode": 422,
+    "title": "Unable to export project",
+    "description": "There was a problem exporting this project, details: %{details}"
+  },
+  "project_limit_reached": {
+    "statusCode": 403,
+    "title": "The project limit for this user has been reached.",
+    "apiV2": true
+  },
+  "project_manual_update_disabled": {
+    "statusCode": 423,
+    "title": "Cannot update instance",
+    "description": "To update your instance, please contact our support team. We'll help you schedule and perform the update while ensuring minimal disruption to your service."
+  },
+  "project_master_key_rotation_failed": {
+    "statusCode": 500,
+    "title": "Unable to rotate master key",
+    "description": "There was a problem rotating the master key of this project. Please contact support"
+  },
+  "project_master_key_rotation_unavailable": {
+    "statusCode": 423,
+    "title": "Cannot rotate master key now",
+    "description": "The master key can only be rotated while the project is running or failed"
+  },
+  "project_name_invalid": {
+    "statusCode": 422,
+    "title": "Invalid project name",
+    "description": "The project's name should be between 3 and 40 characters"
+  },
+  "project_not_found": {
+    "statusCode": 404,
+    "title": "Project not found.",
+    "apiV2": true
+  },
+  "project_payment_method_missing": {
+    "statusCode": 422,
+    "title": "Missing payment method",
+    "description": "The payment method is missing"
+  },
+  "project_resource_invalid": {
+    "statusCode": 422,
+    "title": "Invalid resource for project",
+    "description": "The resource specified for this project is invalid or doesn't exist"
+  },
+  "project_resource_missing": {
+    "statusCode": 422,
+    "title": "Missing resource for project",
+    "description": "The resource is missing"
+  },
+  "project_team_invalid": {
+    "statusCode": 403,
+    "title": "Invalid team ID for project",
+    "description": "The team ID is incorrect"
+  },
+  "project_team_missing": {
+    "statusCode": 422,
+    "title": "Missing team ID for project",
+    "description": "The team ID is missing"
+  },
+  "project_update_downgrade_not_allowed": {
+    "statusCode": 422,
+    "title": "Downgrading to an older Meilisearch version is not supported.",
+    "apiV2": true
+  },
+  "project_update_same_version": {
+    "statusCode": 422,
+    "title": "The project is already running this version.",
+    "apiV2": true
+  },
+  "project_update_version_invalid": {
+    "statusCode": 422,
+    "title": "The version doesn't exist or isn't available.",
+    "apiV2": true
+  },
+  "project_version_invalid": {
+    "statusCode": 422,
+    "title": "The version doesn't exist or isn't available.",
+    "apiV2": true
+  },
+  "project_version_missing": {
+    "statusCode": 422,
+    "title": "Missing version for project",
+    "description": "The version is missing"
+  },
+  "promo_code_invalid": {
+    "statusCode": 422,
+    "title": "Promo code is invalid",
+    "description": "The promo code is invalid or doesn't exist"
+  },
+  "rate_limited": {
+    "statusCode": 429,
+    "title": "Too many requests. Retry after the number of seconds in the `Retry-After` header.",
+    "apiV2": true
+  },
+  "request_failed": {
+    "statusCode": 503,
+    "title": "Scalekit request failed",
+    "description": "%{details}"
+  },
+  "search_rules_active_limit_reached": {
+    "statusCode": 403,
+    "title": "Search rules active limit reached",
+    "description": "All of the %{details} rules are currently active, deactivate some rules or add more packs to increase the limit."
+  },
+  "search_rules_free_limit_reached": {
+    "statusCode": 403,
+    "title": "Search rules limit reached",
+    "description": "Limit of %{details} free rules reached, you have to buy the add-on to keep adding more rules."
+  },
+  "search_rules_paid_limit_reached": {
+    "statusCode": 403,
+    "title": "Search rules limit reached",
+    "description": "Limit of %{details} reached, add extra packs to define more rules."
+  },
+  "sso_name_missing": {
+    "statusCode": 422,
+    "title": "We could not sign you in with the details provided."
+  },
+  "sso_not_configured": {
+    "statusCode": 422,
+    "title": "We couldn't start SSO with the details provided."
+  },
+  "sso_org_identifier_required": {
+    "statusCode": 422,
+    "title": "Organization identifier required",
+    "description": "Enter your organization's identifier to continue with SSO."
+  },
+  "sso_org_invalid": {
+    "statusCode": 422,
+    "title": "Email or organization is invalid"
+  },
+  "sso_required": {
+    "statusCode": 401,
+    "title": "Single Sign-On required",
+    "description": "We couldn’t continue without signing in with your organization account."
+  },
+  "sso_unavailable": {
+    "statusCode": 503,
+    "title": "Single Sign-On is unavailable",
+    "description": "We couldn't complete your SSO request. Please try again later or contact support."
+  },
+  "team_create_error": {
+    "statusCode": 500,
+    "title": "Unable to create the team.",
+    "apiV2": true
+  },
+  "team_delete_error": {
+    "statusCode": 500,
+    "title": "Unable to delete the team.",
+    "apiV2": true
+  },
+  "team_deletion_has_addons": {
+    "statusCode": 422,
+    "title": "The team still has active add-ons.",
+    "apiV2": true
+  },
+  "team_deletion_has_project": {
+    "statusCode": 422,
+    "title": "The team still has active projects.",
+    "apiV2": true
+  },
+  "team_deletion_is_default_team": {
+    "statusCode": 422,
+    "title": "The default team cannot be deleted.",
+    "apiV2": true
+  },
+  "team_deletion_last_team": {
+    "statusCode": 422,
+    "title": "The last team of an organization cannot be deleted.",
+    "apiV2": true
+  },
+  "team_invitation_token_invalid": {
+    "statusCode": 422,
+    "title": "Invitation token is invalid",
+    "description": "The invitation token is invalid or doesn't exist"
+  },
+  "team_member_not_found": {
+    "statusCode": 404,
+    "title": "Team member not found.",
+    "apiV2": true
+  },
+  "team_name_invalid": {
+    "statusCode": 422,
+    "title": "Invalid team name",
+    "description": "The team's name should be between 3 and 40 characters"
+  },
+  "team_not_found": {
+    "statusCode": 404,
+    "title": "Team not found.",
+    "apiV2": true
+  },
+  "team_owner_cant_be_removed": {
+    "statusCode": 422,
+    "title": "The team owner cannot be removed from the team.",
+    "apiV2": true
+  },
+  "team_user_already_invited": {
+    "statusCode": 422,
+    "title": "The user has already been invited to the team.",
+    "apiV2": true
+  },
+  "team_user_is_member_already": {
+    "statusCode": 422,
+    "title": "The user is already a member of the team.",
+    "apiV2": true
+  },
+  "team_user_is_not_member": {
+    "statusCode": 422,
+    "title": "The user must already be a member of the team.",
+    "apiV2": true
+  },
+  "transition_error": {
+    "statusCode": 422,
+    "title": "Transition error",
+    "description": "%{details}"
+  },
+  "unauthorized": {
+    "statusCode": 401,
+    "title": "Unauthorized request",
+    "description": "Token is invalid or missing"
+  },
+  "unknown_field": {
+    "statusCode": 400,
+    "title": "The request body contains a field this route does not accept.",
+    "apiV2": true
+  },
+  "unprocessable_content": {
+    "statusCode": 422,
+    "title": "Unprocessable content",
+    "description": "%{details}"
+  },
+  "usage_invalid_range": {
+    "statusCode": 422,
+    "title": "Invalid usage date range",
+    "description": "from and to must be ISO 8601 dates (YYYY-MM-DD) and from must not be after to"
+  },
+  "usage_range_too_large": {
+    "statusCode": 422,
+    "title": "Usage date range too large",
+    "description": "The usage date range can not exceed 93 days"
+  },
+  "user_already_verified": {
+    "statusCode": 422,
+    "title": "User has already a verified email"
+  },
+  "user_company_invalid": {
+    "statusCode": 422,
+    "title": "Company format is invalid"
+  },
+  "user_company_unchanged": {
+    "statusCode": 422,
+    "title": "The new company name should be different from the old one"
+  },
+  "user_creation_error": {
+    "statusCode": 422,
+    "title": "Unable to create this account, please try again or contact support."
+  },
+  "user_deletion_error": {
+    "statusCode": 500,
+    "title": "Unable to delete user"
+  },
+  "user_deletion_has_item_subscription": {
+    "statusCode": 403,
+    "title": "Unable to delete user because the subscription is not empty"
+  },
+  "user_deletion_has_project": {
+    "statusCode": 403,
+    "title": "Unable to delete user because at least one active project has been found"
+  },
+  "user_email_exists": {
+    "statusCode": 409,
+    "title": "Email already exists"
+  },
+  "user_email_invalid": {
+    "statusCode": 422,
+    "title": "Email format is invalid"
+  },
+  "user_email_unchanged": {
+    "statusCode": 422,
+    "title": "The new email should be different from the old one"
+  },
+  "user_login_invalid": {
+    "statusCode": 422,
+    "title": "User credentials are invalid"
+  },
+  "user_name_invalid": {
+    "statusCode": 422,
+    "title": "Name format is invalid"
+  },
+  "user_name_unchanged": {
+    "statusCode": 422,
+    "title": "The new name should be different from the old one"
+  },
+  "user_not_entitled_to_free_trial": {
+    "statusCode": 422,
+    "title": "Cannot create a free trial project",
+    "description": "The user is not entitled to a free trial at the moment"
+  },
+  "user_not_verified": {
+    "statusCode": 422,
+    "title": "User email not verified"
+  },
+  "user_password_error": {
+    "statusCode": 422,
+    "title": "Password submitted is not valid"
+  },
+  "user_password_invalid": {
+    "statusCode": 422,
+    "title": "Password format is invalid"
+  },
+  "user_password_match_error": {
+    "statusCode": 422,
+    "title": "New password and password confirmation do not match"
+  },
+  "user_password_unchanged": {
+    "statusCode": 422,
+    "title": "The new password should be different from the current one"
+  },
+  "user_sso_error": {
+    "statusCode": 422,
+    "title": "Unable to log in with this account, please try again or contact support."
+  },
+  "user_terms_error": {
+    "statusCode": 422,
+    "title": "Terms and conditions not accepted"
+  },
+  "validation_error": {
+    "statusCode": 422,
+    "title": "Validation error",
+    "description": "%{details}"
+  },
+  "validation_failed": {
+    "statusCode": 422,
+    "title": "The request contains invalid values.",
+    "apiV2": true
+  }
+}

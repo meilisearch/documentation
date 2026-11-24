@@ -1,0 +1,3004 @@
+---
+openapi: 3.0.1
+info:
+  title: Meilisearch Cloud API V2
+  version: v2
+  contact:
+    name: Meilisearch support
+    email: support@meilisearch.com
+  description: |-
+    Manages Meilisearch Cloud organizations, teams and projects. Request and response fields are camelCase.
+
+    ## Authentication
+
+    Send `Authorization: Bearer <token>` with a Personal Access Token or an OAuth2 access token. OAuth2 tokens need the `read` scope for GET requests and `write` for every other method. See [Authentication](https://www.meilisearch.com/docs/reference/management-api/authentication).
+
+    ## Pagination
+
+    List endpoints take `offset` and `limit` and return `{ results, offset, limit, total }`.
+
+    ## Errors
+
+    Every non-2xx response has the `Error` body. Read its `code` field to know the exact error. Each operation documents the statuses it can answer. Every endpoint can also answer:
+
+    - `400` `invalid_id`: an id in the path or the query is not an integer.
+    - `400` `invalid_body`: the body is not valid JSON.
+    - `400` `unknown_field`: the body has a field the endpoint does not accept.
+    - `400` `invalid_offset`, `invalid_limit`: invalid pagination parameter on a list endpoint.
+    - `401` `missing_authorization_header`, `invalid_token`: no token, or an invalid, expired or revoked one.
+    - `403` `forbidden`: the OAuth2 token does not have the scope the method needs.
+    - `429` `rate_limited`: over 30 requests per minute per token. Retry after the number of seconds in the `Retry-After` header.
+    - `500` `internal`: unexpected error.
+tags:
+- name: Authentication
+  description: Identity of the token owner.
+- name: Organizations
+  description: Organizations hold teams and billing.
+- name: Teams
+  description: Teams hold projects and members.
+- name: Projects
+  description: Meilisearch instances.
+- name: Cost monitoring
+  description: Usage and estimated cost of projects.
+- name: Regions
+  description: Regions where a project can be created.
+- name: Resources
+  description: Machine sizes and their plans, to create a project or change its plan.
+- name: Meilisearch Versions
+  description: Meilisearch versions a project can run.
+paths:
+  "/api/v2/me":
+    get:
+      summary: Get current user
+      tags:
+      - Authentication
+      operationId: getMe
+      description: Returns the user the token authenticates as. Use it to check that
+        a token is valid.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Current user identity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: Id of the user.
+                    example: 3f1c8a2e-5b7d-4e9a-9c1f-2a6b8d4e0f13
+                  name:
+                    type: string
+                    description: Name of the user.
+                    example: Jane Doe
+                  email:
+                    type: string
+                    description: Email address of the user.
+                    example: jane@example.com
+                required:
+                - id
+                - name
+                - email
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    message: Too many requests. Retry after the number of seconds
+                      in the `Retry-After` header.
+                    code: rate_limited
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#rate_limited
+              schema:
+                "$ref": "#/components/schemas/Error"
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds to wait before retrying.
+  "/api/v2/meilisearch-versions":
+    get:
+      summary: List Meilisearch versions
+      tags:
+      - Meilisearch Versions
+      operationId: listMeilisearchVersions
+      description: Lists the Meilisearch versions you can create a project with or
+        upgrade a project to.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      responses:
+        '200':
+          description: Meilisearch versions list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/MeilisearchVersion"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/organizations":
+    get:
+      summary: List organizations
+      tags:
+      - Organizations
+      operationId: listOrganizations
+      description: Lists the organizations the authenticated user owns or belongs
+        to through a team.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      responses:
+        '200':
+          description: Organizations list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/Organization"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/organizations/{id}":
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the organization.
+      required: true
+    get:
+      summary: Get organization
+      tags:
+      - Organizations
+      operationId: getOrganization
+      description: Returns an organization the authenticated user can access.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Organization found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                organization_not_found:
+                  value:
+                    message: Organization not found.
+                    code: organization_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+    patch:
+      summary: Update organization
+      tags:
+      - Organizations
+      operationId: updateOrganization
+      description: Renames an organization. Only the organization owner can update
+        it.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '200':
+          description: Organization updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Organization"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                organization_not_found:
+                  value:
+                    message: Organization not found.
+                    code: organization_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                validation_failed:
+                  value:
+                    message: The request contains invalid values.
+                    code: validation_failed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed
+                    details:
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name of the organization.
+                  example: Acme
+    delete:
+      summary: Delete organization
+      tags:
+      - Organizations
+      operationId: deleteOrganization
+      description: Deletes an organization and its teams. Only the organization owner
+        can delete it, once the organization has no active project.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      responses:
+        '204':
+          description: Organization deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                organization_deletion_has_project:
+                  value:
+                    message: The organization still has active projects.
+                    code: organization_deletion_has_project
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_deletion_has_project
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                organization_not_found:
+                  value:
+                    message: Organization not found.
+                    code: organization_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/projects/{projectId}/cost":
+    parameters:
+    - name: projectId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    - name: from
+      in: query
+      schema:
+        type: string
+        format: date
+      required: false
+      description: First UTC day of the window, inclusive. Defaults to the first day
+        of the current month.
+    - name: to
+      in: query
+      schema:
+        type: string
+        format: date
+      required: false
+      description: Last UTC day of the window, inclusive. Defaults to today. The window
+        can not exceed 93 days.
+    get:
+      summary: Get project cost
+      tags:
+      - Cost monitoring
+      operationId: getProjectCost
+      description: 'Returns a gross estimation of the cost of a project usage over
+        the window: quantity × unit price of the project plan, before free tiers shared
+        across the organization, discounts and taxes. The window is the same as the
+        usage one.'
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Project estimated cost
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProjectCost"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                usage_invalid_range:
+                  value:
+                    message: Invalid usage date range
+                    code: usage_invalid_range
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#usage_invalid_range
+                    details:
+                    - field: from
+                      code: invalid
+                      message: Invalid usage date range
+                    - field: to
+                      code: invalid
+                      message: Invalid usage date range
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/projects/{projectId}/master-key":
+    parameters:
+    - name: projectId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    get:
+      summary: Get project master key
+      tags:
+      - Projects
+      operationId: getProjectMasterKey
+      description: Returns a project with its current master key. Only the team owner
+        or the organization owner can read it.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Project with master key
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+    patch:
+      summary: Rotate project master key
+      tags:
+      - Projects
+      operationId: rotateProjectMasterKey
+      description: Generates a new master key and restarts the instance to apply it.
+        The previous master key and every API key derived from it stop working.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      responses:
+        '202':
+          description: Master key rotated, instance restarting
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '423':
+          description: Locked
+          content:
+            application/json:
+              examples:
+                project_master_key_rotation_unavailable:
+                  value:
+                    message: Cannot rotate master key now
+                    code: project_master_key_rotation_unavailable
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_master_key_rotation_unavailable
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/projects/{projectId}/plan":
+    parameters:
+    - name: projectId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    patch:
+      summary: Update project plan
+      tags:
+      - Projects
+      operationId: changeProjectPlan
+      description: 'Moves a project to another resource, which sets its machine size
+        and plan. The change runs in the background: the project `status` is `changing_plan`
+        until it is done. Only the team owner or the organization owner can change
+        the plan.'
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '202':
+          description: Plan change started
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+                organization_not_self_serve:
+                  value:
+                    message: Operation not allowed
+                    code: organization_not_self_serve
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_self_serve
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                project_resource_invalid:
+                  value:
+                    message: Invalid resource for project
+                    code: project_resource_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_resource_invalid
+                    details:
+                    - field: resourceId
+                      code: invalid
+                      message: Invalid resource for project
+                change_plan_region_invalid:
+                  value:
+                    message: Unable to change project region
+                    code: change_plan_region_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#change_plan_region_invalid
+                    details:
+                    - field: resourceId
+                      code: invalid
+                      message: Unable to change project region
+                change_plan_resource_invalid:
+                  value:
+                    message: Unable to change plan to the specified resource
+                    code: change_plan_resource_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#change_plan_resource_invalid
+                    details:
+                    - field: resourceId
+                      code: invalid
+                      message: Unable to change plan to the specified resource
+                project_billing_information_missing:
+                  value:
+                    message: Missing billing information
+                    code: project_billing_information_missing
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_billing_information_missing
+                change_plan_failed_state:
+                  value:
+                    message: Impossible to change plan
+                    code: change_plan_failed_state
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#change_plan_failed_state
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - resourceId
+              properties:
+                resourceId:
+                  type: integer
+                  example: 12
+                  description: Id of the new resource, as listed by `GET /resources`.
+        required: true
+  "/api/v2/projects/{projectId}/usage":
+    parameters:
+    - name: projectId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    - name: from
+      in: query
+      schema:
+        type: string
+        format: date
+      required: false
+      description: First UTC day of the window, inclusive. Defaults to the first day
+        of the current month.
+    - name: to
+      in: query
+      schema:
+        type: string
+        format: date
+      required: false
+      description: Last UTC day of the window, inclusive. Defaults to today. The window
+        can not exceed 93 days.
+    get:
+      summary: Get project usage
+      tags:
+      - Cost monitoring
+      operationId: getProjectUsage
+      description: 'Returns the usage of a project per UTC day: runtime, storage,
+        bandwidth, documents, searches, and chat tokens. The window is clamped to
+        the project lifetime, terminated projects included.'
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Project usage
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ProjectUsage"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                usage_range_too_large:
+                  value:
+                    message: Usage date range too large
+                    code: usage_range_too_large
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#usage_range_too_large
+                    details:
+                    - field: from
+                      code: invalid
+                      message: Usage date range too large
+                    - field: to
+                      code: invalid
+                      message: Usage date range too large
+                usage_invalid_range:
+                  value:
+                    message: Invalid usage date range
+                    code: usage_invalid_range
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#usage_invalid_range
+                    details:
+                    - field: from
+                      code: invalid
+                      message: Invalid usage date range
+                    - field: to
+                      code: invalid
+                      message: Invalid usage date range
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/projects/{projectId}/version":
+    parameters:
+    - name: projectId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    patch:
+      summary: Update project version
+      tags:
+      - Projects
+      operationId: upgradeProjectVersion
+      description: 'Upgrades a project to a newer Meilisearch version. The upgrade
+        runs in the background: the project `status` is `updating` until it is done.'
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '202':
+          description: Version upgrade started
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                project_update_version_invalid:
+                  value:
+                    message: The version doesn't exist or isn't available.
+                    code: project_update_version_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_update_version_invalid
+                    details:
+                    - field: version
+                      code: invalid
+                      message: The version doesn't exist or isn't available.
+                project_update_downgrade_not_allowed:
+                  value:
+                    message: Downgrading to an older Meilisearch version is not supported.
+                    code: project_update_downgrade_not_allowed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_update_downgrade_not_allowed
+                    details:
+                    - field: version
+                      code: invalid
+                      message: Downgrading to an older Meilisearch version is not
+                        supported.
+                project_update_same_version:
+                  value:
+                    message: The project is already running this version.
+                    code: project_update_same_version
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_update_same_version
+                    details:
+                    - field: version
+                      code: invalid
+                      message: The project is already running this version.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '423':
+          description: Locked
+          content:
+            application/json:
+              examples:
+                project_cannot_be_updated:
+                  value:
+                    message: Cannot update now
+                    code: project_cannot_be_updated
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_cannot_be_updated
+                project_manual_update_disabled:
+                  value:
+                    message: Cannot update instance
+                    code: project_manual_update_disabled
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_manual_update_disabled
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - version
+              properties:
+                version:
+                  type: string
+                  example: v1.54.0
+                  description: Meilisearch version to upgrade to, as listed by `GET
+                    /meilisearch-versions`. Must be newer than the current one.
+        required: true
+  "/api/v2/projects":
+    get:
+      summary: List projects
+      tags:
+      - Projects
+      operationId: listProjects
+      description: Lists the projects of the teams the authenticated user can access.
+        Terminated projects are only returned with `includeTerminated`.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      - name: teamId
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+        required: false
+        description: Only returns the projects of this team.
+      - name: includeTerminated
+        in: query
+        schema:
+          type: boolean
+          default: false
+        required: false
+        description: Also returns terminated projects, e.g. to read their usage until
+          termination.
+      responses:
+        '200':
+          description: Projects list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/Project"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalid_boolean:
+                  value:
+                    message: Boolean parameters must be `true` or `false`.
+                    code: invalid_boolean
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_boolean
+                    details:
+                    - field: includeTerminated
+                      code: invalid
+                      message: Boolean parameters must be `true` or `false`.
+                invalid_id:
+                  value:
+                    message: Ids must be integers.
+                    code: invalid_id
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_id
+                    details:
+                    - field: teamId
+                      code: invalid
+                      message: Ids must be integers.
+              schema:
+                "$ref": "#/components/schemas/Error"
+    post:
+      summary: Create project
+      tags:
+      - Projects
+      operationId: createProject
+      description: 'Creates a Meilisearch project in a team. The response contains
+        the master key. The instance is deployed in the background: its `status` is
+        `creating` until it is `running`.'
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '201':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+                project_limit_reached:
+                  value:
+                    message: The project limit for this user has been reached.
+                    code: project_limit_reached
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_limit_reached
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                project_billing_information_missing:
+                  value:
+                    message: Missing billing information
+                    code: project_billing_information_missing
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_billing_information_missing
+                project_version_invalid:
+                  value:
+                    message: The version doesn't exist or isn't available.
+                    code: project_version_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_version_invalid
+                    details:
+                    - field: msVersion
+                      code: invalid
+                      message: The version doesn't exist or isn't available.
+                project_resource_invalid:
+                  value:
+                    message: Invalid resource for project
+                    code: project_resource_invalid
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_resource_invalid
+                    details:
+                    - field: resourceId
+                      code: invalid
+                      message: Invalid resource for project
+                validation_failed:
+                  value:
+                    message: The request contains invalid values.
+                    code: validation_failed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed
+                    details:
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                missing_parameter:
+                  value:
+                    message: A required parameter is missing.
+                    code: missing_parameter
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#missing_parameter
+                    details:
+                    - field: teamId
+                      code: missing
+                      message: A required parameter is missing.
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - teamId
+              - resourceId
+              properties:
+                name:
+                  type: string
+                  description: Name of the project, between 3 and 40 characters.
+                  example: my-project
+                teamId:
+                  type: integer
+                  description: Id of a team the authenticated user belongs to.
+                  example: 34
+                resourceId:
+                  type: integer
+                  example: 7
+                  description: Id of a resource, as listed by `GET /resources`. Sets
+                    the region, machine size, and plan.
+                msVersion:
+                  type: string
+                  example: v1.54.0
+                  description: Name of an active Meilisearch version, as listed by
+                    `GET /meilisearch-versions`. Defaults to the latest version.
+        required: true
+  "/api/v2/projects/{id}":
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the project.
+      required: true
+    get:
+      summary: Get project
+      tags:
+      - Projects
+      operationId: getProject
+      description: Returns a project, terminated projects included, e.g. to read their
+        usage until termination. The response does not contain the master key.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Project found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+    patch:
+      summary: Update project
+      tags:
+      - Projects
+      operationId: updateProject
+      description: Renames a project. To change its plan or its Meilisearch version,
+        use the dedicated routes.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '200':
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Project"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                unknown_field:
+                  value:
+                    message: The request body contains a field this route does not
+                      accept.
+                    code: unknown_field
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#unknown_field
+                    details:
+                    - field: resourceId
+                      code: unknown
+                      message: The request body contains a field this route does not
+                        accept.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                validation_failed:
+                  value:
+                    message: The request contains invalid values.
+                    code: validation_failed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed
+                    details:
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: New name of the project, between 3 and 40 characters.
+                  example: my-project
+        required: true
+    delete:
+      summary: Delete project
+      tags:
+      - Projects
+      operationId: deleteProject
+      description: Terminates a project and its Meilisearch instance. Only the team
+        owner or the organization owner can delete it.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      responses:
+        '204':
+          description: Project deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+                organization_not_self_serve:
+                  value:
+                    message: Operation not allowed
+                    code: organization_not_self_serve
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_self_serve
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                user_not_verified:
+                  value:
+                    message: User email not verified
+                    code: user_not_verified
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#user_not_verified
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                project_not_found:
+                  value:
+                    message: Project not found.
+                    code: project_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/regions":
+    get:
+      summary: List regions
+      tags:
+      - Regions
+      operationId: listRegions
+      description: Lists the regions where you can create a project.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      responses:
+        '200':
+          description: Regions list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/Region"
+                  required:
+                  - results
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalid_limit:
+                  value:
+                    message: "`limit` must be a positive integer."
+                    code: invalid_limit
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_limit
+                    details:
+                    - field: limit
+                      code: invalid
+                      message: "`limit` must be a positive integer."
+                invalid_offset:
+                  value:
+                    message: "`offset` must be a non-negative integer."
+                    code: invalid_offset
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_offset
+                    details:
+                    - field: offset
+                      code: invalid
+                      message: "`offset` must be a non-negative integer."
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/resources":
+    get:
+      summary: List resources
+      tags:
+      - Resources
+      operationId: listResources
+      description: Lists the machine sizes and plans you can create a project with
+        or move a project to, with the pricing of public plans.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      - name: regionId
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+        required: false
+        description: Only returns the resources of this region.
+      - name: plan
+        in: query
+        schema:
+          type: string
+          enum:
+          - legacy
+          - build_plan
+          - pro_plan
+          - custom_plan
+          - grow_plan
+          - free_trial
+          - enterprise_plan
+          - resource_based_plan
+        required: false
+        description: Only returns the resources of this plan.
+      responses:
+        '200':
+          description: Resources list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/Resource"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/teams/{teamId}/members":
+    parameters:
+    - name: teamId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the team.
+      required: true
+    get:
+      summary: List team members
+      tags:
+      - Teams
+      operationId: listTeamMembers
+      description: Lists the members of a team, then its pending invitations.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      responses:
+        '200':
+          description: Team members list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/TeamMember"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+    post:
+      summary: Add team member
+      tags:
+      - Teams
+      operationId: inviteTeamMember
+      description: Adds a user to a team by email and notifies them. A user without
+        a Meilisearch Cloud account stays a pending invitation until they sign up.
+        Only the team owner or the organization owner can add members.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '201':
+          description: Member invited
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TeamMember"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                team_user_is_member_already:
+                  value:
+                    message: The user is already a member of the team.
+                    code: team_user_is_member_already
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_user_is_member_already
+                    details:
+                    - field: email
+                      code: invalid
+                      message: The user is already a member of the team.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                missing_parameter:
+                  value:
+                    message: A required parameter is missing.
+                    code: missing_parameter
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#missing_parameter
+                    details:
+                    - field: email
+                      code: missing
+                      message: A required parameter is missing.
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              properties:
+                email:
+                  type: string
+                  description: Email address of the user to add.
+                  example: jane@example.com
+        required: true
+  "/api/v2/teams/{teamId}/members/{memberId}":
+    parameters:
+    - name: teamId
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the team.
+      required: true
+    - name: memberId
+      in: path
+      schema:
+        type: string
+        format: uuid
+      description: The `id` of the member, as returned by the members list.
+      required: true
+    delete:
+      summary: Remove team member
+      tags:
+      - Teams
+      operationId: removeTeamMember
+      description: Removes a member from a team, or cancels a pending invitation.
+        The team owner cannot be removed.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      responses:
+        '204':
+          description: Member removed
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                team_owner_cant_be_removed:
+                  value:
+                    message: The team owner cannot be removed from the team.
+                    code: team_owner_cant_be_removed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_owner_cant_be_removed
+                    details:
+                    - field: memberId
+                      code: invalid
+                      message: The team owner cannot be removed from the team.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_member_not_found:
+                  value:
+                    message: Team member not found.
+                    code: team_member_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_member_not_found
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+  "/api/v2/teams":
+    get:
+      summary: List teams
+      tags:
+      - Teams
+      operationId: listTeams
+      description: Lists the teams the authenticated user can access, optionally only
+        the ones of an organization.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      parameters:
+      - "$ref": "#/components/parameters/Offset"
+      - "$ref": "#/components/parameters/Limit"
+      - name: organizationId
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+        required: false
+        description: Only returns the teams of this organization.
+      responses:
+        '200':
+          description: Teams list
+          content:
+            application/json:
+              schema:
+                allOf:
+                - "$ref": "#/components/schemas/Pagination"
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      description: Items of the current page.
+                      items:
+                        "$ref": "#/components/schemas/Team"
+                  required:
+                  - results
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+                missing_authorization_header:
+                  value:
+                    message: The Authorization header is missing.
+                    code: missing_authorization_header
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#missing_authorization_header
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalid_id:
+                  value:
+                    message: Ids must be integers.
+                    code: invalid_id
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_id
+                    details:
+                    - field: organizationId
+                      code: invalid
+                      message: Ids must be integers.
+              schema:
+                "$ref": "#/components/schemas/Error"
+    post:
+      summary: Create team
+      tags:
+      - Teams
+      operationId: createTeam
+      description: Creates a team in an organization, owned by the authenticated user.
+        Only the organization owner can create teams.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '201':
+          description: Team created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                organization_not_found:
+                  value:
+                    message: Organization not found.
+                    code: organization_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#organization_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                missing_parameter:
+                  value:
+                    message: A required parameter is missing.
+                    code: missing_parameter
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#missing_parameter
+                    details:
+                    - field: organizationId
+                      code: missing
+                      message: A required parameter is missing.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                validation_failed:
+                  value:
+                    message: The request contains invalid values.
+                    code: validation_failed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed
+                    details:
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - organizationId
+              properties:
+                name:
+                  type: string
+                  description: Name of the team.
+                  example: Search team
+                organizationId:
+                  type: integer
+                  description: Id of the organization to create the team in.
+                  example: 12
+        required: true
+  "/api/v2/teams/{id}":
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        minimum: 0
+      description: Id of the team.
+      required: true
+    get:
+      summary: Get team
+      tags:
+      - Teams
+      operationId: getTeam
+      description: Returns a team the authenticated user can access.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - read
+      responses:
+        '200':
+          description: Team found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalid_id:
+                  value:
+                    message: Ids must be integers.
+                    code: invalid_id
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_id
+                    details:
+                    - field: id
+                      code: invalid
+                      message: Ids must be integers.
+              schema:
+                "$ref": "#/components/schemas/Error"
+    patch:
+      summary: Update team
+      tags:
+      - Teams
+      operationId: updateTeam
+      description: Renames a team or transfers its ownership to one of its members.
+        Only the team owner or the organization owner can update it.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      parameters: []
+      responses:
+        '200':
+          description: Team updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Team"
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                team_user_is_not_member:
+                  value:
+                    message: The user must already be a member of the team.
+                    code: team_user_is_not_member
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_user_is_not_member
+                    details:
+                    - field: ownerId
+                      code: invalid
+                      message: The user must already be a member of the team.
+                validation_failed:
+                  value:
+                    message: The request contains invalid values.
+                    code: validation_failed
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#validation_failed
+                    details:
+                    - field: name
+                      code: invalid
+                      message: The request contains invalid values.
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                invalid_body:
+                  value:
+                    message: The request body is not valid JSON.
+                    code: invalid_body
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_body
+              schema:
+                "$ref": "#/components/schemas/Error"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: New name of the team.
+                  example: Search team
+                ownerId:
+                  type: string
+                  format: uuid
+                  example: 7d2e4f6a-1b3c-4d5e-8f9a-0b1c2d3e4f5a
+                  description: "`id` of the new owner, as returned by the members
+                    list. Must already be a member of the team."
+    delete:
+      summary: Delete team
+      tags:
+      - Teams
+      operationId: deleteTeam
+      description: Deletes a team that has no active project. Only the team owner
+        or the organization owner can delete it.
+      security:
+      - personal_access_token: []
+      - oauth2:
+        - write
+      responses:
+        '204':
+          description: Team deleted
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                invalid_token:
+                  value:
+                    message: The provided token is invalid.
+                    code: invalid_token
+                    type: auth
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#invalid_token
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '422':
+          description: Unprocessable Content
+          content:
+            application/json:
+              examples:
+                team_deletion_has_project:
+                  value:
+                    message: The team still has active projects.
+                    code: team_deletion_has_project
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_deletion_has_project
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                forbidden:
+                  value:
+                    message: You are not allowed to perform this action.
+                    code: forbidden
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#forbidden
+              schema:
+                "$ref": "#/components/schemas/Error"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                team_not_found:
+                  value:
+                    message: Team not found.
+                    code: team_not_found
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#team_not_found
+              schema:
+                "$ref": "#/components/schemas/Error"
+components:
+  parameters:
+    Offset:
+      name: offset
+      in: query
+      required: false
+      description: Number of items to skip.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    Limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return. Values above the maximum are
+        capped to it.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+  securitySchemes:
+    personal_access_token:
+      type: http
+      scheme: bearer
+      description: 'Send `Authorization: Bearer <token>`, where `<token>` is a personal
+        access token (PAT) or an OAuth2 access token. A PAT authenticates as the user
+        who owns it. See [Authentication](https://www.meilisearch.com/docs/reference/management-api/authentication).'
+    oauth2:
+      type: oauth2
+      description: OAuth2 authorization code flow with PKCE, for partner applications
+        acting on behalf of a user. Send the user to the authorization URL in their
+        browser. `read` allows GET requests, `write` allows every other method. See
+        [Authentication](https://www.meilisearch.com/docs/reference/management-api/authentication).
+      flows:
+        authorizationCode:
+          authorizationUrl: https://cloud.meilisearch.com/oauth/authorize
+          tokenUrl: https://api.meilisearch.com/oauth/token
+          refreshUrl: https://api.meilisearch.com/oauth/token
+          scopes:
+            read: Read access (GET requests)
+            write: Write access (all other requests)
+  schemas:
+    Error:
+      type: object
+      description: Error body returned by every non-2xx response. Switch on `code`,
+        never on `message`.
+      properties:
+        message:
+          type: string
+          description: Human-readable description of the error.
+          example: Project not found.
+        code:
+          type: string
+          description: Stable snake_case identifier of the error.
+          example: project_not_found
+        type:
+          type: string
+          enum:
+          - invalid_request
+          - auth
+          - internal
+          description: Category of the error, derived from the HTTP status.
+          example: invalid_request
+        link:
+          type: string
+          format: uri
+          description: Documentation of this error code.
+          example: https://www.meilisearch.com/docs/reference/management-api-errors#project_not_found
+        details:
+          type: array
+          description: Request fields the error is about. Present whenever the error
+            involves request fields.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Name of the field, in camelCase.
+                example: name
+              code:
+                type: string
+                description: Reason the field was rejected, e.g. `missing` or `unknown`.
+                example: blank
+              message:
+                type: string
+                description: Human-readable description of the problem.
+                example: Name can't be blank
+            required:
+            - field
+            - code
+            - message
+      required:
+      - message
+      - code
+      - type
+      - link
+    Pagination:
+      type: object
+      description: Envelope of every list response, the items being in `results`.
+      properties:
+        offset:
+          type: integer
+          description: Number of items skipped.
+          example: 0
+        limit:
+          type: integer
+          description: Maximum number of items returned.
+          example: 20
+        total:
+          type: integer
+          description: Number of items matching the request.
+          example: 1
+      required:
+      - offset
+      - limit
+      - total
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the organization.
+          example: 12
+        name:
+          type: string
+          description: Name of the organization.
+          example: Acme
+        identifier:
+          type: string
+          description: Unique slug of the organization, derived from its name.
+          example: acme
+        ownerId:
+          type: string
+          format: uuid
+          description: "`id` of the user who owns the organization."
+          example: 3f1c8a2e-5b7d-4e9a-9c1f-2a6b8d4e0f13
+        isAdmin:
+          type: boolean
+          description: Whether the authenticated user owns the organization.
+          example: true
+      required:
+      - id
+      - name
+      - identifier
+      - ownerId
+      - isAdmin
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the team.
+          example: 34
+        name:
+          type: string
+          description: Name of the team.
+          example: Search team
+        organizationId:
+          type: integer
+          description: Id of the organization of the team.
+          example: 12
+        ownerId:
+          type: string
+          format: uuid
+          description: "`id` of the user who owns the team."
+          example: 3f1c8a2e-5b7d-4e9a-9c1f-2a6b8d4e0f13
+        isAdmin:
+          type: boolean
+          example: true
+          description: Whether the authenticated user owns the team or its organization,
+            and can manage it.
+      required:
+      - id
+      - name
+      - organizationId
+      - ownerId
+      - isAdmin
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 7d2e4f6a-1b3c-4d5e-8f9a-0b1c2d3e4f5a
+          description: Identifies the member or the pending invitation, e.g. to remove
+            it.
+        email:
+          type: string
+          description: Email address of the member.
+          example: jane@example.com
+        name:
+          type: string
+          nullable: true
+          description: Name of the member. `null` for an invitation.
+          example: Jane Doe
+        isOwner:
+          type: boolean
+          description: Whether the member owns the team.
+          example: false
+        status:
+          type: string
+          enum:
+          - accepted
+          - invited
+          example: accepted
+          description: "`accepted` for a member, `invited` for a pending invitation."
+        invitedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example:
+          description: Date of the invitation. `null` for an accepted member.
+      required:
+      - id
+      - email
+      - name
+      - isOwner
+      - status
+      - invitedAt
+    PlanFeature:
+      type: object
+      description: A billed feature of a plan, with its price.
+      properties:
+        id:
+          type: integer
+          description: Id of the feature.
+          example: 101
+        name:
+          type: string
+          description: Name of the feature.
+          example: Instance runtime
+        kind:
+          type: string
+          enum:
+          - base
+          - search
+          - document
+          - storage
+          - instance_runtime
+          - chat_token
+          - bandwidth
+          - backup
+          description: What the feature bills.
+          example: instance_runtime
+        stripePriceId:
+          type: string
+          nullable: true
+          description: Id of the Stripe price of the feature.
+          example: price_1Nx2yZ3aBcDeFgHi
+        enabled:
+          type: boolean
+          description: Whether the feature is enabled.
+          example: true
+        nickname:
+          type: string
+          nullable: true
+          description: Short name of the price.
+          example: XS
+        description:
+          type: string
+          nullable: true
+          description: Description of the billed product.
+          example: Hourly runtime of the instance.
+        productName:
+          type: string
+          nullable: true
+          description: Name of the billed product.
+          example: Meilisearch Cloud instance
+        unitPrice:
+          type: number
+          nullable: true
+          description: Price of one unit, in USD.
+          example: 0.05
+        monthlyEstimation:
+          type: number
+          nullable: true
+          example: 36.5
+          description: Estimated monthly price, in USD, for the base fee and the instance
+            runtime.
+        transformQuantity:
+          type: object
+          nullable: true
+          description: 'Billed per package of units: the quantity is divided by `divideBy`
+            before applying `unitPrice`.'
+          properties:
+            divideBy:
+              type: integer
+              description: Number of units in a package.
+              example: 1000
+            round:
+              type: string
+              enum:
+              - up
+              - down
+              description: How the number of packages is rounded.
+              example: up
+      required:
+      - id
+      - name
+      - kind
+      - enabled
+      - stripePriceId
+    Resource:
+      type: object
+      description: A machine size in a region, and the plan it belongs to.
+      properties:
+        id:
+          type: integer
+          description: Id of the resource.
+          example: 7
+        name:
+          type: string
+          description: Name of the machine size.
+          example: XS
+        displayName:
+          type: string
+          nullable: true
+          description: Name shown in the Cloud UI.
+          example: XS
+        plan:
+          type: string
+          enum:
+          - legacy
+          - build_plan
+          - pro_plan
+          - custom_plan
+          - grow_plan
+          - free_trial
+          - enterprise_plan
+          - resource_based_plan
+          description: Plan of the resource.
+          example: resource_based_plan
+        regionId:
+          type: integer
+          description: Id of the region of the resource.
+          example: 3
+        storage:
+          type: number
+          nullable: true
+          description: Disk size of the machine.
+          example: 32
+        memory:
+          type: number
+          nullable: true
+          description: Memory of the machine.
+          example: 1
+        vcpu:
+          type: number
+          nullable: true
+          description: Number of vCPUs of the machine.
+          example: 0.5
+        fullPlan:
+          type: object
+          nullable: true
+          description: Plan and pricing of the resource. `null` when the resource
+            has no public plan.
+          properties:
+            id:
+              type: integer
+              description: Id of the plan.
+              example: 5
+            name:
+              type: string
+              description: Name of the plan.
+              example: Resource-based XS
+            code:
+              type: string
+              description: Stable identifier of the plan.
+              example: resource_based_xs
+            features:
+              type: array
+              items:
+                "$ref": "#/components/schemas/PlanFeature"
+              description: Billed features of the plan.
+          required:
+          - id
+          - name
+          - code
+          - features
+      required:
+      - id
+      - name
+      - plan
+      - regionId
+    Region:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the region.
+          example: 3
+        name:
+          type: string
+          description: Name of the region.
+          example: France
+        awsRegion:
+          type: string
+          description: AWS region hosting the projects.
+          example: eu-west-3
+        countryCode:
+          type: string
+          description: ISO 3166-1 alpha-2 code of the country of the region.
+          example: FR
+        greenLabel:
+          type: boolean
+          description: Whether the region runs on low-carbon energy.
+          example: true
+        regionUrl:
+          type: string
+          description: Domain of the project URLs in this region.
+          example: fra.meilisearch.io
+      required:
+      - id
+      - name
+      - awsRegion
+      - countryCode
+      - greenLabel
+      - regionUrl
+    MeilisearchVersion:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Version to send as `msVersion` or `version`.
+          example: v1.54.0
+        tag:
+          type: string
+          description: Release tag of the version.
+          example: v1.54.0
+        latest:
+          type: boolean
+          description: Whether it is the latest version, used by default.
+          example: true
+      required:
+      - name
+      - tag
+      - latest
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id of the project.
+          example: 56
+        name:
+          type: string
+          description: Name of the project.
+          example: my-project
+        projectUid:
+          type: string
+          description: Unique identifier of the project, used in its URL.
+          example: ms-1a2b3c4d5e6f-1234
+        url:
+          type: string
+          nullable: true
+          description: URL of the Meilisearch instance. `null` until its DNS record
+            is ready.
+          example: https://ms-1a2b3c4d5e6f-1234.fra.meilisearch.io
+        masterKey:
+          type: string
+          description: Only returned on project creation and master key endpoints.
+          example: b9f0c3d2e1a4f5b6c7d8e9f0a1b2c3d4
+        teamId:
+          type: integer
+          description: Id of the team of the project.
+          example: 34
+        resourceId:
+          type: integer
+          description: Id of the resource of the project.
+          example: 7
+        msVersion:
+          type: string
+          description: Meilisearch version of the instance.
+          example: v1.54.0
+        readOnly:
+          type: boolean
+          description: Whether the instance only accepts read requests.
+          example: false
+        status:
+          type: string
+          enum:
+          - creating
+          - waiting_for_end_of_dns_ttl
+          - health_checking
+          - running
+          - changing_plan
+          - updating
+          - restoring
+          - failed
+          - update_failed
+          - paused
+          description: State of the instance.
+          example: running
+        paused:
+          type: boolean
+          description: Whether the instance is paused.
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation date of the project.
+          example: '2026-01-15T09:30:00Z'
+        terminatedAt:
+          type: string
+          format: date-time
+          nullable: true
+          example:
+          description: Termination date of the project. `null` for an active project.
+        freeTrialEndsAt:
+          type: string
+          format: date-time
+          nullable: true
+          example:
+          description: End date of the free trial. `null` outside a free trial.
+        resource:
+          "$ref": "#/components/schemas/Resource"
+      required:
+      - id
+      - name
+      - projectUid
+      - teamId
+      - resourceId
+      - msVersion
+      - readOnly
+      - status
+      - paused
+      - createdAt
+      - resource
+    ProjectUsageDay:
+      type: object
+      description: Usage of a UTC day. A null quantity means nothing was collected
+        that day.
+      properties:
+        date:
+          type: string
+          format: date
+          description: UTC day.
+          example: '2026-11-01'
+        runtime:
+          type: array
+          description: Hours per machine size (resource), each one having its own
+            hourly price.
+          items:
+            type: object
+            properties:
+              resourceId:
+                type: integer
+                description: Id of the resource.
+                example: 7
+              hours:
+                type: number
+                description: Hours the instance ran on this resource.
+                example: 24
+            required:
+            - resourceId
+            - hours
+        storageGb:
+          type: integer
+          nullable: true
+          description: Provisioned disk, in GB.
+          example: 32
+        bandwidthBytes:
+          type: integer
+          nullable: true
+          description: Outbound bandwidth, in bytes.
+          example: 52428800
+        documents:
+          type: integer
+          nullable: true
+          description: Number of documents stored.
+          example: 120000
+        searches:
+          type: integer
+          nullable: true
+          description: Number of search requests.
+          example: 4500
+        chatTokens:
+          type: integer
+          nullable: true
+          description: Number of chat completion tokens.
+          example: 0
+      required:
+      - date
+      - runtime
+      - storageGb
+      - bandwidthBytes
+      - documents
+      - searches
+      - chatTokens
+    ProjectUsage:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Id of the project.
+          example: 56
+        from:
+          type: string
+          format: date
+          description: First UTC day of the window.
+          example: '2026-11-01'
+        to:
+          type: string
+          format: date
+          description: Last UTC day of the window.
+          example: '2026-11-23'
+        days:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ProjectUsageDay"
+          description: Usage of each day of the window.
+      required:
+      - projectId
+      - from
+      - to
+      - days
+    ProjectCostItem:
+      type: object
+      description: A feature the project is billed per usage for. Monthly prices (storage,
+        documents, base fee) are prorated on the hours the project existed.
+      properties:
+        kind:
+          type: string
+          enum:
+          - instance_runtime
+          - storage
+          - bandwidth
+          - document
+          - search
+          - chat_token
+          - base
+          description: What the item bills.
+          example: instance_runtime
+        resourceId:
+          type: integer
+          description: Machine size of an instance_runtime item.
+          example: 7
+        quantity:
+          type: number
+          description: Quantity used, in `unit`.
+          example: 552
+        unit:
+          type: string
+          enum:
+          - hour
+          - GB-month
+          - MB
+          - document-month
+          - search
+          - token
+          - month
+          description: Unit of `quantity` and `unitPrice`.
+          example: hour
+        unitPrice:
+          type: number
+          description: Price of one unit, in `currency`.
+          example: 0.05
+        amount:
+          type: number
+          description: Equal to `quantity` × `unitPrice`.
+          example: 27.6
+      required:
+      - kind
+      - quantity
+      - unit
+      - unitPrice
+      - amount
+    ProjectCost:
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Id of the project.
+          example: 56
+        from:
+          type: string
+          format: date
+          description: First UTC day of the window.
+          example: '2026-11-01'
+        to:
+          type: string
+          format: date
+          description: Last UTC day of the window.
+          example: '2026-11-23'
+        currency:
+          type: string
+          description: Currency of the prices and amounts.
+          example: USD
+        total:
+          type: number
+          description: Sum of the item amounts.
+          example: 27.6
+        items:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ProjectCostItem"
+          description: Cost per billed feature.
+      required:
+      - projectId
+      - from
+      - to
+      - currency
+      - total
+      - items
+security:
+- personal_access_token: []
+- oauth2:
+  - read
+  - write
+servers:
+- url: https://api.meilisearch.com
