@@ -27,7 +27,6 @@ export type MeilisearchConfig = {
 export type IngestConfig = {
   /** Absolute path of the docs root (where the navigation file and MDX pages live). */
   rootDir: string;
-  baseUrl: string;
   /** Path of the navigation file, relative to `rootDir`. */
   navigation: string;
   /** Page globs (for example `changelog/**`) to skip. */
@@ -70,7 +69,6 @@ export type Chunk = {
   id: string;
   page: string;
   page_hash: string;
-  url: string;
   anchor: string | null;
   title: string;
   description: string;

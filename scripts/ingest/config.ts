@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { ChunkingConfig, IngestConfig, MeilisearchConfig } from "./types.ts";
 
 /** Bump when chunking or cleaning logic changes, to force a full re-sync. */
-export const PIPELINE_VERSION = 4;
+export const PIPELINE_VERSION = 1;
 
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 export const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "../..");
@@ -16,7 +16,6 @@ export const DEFAULT_CHUNKING: ChunkingConfig = {
 
 export const DEFAULT_CONFIG: IngestConfig = {
   rootDir: PROJECT_ROOT,
-  baseUrl: "https://www.meilisearch.com/docs",
   navigation: "config/navigation.json",
   exclude: [],
   sources: { mdx: true, codeSamples: true, images: false },

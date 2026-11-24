@@ -3,9 +3,9 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, rerank, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch, MeilisearchApiError } from "meilisearch";
 import { z } from "zod";
-import { groupReleases, resolvePage, type Release } from "./releases.ts";
+import { groupReleases, resolvePage, type Release } from "./releases.js";
 import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
-import { pageKey, type Source } from "../src/source.ts";
+import { pageHref, pageKey, type Source } from "../src/source.js";
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
@@ -31,7 +31,7 @@ const MIN_KEEP = 3;
 /** Guardrail for the tool loop. Unused steps are not called. */
 const STEP_BUDGET = 8;
 
-const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group", "version_label", "released_on"] as const;
+const HIT_FIELDS = ["title", "page", "anchor", "breadcrumb", "content", "content_type", "tab", "group", "version_label", "released_on"] as const;
 
 const ISO_DATE = new Intl.DateTimeFormat("en-CA", {
   timeZone: "UTC",
@@ -181,6 +181,7 @@ function stringRecord(value: unknown): Record<string, string> | undefined {
 type SearchHit = {
   title: string;
   page: string;
+  /** Derived from `page` and `anchor`. Not stored on the chunk. */
   url: string;
   anchor: string | null;
   breadcrumb: string;
@@ -592,11 +593,13 @@ export async function POST(request: Request): Promise<Response> {
     const content = contentType === "code_sample" ? renderSample(stringRecord(hit.codes)) : text(hit.content);
     const releasedOn = textOrNull(hit.released_on);
     const versionLabel = textOrNull(hit.version_label);
+    const page = text(hit.page);
+    const anchor = textOrNull(hit.anchor);
     return {
       title: text(hit.title),
-      page: text(hit.page),
-      url: text(hit.url),
-      anchor: textOrNull(hit.anchor),
+      page,
+      url: page ? pageHref(page, anchor) : "",
+      anchor,
       breadcrumb: text(hit.breadcrumb),
       content,
       content_type: contentType,
@@ -709,9 +712,9 @@ export async function POST(request: Request): Promise<Response> {
       detail.hits = kept.flatMap((item) => (item.hit.page ? [{ page: item.hit.page, rank: item.voyageRank, meiliRank: item.originalIndex + 1 }] : []));
       detail.resultBytes = utf8Bytes({ hits: kept.map((item) => item.hit) });
       for (const item of kept) {
-        const { page, url, title, tab, group } = item.hit;
-        if (!page || !url) continue;
-        const key = pageKey(url);
+        const { page, title, tab, group } = item.hit;
+        if (!page) continue;
+        const key = pageKey(page);
         const previous = pageSources.get(key);
         if (previous) {
           previous.score = Math.max(previous.score, item.score);
@@ -721,7 +724,7 @@ export async function POST(request: Request): Promise<Response> {
         pageSources.set(key, {
           key,
           title: title || key,
-          href: url.split("#")[0],
+          href: pageHref(page),
           ...(breadcrumb ? { breadcrumb } : {}),
           score: item.score,
           order: sourceOrder++,
@@ -752,7 +755,7 @@ export async function POST(request: Request): Promise<Response> {
           filter: `page = "${resolved}"`, // the schema regex rejects quotes and backslashes
           sort: ["chunk_index:asc"],
           limit: MAX_PAGE_CHUNKS,
-          attributesToRetrieve: ["title", "url", "content", "content_type", "codes"],
+          attributesToRetrieve: ["title", "content", "content_type", "codes"],
           showPerformanceDetails: true,
         }),
       );
@@ -768,7 +771,7 @@ export async function POST(request: Request): Promise<Response> {
       const { text, truncated } = truncate(markdown, MAX_PAGE_CHARS);
       const body = {
         title: hits[0].title as string,
-        url: (hits[0].url as string).split("#")[0],
+        url: pageHref(resolved),
         markdown: text,
         truncated: truncated || (estimatedTotalHits ?? hits.length) > hits.length,
       };
@@ -777,7 +780,7 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
 
-  const routeAttributes = ["title", "page", "url", "content", "chunk_index", "codes"];
+  const routeAttributes = ["title", "page", "content", "chunk_index", "codes"];
   const loadRoute = async (filter: string, spans: MeiliSpan[]) => {
     const { hits } = await runMeili(spans, () =>
       routes.search("", {
@@ -800,7 +803,7 @@ export async function POST(request: Request): Promise<Response> {
       matched,
       title: hits[0].title as string,
       page: hits[0].page as string,
-      url: String(hits[0].url).split("#")[0],
+      url: pageHref(String(hits[0].page ?? "")),
       markdown: text,
       truncated,
       language: selected.language,
@@ -817,11 +820,10 @@ export async function POST(request: Request): Promise<Response> {
       const page = hit.page;
       if (typeof page !== "string" || seen.has(page)) continue;
       seen.add(page);
-      const url = hit.url;
       pages.push({
         title: typeof hit.title === "string" ? hit.title : "",
         page,
-        url: typeof url === "string" ? url.split("#")[0] : "",
+        url: pageHref(page),
       });
     }
     return pages;
@@ -916,7 +918,7 @@ export async function POST(request: Request): Promise<Response> {
           client.index(config.changelogIndex).search("", {
             sort: ["released_on:desc"],
             limit: MAX_PAGE_CHUNKS,
-            attributesToRetrieve: ["page", "url", "version_label", "released_on"],
+            attributesToRetrieve: ["page", "version_label", "released_on"],
             showPerformanceDetails: true,
           }),
         );
@@ -1043,7 +1045,12 @@ export async function POST(request: Request): Promise<Response> {
     headers,
     messageMetadata: ({ part }) => {
       if (part.type !== "finish") return undefined;
-      const cited = new Set((answerText.match(/https?:\/\/[^\s)<>"'\]]+/g) ?? []).map(pageKey));
+      const cited = new Set(
+        [...answerText.matchAll(/\]\(\s*<?([^)\s>]+)>?|(https?:\/\/[^\s)<>"'\]]+)/g)].flatMap((match) => {
+          const target = (match[1] ?? match[2])?.replace(/[.,;:!?]+$/, "");
+          return target ? [pageKey(target)] : [];
+        }),
+      );
       const sources = [...pageSources.values()]
         .filter((source) => cited.has(source.key))
         .sort((a, b) => b.score - a.score || a.order - b.order)

@@ -8,7 +8,6 @@ function chunk(page: string, pageHash: string, index: number): Chunk {
     id: `${page}-${index}`,
     page,
     page_hash: pageHash,
-    url: `https://example.com/${page}`,
     anchor: null,
     title: page,
     description: "",

@@ -1,6 +1,7 @@
+import { pageHref } from "../src/source.js";
+
 export type ReleaseChunk = {
   page?: string;
-  url?: string;
   version_label?: string;
   released_on?: string;
 };
@@ -26,12 +27,11 @@ export function groupReleases(hits: readonly unknown[]): Release[] {
     const page = textField(hit, "page");
     const version = textField(hit, "version_label");
     const releasedOn = textField(hit, "released_on");
-    const url = textField(hit, "url");
-    if (!page || !version || !releasedOn || !url || byPage.has(page)) continue;
+    if (!page || !version || !releasedOn || byPage.has(page)) continue;
     byPage.set(page, {
       version,
       released_on: releasedOn,
-      url: url.split("#")[0],
+      url: pageHref(page),
     });
   }
   return [...byPage.values()].sort((a, b) => b.released_on.localeCompare(a.released_on));

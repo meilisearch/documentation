@@ -13,7 +13,6 @@ import { normalizeLanguage, selectSample } from "../languages.ts";
 import { loadApiRoutes } from "../sources/openapi.ts";
 
 const FIXTURE_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../__fixtures__/docs");
-const BASE_URL = "https://www.meilisearch.com/docs";
 
 describe("language selection", () => {
   it("normalizes Mintlify labels and snippet fence labels to the same key", () => {
@@ -78,7 +77,6 @@ describe("API route chunks", () => {
     const [route] = await loadApiRoutes({
       rootDir: FIXTURE_DIR,
       navigation: "navigation.json",
-      baseUrl: BASE_URL,
       chunking: DEFAULT_CHUNKING,
     });
 
@@ -88,18 +86,16 @@ describe("API route chunks", () => {
       "reference/api/indexes/list-indexes",
       "list-indexes",
       "/reference/api/indexes/list-indexes",
-      "https://www.meilisearch.com/docs/reference/api/indexes/list-indexes",
     ]);
     expect(route.parts.join("\n\n")).toContain('"results"');
     expect(route.parts.join("\n\n")).not.toContain("ResponseError");
     expect(route.codes).toEqual({ http: "curl -X GET 'MEILISEARCH_URL/indexes'" });
     expect(route.sdkMethods).toEqual([]);
 
-    const chunks = chunkRoute(route, BASE_URL);
+    const chunks = chunkRoute(route);
     expect(chunks).toHaveLength(1);
     expect(chunks[0]).toMatchObject({
       content_type: "api_route",
-      url: "https://www.meilisearch.com/docs/reference/api/indexes/list-indexes",
       codes: route.codes,
       code_language: ["http"],
       sdk_methods: [],
@@ -110,7 +106,6 @@ describe("API route chunks", () => {
     const routes = await loadApiRoutes({
       rootDir: PROJECT_ROOT,
       navigation: "config/navigation.json",
-      baseUrl: BASE_URL,
       chunking: DEFAULT_CHUNKING,
       only: ["reference/api/search/*"],
     });
@@ -133,7 +128,7 @@ describe("API route chunks", () => {
     expect(get!.sdkMethods).toContain("searchGet");
     expect(post!.sdkMethods).toEqual(expect.arrayContaining(["search", "SearchAsync", "with_query", "execute"]));
 
-    const chunks = chunkRoute(get!, BASE_URL);
+    const chunks = chunkRoute(get!);
     expect(chunks[0].codes).toEqual(get!.codes);
     expect(chunks[1].codes).toBeUndefined();
     expect(chunks.every((chunk) => chunk.lookup_keys?.includes("search-with-get"))).toBe(true);
@@ -145,7 +140,6 @@ describe("API route chunks", () => {
     const routes = await loadApiRoutes({
       rootDir: PROJECT_ROOT,
       navigation: "config/navigation.json",
-      baseUrl: BASE_URL,
       chunking: DEFAULT_CHUNKING,
     });
     const embedders = routes.find(

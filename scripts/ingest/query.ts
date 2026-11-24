@@ -1,5 +1,6 @@
 import { parseArgs } from "node:util";
 import { Meilisearch } from "meilisearch";
+import { pageHref } from "../../chat/src/source.ts";
 import { resolveMeilisearchConfig } from "./config.ts";
 import userConfig from "./ingest.config.ts";
 import type { Chunk } from "./types.ts";
@@ -32,7 +33,7 @@ async function main(): Promise<void> {
   const response = await client.index<Chunk>(indexUid).search(query, {
     hybrid: { embedder: meilisearch.embedder.name, semanticRatio: Number(values.ratio) },
     limit: Number(values.limit),
-    attributesToRetrieve: ["breadcrumb", "url", "content", "content_type", "version_label", "released_on"],
+    attributesToRetrieve: ["breadcrumb", "page", "anchor", "content", "content_type", "version_label", "released_on"],
     showRankingScore: true,
   });
 
@@ -40,7 +41,8 @@ async function main(): Promise<void> {
   for (const [rank, hit] of response.hits.entries()) {
     const score = hit._rankingScore?.toFixed(3) ?? "?";
     const release = [hit.version_label, hit.released_on].filter(Boolean).join(" ");
-    console.log(`${rank + 1}. [${score}] ${release ? `${release} — ` : ""}${hit.breadcrumb}\n   ${hit.url}`);
+    const href = hit.page ? pageHref(hit.page, hit.anchor) : "";
+    console.log(`${rank + 1}. [${score}] ${release ? `${release} — ` : ""}${hit.breadcrumb}\n   ${href}`);
     console.log(`   ${hit.content.replace(/\s+/g, " ").slice(0, 200)}...\n`);
   }
 }

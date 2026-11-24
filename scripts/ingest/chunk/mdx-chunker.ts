@@ -11,7 +11,7 @@ import { unified } from "unified";
 import type { Chunk, ChunkingConfig, CodeSample, RawPage } from "../types.ts";
 import { cleanTree } from "./mdast-to-text.ts";
 
-export type ChunkPageOptions = { chunking: ChunkingConfig; baseUrl: string };
+export type ChunkPageOptions = { chunking: ChunkingConfig };
 
 type Section = { hierarchy: string[]; anchor: string | null; heading: Heading | null; blocks: RootContent[] };
 
@@ -269,7 +269,6 @@ export function chunkPage(page: RawPage, options: ChunkPageOptions): Chunk[] {
   const samples = new Map((page.samples ?? []).map((sample) => [sample.alias, sample]));
   const tree = cleanTree(parse(page), new Set(samples.keys()));
   const title = page.frontmatter.title;
-  const pageUrl = `${options.baseUrl}/${page.page}`;
   const rendered = serializeSections(splitSections(tree, title, options.chunking.splitDepth)).flatMap((section) =>
     expandSentinels(section, samples),
   );
@@ -293,7 +292,6 @@ export function chunkPage(page: RawPage, options: ChunkPageOptions): Chunk[] {
       id: `${page.page.replaceAll("/", "__")}-${chunkIndex}`.replace(/[^a-zA-Z0-9_-]/g, "_"),
       page: page.page,
       page_hash: page.pageHash,
-      url: section.anchor ? `${pageUrl}#${section.anchor}` : pageUrl,
       anchor: section.anchor,
       title,
       description: page.frontmatter.description ?? "",

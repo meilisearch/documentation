@@ -1,7 +1,6 @@
 import { defineConfig } from "./config.ts";
 
 export default defineConfig({
-  baseUrl: "https://www.meilisearch.com/docs",
   navigation: "config/navigation.json",
   exclude: ["changelog/v*"],
   sources: { mdx: true, codeSamples: true, images: false },

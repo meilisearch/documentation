@@ -45,9 +45,8 @@ function codesFromSamples(samples: CodeSample[] | undefined): Record<string, str
   return codes;
 }
 
-function lookupKeys(method: string, routePath: string, page: string, summary: string, baseUrl: string): string[] {
-  const url = `${baseUrl}/${page}`;
-  return [`${method} ${routePath}`, page, slugify(summary), `/${page}`, url];
+function lookupKeys(method: string, routePath: string, page: string, summary: string): string[] {
+  return [`${method} ${routePath}`, page, slugify(summary), `/${page}`];
 }
 
 function sdkMethodNames(codes: Record<string, string>): string[] {
@@ -88,12 +87,7 @@ function hashRoute(route: RouteDocument, chunking: ChunkingConfig): string {
     .digest("hex");
 }
 
-function renderLocation(
-  location: RouteLocation,
-  spec: Spec,
-  baseUrl: string,
-  chunking: ChunkingConfig,
-): RouteDocument | null {
+function renderLocation(location: RouteLocation, spec: Spec, chunking: ChunkingConfig): RouteDocument | null {
   const match = ROUTE.exec(location.route);
   if (!match) return null;
   const method = match[1];
@@ -119,7 +113,7 @@ function renderLocation(
     },
     chunking.maxChars,
   );
-  const keys = lookupKeys(method, routePath, page, summary, baseUrl);
+  const keys = lookupKeys(method, routePath, page, summary);
 
   return {
     page,
@@ -140,7 +134,6 @@ function renderLocation(
 export async function loadApiRoutes(options: {
   rootDir: string;
   navigation: string;
-  baseUrl: string;
   chunking: ChunkingConfig;
   only?: string[];
 }): Promise<RouteDocument[]> {
@@ -164,7 +157,7 @@ export async function loadApiRoutes(options: {
       specs.set(location.source, spec);
     }
 
-    const route = renderLocation(location, spec, options.baseUrl, options.chunking);
+    const route = renderLocation(location, spec, options.chunking);
     if (!route) continue;
     if (only.length > 0 && !only.some((glob) => path.matchesGlob(route.page, glob))) continue;
     routes.push(route);

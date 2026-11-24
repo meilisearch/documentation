@@ -2,8 +2,6 @@ import { describe, expect, it } from "vitest";
 import { chunkPage } from "../chunk/mdx-chunker.ts";
 import type { ChunkingConfig, RawPage } from "../types.ts";
 
-const BASE_URL = "https://www.meilisearch.com/docs";
-
 const chunking: ChunkingConfig = {
   splitDepth: 3,
   maxChars: 2000,
@@ -26,14 +24,13 @@ describe("chunkPage", () => {
   it("turns a page with only prose into a single chunk carrying page metadata", () => {
     const page = makePage("Meilisearch can **personalize** results.\n\nIt uses user context.\n");
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks).toEqual([
       {
         id: "capabilities__personalization__overview-0",
         page: "capabilities/personalization/overview",
         page_hash: "hash-123",
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview",
         anchor: null,
         title: "Personalization",
         description: "Tailor results to users.",
@@ -61,14 +58,13 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(
-      chunks.map(({ id, chunk_index, anchor, url, hierarchy, breadcrumb, content }) => ({
+      chunks.map(({ id, chunk_index, anchor, hierarchy, breadcrumb, content }) => ({
         id,
         chunk_index,
         anchor,
-        url,
         hierarchy,
         breadcrumb,
         content,
@@ -78,7 +74,6 @@ describe("chunkPage", () => {
         id: "capabilities__personalization__overview-0",
         chunk_index: 0,
         anchor: null,
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview",
         hierarchy: ["Personalization"],
         breadcrumb: "Capabilities > Personalization > Personalization",
         content: "Intro text.",
@@ -87,7 +82,6 @@ describe("chunkPage", () => {
         id: "capabilities__personalization__overview-1",
         chunk_index: 1,
         anchor: "getting-started",
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#getting-started",
         hierarchy: ["Personalization", "Getting started"],
         breadcrumb: "Capabilities > Personalization > Personalization > Getting started",
         content: "## Getting started\n\nInstall the SDK.\n\n#### Requirements\n\nNode 20.",
@@ -96,7 +90,6 @@ describe("chunkPage", () => {
         id: "capabilities__personalization__overview-2",
         chunk_index: 2,
         anchor: "configure-ranking",
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#configure-ranking",
         hierarchy: ["Personalization", "Configure ranking"],
         breadcrumb: "Capabilities > Personalization > Personalization > Configure ranking",
         content: "## Configure ranking\n\nSet ranking rules.",
@@ -117,7 +110,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ hierarchy, anchor, content }) => ({ hierarchy, anchor, content }))).toEqual([
       {
@@ -143,18 +136,9 @@ describe("chunkPage", () => {
       ["## Movies", "### Example", "First example.", "## Books", "### Example", "Second example."].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
-    expect(chunks.map(({ anchor, url }) => ({ anchor, url }))).toEqual([
-      {
-        anchor: "example",
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#example",
-      },
-      {
-        anchor: "example-1",
-        url: "https://www.meilisearch.com/docs/capabilities/personalization/overview#example-1",
-      },
-    ]);
+    expect(chunks.map(({ anchor }) => anchor)).toEqual(["example", "example-1"]);
   });
 
   it("removes imports, exports, expressions, definitions, and generated code samples but keeps fenced code and inline code", () => {
@@ -171,7 +155,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "Call the `search` route.\n\n```bash\ncurl -X POST 'MEILISEARCH_URL/indexes/movies/search'\n```\n\nResults are ranked.",
@@ -187,7 +171,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "Personalization requires an API key.\n\n**Hybrid search**\n\nCombine keyword and semantic search.\n\nUse **filters** with filter expressions too.",
@@ -204,7 +188,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
     const content = chunks.map(({ content }) => content).join("\n\n");
 
     expect(content).toContain("Send this request:");
@@ -225,7 +209,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "Read the ranking guide and the API reference.\n\nSearch results dashboard\n\nDone.",
@@ -241,7 +225,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "Ranking rules diagram\n\nClick the gear icon to open settings.",
@@ -268,7 +252,7 @@ describe("chunkPage", () => {
       { page: "changelog/changelog", tab: "Changelog", group: "", frontmatter: { title: "Changelog" } },
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(
       chunks.map(({ hierarchy, anchor, breadcrumb, content }) => ({ hierarchy, anchor, breadcrumb, content })),
@@ -307,7 +291,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking: { ...chunking, minChars: 20 }, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking: { ...chunking, minChars: 20 } });
 
     expect(chunks.map(({ id, hierarchy, anchor, content }) => ({ id, hierarchy, anchor, content }))).toEqual([
       {
@@ -336,7 +320,6 @@ describe("chunkPage", () => {
 
     const chunks = chunkPage(page, {
       chunking: { ...chunking, minChars: 20, maxChars: 40 },
-      baseUrl: BASE_URL,
     });
 
     expect(chunks.map(({ hierarchy, content }) => ({ hierarchy, content }))).toEqual([
@@ -358,7 +341,6 @@ describe("chunkPage", () => {
 
     const chunks = chunkPage(page, {
       chunking: { ...chunking, maxChars: 60 },
-      baseUrl: BASE_URL,
     });
 
     expect(
@@ -391,7 +373,7 @@ describe("chunkPage", () => {
   it("splits a single paragraph longer than maxChars between words", () => {
     const page = makePage("Ranking rules sort documents by relevance before any custom sort is applied.");
 
-    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 30 }, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 30 } });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "Ranking rules sort documents",
@@ -403,7 +385,7 @@ describe("chunkPage", () => {
   it("serializes tables without padding cells to align columns", () => {
     const page = makePage(["| Field | Description |", "| --- | --- |", "| `id` | Primary key of the document |"].join("\n"));
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks[0].content).toBe("| Field | Description |\n| - | - |\n| `id` | Primary key of the document |");
   });
@@ -413,7 +395,7 @@ describe("chunkPage", () => {
       ["| Field | Type |", "| --- | --- |", "| `uid` | string |", "| `primaryKey` | string |", "| `createdAt` | date |"].join("\n"),
     );
 
-    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 72 }, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking: { ...chunking, maxChars: 72 } });
 
     expect(chunks.map(({ content }) => content)).toEqual([
       "| Field | Type |\n| - | - |\n| `uid` | string |\n| `primaryKey` | string |",
@@ -426,7 +408,7 @@ describe("chunkPage", () => {
 
     let error: unknown;
     try {
-      chunkPage(page, { chunking, baseUrl: BASE_URL });
+      chunkPage(page, { chunking });
     } catch (caught) {
       error = caught;
     }
@@ -441,20 +423,15 @@ describe("chunkPage", () => {
   it("builds ids that only use characters Meilisearch accepts in document ids", () => {
     const page = makePage("Server-side rendering.", { page: "getting_started/frameworks/next.js" });
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
-    expect(chunks.map(({ id, url }) => ({ id, url }))).toEqual([
-      {
-        id: "getting_started__frameworks__next_js-0",
-        url: "https://www.meilisearch.com/docs/getting_started/frameworks/next.js",
-      },
-    ]);
+    expect(chunks.map(({ id }) => id)).toEqual(["getting_started__frameworks__next_js-0"]);
   });
 
   it("uses an empty description when the frontmatter has none", () => {
     const page = makePage("Some text.", { frontmatter: { title: "Personalization" } });
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ description }) => description)).toEqual([""]);
   });
@@ -475,7 +452,7 @@ describe("chunkPage", () => {
       ].join("\n\n"),
     );
 
-    const chunks = chunkPage(page, { chunking, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking });
 
     expect(chunks.map(({ hierarchy, anchor, content }) => ({ hierarchy, anchor, content }))).toEqual([
       { hierarchy: ["Personalization", "Create an index"], anchor: "create-an-index", content: "### Create an index\n\nName it movies." },
@@ -500,7 +477,6 @@ describe("chunkPage", () => {
 
     const chunks = chunkPage(makePage(body), {
       chunking: { splitDepth: 3, maxChars: 400, minChars: 20 },
-      baseUrl: BASE_URL,
     });
 
     expect(["# Personalization", ...chunks.map(({ content }) => content)].join("\n\n")).toBe(
@@ -515,7 +491,6 @@ describe("chunkPage", () => {
     const body = ["## Feature", filler, "Example usage:", fence, "Then restart."].join("\n\n");
     const chunks = chunkPage(makePage(body), {
       chunking: { splitDepth: 3, maxChars: filler.length + 30, minChars: 0 },
-      baseUrl: BASE_URL,
     });
 
     const holdingFence = chunks.find((chunk) => chunk.content.includes("```bash"));
@@ -544,7 +519,6 @@ describe("chunkPage", () => {
 
     const chunks = chunkPage(page, {
       chunking: { splitDepth: 3, maxChars: 2000, minChars: 500 },
-      baseUrl: BASE_URL,
     });
 
     expect(chunks.map(({ content_type, chunk_index }) => ({ content_type, chunk_index }))).toEqual([
@@ -579,7 +553,7 @@ describe("chunkPage", () => {
       },
     );
 
-    const chunks = chunkPage(page, { chunking: { splitDepth: 3, maxChars: 2000, minChars: 200 }, baseUrl: BASE_URL });
+    const chunks = chunkPage(page, { chunking: { splitDepth: 3, maxChars: 2000, minChars: 200 } });
 
     expect(chunks.map((chunk) => chunk.content_type)).toEqual(["prose", "code_sample", "prose"]);
     expect(chunks[0].content).toContain("Check the settings:");

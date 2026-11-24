@@ -1,8 +1,9 @@
 import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
 import { code } from "./highlight";
+import { linkTarget, localizeHref } from "./links";
 import type { ChatMessage } from "./source";
-import { expandedPageLabel, isExpandPart, isReleasesPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
+import { expandedPageLabel, isExpandPart, isReleasesPart, isSearchPart, searchQuery, Sources } from "./Sources";
 
 function ToolStatus({ state, label }: { state: string; label: string }) {
   const done = state === "output-available";
@@ -16,8 +17,10 @@ function ToolStatus({ state, label }: { state: string; label: string }) {
 }
 
 function Link({ href, children }: ComponentProps<"a">) {
+  const page = window.location.href;
+  const local = href ? localizeHref(href, page) : href;
   return (
-    <a href={href} {...(href ? linkTarget(href) : {})}>
+    <a href={local} {...(local ? linkTarget(local, page) : {})}>
       {children}
     </a>
   );

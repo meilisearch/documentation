@@ -61,7 +61,6 @@ export async function runIngest({
   const routes = await loadApiRoutes({
     rootDir: config.rootDir,
     navigation: config.navigation,
-    baseUrl: config.baseUrl,
     chunking: config.chunking,
     only,
   });
@@ -79,7 +78,7 @@ export async function runIngest({
     ? await syncIndex(
         pages,
         sinks.docs,
-        (page) => chunkPage(page, { chunking: config.chunking, baseUrl: config.baseUrl }),
+        (page) => chunkPage(page, { chunking: config.chunking }),
         only,
         force,
       )
@@ -87,7 +86,7 @@ export async function runIngest({
   const routeSummary = await syncIndex(
     routes,
     sinks.routes,
-    (route) => chunkRoute(route, config.baseUrl),
+    (route) => chunkRoute(route),
     only,
     force,
   );
@@ -95,7 +94,7 @@ export async function runIngest({
     ? await syncIndex(
         releases,
         sinks.changelog,
-        (page) => chunkRelease(page, { chunking: config.chunking, baseUrl: config.baseUrl }),
+        (page) => chunkRelease(page, { chunking: config.chunking }),
         only,
         force,
       )

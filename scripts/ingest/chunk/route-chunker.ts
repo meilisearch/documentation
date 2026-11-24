@@ -243,14 +243,12 @@ export function renderRoute(input: RenderInput, maxChars: number): string[] {
   return splitRouteContent(title, blocks, maxChars);
 }
 
-export function chunkRoute(route: RouteDocument, baseUrl: string): Chunk[] {
-  const url = `${baseUrl}/${route.page}`;
+export function chunkRoute(route: RouteDocument): Chunk[] {
   return route.parts.map((content, chunkIndex) => {
     const chunk: Chunk = {
       id: `${route.page.replaceAll("/", "__")}-${chunkIndex}`.replace(/[^a-zA-Z0-9_-]/g, "_"),
       page: route.page,
       page_hash: route.pageHash,
-      url,
       anchor: null,
       title: route.summary,
       description: route.description,

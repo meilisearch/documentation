@@ -82,7 +82,6 @@ describe("chunkRelease", () => {
 
     const chunks = chunkRelease(page, {
       chunking: { ...DEFAULT_CHUNKING, minChars: 0 },
-      baseUrl: "https://www.meilisearch.com/docs",
     });
 
     expect(chunks.map((chunk) => chunk.release_section)).toEqual(["New Features", "Bug Fixes"]);
