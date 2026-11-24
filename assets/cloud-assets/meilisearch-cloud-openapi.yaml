@@ -886,12 +886,14 @@ paths:
       description: Id of the project.
       required: true
     patch:
-      summary: Update project version
+      summary: Upgrade project version
       tags:
       - Projects
       operationId: upgradeProjectVersion
       description: 'Upgrades a project to a newer Meilisearch version. The upgrade
-        runs in the background: the project `status` is `updating` until it is done.'
+        runs in the background: the project `status` is `updating` until it is done.
+        Downgrades are not supported: once upgraded, a project cannot go back to an
+        older version. The project must be `running`.'
       security:
       - personal_access_token: []
       - oauth2:
@@ -975,13 +977,14 @@ paths:
               examples:
                 project_cannot_be_updated:
                   value:
-                    message: Cannot update now
+                    message: The project must be running to be upgraded.
                     code: project_cannot_be_updated
                     type: invalid_request
                     link: https://www.meilisearch.com/docs/reference/management-api-errors#project_cannot_be_updated
                 project_manual_update_disabled:
                   value:
-                    message: Cannot update instance
+                    message: Manual version upgrades are disabled for this project.
+                      Contact support.
                     code: project_manual_update_disabled
                     type: invalid_request
                     link: https://www.meilisearch.com/docs/reference/management-api-errors#project_manual_update_disabled
@@ -999,7 +1002,8 @@ paths:
                   type: string
                   example: v1.54.0
                   description: Meilisearch version to upgrade to, as listed by `GET
-                    /meilisearch-versions`. Must be newer than the current one.
+                    /meilisearch-versions`. Must be newer than the current version
+                    of the project.
         required: true
   "/api/v2/projects":
     get:
