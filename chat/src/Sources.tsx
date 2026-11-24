@@ -16,6 +16,10 @@ export function isExpandPart(part: Part): part is Part & { type: "tool-expand_pa
   return part.type === "tool-expand_page";
 }
 
+export function isReleasesPart(part: Part): part is Part & { type: "tool-list_releases"; state: string } {
+  return part.type === "tool-list_releases";
+}
+
 /** Page title once the tool has returned, the requested page path before. */
 export function expandedPageLabel(part: Part): string | undefined {
   const { input, output } = part as { input?: { page?: unknown }; output?: { title?: unknown } };

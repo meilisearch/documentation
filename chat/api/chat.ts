@@ -3,6 +3,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { convertToModelMessages, isStepCount, rerank, streamText, tool, type UIMessage } from "ai";
 import { Meilisearch, MeilisearchApiError } from "meilisearch";
 import { z } from "zod";
+import { groupReleases, resolvePage, type Release } from "./releases.ts";
 import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
 import { pageKey, type Source } from "../src/source.ts";
 import type { ChatUser } from "../src/user.ts";
@@ -27,26 +28,61 @@ const MIN_SCORE = 0.5;
 /** Drop a hit more than this far below the top Voyage score. */
 const MAX_DROP = 0.2;
 const MIN_KEEP = 3;
-const MAX_SEARCHES = 2;
-const MAX_READS = 2;
+/** Guardrail for the tool loop. Unused steps are not called. */
+const STEP_BUDGET = 8;
 
 const HIT_FIELDS = ["title", "page", "url", "anchor", "breadcrumb", "content", "content_type", "tab", "group", "version_label", "released_on"] as const;
 
-const SYSTEM_PROMPT = `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
+const ISO_DATE = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "UTC",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
 
-Rules:
-- Call the search tool before answering a question about Meilisearch. Write 1 short, keyword-rich query, about 12 words at most. If the question has two distinct parts, call search twice in the same turn, one query per part. Do not search more than twice. On a follow-up question, include the topic from the earlier turns in the query.
-- Answer from the search hits. They may be prose chunks, code samples already in the reader's language, API route chunks, or changelog release notes.
-- A changelog hit has version_label and released_on. Quote released_on as the release date, and do not invent a date when it is absent. To read a whole release, call expand_page with that hit's page.
-- Call expand_page or get_api_route only when the hits are not enough: a chunk is cut off, or the answer needs parameters, a request body, or a complete example. Pass expand_page the "page" field of a hit. Pass get_api_route the page of a hit whose content_type is "api_route", or a method and path. Open at most two pages or routes.
-- Answer only from the search results, expanded pages, and get_api_route results. If they do not contain the answer, say so plainly and suggest rephrasing. Never invent settings, routes, parameters, or behavior.
-- If the question is not about Meilisearch or search, politely decline and say what you can help with.
+const LONG_DATE = new Intl.DateTimeFormat("en-US", {
+  timeZone: "UTC",
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+function isoDate(now: Date): string {
+  return ISO_DATE.format(now);
+}
+
+function longDate(now: Date): string {
+  return LONG_DATE.format(now);
+}
+
+const systemPrompt = (now: Date) => `You are the Meilisearch documentation assistant, embedded in the Meilisearch docs website.
+
+Today is ${isoDate(now)} (${longDate(now)}).
+
+Answering
+- Answer from what the tools return. When they do not contain the answer, say so plainly and suggest a rephrasing.
+- A question that is not about Meilisearch or search: politely decline and say what you can help with.
+
+Release questions
+- A question about a period is a window: "the last 3 months", "since v1.50", "what shipped in 2025". Call list_releases once, then pick the window from the dates in it.
+- The list names versions and dates. Read a release with expand_page before saying what changed in it.
+- State a release date only as list_releases or a changelog hit returns it.
+- "When did X ship?" is not a window: the changelog hit from search carries released_on.
 
 Output
-- Be concise and direct. Synthesize the information from tool calls into a tailored answer, don't just repeat.
-- Link to sources when they allow the reader to learn nore about a mentioned API or concept. Use it to avoid digressing and enable progressive disclosure of information to users.
-- Links should be inserted inline as Markdown links on the relevant keywords using the "url" field of the result (append "#anchor" when "anchor" is not null). For an expanded page, use the "url" it returns, or the URL of a search result from that page. Never link to a URL that was not returned by a tool, and never guess an anchor.
+- Lead with the answer, then the detail that supports it. Synthesize rather than repeat the tool output.
+- Link the pages and routes you used, inline, on the words they explain. Copy the url a tool returned, with its anchor.
+- For a window question, open each release with its version and date, put one bullet per notable change under it, and link the release page.
 - Write for readers who may not be native English speakers.
+`;
+
+const triagePrompt = (now: Date) => `You route a question about the Meilisearch documentation to one tool.
+
+Today is ${isoDate(now)}.
+
+A question about a period is a window: "the last 3 months", "since v1.50", "what shipped in 2025". Call list_releases.
+Every other question: call search.
 `;
 
 /** Cuts `text` to at most `max` characters, on a paragraph boundary when possible. */
@@ -482,6 +518,7 @@ export async function POST(request: Request): Promise<Response> {
   if (!isValidMessages(messages)) return json(400, { error: "Invalid messages" }, headers);
 
   const user = parseChatUser(userInput);
+  const now = new Date();
   const started = performance.now();
   let inFlightMeili = 0;
   let answerFirstOutput: number | undefined;
@@ -492,10 +529,10 @@ export async function POST(request: Request): Promise<Response> {
   const searches: SearchDetail[] = [];
   const searchDetails = new Map<string, SearchDetail>();
   const seenChunks = new Set<string>();
-  let searchCount = 0;
-  let readCount = 0;
   const readDetails = new Map<string, ReadDetail>();
   const opened: OpenedPage[] = [];
+  type ReleaseListDetail = { count: number; bytes: number; oldest?: string; meili: MeiliSummary };
+  const releaseLists = new Map<string, ReleaseListDetail>();
 
   async function runMeili<T extends { processingTimeMs: number; performanceDetails?: unknown }>(
     spans: MeiliSpan[],
@@ -574,13 +611,11 @@ export async function POST(request: Request): Promise<Response> {
 
   const search = tool({
     description:
-      "Search the Meilisearch documentation and changelog. Results are prose chunks, code samples already in the reader's language, API route chunks, or release notes. A release note has version_label and released_on. Pass one short keyword-rich query, about 12 words. If the question has two distinct parts, call this tool twice in the same turn. On a follow-up, include the topic from earlier turns. Call expand_page or get_api_route only when a hit is missing detail: parameters, a full example, a whole release, or steps the chunk cuts off.",
+      "Search the Meilisearch documentation and changelog. Pass one short, keyword-rich query of about 12 words. A question with two distinct parts takes two calls in the same turn; a follow-up includes the earlier topic in its query.",
     inputSchema: z.object({
       q: z.string().min(1).max(500).describe("The search query"),
     }),
     execute: async ({ q }, { toolCallId }) => {
-      if (searchCount >= MAX_SEARCHES) return { hits: [], note: "Search budget used. Answer from earlier hits." };
-      searchCount += 1;
       const spans: MeiliSpan[] = [];
       const docsQuery = {
         indexUid: config.docsIndex,
@@ -699,27 +734,22 @@ export async function POST(request: Request): Promise<Response> {
   // Chunks of one page are ordered by chunk_index. Joining them rebuilds the page, samples included.
   const expandPage = tool({
     description:
-      "Read one documentation page in full, including code samples already chosen for the reader's language. Use it only when a search hit cuts off the steps or example the answer needs. Pass the `page` field of a search result.",
+      'Read one page in full: markdown, code samples in the reader\'s language, and its url. Pass the "page" field of a search result, or a version such as "v1.58" for release notes.',
     inputSchema: z.object({
       page: z
         .string()
         .min(1)
         .max(300)
         .regex(/^[\w\-/.]+$/)
-        .describe('The "page" field of a search result, for example "capabilities/personalization/overview"'),
+        .describe('The "page" field of a search result, or a version such as "v1.58"'),
     }),
     execute: async ({ page }, { toolCallId }) => {
-      if (readCount >= MAX_READS) {
-        const denied = { error: "Read budget used. Answer from what you have." };
-        rememberRead(toolCallId, "expand_page", page, denied, []);
-        return denied;
-      }
-      readCount += 1;
+      const resolved = resolvePage(page);
       const spans: MeiliSpan[] = [];
-      const pageIndex = page.startsWith("changelog/v") ? client.index(config.changelogIndex) : index;
+      const pageIndex = resolved.startsWith("changelog/v") ? client.index(config.changelogIndex) : index;
       const { hits, estimatedTotalHits } = await runMeili(spans, () =>
         pageIndex.search("", {
-          filter: `page = "${page}"`, // the schema regex rejects quotes and backslashes
+          filter: `page = "${resolved}"`, // the schema regex rejects quotes and backslashes
           sort: ["chunk_index:asc"],
           limit: MAX_PAGE_CHUNKS,
           attributesToRetrieve: ["title", "url", "content", "content_type", "codes"],
@@ -727,8 +757,8 @@ export async function POST(request: Request): Promise<Response> {
         }),
       );
       if (hits.length === 0) {
-        const missing = { error: `No page found for "${page}". Use the page field of a search result.` };
-        rememberRead(toolCallId, "expand_page", page, missing, spans);
+        const missing = { error: `No page found for "${resolved}". Use the page field of a search result.` };
+        rememberRead(toolCallId, "expand_page", resolved, missing, spans);
         return missing;
       }
       const parts = hits.map((hit) =>
@@ -742,7 +772,7 @@ export async function POST(request: Request): Promise<Response> {
         markdown: text,
         truncated: truncated || (estimatedTotalHits ?? hits.length) > hits.length,
       };
-      rememberRead(toolCallId, "expand_page", page, body, spans);
+      rememberRead(toolCallId, "expand_page", resolved, body, spans);
       return body;
     },
   });
@@ -799,7 +829,7 @@ export async function POST(request: Request): Promise<Response> {
 
   const getApiRoute = tool({
     description:
-      'Read one API route: its parameters, request body, and response example, plus a code sample already chosen for the reader\'s language. Pass a method and path ("POST /indexes/{index_uid}/search"), a docs URL, a slug such as "search-with-post", or an SDK method name such as updateEmbedders or update_embedders. If note is set, the reader\'s language has no sample: show the HTTP request and say so.',
+      'Read one API route: its parameters, request body, response example, and a code sample in the reader\'s language. Pass a method and path ("POST /indexes/{index_uid}/search"), a docs URL, a slug such as "search-with-post", or an SDK method name such as updateEmbedders. When note is set, the reader\'s language has no sample: show the HTTP request and say so.',
     inputSchema: z.object({
       route: z
         .string()
@@ -810,12 +840,6 @@ export async function POST(request: Request): Promise<Response> {
         ),
     }),
     execute: async ({ route }, { toolCallId }) => {
-      if (readCount >= MAX_READS) {
-        const denied = { error: "Read budget used. Answer from what you have." };
-        rememberRead(toolCallId, "get_api_route", route, denied, []);
-        return denied;
-      }
-      readCount += 1;
       const spans: MeiliSpan[] = [];
       const finish = (body: unknown) => {
         rememberRead(toolCallId, "get_api_route", route, body, spans);
@@ -855,6 +879,56 @@ export async function POST(request: Request): Promise<Response> {
     },
   });
 
+  const rememberReleases = (releases: Release[]) => {
+    for (const release of releases) {
+      const key = pageKey(release.url);
+      if (!key || pageSources.has(key)) continue;
+      pageSources.set(key, {
+        key,
+        title: `Meilisearch ${release.version} release notes`,
+        href: release.url,
+        breadcrumb: "Changelog",
+        score: 0,
+        order: sourceOrder++,
+      });
+    }
+  };
+
+  const listReleases = tool({
+    description:
+      "List every Meilisearch release, newest first: version, release date, and changelog url. It has no summaries: expand_page a version to read what changed.",
+    inputSchema: z.object({}),
+    execute: async (_input, { toolCallId }) => {
+      const spans: MeiliSpan[] = [];
+      const finish = (releases: Release[]) => {
+        const body = { releases };
+        releaseLists.set(toolCallId, {
+          count: releases.length,
+          bytes: utf8Bytes(body),
+          oldest: releases.at(-1)?.released_on,
+          meili: summarizeSpans(spans),
+        });
+        rememberReleases(releases);
+        return body;
+      };
+      try {
+        const { hits } = await runMeili(spans, () =>
+          client.index(config.changelogIndex).search("", {
+            sort: ["released_on:desc"],
+            limit: MAX_PAGE_CHUNKS,
+            attributesToRetrieve: ["page", "url", "version_label", "released_on"],
+            showPerformanceDetails: true,
+          }),
+        );
+        return finish(groupReleases(hits));
+      } catch (error) {
+        if (!(error instanceof MeilisearchApiError) || error.cause?.code !== "index_not_found") throw error;
+        console.error("[chat] changelog index missing");
+        return finish([]);
+      }
+    },
+  });
+
   const logFooter = (status: string) => {
     const lines = [`└─ ${status}`];
     if (answerFirstOutput !== undefined) lines.push(`   answer firstOutput +${formatDuration(answerFirstOutput)}`);
@@ -865,14 +939,21 @@ export async function POST(request: Request): Promise<Response> {
   logChat(["trace"]);
   const result = streamText({
     model: main,
-    system: SYSTEM_PROMPT,
+    system: systemPrompt(now),
     messages: await convertToModelMessages(messages),
-    tools: { search, expand_page: expandPage, get_api_route: getApiRoute },
-    stopWhen: isStepCount(3),
+    tools: { search, expand_page: expandPage, get_api_route: getApiRoute, list_releases: listReleases },
+    stopWhen: isStepCount(STEP_BUDGET),
     prepareStep: ({ stepNumber }) => {
-      if (stepNumber === 0) return { model: fast, activeTools: ["search"], toolChoice: "required" };
-      if (stepNumber === 1) return { activeTools: ["expand_page", "get_api_route"] };
-      return { toolChoice: "none" };
+      if (stepNumber === 0) {
+        return {
+          model: fast,
+          activeTools: ["search", "list_releases"],
+          toolChoice: "required",
+          instructions: triagePrompt(now),
+        };
+      }
+      if (stepNumber === STEP_BUDGET - 1) return { toolChoice: "none", instructions: systemPrompt(now) };
+      return { instructions: systemPrompt(now) };
     },
     onStepEnd: (step) => {
       const stepMs = Math.round(step.performance.stepTimeMs);
@@ -896,6 +977,20 @@ export async function POST(request: Request): Promise<Response> {
         const slow = slowest !== undefined && duration === slowest && slowest > 0 ? "  slowest" : "";
         const arg = toolArg(call.input) ?? "";
         const durationLabel = duration === undefined ? "n/a" : formatDuration(Math.round(duration));
+
+        if (call.toolName === "list_releases") {
+          const detail = releaseLists.get(call.toolCallId);
+          lines.push(`│  ${branch} list_releases  ${durationLabel}${slow}`);
+          if (!detail) {
+            lines.push(`│  ${pad}no detail`);
+            return;
+          }
+          lines.push(
+            `│  ${pad}${detail.count} releases  oldest ${detail.oldest ?? "n/a"}  ${formatBytes(detail.bytes)}  meili ${formatDuration(detail.meili.ms)}  processing ${formatDuration(detail.meili.processingMs)}  wait ${formatDuration(detail.meili.waitMs)}  inFlight ${detail.meili.inFlight}`,
+          );
+          for (const line of formatTraces(detail.meili.traces)) lines.push(`│  ${pad}${line}`);
+          return;
+        }
 
         if (call.toolName === "search") {
           const detail = searchDetails.get(call.toolCallId);

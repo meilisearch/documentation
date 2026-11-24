@@ -46,6 +46,7 @@
     "rebuild-search-staging": "bash scripts/search/rebuild-staging.sh",
     "ingest": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/index.ts",
     "ingest:query": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --import tsx scripts/ingest/query.ts",
-    "test:ingest": "vitest run scripts/ingest"
+    "test:ingest": "vitest run scripts/ingest",
+    "test": "vitest run scripts/ingest chat"
   }
 }

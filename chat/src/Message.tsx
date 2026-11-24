@@ -2,7 +2,7 @@ import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
 import { code } from "./highlight";
 import type { ChatMessage } from "./source";
-import { expandedPageLabel, isExpandPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
+import { expandedPageLabel, isExpandPart, isReleasesPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
 
 function ToolStatus({ state, label }: { state: string; label: string }) {
   const done = state === "output-available";
@@ -70,6 +70,16 @@ export const Message = memo(function Message({ message, streaming }: { message: 
                 ? "Searched the docs"
                 : "Searching the docs";
           return <ToolStatus key={index} state={part.state} label={`${verb}${q ? `: “${q}”` : ""}`} />;
+        }
+
+        if (isReleasesPart(part)) {
+          const verb =
+            part.state === "output-error"
+              ? "Could not list releases"
+              : part.state === "output-available"
+                ? "Listed every release"
+                : "Listing releases";
+          return <ToolStatus key={index} state={part.state} label={verb} />;
         }
 
         if (isExpandPart(part)) {

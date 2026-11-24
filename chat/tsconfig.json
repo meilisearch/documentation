@@ -23,5 +23,8 @@
     "src",
     "api",
     "vite.config.ts"
+  ],
+  "exclude": [
+    "api/**/__tests__"
   ]
 }
