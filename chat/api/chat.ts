@@ -4,6 +4,7 @@ import { convertToModelMessages, isStepCount, rerank, streamText, tool, type UIM
 import { Meilisearch, MeilisearchApiError } from "meilisearch";
 import { z } from "zod";
 import { fenceLanguage, lookupCandidates, methodCandidates, quoteFilter, selectSample } from "../src/samples.js";
+import { pageKey, type Source } from "../src/source.ts";
 import type { ChatUser } from "../src/user.ts";
 
 const DEFAULT_MODEL = "openai/gpt-6-luna";
@@ -484,6 +485,10 @@ export async function POST(request: Request): Promise<Response> {
   const started = performance.now();
   let inFlightMeili = 0;
   let answerFirstOutput: number | undefined;
+  let answerText = "";
+  type PooledSource = Source & { key: string; score: number; order: number };
+  const pageSources = new Map<string, PooledSource>();
+  let sourceOrder = 0;
   const searches: SearchDetail[] = [];
   const searchDetails = new Map<string, SearchDetail>();
   const seenChunks = new Set<string>();
@@ -668,6 +673,25 @@ export async function POST(request: Request): Promise<Response> {
       );
       detail.hits = kept.flatMap((item) => (item.hit.page ? [{ page: item.hit.page, rank: item.voyageRank, meiliRank: item.originalIndex + 1 }] : []));
       detail.resultBytes = utf8Bytes({ hits: kept.map((item) => item.hit) });
+      for (const item of kept) {
+        const { page, url, title, tab, group } = item.hit;
+        if (!page || !url) continue;
+        const key = pageKey(url);
+        const previous = pageSources.get(key);
+        if (previous) {
+          previous.score = Math.max(previous.score, item.score);
+          continue;
+        }
+        const breadcrumb = [tab, group].filter((part): part is string => typeof part === "string" && part.length > 0).join(" > ");
+        pageSources.set(key, {
+          key,
+          title: title || key,
+          href: url.split("#")[0],
+          ...(breadcrumb ? { breadcrumb } : {}),
+          score: item.score,
+          order: sourceOrder++,
+        });
+      }
       return { hits: kept.map((item) => item.hit) };
     },
   });
@@ -856,6 +880,7 @@ export async function POST(request: Request): Promise<Response> {
       const ttft = step.performance.timeToFirstOutputMs;
       const firstOutputAt = ttft === undefined ? undefined : now - stepMs + Math.round(ttft);
       if (step.finishReason === "stop" && firstOutputAt !== undefined) answerFirstOutput = firstOutputAt;
+      if (step.toolCalls.length === 0 && step.text) answerText = step.text;
 
       const durations = step.toolCalls.map((call) => step.performance.toolExecutionMs[call.toolCallId] ?? 0);
       const slowest = durations.length > 1 ? Math.max(...durations) : undefined;
@@ -921,6 +946,15 @@ export async function POST(request: Request): Promise<Response> {
 
   return result.toUIMessageStreamResponse({
     headers,
+    messageMetadata: ({ part }) => {
+      if (part.type !== "finish") return undefined;
+      const cited = new Set((answerText.match(/https?:\/\/[^\s)<>"'\]]+/g) ?? []).map(pageKey));
+      const sources = [...pageSources.values()]
+        .filter((source) => cited.has(source.key))
+        .sort((a, b) => b.score - a.score || a.order - b.order)
+        .map(({ title, href, breadcrumb }) => ({ title, href, ...(breadcrumb ? { breadcrumb } : {}) }));
+      return { sources };
+    },
     onError: (error) => {
       console.error("[chat] stream error", error);
       return "Something went wrong. Please try again.";

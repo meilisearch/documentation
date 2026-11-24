@@ -1,15 +1,7 @@
 import type { UIMessage } from "ai";
-
-export type Source = { title: string; href: string; breadcrumb?: string };
+import type { Source } from "./source";
 
 type Part = UIMessage["parts"][number];
-
-/** Never trust tool output shape: a partial or unexpected result must not break the UI. */
-function hitsOf(output: unknown): Record<string, unknown>[] {
-  if (!output || typeof output !== "object") return [];
-  const hits = (output as { hits?: unknown }).hits;
-  return Array.isArray(hits) ? (hits as Record<string, unknown>[]) : [];
-}
 
 export function isSearchPart(part: Part): part is Part & { type: "tool-search"; state: string } {
   return part.type === "tool-search";
@@ -29,42 +21,6 @@ export function expandedPageLabel(part: Part): string | undefined {
   const { input, output } = part as { input?: { page?: unknown }; output?: { title?: unknown } };
   if (typeof output?.title === "string") return output.title;
   return typeof input?.page === "string" ? input.page : undefined;
-}
-
-const MAX_SOURCES = 8;
-
-function pageHref(url: string): string {
-  return url.split("#")[0];
-}
-
-/** Nav location only. `hit.breadcrumb` includes the chunk heading, so it is not a page label. */
-function pageBreadcrumb(hit: Record<string, unknown>): string | undefined {
-  const parts = [hit.tab, hit.group].filter((part): part is string => typeof part === "string" && part.length > 0);
-  return parts.length > 0 ? parts.join(" > ") : undefined;
-}
-
-/** Unique pages found by all completed searches in a message, in order of appearance. */
-export function collectSources(parts: Part[]): Source[] {
-  const seen = new Set<string>();
-  const sources: Source[] = [];
-
-  for (const part of parts) {
-    if (!isSearchPart(part) || part.state !== "output-available") continue;
-    for (const hit of hitsOf((part as { output?: unknown }).output)) {
-      if (sources.length >= MAX_SOURCES) return sources;
-      if (typeof hit.url !== "string") continue;
-      const href = pageHref(hit.url);
-      const key = typeof hit.page === "string" ? hit.page : href;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      sources.push({
-        href,
-        title: typeof hit.title === "string" ? hit.title : href,
-        breadcrumb: pageBreadcrumb(hit),
-      });
-    }
-  }
-  return sources;
 }
 
 export function Sources({ sources }: { sources: Source[] }) {

@@ -1,8 +1,8 @@
-import type { UIMessage } from "ai";
 import { memo, type ComponentProps } from "react";
 import { Streamdown } from "streamdown";
 import { code } from "./highlight";
-import { collectSources, expandedPageLabel, isExpandPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
+import type { ChatMessage } from "./source";
+import { expandedPageLabel, isExpandPart, isSearchPart, linkTarget, searchQuery, Sources } from "./Sources";
 
 function ToolStatus({ state, label }: { state: string; label: string }) {
   const done = state === "output-available";
@@ -25,7 +25,7 @@ function Link({ href, children }: ComponentProps<"a">) {
 
 const components = { a: Link };
 
-export const Message = memo(function Message({ message, streaming }: { message: UIMessage; streaming: boolean }) {
+export const Message = memo(function Message({ message, streaming }: { message: ChatMessage; streaming: boolean }) {
   if (message.role === "user") {
     const text = message.parts.map((part) => (part.type === "text" ? part.text : "")).join("");
     return (
@@ -37,7 +37,7 @@ export const Message = memo(function Message({ message, streaming }: { message: 
     );
   }
 
-  const sources = collectSources(message.parts);
+  const sources = message.metadata?.sources ?? [];
 
   return (
     <div>

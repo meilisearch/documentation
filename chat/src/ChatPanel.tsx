@@ -1,5 +1,5 @@
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport, type UIMessage } from "ai";
+import { DefaultChatTransport } from "ai";
 import {
   useCallback,
   useEffect,
@@ -13,6 +13,7 @@ import {
 } from "react";
 import { OPEN_EVENT, TOGGLE_EVENT } from "./events";
 import { Message } from "./Message";
+import type { ChatMessage } from "./source";
 import { useDarkMode } from "./useDarkMode";
 import { readChatUser } from "./user";
 
@@ -31,16 +32,16 @@ const SUGGESTIONS = [
   "What is the difference between an API key and a tenant token?",
 ];
 
-function loadMessages(): UIMessage[] {
+function loadMessages(): ChatMessage[] {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as UIMessage[]) : [];
+    return raw ? (JSON.parse(raw) as ChatMessage[]) : [];
   } catch {
     return [];
   }
 }
 
-function saveMessages(messages: UIMessage[]) {
+function saveMessages(messages: ChatMessage[]) {
   try {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
   } catch {
@@ -95,7 +96,7 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
       }),
     [apiBase],
   );
-  const { messages, sendMessage, status, stop, error, regenerate, setMessages } = useChat({
+  const { messages, sendMessage, status, stop, error, regenerate, setMessages } = useChat<ChatMessage>({
     messages: loadMessages(),
     transport,
   });
