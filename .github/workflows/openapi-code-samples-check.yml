@@ -1,7 +1,7 @@
 # On every push to main, check meilisearch-openapi-mintlify.json and meilisearch-cloud-openapi-mintlify.json:
 # - Job 1: Ensure every route of both files includes a cURL sample (can fail).
 # - Job 2: Informational only – list routes and all missing code sample languages (never fails).
-# - Job 3: Ensure every OpenAPI route is mapped in docs.json (can fail).
+# - Job 3: Ensure every Meilisearch API route is mapped in docs.json (can fail).
 name: Check OpenAPI code samples
 
 on:
@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check routes have cURL in x-codeSamples
+      - name: Check Meilisearch API routes have cURL in x-codeSamples
         run: |
           npm run check-openapi-code-samples -- curl-check assets/engine-release-assets/meilisearch-openapi-mintlify.json
 
@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: List routes and missing code samples (informational, never fails)
+      - name: List Meilisearch API routes and missing code samples (informational, never fails)
         run: |
           npm run check-openapi-code-samples -- info assets/engine-release-assets/meilisearch-openapi-mintlify.json || true
 
@@ -58,9 +58,9 @@ jobs:
         run: |
           npm run check-openapi-code-samples -- info assets/cloud-assets/meilisearch-cloud-openapi-mintlify.json || true
 
-  # Fails if any OpenAPI route is not mapped in docs.json API Routes pages.
+  # Fails if any Meilisearch API route is not mapped in docs.json API Routes pages.
   require-routes-coverage:
-    name: Require all OpenAPI routes in docs.json
+    name: Require all Meilisearch API routes in docs.json
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -73,6 +73,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check all OpenAPI routes are covered in docs.json
+      - name: Check all Meilisearch API routes are covered in docs.json
         run: |
           npm run check-openapi-routes-coverage
