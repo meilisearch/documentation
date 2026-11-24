@@ -3,13 +3,13 @@ import css from "../theme.css?inline";
 const SEARCH_BAR_ID = "meilisearch-bar-container";
 const MINTLIFY_SEARCH_ID = "search-bar-entry";
 
-export function createShadowHost(id: string): { host: HTMLElement; container: HTMLElement } {
+export function createShadowHost(id: string, stylesheet: string = css): { host: HTMLElement; container: HTMLElement } {
   const host = document.createElement("div");
   host.id = id;
   const shadow = host.attachShadow({ mode: "open" });
 
   const style = document.createElement("style");
-  style.textContent = css;
+  style.textContent = stylesheet;
   shadow.appendChild(style);
 
   const container = document.createElement("div");
@@ -21,9 +21,9 @@ export function createShadowHost(id: string): { host: HTMLElement; container: HT
  * `@property` rules are ignored inside shadow roots, which breaks Tailwind's defaults
  * (shadows, rings, transforms). Registering them on the document fixes it.
  */
-export function hoistAtProperties() {
+export function hoistAtProperties(stylesheet: string = css) {
   if (document.getElementById("meili-chat-properties")) return;
-  const rules = css.match(/@property\s+--[\w-]+\s*\{[^}]*\}/g);
+  const rules = stylesheet.match(/@property\s+--[\w-]+\s*\{[^}]*\}/g);
   if (!rules) return;
   const style = document.createElement("style");
   style.id = "meili-chat-properties";

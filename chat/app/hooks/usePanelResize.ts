@@ -4,11 +4,11 @@ const WIDTH_KEY = "meili-chat:width";
 export const MIN_WIDTH = 368;
 export const MAX_WIDTH = 576;
 
-function clampWidth(value: number) {
+export function clampWidth(value: number) {
   return Math.min(MAX_WIDTH, Math.max(MIN_WIDTH, value));
 }
 
-function loadWidth(): number {
+export function loadWidth(): number {
   try {
     const raw = localStorage.getItem(WIDTH_KEY);
     const value = raw ? Number(raw) : MIN_WIDTH;

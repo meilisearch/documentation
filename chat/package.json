@@ -2,6 +2,9 @@
   "name": "meilisearch-docs-chat",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -23,6 +26,8 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.4",
+    "@testing-library/jest-dom": "^8.0.0",
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^20.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

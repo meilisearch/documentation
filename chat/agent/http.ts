@@ -12,8 +12,12 @@ function matchesHost(hostname: string, pattern: string): boolean {
   return pattern.startsWith("*.") ? hostname.endsWith(pattern.slice(1)) : hostname === pattern;
 }
 
-export function isAllowedOrigin(origin: string | null, allowed: string[]): boolean {
-  const dev = process.env.NODE_ENV !== "production";
+export function isAllowedOrigin(
+  origin: string | null,
+  allowed: string[],
+  nodeEnv: string | undefined = process.env.NODE_ENV,
+): boolean {
+  const dev = nodeEnv !== "production";
   if (!origin) return dev;
   try {
     const { protocol, hostname } = new URL(origin);

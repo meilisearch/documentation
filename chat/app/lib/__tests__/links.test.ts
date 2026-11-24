@@ -1,38 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { linkTarget, localizeHref } from "../links.ts";
-import { pageHref, pageKey } from "../../../shared/source.ts";
 
 const PROD = "https://www.meilisearch.com/docs/getting_started/overview";
 const PREVIEW = "https://meilisearch-6b28dec2-chat.mintlify.site/getting_started/overview";
 const LOCAL = "http://127.0.0.1:3000/getting_started/overview";
 const CUSTOM = "https://docs.example.com/getting_started/overview";
 const DOCS_PATH = "/capabilities/hybrid_search/overview#configure";
-
-describe("pageHref", () => {
-  it("joins the page and anchor into a root-relative path", () => {
-    expect(pageHref("capabilities/hybrid_search/overview", "configure")).toBe(DOCS_PATH);
-    expect(pageHref("capabilities/hybrid_search/overview")).toBe("/capabilities/hybrid_search/overview");
-    expect(pageHref("/capabilities/hybrid_search/overview/")).toBe("/capabilities/hybrid_search/overview");
-  });
-});
-
-describe("pageKey", () => {
-  it.each([
-    ["capabilities/hybrid_search/overview", "capabilities/hybrid_search/overview"],
-    ["/capabilities/hybrid_search/overview", "capabilities/hybrid_search/overview"],
-    ["/docs/capabilities/hybrid_search/overview", "capabilities/hybrid_search/overview"],
-    ["/docs/capabilities/hybrid_search/overview#configure", "capabilities/hybrid_search/overview"],
-    ["/capabilities/hybrid_search/overview?q=1#configure", "capabilities/hybrid_search/overview"],
-    [
-      "https://www.meilisearch.com/docs/capabilities/hybrid_search/overview#configure",
-      "capabilities/hybrid_search/overview",
-    ],
-    ["https://meilisearch.com/docs/capabilities/hybrid_search/overview/", "capabilities/hybrid_search/overview"],
-    ["https://preview.mintlify.site/capabilities/hybrid_search/overview", "capabilities/hybrid_search/overview"],
-  ])("%s -> %s", (value, key) => {
-    expect(pageKey(value)).toBe(key);
-  });
-});
 
 describe("localizeHref", () => {
   it("adds the production /docs mount to a docs path", () => {

@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      # `--env-file-if-exists` in the ingest script needs Node.js 20.12 or newer.
+      # `--env-file-if-exists` in the ingest script needs Node.js 22.
       - uses: actions/setup-node@v7
         with:
           node-version: "22"

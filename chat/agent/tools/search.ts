@@ -6,7 +6,7 @@ import { utf8Bytes } from "../lib/format.js";
 import { toHit } from "../lib/hits.js";
 import { summarizeSpans, type MeiliSpan } from "../lib/meili.js";
 import { isRecord } from "../lib/records.js";
-import { MAX_DROP, MIN_KEEP, MIN_SCORE, POST_RANKS, PRE_RANKS, rerankHits, scoreCurve } from "../lib/rerank.js";
+import { POST_RANKS, PRE_RANKS, rerankHits, scoreCurve, selectHits } from "../lib/rerank.js";
 import type { AgentContext, SearchDetail } from "../state.js";
 
 const HIT_FIELDS = ["title", "page", "anchor", "breadcrumb", "content", "content_type", "tab", "group", "version_label", "released_on"] as const;
@@ -21,7 +21,7 @@ function federationIndexUid(hit: unknown): string | undefined {
   return hit._federation.indexUid;
 }
 
-export function createSearchTool(ctx: AgentContext) {
+export function createSearchTool(ctx: AgentContext, deps: { rerank: typeof rerankHits } = { rerank: rerankHits }) {
   return tool({
     description:
       "Search the Meilisearch documentation and changelog. Pass one short, keyword-rich query of about 12 words. A question with two distinct parts takes two calls in the same turn; a follow-up includes the earlier topic in its query.",
@@ -96,25 +96,14 @@ export function createSearchTool(ctx: AgentContext) {
       ctx.details.searches.push(detail);
       ctx.details.byCall.set(toolCallId, detail);
       if (pool.length === 0) return { hits: [] };
-      const reranked = await rerankHits(q, pool);
-      const top = reranked.ranked[0]?.score ?? 0;
-      const cutoff = top - MAX_DROP;
-      let dupes = 0;
-      const kept = reranked.ranked.flatMap((item, index) => {
-        if (index >= MIN_KEEP && (item.score < MIN_SCORE || item.score < cutoff)) return [];
-        const key = `${item.hit.page}#${item.hit.anchor ?? ""}`;
-        if (ctx.pool.seenChunks.has(key)) {
-          dupes += 1;
-          return [];
-        }
-        ctx.pool.seenChunks.add(key);
-        return [{ ...item, voyageRank: index + 1 }];
-      });
+      const reranked = await deps.rerank(q, pool);
+      const selected = selectHits(reranked.ranked, ctx.pool.seenChunks);
+      const kept = selected.kept;
       detail.rerankMs = reranked.ms;
       detail.reranked = reranked.ranked.length;
       detail.kept = kept.length;
-      detail.cutoff = reranked.ranked.length === 0 ? null : Math.max(MIN_SCORE, cutoff);
-      detail.dupes = dupes;
+      detail.cutoff = selected.cutoff;
+      detail.dupes = selected.dupes;
       detail.post = scoreCurve(
         reranked.ranked.map((item) => item.score),
         POST_RANKS,

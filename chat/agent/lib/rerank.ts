@@ -43,6 +43,31 @@ export function rerankDocument(hit: {
 
 export type RankedHit<T> = { hit: T; score: number; originalIndex: number };
 
+/**
+ * Keeps the first MIN_KEEP hits, then drops scores below MIN_SCORE or more than
+ * MAX_DROP under the top score. Chunks already in `seen` are duplicates.
+ * `seen` gains the chunks that are kept.
+ */
+export function selectHits<T extends { page?: string; anchor?: string | null }>(
+  ranked: RankedHit<T>[],
+  seen: Set<string>,
+): { kept: Array<RankedHit<T> & { voyageRank: number }>; dupes: number; cutoff: number | null } {
+  const top = ranked[0]?.score ?? 0;
+  const floor = top - MAX_DROP;
+  let dupes = 0;
+  const kept = ranked.flatMap((item, index) => {
+    if (index >= MIN_KEEP && (item.score < MIN_SCORE || item.score < floor)) return [];
+    const key = `${item.hit.page}#${item.hit.anchor ?? ""}`;
+    if (seen.has(key)) {
+      dupes += 1;
+      return [];
+    }
+    seen.add(key);
+    return [{ ...item, voyageRank: index + 1 }];
+  });
+  return { kept, dupes, cutoff: ranked.length === 0 ? null : Math.max(MIN_SCORE, floor) };
+}
+
 export async function rerankHits<T extends { breadcrumb: string; content: string }>(
   query: string,
   pool: T[],

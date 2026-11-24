@@ -17,7 +17,7 @@ This guide covers how to set up your environment and run the docs locally, rebui
 
 ## Technical requirements
 
-- **Node.js** 20.17 or newer, but older than 25 (required by Mintlify)
+- **Node.js** 22 or newer, but older than 25. Mintlify refuses Node.js 25. Ingestion uses `path.matchesGlob`, which needs Node.js 22.
 - **npm** (comes with Node.js)
 
 ## Install
@@ -26,7 +26,10 @@ From the root of the repository:
 
 ```bash
 npm install
+npm install --prefix chat
 ```
+
+The chat widget is its own package. The second command installs it. Unit tests and `npm run typecheck` need both.
 
 ## Docs writing
 
@@ -68,6 +71,26 @@ npm run rebuild-search-staging
 
 ## Tests
 
+`chat/agent/`, `chat/shared/`, and `scripts/ingest/` run in Node. `chat/app/` runs in jsdom. Integration tests talk to a real Meilisearch and are not part of `npm test`.
+
+| Script | What it runs |
+|--------|----------------|
+| `npm test` | Every unit test |
+| `npm run test:scripts` | Ingestion, plus `chat/shared/` (ingestion imports those helpers) |
+| `npm run test:chat` | The assistant, the widget, and `chat/shared/` |
+| `npm run test:watch` | The unit tests in watch mode |
+| `npm run test:integration` | The Meilisearch sink. Fails if `MEILI_TEST_URL` is unset. It does not skip. |
+| `npm run typecheck` | `scripts/ingest` and `chat/` |
+
+Write a unit test before changing behavior. Name the test after the behavior, and put it in `__tests__/` next to the module.
+
+To run the integration tests locally:
+
+```bash
+docker run --rm -p 7700:7700 -e MEILI_ENV=development -e MEILI_MASTER_KEY=masterKey getmeili/meilisearch:v1.58
+MEILI_TEST_URL=http://localhost:7700 MEILI_TEST_KEY=masterKey npm run test:integration
+```
+
 ### Broken links
 
 Check for broken links in the doc site:
@@ -89,11 +112,13 @@ npx mint broken-links
 
 ## Linting
 
-Lint the AI assistant app with:
+Lint the repository with:
 
 ```bash
-npm run lint:chat
+npm run lint
 ```
+
+`npm run lint:chat` lints only the assistant app.
 
 ## Code samples
 

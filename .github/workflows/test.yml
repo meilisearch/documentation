@@ -1,0 +1,150 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      scripts: ${{ steps.filter.outputs.scripts }}
+      chat: ${{ steps.filter.outputs.chat }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            scripts:
+              - 'scripts/**'
+              - 'chat/shared/**'
+              - 'config/navigation.json'
+              - 'assets/release-assets/**'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vitest.config.ts'
+              - 'vitest.integration.config.ts'
+              - 'scripts/ingest/tsconfig.json'
+            chat:
+              - 'chat/**'
+              - '.oxlintrc.json'
+              - 'package.json'
+              - 'package-lock.json'
+              - 'vitest.config.ts'
+              - 'vitest.integration.config.ts'
+              - 'chat/tsconfig.json'
+
+  lint:
+    name: Lint and typecheck
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.scripts == 'true' || needs.changes.outputs.chat == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  scripts:
+    name: Test scripts
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.scripts == 'true'
+    runs-on: ubuntu-latest
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.58
+        ports:
+          - 7700:7700
+        env:
+          MEILI_ENV: development
+          MEILI_MASTER_KEY: masterKey
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Wait for Meilisearch
+        run: |
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:7700/health && exit 0
+            sleep 1
+          done
+          echo "Meilisearch did not become healthy" >&2
+          exit 1
+
+      - name: Unit tests
+        run: npm run test:scripts
+
+      - name: Integration tests
+        run: npm run test:integration
+        env:
+          MEILI_TEST_URL: http://localhost:7700
+          MEILI_TEST_KEY: masterKey
+
+  chat:
+    name: Test chat
+    needs: changes
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.chat == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Unit tests
+        run: npm run test:chat
+
+  tests:
+    name: Tests
+    needs: [changes, lint, scripts, chat]
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail when a required job failed
+        env:
+          CHANGES: ${{ needs.changes.result }}
+          LINT: ${{ needs.lint.result }}
+          SCRIPTS: ${{ needs.scripts.result }}
+          CHAT: ${{ needs.chat.result }}
+        run: |
+          echo "changes=$CHANGES lint=$LINT scripts=$SCRIPTS chat=$CHAT"
+          for result in "$CHANGES" "$LINT" "$SCRIPTS" "$CHAT"; do
+            case "$result" in
+              success|skipped) ;;
+              *) echo "unexpected job result: $result" >&2; exit 1 ;;
+            esac
+          done

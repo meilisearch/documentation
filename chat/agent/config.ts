@@ -30,8 +30,7 @@ export type ChatConfig = {
 };
 
 /** Reads every setting once. Empty strings fall back to the defaults. */
-export function readConfig(): ChatConfig {
-  const env = process.env;
+export function readConfig(env: NodeJS.ProcessEnv = process.env): ChatConfig {
   return {
     openrouterKey: env.OPENROUTER_API_KEY,
     meiliUrl: env.MEILISEARCH_URL,
@@ -51,8 +50,8 @@ export function readConfig(): ChatConfig {
 }
 
 /** Env var names that are unset. The check matches what the process actually has. */
-export function missingSettings(): string[] {
+export function missingSettings(env: NodeJS.ProcessEnv = process.env): string[] {
   return (["OPENROUTER_API_KEY", "MEILISEARCH_URL", "MEILISEARCH_KEY", "VOYAGE_API_KEY"] as const).filter(
-    (name) => !process.env[name],
+    (name) => !env[name],
   );
 }
