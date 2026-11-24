@@ -511,7 +511,7 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const openrouter = createOpenRouter({ apiKey: openrouterKey });
-  const main = openrouter(config.model, { reasoning: { effort: "low" }, provider: OPENAI_PROVIDER });
+  const main = openrouter(config.model, { reasoning: { effort: "medium" }, provider: OPENAI_PROVIDER });
   const fast = openrouter(config.queryModel, {
     reasoning: { effort: "low", exclude: true },
     provider: OPENAI_PROVIDER,
