@@ -224,8 +224,8 @@
   },
   "project_cannot_be_updated": {
     "statusCode": 423,
-    "title": "Cannot update now",
-    "description": "The project cannot be updated in its current state: maybe it's already updating, or it's not running at the moment?"
+    "title": "The project must be running to be upgraded.",
+    "apiV2": true
   },
   "project_create_error": {
     "statusCode": 500,
@@ -254,8 +254,8 @@
   },
   "project_manual_update_disabled": {
     "statusCode": 423,
-    "title": "Cannot update instance",
-    "description": "To update your instance, please contact our support team. We'll help you schedule and perform the update while ensuring minimal disruption to your service."
+    "title": "Manual version upgrades are disabled for this project. Contact support.",
+    "apiV2": true
   },
   "project_master_key_rotation_failed": {
     "statusCode": 500,
