@@ -14780,6 +14780,10 @@
             "lang": "cURL",
             "label": "HTTP request",
             "source": "curl \\\n  -X GET 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.index('INDEX_NAME').getWordPosition();"
           }
         ]
       },
@@ -14867,6 +14871,10 @@
             "lang": "cURL",
             "label": "HTTP request",
             "source": "curl \\\n  -X DELETE 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.index('INDEX_NAME').resetWordPosition();"
           }
         ]
       },
@@ -14971,6 +14979,10 @@
             "lang": "cURL",
             "label": "HTTP request",
             "source": "curl \\\n  -X PATCH 'MEILISEARCH_URL/indexes/INDEX_UID/settings/word-position' \\\n  -H 'Authorization: Bearer API_KEY' \\\n  -H 'Content-Type: application/json' \\\n  --data-binary '{\n    \"enabled\": false\n  }'"
+          },
+          {
+            "lang": "JS",
+            "source": "client.index('INDEX_NAME').updateWordPosition({ enabled: false });"
           }
         ]
       }
