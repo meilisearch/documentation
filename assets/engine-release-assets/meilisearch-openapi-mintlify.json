@@ -14784,6 +14784,10 @@
           {
             "lang": "JS",
             "source": "client.index('INDEX_NAME').getWordPosition();"
+          },
+          {
+            "lang": "Go",
+            "source": "client.Index(\"books\").GetWordPosition()"
           }
         ]
       },
@@ -14875,6 +14879,10 @@
           {
             "lang": "JS",
             "source": "client.index('INDEX_NAME').resetWordPosition();"
+          },
+          {
+            "lang": "Go",
+            "source": "client.Index(\"books\").ResetWordPosition()"
           }
         ]
       },
@@ -14983,6 +14991,10 @@
           {
             "lang": "JS",
             "source": "client.index('INDEX_NAME').updateWordPosition({ enabled: false });"
+          },
+          {
+            "lang": "Go",
+            "source": "client.Index(\"books\").UpdateWordPosition(&meilisearch.WordPosition{\n  Enabled: meilisearch.BoolPtr(false),\n})"
           }
         ]
       }
@@ -16813,7 +16825,7 @@
           },
           {
             "lang": "PHP",
-            "source": "$client->updateNetwork([\n  'self' => 'ms-00',\n  'leader' => 'ms-00',\n  'remotes' => [\n    'ms-00' => [\n      'url' => 'http://INSTANCE_URL',\n      'searchApiKey' => 'INSTANCE_API_KEY',\n      'writeApiKey' => 'INSTANCE_WRITE_API_KEY'\n    ],\n    'ms-01' => [\n      'url' => 'http://ANOTHER_INSTANCE_URL',\n      'searchApiKey' => 'ANOTHER_INSTANCE_API_KEY',\n      'writeApiKey' => 'ANOTHER_INSTANCE_WRITE_API_KEY'\n    ]\n  ]\n]);"
+            "source": "$client->initializeNetwork([\n  'self' => 'ms-00',\n  'leader' => 'ms-00',\n  'remotes' => [\n    'ms-00' => [\n      'url' => 'http://INSTANCE_URL',\n      'searchApiKey' => 'INSTANCE_API_KEY',\n      'writeApiKey' => 'INSTANCE_WRITE_API_KEY'\n    ],\n    'ms-01' => [\n      'url' => 'http://ANOTHER_INSTANCE_URL',\n      'searchApiKey' => 'ANOTHER_INSTANCE_API_KEY',\n      'writeApiKey' => 'ANOTHER_INSTANCE_WRITE_API_KEY'\n    ]\n  ],\n  'shards' => [\n    'shard-a' => ['remotes' => ['ms-00']],\n    'shard-b' => ['remotes' => ['ms-01']]\n  ]\n]);"
           },
           {
             "lang": "Python",
