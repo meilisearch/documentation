@@ -758,6 +758,12 @@ paths:
                     code: change_plan_failed_state
                     type: invalid_request
                     link: https://www.meilisearch.com/docs/reference/management-api-errors#change_plan_failed_state
+                change_plan_payment_overdue:
+                  value:
+                    message: Unable to change plan while invoices are unpaid
+                    code: change_plan_payment_overdue
+                    type: invalid_request
+                    link: https://www.meilisearch.com/docs/reference/management-api-errors#change_plan_payment_overdue
               schema:
                 "$ref": "#/components/schemas/Error"
       requestBody:
