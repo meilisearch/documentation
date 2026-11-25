@@ -1,46 +1,24 @@
-name: Test
+name: Test the docs chat
 
 on:
   workflow_dispatch:
   pull_request:
     branches:
       - main
+    paths:
+      - "chat/**"
+      - "scripts/ingest/**"
+      - "config/navigation.json"
+      - "assets/release-assets/**"
+      - "package.json"
+      - "package-lock.json"
+      - "vitest.config.ts"
+      - ".oxlintrc.json"
+      - ".github/workflows/test-chat.yml"
 
 jobs:
-  changes:
-    name: Detect changes
-    runs-on: ubuntu-latest
-    outputs:
-      scripts: ${{ steps.filter.outputs.scripts }}
-      chat: ${{ steps.filter.outputs.chat }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            scripts:
-              - 'scripts/**'
-              - 'chat/shared/**'
-              - 'config/navigation.json'
-              - 'assets/release-assets/**'
-              - 'package.json'
-              - 'package-lock.json'
-              - 'vitest.config.ts'
-              - 'scripts/ingest/tsconfig.json'
-            chat:
-              - 'chat/**'
-              - '.oxlintrc.json'
-              - 'package.json'
-              - 'package-lock.json'
-              - 'vitest.config.ts'
-              - 'chat/tsconfig.json'
-
   lint:
     name: Lint and typecheck
-    needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.scripts == 'true' || needs.changes.outputs.chat == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,10 +39,8 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-  scripts:
-    name: Test scripts
-    needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.scripts == 'true'
+  ingest:
+    name: Test ingestion
     runs-on: ubuntu-latest
     services:
       meilisearch:
@@ -107,8 +83,6 @@ jobs:
 
   chat:
     name: Test chat
-    needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.chat == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -125,24 +99,3 @@ jobs:
 
       - name: Unit tests
         run: npm run chat:test
-
-  tests:
-    name: Tests
-    needs: [changes, lint, scripts, chat]
-    if: always() && !cancelled()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fail when a required job failed
-        env:
-          CHANGES: ${{ needs.changes.result }}
-          LINT: ${{ needs.lint.result }}
-          SCRIPTS: ${{ needs.scripts.result }}
-          CHAT: ${{ needs.chat.result }}
-        run: |
-          echo "changes=$CHANGES lint=$LINT scripts=$SCRIPTS chat=$CHAT"
-          for result in "$CHANGES" "$LINT" "$SCRIPTS" "$CHAT"; do
-            case "$result" in
-              success|skipped) ;;
-              *) echo "unexpected job result: $result" >&2; exit 1 ;;
-            esac
-          done

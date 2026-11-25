@@ -82,7 +82,7 @@ npm run rebuild-search-staging
 | `npm run test:watch` | The unit tests in watch mode |
 | `npm run typecheck` | `scripts/ingest` and `chat/` |
 
-Write a unit test before changing behavior. Name the test after the behavior, and put it in `__tests__/` next to the module.
+Write the failing test first. Name the test after the behavior, and put it in `__tests__/` next to the module.
 
 To run the integration tests locally:
 
