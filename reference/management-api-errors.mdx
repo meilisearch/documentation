@@ -108,6 +108,12 @@ A resource-based project can not be moved to a smaller resource
 
 Unable to change plan for this project, it is either in failed or update_failed state
 
+### `change_plan_payment_overdue`
+
+`422` **Unable to change plan while invoices are unpaid**
+
+This project was paused because of unpaid invoices, pay them to resume the project
+
 ### `change_plan_region_invalid`
 
 `422` **Unable to change project region**
