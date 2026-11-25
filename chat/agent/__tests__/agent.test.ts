@@ -162,4 +162,31 @@ describe("createChatResponse", () => {
     expect(mergedMetadata(body).traceId).toBe(TRACE);
     expect(chunks.map((chunk) => chunk.type)).toEqual(["start", "text-start", "text-delta", "text-end", "finish"]);
   });
+
+  it("ends the turn when the messages cannot be sent to the model", async () => {
+    const ended: unknown[] = [];
+    const failing = {
+      startTurn: () => ({
+        traceId: TRACE,
+        run: <T,>(fn: () => T) => fn(),
+        end: (error?: unknown) => {
+          ended.push(error);
+        },
+      }),
+    };
+    const broken: UIMessage = {
+      id: "file",
+      role: "user",
+      parts: [
+        { type: "text", text: "How do I filter?" },
+        { type: "file", mediaType: "text/plain", url: "not a url" },
+      ],
+    };
+
+    await expect(
+      createChatResponse(fakeContext(), [broken], now, headers, { main: answering("unused"), router: router({ handled: true }) }, failing),
+    ).rejects.toThrow();
+    expect(ended).toHaveLength(1);
+    expect(ended[0]).toBeInstanceOf(Error);
+  });
 });

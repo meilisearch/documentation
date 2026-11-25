@@ -99,6 +99,16 @@ describe("readPostHogIdentity", () => {
     expect(readPostHogIdentity(token, { storage, cookie: "" })).toBeNull();
   });
 
+  it("returns null when storage access throws", () => {
+    const storage = {
+      getItem() {
+        throw new Error("blocked");
+      },
+    };
+
+    expect(readPostHogIdentity(token, { storage, cookie: "" })).toBeNull();
+  });
+
   it("omits sessionId when the posthog session id is empty", () => {
     const posthog = {
       get_distinct_id: () => "ph-visitor-1",

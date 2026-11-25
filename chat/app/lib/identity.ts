@@ -53,7 +53,14 @@ function cookieValue(cookie: string, name: string): string | null {
 
 export function readPostHogIdentity(token: string, env?: IdentityEnv): Identity | null {
   if (!token) return null;
-  const resolved = env ?? browserEnv();
+  try {
+    return readIdentity(env ?? browserEnv(), token);
+  } catch {
+    return null;
+  }
+}
+
+function readIdentity(resolved: IdentityEnv, token: string): Identity | null {
   const optedOut =
     optedOutByClient(resolved.posthog) ||
     resolved.storage.getItem(`__ph_opt_in_out_${token}`) === "0" ||

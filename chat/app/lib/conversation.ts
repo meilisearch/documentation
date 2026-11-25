@@ -14,14 +14,12 @@ function remember(id: string): string {
 }
 
 export function loadConversationId(): string {
+  if (memoryId) return memoryId;
   try {
     const stored = sessionStorage.getItem(STORAGE_KEY);
-    if (stored && UUID.test(stored)) {
-      memoryId = stored;
-      return stored;
-    }
+    if (stored && UUID.test(stored)) return remember(stored);
   } catch {
-    if (memoryId) return memoryId;
+    // Storage blocked: a new id lives in memory for this page.
   }
   return remember(crypto.randomUUID());
 }

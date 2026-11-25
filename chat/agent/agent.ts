@@ -82,45 +82,50 @@ export async function createChatResponse(
     return declineResponse(headers, { messageId, traceId: turn.traceId });
   }
 
-  const modelMessages = await convertToModelMessages(messages);
-  const result = turn.run(() =>
-    streamText({
-      model: models.main,
-      instructions: systemInstructions(now),
-      messages: modelMessages,
-      runtimeContext,
-      telemetry: telemetrySettings("docs-chat-answer"),
-      tools: {
-        search: createSearchTool(ctx),
-        expand_page: createExpandPageTool(ctx),
-        get_api_route: createApiRouteTool(ctx),
-        list_releases: createListReleasesTool(ctx),
-      },
-      stopWhen: isStepCount(STEP_BUDGET),
-      prepareStep: ({ stepNumber }) => (stepNumber === STEP_BUDGET - 1 ? { toolChoice: "none" } : undefined),
-      onStepEnd: (step) => {
-        if (step.toolCalls.length === 0 && step.text) ctx.answer.text = step.text;
-      },
-      onStepError: (event) => {
-        console.error("[chat] step error", event.error);
-      },
-      onEnd: () => turn.end(),
-      onAbort: () => turn.end(),
-      onError: ({ error }) => turn.end(error),
-    }),
-  );
+  try {
+    const modelMessages = await convertToModelMessages(messages);
+    const result = turn.run(() =>
+      streamText({
+        model: models.main,
+        instructions: systemInstructions(now),
+        messages: modelMessages,
+        runtimeContext,
+        telemetry: telemetrySettings("docs-chat-answer"),
+        tools: {
+          search: createSearchTool(ctx),
+          expand_page: createExpandPageTool(ctx),
+          get_api_route: createApiRouteTool(ctx),
+          list_releases: createListReleasesTool(ctx),
+        },
+        stopWhen: isStepCount(STEP_BUDGET),
+        prepareStep: ({ stepNumber }) => (stepNumber === STEP_BUDGET - 1 ? { toolChoice: "none" } : undefined),
+        onStepEnd: (step) => {
+          if (step.toolCalls.length === 0 && step.text) ctx.answer.text = step.text;
+        },
+        onStepError: (event) => {
+          console.error("[chat] step error", event.error);
+        },
+        onEnd: () => turn.end(),
+        onAbort: () => turn.end(),
+        onError: ({ error }) => turn.end(error),
+      }),
+    );
 
-  return result.toUIMessageStreamResponse({
-    headers,
-    generateMessageId: () => messageId,
-    messageMetadata: ({ part }) => {
-      if (part.type === "start") return { traceId: turn.traceId };
-      if (part.type === "finish") return { sources: ctx.pool.cited(ctx.answer.text) };
-      return undefined;
-    },
-    onError: (error) => {
-      console.error("[chat] stream error", error);
-      return "Something went wrong. Please try again.";
-    },
-  });
+    return result.toUIMessageStreamResponse({
+      headers,
+      generateMessageId: () => messageId,
+      messageMetadata: ({ part }) => {
+        if (part.type === "start") return { traceId: turn.traceId };
+        if (part.type === "finish") return { sources: ctx.pool.cited(ctx.answer.text) };
+        return undefined;
+      },
+      onError: (error) => {
+        console.error("[chat] stream error", error);
+        return "Something went wrong. Please try again.";
+      },
+    });
+  } catch (error) {
+    turn.end(error);
+    throw error;
+  }
 }

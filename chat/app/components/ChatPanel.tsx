@@ -9,7 +9,7 @@ import { useDarkMode } from "../hooks/useDarkMode";
 import type { ChatAnalytics } from "../lib/analytics";
 import { loadConversationId, resetConversationId } from "../lib/conversation";
 import { TOGGLE_EVENT } from "../lib/events";
-import { traceRefFor } from "../lib/trace";
+import { currentTurnTraceId, traceRefFor } from "../lib/trace";
 import { ChatComposer } from "./ChatComposer";
 import { ChatHeader } from "./ChatHeader";
 import { Message } from "./Message";
@@ -38,15 +38,6 @@ function saveMessages(messages: ChatMessage[]) {
   } catch {
     // Storage full or unavailable: the chat still works, it just won't persist.
   }
-}
-
-function lastAssistantTraceId(messages: ChatMessage[]): string | undefined {
-  for (let index = messages.length - 1; index >= 0; index -= 1) {
-    const message = messages[index];
-    if (message?.role !== "assistant") continue;
-    return message.metadata?.traceId || undefined;
-  }
-  return undefined;
 }
 
 function useDesktop() {
@@ -266,7 +257,7 @@ export function ChatPanel({ apiBase, analytics }: { apiBase: string; analytics: 
               <button
                 type="button"
                 onClick={() => {
-                  const traceId = lastAssistantTraceId(messages);
+                  const traceId = currentTurnTraceId(messages);
                   analytics.retried(traceId ? { conversationId, traceId } : { conversationId });
                   void regenerate();
                 }}
