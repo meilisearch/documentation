@@ -32,7 +32,7 @@ const CORS_HEADERS = {
 /**
  * Local dev only (`npm run dev`):
  * - rebuilds `dist/chat.js` in watch mode and serves it at `/chat.js`
- * - routes `/api/chat` to the same Web `Request`/`Response` handler Vercel runs in production
+ * - routes `/api/chat` and `/api/events` to the same Web `Request`/`Response` handlers Vercel runs in production
  */
 function devServer(): Plugin {
   return {
@@ -73,9 +73,11 @@ function devServer(): Plugin {
           return;
         }
 
-        if (url.pathname === "/api/chat") {
+        const api = /^\/api\/(chat|events)$/.exec(url.pathname);
+        if (api) {
+          const name = api[1];
           try {
-            const mod = await server.ssrLoadModule("/api/chat.ts");
+            const mod = await server.ssrLoadModule(`/api/${name}.ts`);
             const method = req.method ?? "GET";
             const handler = mod[method];
             if (typeof handler !== "function") {
@@ -109,7 +111,7 @@ function devServer(): Plugin {
             }
             res.end();
           } catch (error) {
-            console.error("[chat] /api/chat failed", error);
+            console.error(`[chat] /api/${name} failed`, error);
             if (!res.headersSent) res.writeHead(500);
             res.end("Internal error");
           }
@@ -129,6 +131,7 @@ export default defineConfig({
   define: {
     "process.env.NODE_ENV": JSON.stringify("production"),
     __MEILI_CHAT_ORIGIN__: JSON.stringify(chatOrigin()),
+    __MEILI_CHAT_POSTHOG_TOKEN__: JSON.stringify(process.env.POSTHOG_PROJECT_TOKEN ?? ""),
   },
   // Bind IPv4 explicitly. Listening on localhost alone can be IPv6-only, which the browser misses.
   server: { host: "127.0.0.1", port: 5173, cors: true },

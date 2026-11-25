@@ -1,10 +1,13 @@
 import { createRoot } from "react-dom/client";
 import { AskButton } from "./components/AskButton";
 import { ChatPanel } from "./components/ChatPanel";
+import { createChatAnalytics } from "./lib/analytics";
 import { TOGGLE_EVENT } from "./lib/events";
+import { readPostHogIdentity } from "./lib/identity";
 import { createShadowHost, hoistAtProperties, hoistLayoutStyles, placeButton } from "./lib/shadow";
 
 declare const __MEILI_CHAT_ORIGIN__: string;
+declare const __MEILI_CHAT_POSTHOG_TOKEN__: string;
 
 export type MountOptions = {
   /** Base URL of the chat service. Used when the bundle was not built on Vercel. */
@@ -28,14 +31,24 @@ export function mount(options: MountOptions = {}) {
   // Idempotent: Mintlify re-runs scripts on some navigations.
   if (document.getElementById(PANEL_HOST_ID)) return;
 
+  if (__MEILI_CHAT_POSTHOG_TOKEN__ === "" && __MEILI_CHAT_ORIGIN__ === "") {
+    console.error(
+      "POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_PROJECT_TOKEN is configured",
+    );
+  }
+
   // On Vercel this is the branch or production host baked in at build time.
   const apiBase = __MEILI_CHAT_ORIGIN__ || options.apiBase || scriptOrigin || "";
+  const analytics = createChatAnalytics({
+    apiBase,
+    identity: () => readPostHogIdentity(__MEILI_CHAT_POSTHOG_TOKEN__),
+  });
   hoistAtProperties();
   hoistLayoutStyles();
 
   const panel = createShadowHost(PANEL_HOST_ID);
   document.body.appendChild(panel.host);
-  createRoot(panel.container).render(<ChatPanel apiBase={apiBase} />);
+  createRoot(panel.container).render(<ChatPanel apiBase={apiBase} analytics={analytics} />);
 
   // Header button, injected next to the custom search bar (see search.js).
   const button = createShadowHost(BUTTON_HOST_ID);

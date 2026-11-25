@@ -2,8 +2,13 @@ import type { UIMessage } from "ai";
 
 export type Source = { title: string; href: string; breadcrumb?: string };
 
+export type Feedback = "up" | "down";
+
+/** Assistant message metadata. `traceId` is the PostHog `$ai_trace_id` of that answer. */
+export type ChatMetadata = { sources?: Source[]; traceId?: string; feedback?: Feedback };
+
 /** Assistant message whose sources are the pages the answer actually cited. */
-export type ChatMessage = UIMessage<{ sources?: Source[] }>;
+export type ChatMessage = UIMessage<ChatMetadata>;
 
 const DOCS_MOUNT = /^\/docs(?=\/|$)/;
 

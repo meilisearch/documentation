@@ -1,7 +1,8 @@
-import { missingSettings, readConfig } from "./config.js";
-import { corsHeaders, isAllowedOrigin, isValidMessages, json, parseChatUser } from "./http.js";
-import { createAgentContext } from "./state.js";
 import { createChatResponse } from "./agent.js";
+import { missingSettings, readConfig } from "./config.js";
+import { corsHeaders, isAllowedOrigin, isValidMessages, json, parseChatUser, parseTelemetryIdentity } from "./http.js";
+import { createAgentContext } from "./state.js";
+import { startTelemetry } from "./telemetry.js";
 
 export function OPTIONS(request: Request): Response {
   const { allowedOrigins } = readConfig();
@@ -22,21 +23,27 @@ export async function POST(request: Request): Promise<Response> {
     return json(500, { error: "Chat is not configured" }, headers);
   }
 
+  startTelemetry(config);
+
   void fetch(new URL("/health", config.meiliUrl!)).catch(() => {});
   void fetch("https://api.voyageai.com/", { method: "HEAD" }).catch(() => {});
 
   let messages: unknown;
   let userInput: unknown;
+  let id: unknown;
+  let trigger: unknown;
+  let messageId: unknown;
   try {
-    ({ messages, user: userInput } = await request.json());
+    ({ messages, user: userInput, id, trigger, messageId } = await request.json());
   } catch {
     return json(400, { error: "Invalid JSON" }, headers);
   }
   if (!isValidMessages(messages)) return json(400, { error: "Invalid messages" }, headers);
 
   const user = parseChatUser(userInput);
+  const identity = parseTelemetryIdentity(request.headers, { id, trigger, messageId });
   const now = new Date();
-  const ctx = createAgentContext(config, user, performance.now());
+  const ctx = createAgentContext(config, user, performance.now(), identity);
 
   try {
     return await createChatResponse(ctx, messages, now, headers);

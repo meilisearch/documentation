@@ -48,6 +48,12 @@ export function ChatComposer({
           </button>
         )}
       </div>
+      <p className="mt-2 px-1 text-[12px] text-black/50 dark:text-white/50">
+        Chats are logged to improve answers.{" "}
+        <a href="https://www.meilisearch.com/privacy-policy" target="_blank" rel="noopener" className="underline">
+          Privacy policy
+        </a>
+      </p>
     </form>
   );
 }

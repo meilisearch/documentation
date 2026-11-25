@@ -1,6 +1,7 @@
 import { Meilisearch } from "meilisearch";
 import type { ChatUser } from "../shared/user.js";
 import type { ChatConfig } from "./config.js";
+import type { TelemetryIdentity } from "./http.js";
 import { utf8Bytes } from "./lib/format.js";
 import { summarizeSpans, type MeiliSpan, type MeiliSummary, type SpanRecorder, createSpanRecorder } from "./lib/meili.js";
 import type { ScoreCurve } from "./lib/rerank.js";
@@ -59,9 +60,15 @@ export type AgentContext = {
   };
   answer: { text: string; firstOutputAt?: number };
   started: number;
+  identity: TelemetryIdentity;
 };
 
-export function createAgentContext(config: ChatConfig, user: ChatUser, started: number): AgentContext {
+export function createAgentContext(
+  config: ChatConfig,
+  user: ChatUser,
+  started: number,
+  identity: TelemetryIdentity = { trigger: "submit-message" },
+): AgentContext {
   if (!config.meiliUrl || !config.meiliKey) throw new Error("Chat is not configured");
   const client = new Meilisearch({ host: config.meiliUrl, apiKey: config.meiliKey });
   return {
@@ -84,6 +91,7 @@ export function createAgentContext(config: ChatConfig, user: ChatUser, started: 
     },
     answer: { text: "" },
     started,
+    identity,
   };
 }
 

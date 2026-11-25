@@ -1,6 +1,6 @@
 import { simulateReadableStream, type UIMessage } from "ai";
 import { MockLanguageModelV4 } from "ai/test";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { createChatResponse } from "../agent.ts";
 import { DECLINE_MESSAGE } from "../instructions.ts";
 import { fakeContext } from "./fakes.ts";
@@ -41,24 +41,34 @@ function answering(answer: string) {
 const question: UIMessage = { id: "1", role: "user", parts: [{ type: "text", text: "How do I filter by price?" }] };
 const headers = { "Access-Control-Allow-Origin": "https://docs.example.com" };
 const now = new Date(Date.UTC(2024, 0, 2));
+const TRACE = "4bf92f3577b34da6a3ce929d0e0e4736";
+const telemetry = { startTurn: () => ({ traceId: TRACE, run: <T,>(fn: () => T) => fn(), end: () => {} }) };
+
+type StreamChunk = { type: string; messageId?: string; messageMetadata?: { traceId?: string } };
+
+function streamChunks(body: string): StreamChunk[] {
+  return body
+    .split("\n")
+    .filter((line) => line.startsWith("data: {"))
+    .map((line) => JSON.parse(line.slice("data: ".length)) as StreamChunk);
+}
+
+function mergedMetadata(body: string): { traceId?: string } {
+  return Object.assign({}, ...streamChunks(body).map((chunk) => chunk.messageMetadata ?? {}));
+}
 
 describe("createChatResponse", () => {
-  beforeEach(() => {
-    // The temporary transcript prints a retrieval trace for every answer.
-    vi.spyOn(console, "log").mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    vi.mocked(console.log).mockRestore();
-  });
-
   it("answers a question the router accepts", async () => {
     const main = answering("Use the filter parameter.");
 
-    const response = await createChatResponse(fakeContext(), [question], now, headers, {
-      main,
-      router: router({ handled: true }),
-    });
+    const response = await createChatResponse(
+      fakeContext(),
+      [question],
+      now,
+      headers,
+      { main, router: router({ handled: true }) },
+      telemetry,
+    );
 
     expect(response.status).toBe(200);
     expect(response.headers.get("access-control-allow-origin")).toBe("https://docs.example.com");
@@ -69,10 +79,14 @@ describe("createChatResponse", () => {
   it("declines a question the router rejects, without calling the answering model", async () => {
     const main = answering("The weather is sunny.");
 
-    const response = await createChatResponse(fakeContext(), [question], now, headers, {
-      main,
-      router: router({ handled: false }),
-    });
+    const response = await createChatResponse(
+      fakeContext(),
+      [question],
+      now,
+      headers,
+      { main, router: router({ handled: false }) },
+      telemetry,
+    );
 
     const body = await response.text();
     expect(response.status).toBe(200);
@@ -83,10 +97,14 @@ describe("createChatResponse", () => {
   });
 
   it("streams the refusal as one finished assistant message the widget can render", async () => {
-    const response = await createChatResponse(fakeContext(), [question], now, headers, {
-      main: answering("unused"),
-      router: router({ handled: false }),
-    });
+    const response = await createChatResponse(
+      fakeContext(),
+      [question],
+      now,
+      headers,
+      { main: answering("unused"), router: router({ handled: false }) },
+      telemetry,
+    );
 
     const types = (await response.text())
       .split("\n")
@@ -104,8 +122,44 @@ describe("createChatResponse", () => {
     });
 
     await expect(
-      createChatResponse(fakeContext(), [question], now, headers, { main, router: broken }),
+      createChatResponse(fakeContext(), [question], now, headers, { main, router: broken }, telemetry),
     ).rejects.toThrow("router down");
     expect(main.doStreamCalls).toHaveLength(0);
+  });
+
+  it("tags the streamed answer with the turn's trace id and a message id", async () => {
+    const response = await createChatResponse(
+      fakeContext(),
+      [question],
+      now,
+      headers,
+      { main: answering("Use the filter parameter."), router: router({ handled: true }) },
+      telemetry,
+    );
+
+    const body = await response.text();
+    const start = streamChunks(body).find((chunk) => chunk.type === "start");
+    expect(start?.messageId).toEqual(expect.any(String));
+    expect(start?.messageId).not.toBe("");
+    expect(mergedMetadata(body).traceId).toBe(TRACE);
+  });
+
+  it("tags the refusal with the turn's trace id and a message id", async () => {
+    const response = await createChatResponse(
+      fakeContext(),
+      [question],
+      now,
+      headers,
+      { main: answering("unused"), router: router({ handled: false }) },
+      telemetry,
+    );
+
+    const body = await response.text();
+    const chunks = streamChunks(body);
+    const start = chunks.find((chunk) => chunk.type === "start");
+    expect(start?.messageId).toEqual(expect.any(String));
+    expect(start?.messageId).not.toBe("");
+    expect(mergedMetadata(body).traceId).toBe(TRACE);
+    expect(chunks.map((chunk) => chunk.type)).toEqual(["start", "text-start", "text-delta", "text-end", "finish"]);
   });
 });

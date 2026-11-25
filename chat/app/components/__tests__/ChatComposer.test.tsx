@@ -72,4 +72,13 @@ describe("ChatComposer", () => {
     expect(onKeyDown).toHaveBeenCalledTimes(1);
     expect(onKeyDown.mock.calls[0]?.[0].key).toBe("Enter");
   });
+
+  it("notes that chats are logged and links to the privacy policy", () => {
+    render(<Composer />);
+    expect(screen.getByText(/Chats are logged to improve answers/)).toBeInTheDocument();
+    const policy = screen.getByRole("link", { name: "Privacy policy" });
+    expect(policy).toHaveAttribute("href", "https://www.meilisearch.com/privacy-policy");
+    expect(policy).toHaveAttribute("target", "_blank");
+    expect(policy).toHaveAttribute("rel", "noopener");
+  });
 });

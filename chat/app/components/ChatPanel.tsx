@@ -6,10 +6,14 @@ import { readChatUser } from "../../shared/user";
 import { MAX_WIDTH, MIN_WIDTH, usePanelResize } from "../hooks/usePanelResize";
 import { useStickToBottom } from "../hooks/useStickToBottom";
 import { useDarkMode } from "../hooks/useDarkMode";
+import type { ChatAnalytics } from "../lib/analytics";
+import { loadConversationId, resetConversationId } from "../lib/conversation";
 import { TOGGLE_EVENT } from "../lib/events";
+import { traceRefFor } from "../lib/trace";
 import { ChatComposer } from "./ChatComposer";
 import { ChatHeader } from "./ChatHeader";
 import { Message } from "./Message";
+import { MessageActions } from "./MessageActions";
 
 const STORAGE_KEY = "meili-chat:messages";
 const DESKTOP_QUERY = "(min-width: 1024px)";
@@ -36,6 +40,15 @@ function saveMessages(messages: ChatMessage[]) {
   }
 }
 
+function lastAssistantTraceId(messages: ChatMessage[]): string | undefined {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message?.role !== "assistant") continue;
+    return message.metadata?.traceId || undefined;
+  }
+  return undefined;
+}
+
 function useDesktop() {
   const [desktop, setDesktop] = useState(() => window.matchMedia(DESKTOP_QUERY).matches);
   useEffect(() => {
@@ -47,11 +60,12 @@ function useDesktop() {
   return desktop;
 }
 
-export function ChatPanel({ apiBase }: { apiBase: string }) {
+export function ChatPanel({ apiBase, analytics }: { apiBase: string; analytics: ChatAnalytics }) {
   const dark = useDarkMode();
   const desktop = useDesktop();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [conversationId, setConversationId] = useState(loadConversationId);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { width, dragging, asideRef, maximized, toggleSize, onResizePointerDown, onResizeKeyDown } = usePanelResize(open, desktop);
   const narrow = !desktop;
@@ -62,10 +76,12 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
         api: `${apiBase}/api/chat`,
         // Read on each send: the widget stays mounted while the reader switches code tabs.
         body: () => ({ user: readChatUser() }),
+        headers: () => analytics.requestHeaders(),
       }),
-    [apiBase],
+    [analytics, apiBase],
   );
   const { messages, sendMessage, status, stop, error, regenerate, setMessages } = useChat<ChatMessage>({
+    id: conversationId,
     messages: loadMessages(),
     transport,
   });
@@ -120,6 +136,7 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
     stop();
     setMessages([]);
     saveMessages([]);
+    setConversationId(resetConversationId());
     inputRef.current?.focus();
   };
 
@@ -212,9 +229,33 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
               </div>
             </div>
           ) : (
-            messages.map((message, index) => (
-              <Message key={message.id} message={message} streaming={busy && index === lastIndex} />
-            ))
+            messages.map((message, index) => {
+              const streaming = busy && index === lastIndex;
+              const trace = traceRefFor(message, conversationId, streaming);
+              return (
+                <div key={message.id}>
+                  <Message message={message} streaming={streaming} />
+                  {trace && (
+                    <MessageActions
+                      trace={trace}
+                      feedback={message.metadata?.feedback ?? null}
+                      canRegenerate={index === lastIndex && !busy}
+                      analytics={analytics}
+                      onRegenerate={() => void regenerate({ messageId: message.id })}
+                      onFeedback={(rating) => {
+                        setMessages((current) =>
+                          current.map((item) =>
+                            item.id === message.id
+                              ? { ...item, metadata: { ...item.metadata, feedback: rating } }
+                              : item,
+                          ),
+                        );
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })
           )}
 
           {status === "submitted" && <p className="animate-pulse text-[13px] text-black/50 dark:text-white/50">Thinking…</p>}
@@ -222,7 +263,15 @@ export function ChatPanel({ apiBase }: { apiBase: string }) {
           {error && (
             <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-[13px]">
               Something went wrong.{" "}
-              <button type="button" onClick={() => void regenerate()} className="cursor-pointer underline">
+              <button
+                type="button"
+                onClick={() => {
+                  const traceId = lastAssistantTraceId(messages);
+                  analytics.retried(traceId ? { conversationId, traceId } : { conversationId });
+                  void regenerate();
+                }}
+                className="cursor-pointer underline"
+              >
                 Try again
               </button>
             </div>

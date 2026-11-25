@@ -36,7 +36,11 @@ export function routerMessages(messages: UIMessage[]): RouterTurn[] {
  * Decides whether the assistant handles the conversation. It fails when the model cannot answer,
  * so a question that was not checked is never handled.
  */
-export async function routeQuestion(model: LanguageModel, messages: UIMessage[]): Promise<RouteDecision> {
+export async function routeQuestion(
+  model: LanguageModel,
+  messages: UIMessage[],
+  call?: { runtimeContext?: unknown; telemetry?: unknown },
+): Promise<RouteDecision> {
   const turns = routerMessages(messages);
   if (turns.length === 0) return { handled: false };
 
@@ -45,6 +49,12 @@ export async function routeQuestion(model: LanguageModel, messages: UIMessage[])
     instructions: routerInstructions(),
     messages: turns,
     output: Output.object({ schema: decisionSchema }),
+    ...(call
+      ? {
+          runtimeContext: call.runtimeContext as Record<string, unknown> | undefined,
+          telemetry: call.telemetry as { functionId?: string } | undefined,
+        }
+      : {}),
   });
   return output;
 }

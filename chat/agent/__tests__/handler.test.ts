@@ -69,7 +69,9 @@ describe("OPTIONS", () => {
     expect(response.status).toBe(204);
     expect(response.headers.get("access-control-allow-origin")).toBe(ORIGIN);
     expect(response.headers.get("access-control-allow-methods")).toBe("POST, OPTIONS");
-    expect(response.headers.get("access-control-allow-headers")).toBe("Content-Type");
+    expect(response.headers.get("access-control-allow-headers")).toBe(
+      "Content-Type, X-POSTHOG-DISTINCT-ID, X-POSTHOG-SESSION-ID",
+    );
     expect(response.headers.get("vary")).toBe("Origin");
   });
 });

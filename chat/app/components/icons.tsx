@@ -77,3 +77,30 @@ export function CloseIcon() {
     </Icon>
   );
 }
+
+export function ThumbUpIcon() {
+  return (
+    <Icon>
+      <path d="M5.25 7.5v9" />
+      <path d="M11.25 4.41 10.5 7.5h4.37a1.5 1.5 0 0 1 1.44 1.92l-1.75 6A1.5 1.5 0 0 1 13.13 16.5H3a1.5 1.5 0 0 1-1.5-1.5v-6a1.5 1.5 0 0 1 1.5-1.5h2.07a1.5 1.5 0 0 0 1.34-.83L9 1.5a2.35 2.35 0 0 1 2.25 2.91Z" />
+    </Icon>
+  );
+}
+
+export function ThumbDownIcon() {
+  return (
+    <Icon>
+      <path d="M12.75 10.5V1.5" />
+      <path d="M6.75 13.59 7.5 10.5H3.13a1.5 1.5 0 0 1-1.44-1.92l1.75-6A1.5 1.5 0 0 1 4.88 1.5H15a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5h-2.07a1.5 1.5 0 0 0-1.34.83L9 16.5a2.35 2.35 0 0 1-2.25-2.91Z" />
+    </Icon>
+  );
+}
+
+export function RegenerateIcon() {
+  return (
+    <Icon>
+      <path d="M2.25 9a6.75 6.75 0 1 0 6.75-6.75 7.31 7.31 0 0 0-5.06 2.06L2.25 6" />
+      <path d="M2.25 2.25v3.75h3.75" />
+    </Icon>
+  );
+}
