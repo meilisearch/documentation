@@ -4,7 +4,7 @@ React widget and docs agent, deployed on Vercel as its own project. The Mintlify
 
 ```text
 api/        HTTP entry. One file, one function: re-exports the agent handler.
-agent/      The docs assistant. Instructions, tools, and the request handler.
+agent/      The docs assistant. Instructions, the router, tools, and the request handler.
 app/        Browser widget. Components, hooks, and widget-only helpers.
 shared/     Pure helpers imported by the agent, the widget, and ingestion.
 ```

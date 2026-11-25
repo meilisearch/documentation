@@ -1,13 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { OPTIONS, POST } from "../handler.ts";
 
-const { createChatStream } = vi.hoisted(() => ({
-  createChatStream: vi.fn(async () => ({
-    toUIMessageStreamResponse: (opts: { headers?: HeadersInit }) => new Response("ok", { status: 200, headers: opts.headers }),
-  })),
+const { createChatResponse } = vi.hoisted(() => ({
+  createChatResponse: vi.fn(
+    async (_ctx: unknown, _messages: unknown, _now: Date, headers: HeadersInit) =>
+      new Response("ok", { status: 200, headers }),
+  ),
 }));
 
-vi.mock("../agent.js", () => ({ createChatStream }));
+vi.mock("../agent.js", () => ({ createChatResponse }));
 
 const ORIGINAL = { ...process.env };
 const ORIGIN = "https://docs.example.com";
@@ -41,7 +42,7 @@ function request(method: string, body?: BodyInit, origin: string | null = ORIGIN
 beforeEach(() => {
   vi.stubGlobal("fetch", fetchMock);
   fetchMock.mockClear();
-  createChatStream.mockClear();
+  createChatResponse.mockClear();
   vi.spyOn(console, "error").mockImplementation(() => {});
 });
 
@@ -83,7 +84,7 @@ describe("POST", () => {
     expect(response.status).toBe(500);
     expect(response.headers.get("content-type")).toBe("application/json");
     await expect(response.json()).resolves.toEqual({ error: "Chat is not configured" });
-    expect(createChatStream).not.toHaveBeenCalled();
+    expect(createChatResponse).not.toHaveBeenCalled();
   });
 
   it("returns 400 for invalid JSON", async () => {
@@ -93,7 +94,7 @@ describe("POST", () => {
 
     expect(response.status).toBe(400);
     await expect(response.json()).resolves.toEqual({ error: "Invalid JSON" });
-    expect(createChatStream).not.toHaveBeenCalled();
+    expect(createChatResponse).not.toHaveBeenCalled();
   });
 
   it("returns 400 for invalid messages", async () => {
@@ -103,10 +104,10 @@ describe("POST", () => {
 
     expect(response.status).toBe(400);
     await expect(response.json()).resolves.toEqual({ error: "Invalid messages" });
-    expect(createChatStream).not.toHaveBeenCalled();
+    expect(createChatResponse).not.toHaveBeenCalled();
   });
 
-  it("starts a chat stream when the env is complete and the messages are valid", async () => {
+  it("returns the chat response when the env is complete and the messages are valid", async () => {
     configure();
 
     const response = await POST(request("POST", JSON.stringify({ messages })));
@@ -114,7 +115,7 @@ describe("POST", () => {
     expect(response.status).toBe(200);
     await expect(response.text()).resolves.toBe("ok");
     expect(response.headers.get("access-control-allow-origin")).toBe(ORIGIN);
-    expect(createChatStream).toHaveBeenCalledWith(
+    expect(createChatResponse).toHaveBeenCalledWith(
       expect.objectContaining({
         user: { codeLanguage: null },
         config: expect.objectContaining({
@@ -126,8 +127,21 @@ describe("POST", () => {
       }),
       messages,
       expect.any(Date),
+      expect.objectContaining({ "Access-Control-Allow-Origin": ORIGIN }),
     );
     expect(String(fetchMock.mock.calls[0]?.[0])).toBe("http://meili.test/health");
     expect(fetchMock.mock.calls[1]).toEqual(["https://api.voyageai.com/", { method: "HEAD" }]);
+  });
+
+  it("returns a 502 with CORS headers when the chat cannot start", async () => {
+    configure();
+    createChatResponse.mockRejectedValueOnce(new Error("router down"));
+
+    const response = await POST(request("POST", JSON.stringify({ messages })));
+
+    expect(response.status).toBe(502);
+    expect(response.headers.get("access-control-allow-origin")).toBe(ORIGIN);
+    await expect(response.json()).resolves.toEqual({ error: "Something went wrong. Please try again." });
+    expect(console.error).toHaveBeenCalledWith("[chat] could not start", expect.any(Error));
   });
 });

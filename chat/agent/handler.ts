@@ -1,7 +1,7 @@
 import { missingSettings, readConfig } from "./config.js";
 import { corsHeaders, isAllowedOrigin, isValidMessages, json, parseChatUser } from "./http.js";
 import { createAgentContext } from "./state.js";
-import { createChatStream } from "./agent.js";
+import { createChatResponse } from "./agent.js";
 
 export function OPTIONS(request: Request): Response {
   const { allowedOrigins } = readConfig();
@@ -37,17 +37,11 @@ export async function POST(request: Request): Promise<Response> {
   const user = parseChatUser(userInput);
   const now = new Date();
   const ctx = createAgentContext(config, user, performance.now());
-  const result = await createChatStream(ctx, messages, now);
 
-  return result.toUIMessageStreamResponse({
-    headers,
-    messageMetadata: ({ part }) => {
-      if (part.type !== "finish") return undefined;
-      return { sources: ctx.pool.cited(ctx.answer.text) };
-    },
-    onError: (error) => {
-      console.error("[chat] stream error", error);
-      return "Something went wrong. Please try again.";
-    },
-  });
+  try {
+    return await createChatResponse(ctx, messages, now, headers);
+  } catch (error) {
+    console.error("[chat] could not start", error);
+    return json(502, { error: "Something went wrong. Please try again." }, headers);
+  }
 }
