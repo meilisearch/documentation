@@ -45,7 +45,7 @@ client.add_or_update_networks({
 ```
 
 ```php PHP
-$client->updateNetwork([
+$client->initializeNetwork([
   'self' => 'ms-00',
   'leader' => 'ms-00',
   'remotes' => [
@@ -59,6 +59,10 @@ $client->updateNetwork([
       'searchApiKey' => 'ANOTHER_INSTANCE_API_KEY',
       'writeApiKey' => 'ANOTHER_INSTANCE_WRITE_API_KEY'
     ]
+  ],
+  'shards' => [
+    'shard-a' => ['remotes' => ['ms-00']],
+    'shard-b' => ['remotes' => ['ms-01']]
   ]
 ]);
 ```

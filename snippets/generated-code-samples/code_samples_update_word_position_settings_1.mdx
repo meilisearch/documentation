@@ -13,4 +13,10 @@ curl \
 ```javascript JS
 client.index('INDEX_NAME').updateWordPosition({ enabled: false });
 ```
+
+```go Go
+client.Index("books").UpdateWordPosition(&meilisearch.WordPosition{
+  Enabled: meilisearch.BoolPtr(false),
+})
+```
 </CodeGroup>
