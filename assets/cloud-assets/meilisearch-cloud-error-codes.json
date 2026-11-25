@@ -29,6 +29,11 @@
     "title": "Impossible to change plan",
     "description": "Unable to change plan for this project, it is either in failed or update_failed state"
   },
+  "change_plan_payment_overdue": {
+    "statusCode": 422,
+    "title": "Unable to change plan while invoices are unpaid",
+    "description": "This project was paused because of unpaid invoices, pay them to resume the project"
+  },
   "change_plan_region_invalid": {
     "statusCode": 422,
     "title": "Unable to change project region",
