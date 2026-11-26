@@ -4730,5 +4730,101 @@
   {
     "source": "/reference/errors/overview",
     "destination": "/reference/errors"
+  },
+  {
+    "source": "/movies.json",
+    "destination": "/assets/datasets/movies.json"
+  },
+  {
+    "source": "/advanced-guides/dumps",
+    "destination": "/resources/self_hosting/data_backup/dumps"
+  },
+  {
+    "source": "/resources/howtos/digitalocean_droplet",
+    "destination": "/resources/self_hosting/deployment/digitalocean"
+  },
+  {
+    "source": "/learn/tutorials/getting_started.html",
+    "destination": "/getting_started/first_project"
+  },
+  {
+    "source": "/learn/what_is_meilisearch/contact",
+    "destination": "/resources/help/faq"
+  },
+  {
+    "source": "/learn/what_is_meilisearch/contact.html",
+    "destination": "/resources/help/faq"
+  },
+  {
+    "source": "/learn/getting_started/indexing",
+    "destination": "/capabilities/indexing/getting_started"
+  },
+  {
+    "source": "/reference/api/stop_words",
+    "destination": "/reference/api/settings/list-all-settings"
+  },
+  {
+    "source": "/learn/fine_tuning/ranking",
+    "destination": "/capabilities/full_text_search/relevancy/ranking_rules"
+  },
+  {
+    "source": "/learn/relevance/ranking_rules",
+    "destination": "/capabilities/full_text_search/relevancy/ranking_rules"
+  },
+  {
+    "source": "/learn/relevancy/word_pisition_settings",
+    "destination": "/capabilities/full_text_search/relevancy/ranking_rules"
+  },
+  {
+    "source": "/learn/advanced/documents",
+    "destination": "/capabilities/indexing/overview"
+  },
+  {
+    "source": "/reference/features/installation.html",
+    "destination": "/resources/self_hosting/getting_started/install_locally"
+  },
+  {
+    "source": "/learn/Self-hosted/install_meilisearch_locally",
+    "destination": "/resources/self_hosting/getting_started/install_locally"
+  },
+  {
+    "source": "/guides/integration/firebase",
+    "destination": "/getting_started/integrations/firebase"
+  },
+  {
+    "source": "/guides/integration/strapi",
+    "destination": "/getting_started/frameworks/strapi"
+  },
+  {
+    "source": "/guides/integration/rails",
+    "destination": "/getting_started/frameworks/rails"
+  },
+  {
+    "source": "/sdks/ruby/quick_start",
+    "destination": "/getting_started/sdks/ruby"
+  },
+  {
+    "source": "/sdks/swift/quick_start",
+    "destination": "/getting_started/sdks/swift"
+  },
+  {
+    "source": "/learn/cookbooks/running-production",
+    "destination": "/resources/self_hosting/deployment/running_production"
+  },
+  {
+    "source": "/learn/configuration/hybrid_search",
+    "destination": "/capabilities/hybrid_search/getting_started"
+  },
+  {
+    "source": "/learn/security/securing_meilisearch",
+    "destination": "/capabilities/security/getting_started"
+  },
+  {
+    "source": "/assets/open-api/meilisearch-openapi.json",
+    "destination": "/assets/engine-release-assets/meilisearch-openapi.json"
+  },
+  {
+    "source": "/postman/meilisearch-collection.json",
+    "destination": "/getting_started/integrations/postman"
   }
 ]
