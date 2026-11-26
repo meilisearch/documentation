@@ -4,7 +4,7 @@ description: Enable or disable experimental Meilisearch features from the Cloud 
 ---
 
 <Note>
-This page is for Meilisearch Cloud. If you self-host Meilisearch, see the [experimental features overview](/resources/help/experimental_features_overview).
+This page is for Meilisearch Cloud users. If you self-host Meilisearch, see [how to enable experimental features](/resources/help/experimental_features_overview).
 </Note>
 
 Meilisearch occasionally ships features in an experimental state before promoting them to stable. Experimental features are fully functional but their API or behavior may change between Meilisearch versions without a deprecation period. Be careful when enabling them in production environments.
@@ -17,7 +17,7 @@ You can enable or disable experimental features per project from **Project Setti
 
 Check the box next to a feature to enable it. Changes take effect immediately without a restart or re-index.
 
-## Features you can enable or disable
+## Available features
 
 The list depends on your project's Meilisearch version. A feature appears only if your version supports it.
 
@@ -32,21 +32,9 @@ The list depends on your project's Meilisearch version. A feature appears only i
 | **Render template** | Preview how document templates and fragments render on your content |
 | **Edit documents by function** | [Apply custom transformations to documents](/capabilities/indexing/how_to/edit_documents_with_functions) using Rhai scripts, from simple formatting changes to complex logic |
 
-## Features enabled by default
-
-Meilisearch Cloud enables these experimental features on every project. They do not appear in **Project Settings > General**.
-
-| Feature | Description |
-|---------|-------------|
-| **Metrics** | Exposes the [`/metrics` endpoint](/capabilities/platform/monitoring/prometheus_endpoint). Meilisearch Cloud uses it for monitoring, so you cannot disable it |
-| **Search query embedding cache** | Caches up to 150 search query embeddings to avoid calling the embedder again for repeated queries |
-| **Chat completions** | Enabled automatically when you configure a chat from the Cloud UI |
-
-Meilisearch Cloud also sets some experimental launch options to run your project on its infrastructure, such as the log format and snapshot storage. These options do not change how you use Meilisearch.
-
 ## Other experimental features
 
-Meilisearch has more experimental features than the ones listed on this page. For the complete list, see the [experimental features overview](/resources/help/experimental_features_overview).
+Meilisearch could have more experimental features than the ones listed on this page. For the complete list, see the [experimental features overview](/resources/help/experimental_features_overview).
 
 If you need an experimental feature that is not available in your project settings, contact [support@meilisearch.com](mailto:support@meilisearch.com).
 
