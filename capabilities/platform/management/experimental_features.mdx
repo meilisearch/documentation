@@ -13,30 +13,38 @@ You can enable or disable experimental features per project from **Project Setti
 
 Check the box next to a feature to enable it. Changes take effect immediately without a restart or re-index.
 
-## Available features
+## Features you can enable or disable
 
-The list of available features depends on your project's current Meilisearch version. The table below is a snapshot for illustration:
+The list depends on your project's Meilisearch version. A feature appears only if your version supports it.
 
 | Feature | Description |
 |---------|-------------|
-| **MCP server** | Expose your Meilisearch index through a Model Context Protocol (MCP) server for use with AI agents and tools |
-| **Search Rules** | Pin, boost, deboost, or hide documents in search results when specific conditions are met |
-| **Foreign keys** | Connect indexes so Meilisearch can expand references into full documents in results, and filter using fields from a related index |
-| **"CONTAINS" filter** | Adds the `CONTAINS` filter operator to match documents where the specified attribute includes a specific substring |
-| **Composite embedders** | Use different embedders at search time and indexing time |
-| **Multi-modal search** | Index and search through images, text, and other formats in documents |
+| **MCP server** | Expose your Meilisearch index through a [Model Context Protocol (MCP) server](/getting_started/integrations/mcp) for use with AI agents and tools |
+| **Dynamic Search Rules** | [Pin, boost, deboost, or hide documents](/capabilities/search_rules/overview) in search results when specific conditions are met. Requires Meilisearch v1.41 or later |
+| **Foreign keys** | [Connect indexes](/capabilities/indexing/joins/define_index_relationships) so Meilisearch can expand references into full documents in results, and filter using fields from a related index |
+| **"CONTAINS" filter** | Adds the [`CONTAINS` filter operator](/capabilities/filtering_sorting_faceting/advanced/filter_expression_syntax#contains) to match documents where the specified attribute includes a specific substring |
+| **Composite embedders** | Use [different embedders](/capabilities/hybrid_search/advanced/composite_embedders) at search time and indexing time |
+| **Multi-modal search** | [Index and search through images](/capabilities/hybrid_search/how_to/image_search_with_multimodal), text, and other formats in documents |
 | **Render template** | Preview how document templates and fragments render on your content |
-| **Edit documents by function** | Apply custom transformations to documents using Rhai scripts, from simple formatting changes to complex logic |
+| **Edit documents by function** | [Apply custom transformations to documents](/capabilities/indexing/how_to/edit_documents_with_functions) using Rhai scripts, from simple formatting changes to complex logic |
 
-<Note>
-  This list changes over time. New features are added, and others are eventually promoted to stable and removed from the experimental list. Treat this table as a snapshot rather than an exhaustive reference, and always check your project's **Project Settings > General** in the Cloud UI for the current set.
-</Note>
+## Features enabled by default
 
-For a complete and up-to-date list, see the [experimental features API reference](/reference/api/experimental-features/list-experimental-features) and the [changelog](/changelog).
+Meilisearch Cloud enables these experimental features on every project. They do not appear in **Project Settings > General**.
 
-## Enterprise-only experimental features
+| Feature | Description |
+|---------|-------------|
+| **Metrics** | Exposes the [`/metrics` endpoint](/capabilities/platform/monitoring/prometheus_endpoint). Meilisearch Cloud uses it for monitoring, so you cannot disable it |
+| **Search query embedding cache** | Caches up to 150 search query embeddings to avoid calling the embedder again for repeated queries |
+| **Chat completions** | Enabled automatically when you configure a chat from the Cloud UI |
 
-Some experimental features are not accessible through the Cloud UI and require direct activation by the Meilisearch team. If you need access to a feature that is not listed in your project settings, contact [support@meilisearch.com](mailto:support@meilisearch.com) or reach out to [sales@meilisearch.com](mailto:sales@meilisearch.com) for Enterprise plans.
+Meilisearch Cloud also sets some experimental launch options to run your project on its infrastructure, such as the log format and snapshot storage. These options do not change how you use Meilisearch.
+
+## Other experimental features
+
+Meilisearch has more experimental features than the ones listed on this page. For the complete list, see the [experimental features overview](/resources/help/experimental_features_overview).
+
+If you need an experimental feature that is not available in your project settings, contact [support@meilisearch.com](mailto:support@meilisearch.com).
 
 ## Stability notice
 
