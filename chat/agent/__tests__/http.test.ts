@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { corsHeaders, isAllowedOrigin, isValidMessages, json, parseChatUser } from "../http.ts";
+import { corsHeaders, isAllowedOrigin, isValidMessages, json, parseChatUser, parseTelemetryIdentity } from "../http.ts";
 
 const allowed = ["meilisearch.com", "*.meilisearch.com"];
 
@@ -40,7 +40,7 @@ describe("corsHeaders", () => {
     expect(corsHeaders("https://www.meilisearch.com")).toEqual({
       "Access-Control-Allow-Origin": "https://www.meilisearch.com",
       "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Headers": "Content-Type, X-POSTHOG-DISTINCT-ID, X-POSTHOG-SESSION-ID",
       "Access-Control-Max-Age": "86400",
       Vary: "Origin",
     });
@@ -48,6 +48,63 @@ describe("corsHeaders", () => {
 
   it("uses a wildcard when the request has no origin", () => {
     expect(corsHeaders(null)["Access-Control-Allow-Origin"]).toBe("*");
+  });
+});
+
+const CONVERSATION = "c0ffee00-0000-4000-8000-000000000001";
+
+describe("parseTelemetryIdentity", () => {
+  it("passes through valid headers and a regenerate body", () => {
+    const headers = new Headers({
+      "X-POSTHOG-DISTINCT-ID": "ph-visitor-1",
+      "X-POSTHOG-SESSION-ID": "ph-session-1",
+    });
+
+    expect(
+      parseTelemetryIdentity(headers, {
+        id: CONVERSATION,
+        trigger: "regenerate-message",
+        messageId: "msg-1",
+      }),
+    ).toEqual({
+      distinctId: "ph-visitor-1",
+      webSessionId: "ph-session-1",
+      conversationId: CONVERSATION,
+      trigger: "regenerate-message",
+      regeneratedMessageId: "msg-1",
+    });
+  });
+
+  it("drops a conversation id with a space and a distinct id longer than 200 characters", () => {
+    const headers = new Headers({ "X-POSTHOG-DISTINCT-ID": "x".repeat(201) });
+
+    expect(parseTelemetryIdentity(headers, { id: "a b" })).toEqual({ trigger: "submit-message" });
+  });
+
+  it("uses the conversation id when the distinct id header is missing", () => {
+    expect(parseTelemetryIdentity(new Headers(), { id: CONVERSATION })).toEqual({
+      distinctId: CONVERSATION,
+      conversationId: CONVERSATION,
+      trigger: "submit-message",
+    });
+  });
+
+  it("defaults the trigger to submit-message", () => {
+    expect(parseTelemetryIdentity(new Headers(), {}).trigger).toBe("submit-message");
+    expect(parseTelemetryIdentity(new Headers(), { trigger: "retry" }).trigger).toBe("submit-message");
+  });
+
+  it("sets regeneratedMessageId only for a regenerate trigger with a valid message id", () => {
+    expect(parseTelemetryIdentity(new Headers(), { trigger: "submit-message", messageId: "msg-1" })).toEqual({
+      trigger: "submit-message",
+    });
+    expect(parseTelemetryIdentity(new Headers(), { trigger: "regenerate-message", messageId: "   " })).toEqual({
+      trigger: "regenerate-message",
+    });
+    expect(parseTelemetryIdentity(new Headers(), { trigger: "regenerate-message", messageId: "msg-1" })).toEqual({
+      trigger: "regenerate-message",
+      regeneratedMessageId: "msg-1",
+    });
   });
 });
 

@@ -22,6 +22,8 @@ describe("readConfig", () => {
       MEILISEARCH_ROUTES_INDEX: "routes",
       MEILISEARCH_CHANGELOG_INDEX: "changelog",
       MEILISEARCH_EMBEDDER: "embed",
+      POSTHOG_PROJECT_TOKEN: "phc_token",
+      POSTHOG_HOST: "https://eu.i.posthog.com",
     });
 
     expect(config).toEqual({
@@ -36,6 +38,8 @@ describe("readConfig", () => {
       routesIndex: "routes",
       changelogIndex: "changelog",
       embedder: "embed",
+      posthogToken: "phc_token",
+      posthogHost: "https://eu.i.posthog.com",
     });
   });
 
@@ -48,6 +52,8 @@ describe("readConfig", () => {
       MEILISEARCH_ROUTES_INDEX: "",
       MEILISEARCH_CHANGELOG_INDEX: "",
       MEILISEARCH_EMBEDDER: "",
+      POSTHOG_PROJECT_TOKEN: "",
+      POSTHOG_HOST: "",
     });
 
     expect(config.model).toBe(DEFAULT_MODEL);
@@ -57,6 +63,8 @@ describe("readConfig", () => {
     expect(config.routesIndex).toBe("api-routes");
     expect(config.changelogIndex).toBe("changelog-chunks");
     expect(config.embedder).toBe("voyage");
+    expect(config.posthogToken).toBe("");
+    expect(config.posthogHost).toBe("");
   });
 });
 

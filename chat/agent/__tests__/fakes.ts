@@ -18,6 +18,8 @@ export const testConfig: ChatConfig = {
   routesIndex: "api-routes",
   changelogIndex: "changelog-chunks",
   embedder: "voyage",
+  posthogToken: "phc_test",
+  posthogHost: "https://eu.i.posthog.com",
 };
 
 export const testUser: ChatUser = { codeLanguage: "JS" };
@@ -56,6 +58,7 @@ export function fakeContext(partial: Partial<AgentContext> = {}): AgentContext &
     },
     answer: { text: "" },
     started: 0,
+    identity: { trigger: "submit-message" },
     ...partial,
   };
   if (partial.meili) context.meili = partial.meili;

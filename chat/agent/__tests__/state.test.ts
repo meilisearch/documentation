@@ -22,6 +22,7 @@ describe("createAgentContext", () => {
     expect(ctx.started).toBe(25);
     expect(ctx.answer).toEqual({ text: "" });
     expect(ctx.details.searches).toEqual([]);
+    expect(ctx.identity).toEqual({ trigger: "submit-message" });
   });
 });
 

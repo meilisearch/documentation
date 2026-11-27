@@ -27,6 +27,8 @@ export type ChatConfig = {
   routesIndex: string;
   changelogIndex: string;
   embedder: string;
+  posthogToken: string | undefined;
+  posthogHost: string | undefined;
 };
 
 /** Reads every setting once. Empty strings fall back to the defaults. */
@@ -46,6 +48,8 @@ export function readConfig(env: NodeJS.ProcessEnv = process.env): ChatConfig {
     routesIndex: env.MEILISEARCH_ROUTES_INDEX || "api-routes",
     changelogIndex: env.MEILISEARCH_CHANGELOG_INDEX || "changelog-chunks",
     embedder: env.MEILISEARCH_EMBEDDER || "voyage",
+    posthogToken: env.POSTHOG_PROJECT_TOKEN,
+    posthogHost: env.POSTHOG_HOST,
   };
 }
 
