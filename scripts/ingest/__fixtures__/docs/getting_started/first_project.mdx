@@ -1,0 +1,24 @@
+---
+title: First project
+description: Create an index, add documents, and run your first search.
+---
+
+This tutorial walks you through your first Meilisearch project. You will create an index, add a few documents, and search them. It takes about five minutes.
+
+## Setup
+
+Start by launching a Meilisearch instance. You can run it locally or create a project on Meilisearch Cloud. Keep your instance URL and API key at hand.
+
+### Adding documents
+
+Send an array of JSON objects to the documents route of your index. Meilisearch creates the index automatically if it does not exist yet. Indexing happens asynchronously, so you receive a task object in response.
+
+### Checking task status
+
+Use the task route to check whether your documents were indexed. A task moves from `enqueued` to `processing`, then to `succeeded` or `failed`.
+
+## Next steps
+
+<Card title="Explore search features" href="/capabilities/full_text_search/overview">
+Learn how to customize relevancy, filter results, and sort documents.
+</Card>

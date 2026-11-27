@@ -17,7 +17,7 @@ This guide covers how to set up your environment and run the docs locally, rebui
 
 ## Technical requirements
 
-- **Node.js** 20.17 or newer, but older than 25 (required by Mintlify)
+- **Node.js** 22 or newer, but older than 25. Mintlify refuses Node.js 25. Ingestion uses `path.matchesGlob`, which needs Node.js 22.
 - **npm** (comes with Node.js)
 
 ## Install
@@ -26,7 +26,10 @@ From the root of the repository:
 
 ```bash
 npm install
+npm install --prefix chat
 ```
+
+The chat widget is its own package. The second command installs it. Unit tests and `npm run typecheck` need both.
 
 ## Docs writing
 
@@ -68,6 +71,26 @@ npm run rebuild-search-staging
 
 ## Tests
 
+`chat/agent/`, `chat/shared/`, and `scripts/ingest/` run in Node. `chat/app/` runs in jsdom. Integration tests talk to a real Meilisearch and are not part of `npm test`.
+
+| Script | What it runs |
+|--------|----------------|
+| `npm test` | Every unit test |
+| `npm run chat:test` | The assistant, the widget, and `chat/shared/` |
+| `npm run ingest:test` | Ingestion, plus `chat/shared/` (ingestion imports those helpers) |
+| `npm run ingest:integration` | The Meilisearch sink. Fails if `MEILI_TEST_URL` is unset. |
+| `npm run test:watch` | The unit tests in watch mode |
+| `npm run typecheck` | `scripts/ingest` and `chat/` |
+
+Write the failing test first. Name the test after the behavior, and put it in `__tests__/` next to the module.
+
+To run the integration tests locally:
+
+```bash
+docker run --rm -p 7700:7700 -e MEILI_ENV=development -e MEILI_MASTER_KEY=masterKey getmeili/meilisearch:v1.58
+MEILI_TEST_URL=http://localhost:7700 MEILI_TEST_KEY=masterKey npm run ingest:integration
+```
+
 ### Broken links
 
 Check for broken links in the doc site:
@@ -86,6 +109,16 @@ npx mint broken-links
 | `npm run check-missing-integration-samples` | Informational only. Compares doc snippet imports to the CLI’s and each SDK’s samples and lists, per repo, which imported keys are missing on the integration side. |
 | `npm run check-broken-links` | Checks internal links in MDX files against local pages, OpenAPI-generated reference pages, and redirect sources. Runs from local files only. |
 | `npm run check-openapi-routes-coverage` | Checks that every route of the OpenAPI spec is listed in the API reference pages of `config/navigation.json`. Exits with error if not. |
+
+## Linting
+
+Lint the repository with:
+
+```bash
+npm run lint
+```
+
+`npm run lint:chat` lints only the assistant app.
 
 ## Code samples
 

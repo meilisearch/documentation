@@ -1,0 +1,101 @@
+name: Test the docs chat
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "chat/**"
+      - "scripts/ingest/**"
+      - "config/navigation.json"
+      - "assets/release-assets/**"
+      - "package.json"
+      - "package-lock.json"
+      - "vitest.config.ts"
+      - ".oxlintrc.json"
+      - ".github/workflows/test-chat.yml"
+
+jobs:
+  lint:
+    name: Lint and typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+  ingest:
+    name: Test ingestion
+    runs-on: ubuntu-latest
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.58
+        ports:
+          - 7700:7700
+        env:
+          MEILI_ENV: development
+          MEILI_MASTER_KEY: masterKey
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Wait for Meilisearch
+        run: |
+          for _ in $(seq 1 30); do
+            curl -sf http://localhost:7700/health && exit 0
+            sleep 1
+          done
+          echo "Meilisearch did not become healthy" >&2
+          exit 1
+
+      - name: Unit tests
+        run: npm run ingest:test
+
+      - name: Integration tests
+        run: npm run ingest:integration
+        env:
+          MEILI_TEST_URL: http://localhost:7700
+          MEILI_TEST_KEY: masterKey
+
+  chat:
+    name: Test chat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix chat
+
+      - name: Unit tests
+        run: npm run chat:test
