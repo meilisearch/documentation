@@ -1109,7 +1109,15 @@
   },
   {
     "source": "/reference/api/async-task-management/get-tasks-documents",
-    "destination": "/reference/api/async-task-management/get-task-documents-file"
+    "destination": "/reference/api/async-task-management/get-tasks-document-payload"
+  },
+  {
+    "source": "/reference/api/async-task-management/get-task-documents-file",
+    "destination": "/reference/api/async-task-management/get-tasks-document-payload"
+  },
+  {
+    "source": "/reference/api/template/render-documents-with-post",
+    "destination": "/reference/api/render-templates/render-template"
   },
   {
     "source": "/learn/what_is_meilisearch/telemetry",
