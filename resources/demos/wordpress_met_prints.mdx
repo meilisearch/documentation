@@ -1,0 +1,54 @@
+---
+title: Met Prints (WooCommerce)
+sidebarTitle: Met Prints (WooCommerce)
+description: A WooCommerce print shop of public-domain artworks, searched by the Meilisearch WordPress plugin
+---
+
+<Info>
+**Live demo**: [met-prints.meilisearch.com](https://met-prints.meilisearch.com)
+</Info>
+
+Met Prints is a WooCommerce shop that sells prints of 1,500 public-domain artworks from The Metropolitan Museum of Art. It shows what the [Meilisearch WordPress plugin](https://github.com/meilisearch/meilisearch-wordpress) does for a store: product search tolerates typos, WooCommerce's own filters and sorting keep working on the results, and suggestions with prices appear as you type.
+
+![Met Prints search results filtered by department, with the autocomplete open on "van go" and the Under the hood panel showing the Meilisearch request](/assets/images/demos/wordpress-met-prints-demo.png)
+
+## Key features
+
+- **Product search served by Meilisearch**: WooCommerce's search results page answers with Meilisearch. Searching "rembrant" or "renior" finds every Rembrandt or Renoir print.
+- **WooCommerce filters on search results**: The Product Filters blocks (department, century, medium, price, and rating) keep working on search results. The plugin translates each one into a Meilisearch filter, for example `attr_department IN ["European Paintings"]` for a department.
+- **Sorting**: Sort by relevance, price, popularity, or rating with WooCommerce's usual sorting menu.
+- **Autocomplete with prices**: Suggestions show each print's thumbnail, artist, date, and price. The last row, "See all N results", opens the full search page.
+- **Variable products**: Every print comes in 4 sizes and 3 finishes. The plugin indexes them as one product, with its price range and attributes, so a search never lists the same artwork twelve times.
+- **Under the hood panel**: A panel next to the results shows the exact request the plugin sent to Meilisearch, including the filters built from the WooCommerce query.
+- **Compare with MySQL**: A toggle runs the same search with WooCommerce's built-in MySQL search, side by side with Meilisearch's hit count and response time.
+
+This is a demo store: checkout is closed and no orders are taken.
+
+## How it's built
+
+The site is a standard WordPress and WooCommerce install with a block theme and WooCommerce's block templates. Search comes entirely from the Meilisearch WordPress plugin:
+
+- **Indexing**: The plugin keeps a products index in sync with the catalog. Each document holds the product's title, description, categories, tags, global attributes, price (with sale prices and price ranges for variable products), stock status, and rating.
+- **Search**: The plugin translates WooCommerce's product query into a Meilisearch search request: search terms, attribute filters from the Product Filters blocks, the price range, the stock filter, and the sort order. When it cannot translate a query, or Meilisearch does not answer in time, WooCommerce runs its usual MySQL search, so the store never stops working.
+- **Autocomplete**: The browser queries Meilisearch directly with a search-only API key that the plugin creates. Your admin key never reaches the page.
+
+The *Try* chips, the *Under the hood* panel, and the MySQL comparison are a small demo-only layer built on the plugin's public hooks. They are not part of the plugin.
+
+The artworks and their data come from [The Met Open Access](https://www.metmuseum.org/about-the-met/policies-and-documents/open-access) (CC0). Prices, sizes, stock, and reviews are invented for the demo, which is not affiliated with The Met.
+
+## Links
+
+<CardGroup cols={2}>
+  <Card title="Try the demo" icon="globe" href="https://met-prints.meilisearch.com">
+    Search 1,500 prints from The Met
+  </Card>
+  <Card title="Source code" icon="github" href="https://github.com/meilisearch/wordpress-meilisearch-demo">
+    The theme, the import, and the demo layer
+  </Card>
+  <Card title="Meilisearch WordPress plugin" icon="wordpress" href="https://github.com/meilisearch/meilisearch-wordpress">
+    Add Meilisearch to your WooCommerce store
+  </Card>
+  <Card title="Mission Log (WordPress)" icon="rocket" href="/resources/demos/wordpress_mission_log">
+    The same plugin on a WordPress blog
+  </Card>
+</CardGroup>
