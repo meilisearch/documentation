@@ -1,5 +1,73 @@
 [
   {
+    "source": "/guides/database/meilisync_mysql",
+    "destination": "/capabilities/indexing/how_to/add_and_update_documents"
+  },
+  {
+    "source": "/learn/ai-powered-search/deactivate_ai_powered_search",
+    "destination": "/capabilities/hybrid_search/overview"
+  },
+  {
+    "source": "/learn/async/managing_tasks",
+    "destination": "/capabilities/indexing/tasks_and_batches/monitor_tasks"
+  },
+  {
+    "source": "/learn/cookbooks/http2_ssl",
+    "destination": "/resources/self_hosting/security/http2_ssl"
+  },
+  {
+    "source": "/learn/core_concepts/documents.html",
+    "destination": "/capabilities/indexing/overview"
+  },
+  {
+    "source": "/learn/experimental/reduce-indexing-memory-usage",
+    "destination": "/resources/help/experimental_features_overview"
+  },
+  {
+    "source": "/learn/experimental/search_queue_size",
+    "destination": "/resources/help/experimental_features_overview"
+  },
+  {
+    "source": "/learn/experimental/replication_parameter",
+    "destination": "/resources/self_hosting/sharding/overview"
+  },
+  {
+    "source": "/learn/index_settings/displayed_searchable_attributes",
+    "destination": "/capabilities/full_text_search/how_to/configure_searchable_attributes"
+  },
+  {
+    "source": "/reference/sdks/csharp",
+    "destination": "/getting_started/sdks/dotnet"
+  },
+  {
+    "source": "/reference/sdks/dart",
+    "destination": "/getting_started/sdks/dart"
+  },
+  {
+    "source": "/reference/sdks/go",
+    "destination": "/getting_started/sdks/go"
+  },
+  {
+    "source": "/reference/sdks/java",
+    "destination": "/getting_started/sdks/java"
+  },
+  {
+    "source": "/reference/sdks/php",
+    "destination": "/getting_started/sdks/php"
+  },
+  {
+    "source": "/reference/sdks/python",
+    "destination": "/getting_started/sdks/python"
+  },
+  {
+    "source": "/sdks/js",
+    "destination": "/getting_started/sdks/javascript"
+  },
+  {
+    "source": "/resources/self_hosting/supported_os",
+    "destination": "/resources/self_hosting/getting_started/install_locally"
+  },
+  {
     "source": "/capabilities/search_rules/how_to/schedule_promotion",
     "destination": "/capabilities/search_rules/how_to/boost_documents"
   },
@@ -1041,7 +1109,15 @@
   },
   {
     "source": "/reference/api/async-task-management/get-tasks-documents",
-    "destination": "/reference/api/async-task-management/get-task-documents-file"
+    "destination": "/reference/api/async-task-management/get-tasks-document-payload"
+  },
+  {
+    "source": "/reference/api/async-task-management/get-task-documents-file",
+    "destination": "/reference/api/async-task-management/get-tasks-document-payload"
+  },
+  {
+    "source": "/reference/api/template/render-documents-with-post",
+    "destination": "/reference/api/render-templates/render-template"
   },
   {
     "source": "/learn/what_is_meilisearch/telemetry",
